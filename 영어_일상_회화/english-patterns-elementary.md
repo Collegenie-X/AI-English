@@ -38,9 +38,9 @@ flowchart LR
     기본 --> 생활
     생활 --> 소통
     
-    style A fill:#e8f5e9
-    style C fill:#fff3e0
-    style E fill:#e3f2fd
+    style A fill:#e8f5e9,color:#111
+    style C fill:#fff3e0,color:#111
+    style E fill:#e3f2fd,color:#111
 ```
 
 ---
@@ -261,9 +261,9 @@ flowchart TB
         C1 --> C3["Can I try some?"]
     end
     
-    style A1 fill:#e8f5e9
-    style B1 fill:#fff3e0
-    style C1 fill:#e3f2fd
+    style A1 fill:#e8f5e9,color:#111
+    style B1 fill:#fff3e0,color:#111
+    style C1 fill:#e3f2fd,color:#111
 ```
 
 ---
@@ -461,10 +461,10 @@ flowchart TB
     D --> D1["수업 시간 활용"]
     E --> E1["매일 5개씩 암기"]
     
-    style A fill:#e8f5e9
-    style B fill:#fff9c4
-    style C fill:#bbdefb
-    style D fill:#f8bbd9
+    style A fill:#e8f5e9,color:#111
+    style B fill:#fff9c4,color:#111
+    style C fill:#bbdefb,color:#111
+    style D fill:#f8bbd9,color:#111
 ```
 
 ### ⭐ 가장 많이 쓰는 표현 TOP 15
