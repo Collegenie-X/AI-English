@@ -42,10 +42,10 @@ flowchart LR
     숙소 --> 활동
     활동 --> 비상
     
-    style A fill:#e3f2fd
-    style D fill:#fff3e0
-    style G fill:#e8f5e9
-    style K fill:#ffebee
+    style A fill:#e3f2fd,color:#111
+    style D fill:#fff3e0,color:#111
+    style G fill:#e8f5e9,color:#111
+    style K fill:#ffebee,color:#111
 ```
 
 ---
@@ -107,8 +107,8 @@ flowchart TB
     
     출국 --> |비행| 입국
     
-    style A1 fill:#bbdefb
-    style B1 fill:#c8e6c9
+    style A1 fill:#bbdefb,color:#111
+    style B1 fill:#c8e6c9,color:#111
 ```
 
 ### 📋 공항 필수 표현 (패턴 1~10)
@@ -200,9 +200,9 @@ flowchart LR
     E --> F[추가 요청]
     F --> G[계산하기]
     
-    style A fill:#ffecb3
-    style D fill:#c8e6c9
-    style G fill:#bbdefb
+    style A fill:#ffecb3,color:#111
+    style D fill:#c8e6c9,color:#111
+    style G fill:#bbdefb,color:#111
 ```
 
 ### 📋 식당 필수 표현 (패턴 21~30)
@@ -305,10 +305,10 @@ flowchart TB
     E --> E1["Which line should I take?"]
     F --> F1["I'd like to rent a car."]
     
-    style C fill:#fff9c4
-    style D fill:#c8e6c9
-    style E fill:#bbdefb
-    style F fill:#f8bbd9
+    style C fill:#fff9c4,color:#111
+    style D fill:#c8e6c9,color:#111
+    style E fill:#bbdefb,color:#111
+    style F fill:#f8bbd9,color:#111
 ```
 
 ### 📋 교통 필수 표현 (패턴 39~44)
@@ -358,8 +358,8 @@ flowchart LR
     D --> E[사진 확인]
     E --> F["Thank you so much!"]
     
-    style B fill:#e1bee7
-    style F fill:#c8e6c9
+    style B fill:#e1bee7,color:#111
+    style F fill:#c8e6c9,color:#111
 ```
 
 ---
@@ -384,9 +384,9 @@ flowchart TB
     E --> E1["Can you help me?"]
     E --> E2["I'm lost."]
     
-    style C fill:#ffcdd2
-    style D fill:#fff9c4
-    style E fill:#bbdefb
+    style C fill:#ffcdd2,color:#111
+    style D fill:#fff9c4,color:#111
+    style E fill:#bbdefb,color:#111
 ```
 
 ### 📋 긴급 상황 표현 (패턴 48~50)
@@ -448,8 +448,8 @@ flowchart LR
     E --> F[복습]
     F --> A
     
-    style A fill:#e8f5e9
-    style E fill:#fff3e0
+    style A fill:#e8f5e9,color:#111
+    style E fill:#fff3e0,color:#111
 ```
 
 ### 📌 기억해야 할 핵심 포인트
