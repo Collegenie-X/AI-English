@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧒 전설의 유아 회화 150패턴</title>
+<style>
+:root{
+  --F:#D63384;--F-l:#f8d7e9;--F-ll:#fff0f6;
+  --M:#0d6efd;--M-l:#cfe2ff;--M-ll:#e8f0ff;
+  --green:#38a169;--green-l:#c6f6d5;--green-ll:#f0fff4;
+  --grad:linear-gradient(135deg,#667eea,#764ba2);
+  --bg:#f4f6fb;--card:#fff;--border:#e2e8f0;--radius:14px;
+  --shadow:0 2px 10px rgba(0,0,0,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:var(--bg);color:#2d3748;line-height:1.6;padding-bottom:70px}
+
+/* ── Header ── */
+header{background:var(--grad);color:#fff;padding:26px 20px 18px;text-align:center}
+header h1{font-size:1.65rem;margin-bottom:5px}
+header p{font-size:.88rem;opacity:.9}
+.hbadges{display:flex;justify-content:center;gap:9px;margin-top:12px;flex-wrap:wrap}
+.hb{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 13px;font-size:.78rem;font-weight:600}
+
+/* ── Voice selector ── */
+.voice-bar{background:#fff;border-bottom:2px solid #e2e8f0;padding:10px 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.voice-bar label{font-size:.78rem;font-weight:700;color:#4a5568;white-space:nowrap}
+.voice-bar select{padding:4px 8px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.78rem;outline:none;min-width:160px;background:#f8f9fa}
+.vdot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
+.vF{background:var(--F)}.vM{background:var(--M)}
+
+/* ── Ctrl bar ── */
+.ctrl-bar{background:#fff;border-bottom:1px solid var(--border);padding:9px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ctrl-bar input{flex:1;min-width:160px;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:.86rem;outline:none}
+.ctrl-bar input:focus{border-color:#667eea}
+.cbtn{padding:7px 13px;border:none;border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:700}
+.cbtn.ex{background:#667eea;color:#fff}.cbtn.co{background:#e2e8f0;color:#4a5568}
+.spd-wrap{display:flex;align-items:center;gap:4px;margin-left:auto;font-size:.74rem;font-weight:700;color:#4a5568}
+.sbtn{padding:2px 8px;border:1.5px solid var(--border);border-radius:5px;font-size:.7rem;cursor:pointer;font-weight:700;background:#fff;color:#4a5568;transition:.15s}
+.sbtn.sa{background:#667eea;color:#fff;border-color:#667eea}
+
+/* ── TOC ── */
+.toc-w{max-width:980px;margin:16px auto;padding:0 16px}
+.toc-d summary{cursor:pointer;font-weight:700;color:#667eea;padding:9px 14px;background:#fff;border-radius:var(--radius);border:1.5px solid #c3d1f0;list-style:none;display:flex;align-items:center;gap:8px}
+.toc-d summary::-webkit-details-marker{display:none}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;padding:10px 0}
+.toc-a{display:flex;align-items:center;gap:6px;padding:7px 10px;background:#fff;border-radius:8px;border:1px solid var(--border);text-decoration:none;color:#2d3748;font-size:.8rem;transition:.15s}
+.toc-a:hover{border-color:#667eea;background:#f0f4ff;transform:translateY(-1px)}
+.toc-n{font-weight:700;color:#667eea;font-size:.74rem;min-width:28px}
+
+/* ── Pattern card ── */
+main{max-width:920px;margin:0 auto;padding:0 16px}
+.cat-hdr{font-size:.95rem;font-weight:800;color:#667eea;padding:14px 4px 6px;border-bottom:2px solid #e2e8f0;margin-bottom:10px}
+.pw{margin-bottom:12px}
+.pd{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1.5px solid var(--border);overflow:hidden}
+.pd[open]{border-color:#a0aec0}
+
+/* Summary = Korean question front */
+.ps{cursor:pointer;list-style:none;user-select:none;display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:linear-gradient(90deg,#f7f8fc,#fff);transition:background .2s}
+.ps::-webkit-details-marker{display:none}
+.pd[open] .ps{background:linear-gradient(90deg,#eef2ff,#f7f8ff)}
+.ps:hover{background:#eef2ff}
+.pnum{background:var(--grad);color:#fff;border-radius:7px;padding:3px 9px;font-size:.74rem;font-weight:700;white-space:nowrap;flex-shrink:0;margin-top:2px}
+
+/* Korean question (main visible) */
+.q-ko{font-size:1.05rem;font-weight:800;color:#2d3748;line-height:1.4;flex:1}
+.q-cat{font-size:.72rem;color:#a0aec0;font-weight:600;margin-top:2px}
+.star{font-size:.75rem;color:#f6ad55;flex-shrink:0;margin-top:4px}
+
+/* ── Body ── */
+.pb{padding:14px 16px 18px;border-top:1px solid var(--border)}
+
+/* English answer box */
+.ans-en-box{background:linear-gradient(90deg,#eef2ff,#f7f8ff);border:2px solid #c3d1f0;border-radius:10px;padding:12px 15px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.ans-en-text{flex:1}
+.ans-en-main{font-size:1.1rem;font-weight:800;color:#3730a3;letter-spacing:.3px}
+.ans-pron{font-size:.82rem;color:#6366f1;margin-top:3px;font-style:italic}
+.btn-ans-speak{padding:5px 12px;border:none;border-radius:7px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s;box-shadow:0 2px 6px rgba(102,126,234,.3)}
+.btn-ans-speak:hover{transform:translateY(-1px)}
+.btn-ans-speak.spk{background:linear-gradient(135deg,#e53e3e,#c53030);animation:pulse .9s infinite}
+
+/* Chunk box */
+.chunk-box{background:#fffbeb;border:1.5px solid #fbd38d;border-radius:9px;padding:11px 14px;margin-bottom:12px}
+.chunk-label{font-size:.73rem;font-weight:800;color:#92400e;margin-bottom:6px}
+.chunk-row{display:flex;flex-wrap:wrap;gap:8px}
+.chunk-item{background:#fff;border:1.5px solid #fbd38d;border-radius:8px;padding:7px 11px;text-align:center;min-width:80px}
+.c-en{font-size:.9rem;font-weight:700;color:#2d3748}
+.c-pron{font-size:.76rem;color:#d97706;margin:2px 0;font-style:italic}
+.c-ko{font-size:.76rem;color:#718096}
+
+/* Dialogue */
+.dial-hdr{display:flex;align-items:center;gap:8px;margin:12px 0 6px}
+.dial-title{font-size:.84rem;font-weight:700;color:#276749;flex:1}
+.btn-play-all{padding:5px 13px;border:none;border-radius:7px;font-size:.76rem;cursor:pointer;font-weight:700;background:linear-gradient(135deg,#38a169,#2f855a);color:#fff;transition:.2s;box-shadow:0 2px 5px rgba(56,161,105,.3)}
+.btn-play-all:hover{transform:translateY(-1px)}
+.btn-play-all.ps-on{background:linear-gradient(135deg,#e53e3e,#c53030);animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+
+.play-ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:7px 11px;background:var(--green-ll);border:1px solid var(--green-l);border-radius:9px;margin-bottom:8px}
+.intv-wrap{display:flex;align-items:center;gap:5px;font-size:.73rem;font-weight:700;color:#276749;white-space:nowrap}
+.intv-sl{-webkit-appearance:none;appearance:none;width:80px;height:4px;border-radius:3px;background:var(--green-l);outline:none;cursor:pointer}
+.intv-sl::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#38a169;cursor:pointer}
+.intv-val{min-width:26px;text-align:center;font-size:.74rem;font-weight:700;color:#276749;background:var(--green-l);border-radius:4px;padding:1px 4px}
+.play-prog{font-size:.72rem;font-weight:700;color:#718096;background:#edf2f7;border-radius:10px;padding:2px 9px;white-space:nowrap;margin-left:auto}
+.play-prog.on{color:#276749;background:var(--green-l)}
+
+.dl{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:9px;margin-bottom:6px;border:1.5px solid transparent;transition:.2s}
+.dl.sF{background:var(--F-ll);border-color:var(--F-l)}
+.dl.sM{background:var(--M-ll);border-color:var(--M-l)}
+.dl.spk{transform:scale(1.01);box-shadow:0 0 0 2.5px rgba(102,126,234,.45)}
+.spk-badge{font-size:.68rem;font-weight:800;padding:3px 8px;border-radius:8px;white-space:nowrap;min-width:36px;text-align:center;flex-shrink:0;margin-top:2px}
+.sF .spk-badge{background:var(--F);color:#fff}
+.sM .spk-badge{background:var(--M);color:#fff}
+.dl-text{flex:1}
+.dl-en{font-size:.9rem;font-weight:700;color:#2d3748}
+.dl-pron{font-size:.76rem;color:#718096;font-style:italic;margin-top:1px}
+.dl-ko{font-size:.78rem;color:#4a5568;margin-top:2px;padding-top:2px;border-top:1px dashed #e2e8f0}
+.btn-speak1{flex-shrink:0;border:1.5px solid var(--F-l);border-radius:6px;padding:3px 9px;font-size:.68rem;cursor:pointer;font-weight:700;transition:.15s;background:#fff;color:var(--F);margin-top:2px}
+.btn-speak1:hover{background:var(--F-ll)}
+.btn-speak1.on{background:var(--F-l);animation:pulse .9s infinite}
+.sM .btn-speak1{border-color:var(--M-l);color:var(--M)}
+.sM .btn-speak1:hover{background:var(--M-ll)}
+.sM .btn-speak1.on{background:var(--M-l)}
+
+/* Practice */
+.prac-d{margin-top:10px;border:1.5px solid var(--green-l);border-radius:9px;overflow:hidden}
+.prac-d summary{cursor:pointer;background:var(--green-ll);padding:7px 12px;font-size:.8rem;font-weight:700;color:#276749;list-style:none}
+.prac-d summary::-webkit-details-marker{display:none}
+.prac-list{padding:10px 14px;background:#fff;border-top:1px solid var(--green-l)}
+.prac-list li{font-size:.8rem;margin-bottom:5px;padding-left:8px;border-left:3px solid #68d391;list-style:none;line-height:1.5}
+
+.hidden{display:none!important}
+@media(max-width:600px){header h1{font-size:1.3rem}.q-ko{font-size:.95rem}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧒 전설의 유아 회화 150패턴</h1>
+  <p>한국어로 문제 확인 → 영어로 답하기 → 듣기 연습</p>
+  <div class="hbadges">
+    <span class="hb">📝 한국어 질문</span>
+    <span class="hb">🔊 영어 답 듣기</span>
+    <span class="hb">📦 끊어읽기+발음</span>
+    <span class="hb">👩 여자 / 👨 남자 목소리</span>
+    <span class="hb">▶ 전체 / 한문장 듣기</span>
+  </div>
+</header>
+
+<!-- Voice selector -->
+<div class="voice-bar">
+  <span class="vdot vF"></span>
+  <label>👩 여자(A) 목소리:</label>
+  <select id="selF" onchange="updateVoice('F')"></select>
+  &nbsp;&nbsp;
+  <span class="vdot vM"></span>
+  <label>👨 남자(B) 목소리:</label>
+  <select id="selM" onchange="updateVoice('M')"></select>
+  <span style="font-size:.72rem;color:#a0aec0;margin-left:auto">💡 브라우저 지원 목소리 자동 탐지</span>
+</div>
+
+<div class="ctrl-bar">
+  <input type="text" id="sbox" placeholder="🔍 한국어/영어 검색..." oninput="filterPats()">
+  <button class="cbtn ex" onclick="expandAll()">전체 펼치기</button>
+  <button class="cbtn co" onclick="collapseAll()">전체 접기</button>
+  <div class="spd-wrap">
+    속도:
+    <button class="sbtn" onclick="setSpd(0.75,this)">0.75x</button>
+    <button class="sbtn sa" onclick="setSpd(1,this)">1x</button>
+    <button class="sbtn" onclick="setSpd(1.25,this)">1.25x</button>
+    <button class="sbtn" onclick="setSpd(1.5,this)">1.5x</button>
+  </div>
+</div>
+
+<div class="toc-w">
+  <details class="toc-d">
+    <summary>📋 전체 목차 (클릭)</summary>
+    <div class="toc-grid" id="tocGrid"></div>
+  </details>
+</div>
+
+<main id="mainArea"></main>
+
+<script>
+// ── Data: patterns with pronunciation ──
+const PATS = [
+  {no:"001",cat:"👋 인사하기",star:5,
+   ko:"안녕! 어떻게 지내?",en:"Hi! How are you?",pron:"하이! 하우 아 유?",
+   chunk:[{en:"Hi!",pron:"하이!",ko:"안녕!"},{en:"How",pron:"하우",ko:"어떻게"},{en:"are you?",pron:"아 유?",ko:"지내?"}],
+   dial:[
+     {g:"F",role:"친구A",en:"Hi! How are you?",pron:"하이! 하우 아 유?",ko:"안녕! 어떻게 지내?"},
+     {g:"M",role:"친구B",en:"Hi! I'm fine, thank you!",pron:"하이! 아임 파인, 땡큐!",ko:"안녕! 나는 잘 지내, 고마워!"},
+     {g:"F",role:"친구A",en:"Good! Let's play!",pron:"굿! 렛츠 플레이!",ko:"좋아! 같이 놀자!"}
+   ],
+   prac:["아침에 엄마한테: Hi, Mommy! How are you?","선생님께: Hi, teacher! How are you today?","친구에게: Hi! How are you? Let's play!"]},
+
+  {no:"002",cat:"👋 인사하기",star:5,
+   ko:"안녕하세요, 여러분!",en:"Hello, everyone!",pron:"헬로우, 에브리원!",
+   chunk:[{en:"Hello,",pron:"헬로우,",ko:"안녕하세요,"},{en:"everyone!",pron:"에브리원!",ko:"여러분!"}],
+   dial:[
+     {g:"F",role:"선생님",en:"Hello, everyone! How are you today?",pron:"헬로우, 에브리원! 하우 아 유 투데이?",ko:"안녕하세요, 여러분! 오늘 어떻게 지내요?"},
+     {g:"M",role:"아이들",en:"Hello, teacher! We're fine!",pron:"헬로우, 티처! 위아 파인!",ko:"안녕하세요, 선생님! 우리는 잘 지내요!"},
+     {g:"F",role:"선생님",en:"That's good! Let's start our class!",pron:"댓츠 굿! 렛츠 스타트 아워 클래스!",ko:"좋아요! 수업을 시작하자!"}
+   ],
+   prac:["유치원에서: Hello, friends! Let's play!","가게에서: Hello! Thank you!","이웃에게: Hello, Mr. Kim!"]},
+
+  {no:"003",cat:"👋 인사하기",star:5,
+   ko:"좋은 아침이에요, 엄마!",en:"Good morning, Mommy!",pron:"굿 모닝, 마미!",
+   chunk:[{en:"Good morning,",pron:"굿 모닝,",ko:"좋은 아침이에요,"},{en:"Mommy!",pron:"마미!",ko:"엄마!"}],
+   dial:[
+     {g:"M",role:"아이",en:"Good morning, Mommy!",pron:"굿 모닝, 마미!",ko:"좋은 아침이에요, 엄마!"},
+     {g:"F",role:"엄마",en:"Good morning, sweetie! Did you sleep well?",pron:"굿 모닝, 스위티! 디쥬 슬립 웰?",ko:"좋은 아침, 얘야! 잘 잤니?"},
+     {g:"M",role:"아이",en:"Yes! I had a good dream!",pron:"예스! 아이 해더 굿 드림!",ko:"네! 좋은 꿈 꿨어요!"},
+     {g:"F",role:"엄마",en:"That's wonderful! Let's have breakfast!",pron:"댓츠 원더풀! 렛츠 해브 브렉퍼스트!",ko:"잘됐구나! 아침 먹자!"}
+   ],
+   prac:["아빠에게: Good morning, Daddy! I love you!","선생님께: Good morning, teacher!","친구에게: Good morning! Let's play!"]},
+
+  {no:"004",cat:"👋 인사하기",star:4,
+   ko:"좋은 오후에요, 선생님!",en:"Good afternoon, teacher!",pron:"굿 애프터눈, 티처!",
+   chunk:[{en:"Good afternoon,",pron:"굿 애프터눈,",ko:"좋은 오후에요,"},{en:"teacher!",pron:"티처!",ko:"선생님!"}],
+   dial:[
+     {g:"M",role:"아이",en:"Good afternoon, teacher!",pron:"굿 애프터눈, 티처!",ko:"좋은 오후에요, 선생님!"},
+     {g:"F",role:"선생님",en:"Good afternoon! Are you ready to learn?",pron:"굿 애프터눈! 아 유 레디 투 런?",ko:"좋은 오후! 배울 준비 됐니?"},
+     {g:"M",role:"아이",en:"Yes! I'm ready!",pron:"예스! 아임 레디!",ko:"네! 준비됐어요!"},
+     {g:"F",role:"선생님",en:"Great! Let's begin!",pron:"그레잇! 렛츠 비긴!",ko:"좋아! 시작하자!"}
+   ],
+   prac:["유치원에서: Good afternoon, everyone!","이웃에게: Good afternoon, Mrs. Kim!","가게에서: Good afternoon! Can I have this?"]},
+
+  {no:"005",cat:"👋 인사하기",star:5,
+   ko:"잘 자요! 푹 자요!",en:"Good night! Sleep well!",pron:"굿 나잇! 슬립 웰!",
+   chunk:[{en:"Good night,",pron:"굿 나잇,",ko:"잘 자요,"},{en:"sleep well!",pron:"슬립 웰!",ko:"푹 자요!"}],
+   dial:[
+     {g:"F",role:"엄마",en:"It's bedtime. Good night, sweetie!",pron:"잇츠 베드타임. 굿 나잇, 스위티!",ko:"잘 시간이야. 잘 자, 얘야!"},
+     {g:"M",role:"아이",en:"Good night, Mommy! Sleep well!",pron:"굿 나잇, 마미! 슬립 웰!",ko:"잘 자요, 엄마! 푹 자요!"},
+     {g:"F",role:"엄마",en:"Sweet dreams! I love you!",pron:"스윗 드림스! 아이 러뷰!",ko:"좋은 꿈 꿔! 사랑해!"},
+     {g:"M",role:"아이",en:"I love you too! Good night!",pron:"아이 러뷰 투! 굿 나잇!",ko:"저도 사랑해요! 잘 자요!"}
+   ],
+   prac:["아빠에게: Good night, Daddy! See you tomorrow!","형제에게: Good night, brother! Sleep well!","인형에게: Good night, teddy bear!"]},
+
+  {no:"006",cat:"👋 인사하기",star:5,
+   ko:"만나서 반가워!",en:"Nice to meet you!",pron:"나이스 투 밋 유!",
+   chunk:[{en:"Nice",pron:"나이스",ko:"좋아"},{en:"to meet",pron:"투 밋",ko:"만나서"},{en:"you!",pron:"유!",ko:"반가워!"}],
+   dial:[
+     {g:"M",role:"아이A",en:"Hi! I'm Tom. What's your name?",pron:"하이! 아임 톰. 왓츠 유어 네임?",ko:"안녕! 나는 톰이야. 너의 이름은 뭐야?"},
+     {g:"F",role:"아이B",en:"I'm Jenny. Nice to meet you!",pron:"아임 제니. 나이스 투 밋 유!",ko:"나는 제니야. 만나서 반가워!"},
+     {g:"M",role:"아이A",en:"Nice to meet you too! Do you like toys?",pron:"나이스 투 밋 유 투! 두 유 라이크 토이즈?",ko:"나도 만나서 반가워! 너 장난감 좋아해?"},
+     {g:"F",role:"아이B",en:"Yes! Let's play together!",pron:"예스! 렛츠 플레이 투게더!",ko:"응! 같이 놀자!"}
+   ],
+   prac:["새 친구: Hi! I'm [이름]. Nice to meet you!","선생님께: Good morning! I'm [이름]. Nice to meet you!","친구 부모님께: Hello! Nice to meet you!"]},
+
+  {no:"007",cat:"👋 인사하기",star:5,
+   ko:"고마워요!",en:"Thank you so much!",pron:"땡큐 소우 머치!",
+   chunk:[{en:"Thank you",pron:"땡큐",ko:"고마워요"},{en:"so much!",pron:"소우 머치!",ko:"정말 많이!"}],
+   dial:[
+     {g:"F",role:"엄마",en:"Here's a present for you!",pron:"히어즈 어 프레즌트 포 유!",ko:"너에게 줄 선물이 있어!"},
+     {g:"M",role:"아이",en:"Wow! Thank you so much, Mommy!",pron:"와우! 땡큐 소우 머치, 마미!",ko:"와! 정말 고마워요, 엄마!"},
+     {g:"F",role:"엄마",en:"Do you like it?",pron:"두 유 라이킷?",ko:"마음에 들어?"},
+     {g:"M",role:"아이",en:"Yes! I love it! Thank you!",pron:"예스! 아이 러빗! 땡큐!",ko:"네! 너무 좋아요! 고마워요!"}
+   ],
+   prac:["도움 받았을 때: Thank you for helping me!","음식 받았을 때: Thank you for the food!","친구에게: Thank you, friend!"]},
+
+  {no:"008",cat:"👋 인사하기",star:4,
+   ko:"미안해요!",en:"Sorry! I'm late!",pron:"소리! 아임 레잇!",
+   chunk:[{en:"Sorry,",pron:"소리,",ko:"미안해요,"},{en:"I'm late!",pron:"아임 레잇!",ko:"내가 늦었어요!"}],
+   dial:[
+     {g:"M",role:"아이",en:"Sorry, I'm late! I missed the bus.",pron:"소리, 아임 레잇! 아이 미스드 더 버스.",ko:"미안해요, 늦었어요! 버스를 놓쳤어요."},
+     {g:"F",role:"선생님",en:"It's okay! Come in!",pron:"잇츠 오케이! 컴 인!",ko:"괜찮아요! 들어와요!"},
+     {g:"M",role:"아이",en:"Thank you for waiting!",pron:"땡큐 포 웨이팅!",ko:"기다려줘서 고마워요!"},
+     {g:"F",role:"선생님",en:"No problem! Let's start!",pron:"노우 프라블럼! 렛츠 스타트!",ko:"문제없어요! 시작해요!"}
+   ],
+   prac:["학교에서: Sorry I'm late, teacher!","친구에게: Sorry, I was late!","가족에게: Sorry! I forgot!"]},
+
+  {no:"009",cat:"🙋 자기소개",star:5,
+   ko:"나는 다섯 살이야.",en:"I'm five years old.",pron:"아임 파이브 이어즈 올드.",
+   chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"five",pron:"파이브",ko:"다섯"},{en:"years old.",pron:"이어즈 올드.",ko:"살이야."}],
+   dial:[
+     {g:"F",role:"친구A",en:"How old are you?",pron:"하우 올드 아 유?",ko:"너는 몇 살이야?"},
+     {g:"M",role:"아이",en:"I'm five years old! How about you?",pron:"아임 파이브 이어즈 올드! 하우 어바웃 유?",ko:"다섯 살이야! 너는?"},
+     {g:"F",role:"친구A",en:"I'm six! I'm older!",pron:"아임 식스! 아임 올더!",ko:"나는 여섯 살! 내가 더 많아!"},
+     {g:"M",role:"아이",en:"Wow! You're big!",pron:"와우! 유어 빅!",ko:"와! 너 크다!"}
+   ],
+   prac:["나이 말할 때: I'm [숫자] years old.","외국인에게: I'm five years old! Nice to meet you!","부모님께: I'm [나이] years old today!"]},
+
+  {no:"010",cat:"🙋 자기소개",star:5,
+   ko:"나는 아이스크림을 좋아해!",en:"I like ice cream!",pron:"아이 라이크 아이스크림!",
+   chunk:[{en:"I like",pron:"아이 라이크",ko:"나는 좋아해"},{en:"ice cream!",pron:"아이스크림!",ko:"아이스크림을!"}],
+   dial:[
+     {g:"F",role:"친구A",en:"What do you like?",pron:"왓 두 유 라이크?",ko:"너는 뭘 좋아해?"},
+     {g:"M",role:"아이",en:"I like ice cream! It's yummy!",pron:"아이 라이크 아이스크림! 잇츠 야미!",ko:"아이스크림 좋아해! 맛있어!"},
+     {g:"F",role:"친구A",en:"Me too! Chocolate is the best!",pron:"미 투! 초콜릿 이즈 더 베스트!",ko:"나도! 초콜릿이 최고야!"},
+     {g:"M",role:"아이",en:"I like strawberry! It's my favorite!",pron:"아이 라이크 스트로베리! 잇츠 마이 페이버릿!",ko:"나는 딸기 좋아! 내가 제일 좋아하는 거야!"}
+   ],
+   prac:["음식: I like pizza! / I like cookies!","활동: I like playing! / I like drawing!","동물: I like dogs! / I like cats!"]},
+
+  {no:"011",cat:"😊 감정 표현",star:5,
+   ko:"나는 정말 행복해!",en:"I'm so happy!",pron:"아임 소우 해피!",
+   chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"so happy!",pron:"소우 해피!",ko:"너무 행복해!"}],
+   dial:[
+     {g:"F",role:"친구A",en:"Why are you so happy?",pron:"와이 아 유 소우 해피?",ko:"왜 그렇게 행복해?"},
+     {g:"M",role:"아이",en:"I'm so happy! I got a new toy!",pron:"아임 소우 해피! 아이 갓 어 뉴 토이!",ko:"너무 행복해! 새 장난감 생겼어!"},
+     {g:"F",role:"친구A",en:"That's great! Can I see it?",pron:"댓츠 그레잇! 캔 아이 씨잇?",ko:"좋겠다! 봐도 돼?"},
+     {g:"M",role:"아이",en:"Sure! Come and see!",pron:"슈어! 컴 앤 씨!",ko:"물론! 와서 봐!"}
+   ],
+   prac:["생일에: I'm so happy! It's my birthday!","놀이에서: I'm so happy! This is fun!","선물 받았을 때: I'm so happy! Thank you!"]},
+
+  {no:"012",cat:"😊 감정 표현",star:4,
+   ko:"나 무서워.",en:"I'm scared.",pron:"아임 스케어드.",
+   chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"scared.",pron:"스케어드.",ko:"무서워."}],
+   dial:[
+     {g:"F",role:"엄마",en:"Don't be scared! I'm here.",pron:"돈트 비 스케어드! 아임 히어.",ko:"무서워하지 마! 내가 있잖아."},
+     {g:"M",role:"아이",en:"I'm scared! It's dark!",pron:"아임 스케어드! 잇츠 다크!",ko:"나 무서워! 어두워!"},
+     {g:"F",role:"엄마",en:"Let's turn on the light!",pron:"렛츠 턴 온 더 라잇!",ko:"불 켜자!"},
+     {g:"M",role:"아이",en:"Okay! Thank you! I'm not scared now.",pron:"오케이! 땡큐! 아임 낫 스케어드 나우.",ko:"알겠어! 고마워! 이제 안 무서워."}
+   ],
+   prac:["밤에: I'm scared of the dark.","천둥: I'm scared! It's thundering!","새로운 상황: I'm a little scared."]},
+
+  {no:"013",cat:"🙏 요청하기",star:5,
+   ko:"물을 좀 마실 수 있나요?",en:"Can I have some water?",pron:"캔 아이 해브 썸 워터?",
+   chunk:[{en:"Can I have",pron:"캔 아이 해브",ko:"가질 수 있어요?"},{en:"some water?",pron:"썸 워터?",ko:"약간의 물을?"}],
+   dial:[
+     {g:"M",role:"아이",en:"Can I have some water, please?",pron:"캔 아이 해브 썸 워터, 플리즈?",ko:"물 좀 주세요."},
+     {g:"F",role:"선생님",en:"Of course! Here you go!",pron:"어브 코스! 히어 유 고우!",ko:"물론이죠! 여기요!"},
+     {g:"M",role:"아이",en:"Thank you! I was so thirsty!",pron:"땡큐! 아이 워즈 소우 써스티!",ko:"감사해요! 너무 목말랐어요!"},
+     {g:"F",role:"선생님",en:"You're welcome! Drink up!",pron:"유어 웰컴! 드링크 업!",ko:"천만에요! 많이 마셔요!"}
+   ],
+   prac:["물 요청: Can I have some water?","음식 요청: Can I have a cookie?","장난감: Can I have that toy?"]},
+
+  {no:"014",cat:"🙏 요청하기",star:5,
+   ko:"나를 기다려!",en:"Wait for me!",pron:"웨잇 포 미!",
+   chunk:[{en:"Wait",pron:"웨잇",ko:"기다려"},{en:"for me!",pron:"포 미!",ko:"나를!"}],
+   dial:[
+     {g:"F",role:"친구A",en:"I'm going ahead!",pron:"아임 고잉 어헤드!",ko:"나 먼저 간다!"},
+     {g:"M",role:"아이",en:"Wait for me! I'm coming!",pron:"웨잇 포 미! 아임 커밍!",ko:"나 기다려! 나 가고 있어!"},
+     {g:"F",role:"친구A",en:"Hurry up! We'll be late!",pron:"허리 업! 위일 비 레잇!",ko:"서둘러! 늦겠어!"},
+     {g:"M",role:"아이",en:"Okay! I'm ready! Let's go!",pron:"오케이! 아임 레디! 렛츠 고우!",ko:"알겠어! 준비됐어! 가자!"}
+   ],
+   prac:["놀이에서: Wait for me! I'm slow!","학교에서: Wait for me! I forgot something!","가족에게: Wait for me, Mommy!"]},
+
+  {no:"015",cat:"🙏 요청하기",star:5,
+   ko:"도와주세요, 제발!",en:"Help me, please!",pron:"헬프 미, 플리즈!",
+   chunk:[{en:"Help me,",pron:"헬프 미,",ko:"도와주세요,"},{en:"please!",pron:"플리즈!",ko:"제발!"}],
+   dial:[
+     {g:"M",role:"아이",en:"Help me, please! I can't reach it.",pron:"헬프 미, 플리즈! 아이 캔트 리치 잇.",ko:"도와주세요, 제발! 닿지 않아요."},
+     {g:"F",role:"엄마",en:"Of course! Here you go!",pron:"어브 코스! 히어 유 고우!",ko:"물론이죠! 여기요!"},
+     {g:"M",role:"아이",en:"Thank you so much!",pron:"땡큐 소우 머치!",ko:"정말 고마워요!"},
+     {g:"F",role:"엄마",en:"You're welcome! No problem!",pron:"유어 웰컴! 노우 프라블럼!",ko:"천만에요! 문제없어요!"}
+   ],
+   prac:["가방 들 때: Help me with my bag, please!","문제 풀 때: Help me with this, please!","친구에게: Help me, please!"]},
+
+  {no:"016",cat:"🏠 일상생활",star:5,
+   ko:"일어나! 아침이야!",en:"Wake up! It's morning!",pron:"웨이크 업! 잇츠 모닝!",
+   chunk:[{en:"Wake up!",pron:"웨이크 업!",ko:"일어나!"},{en:"It's morning!",pron:"잇츠 모닝!",ko:"아침이야!"}],
+   dial:[
+     {g:"F",role:"엄마",en:"Wake up! It's morning! Time for school!",pron:"웨이크 업! 잇츠 모닝! 타임 포 스쿨!",ko:"일어나! 아침이야! 학교 갈 시간이야!"},
+     {g:"M",role:"아이",en:"Five more minutes, please!",pron:"파이브 모어 미닛츠, 플리즈!",ko:"5분만 더요, 제발!"},
+     {g:"F",role:"엄마",en:"No! Hurry up! Breakfast is ready!",pron:"노우! 허리 업! 브렉퍼스트 이즈 레디!",ko:"안 돼! 서둘러! 아침 다 됐어!"},
+     {g:"M",role:"아이",en:"Okay, okay! I'm up!",pron:"오케이, 오케이! 아임 업!",ko:"알겠어요, 알겠어요! 일어났어요!"}
+   ],
+   prac:["아침에: Wake up! It's a beautiful morning!","형제에게: Wake up! We'll be late!","주말에: Wake up! Let's play!"]},
+
+  {no:"017",cat:"🏠 일상생활",star:5,
+   ko:"학교에 가자!",en:"Let's go to school!",pron:"렛츠 고우 투 스쿨!",
+   chunk:[{en:"Let's go",pron:"렛츠 고우",ko:"가자"},{en:"to school!",pron:"투 스쿨!",ko:"학교에!"}],
+   dial:[
+     {g:"F",role:"엄마",en:"It's time! Let's go to school!",pron:"잇츠 타임! 렛츠 고우 투 스쿨!",ko:"시간이야! 학교에 가자!"},
+     {g:"M",role:"아이",en:"Wait! I forgot my backpack!",pron:"웨잇! 아이 포갓 마이 백팩!",ko:"잠깐! 가방 깜빡했어요!"},
+     {g:"F",role:"엄마",en:"Hurry! The bus is coming!",pron:"허리! 더 버스 이즈 커밍!",ko:"서둘러! 버스 오고 있어!"},
+     {g:"M",role:"아이",en:"Got it! Let's go! Let's go!",pron:"갓 잇! 렛츠 고우! 렛츠 고우!",ko:"가져왔어요! 가요! 가요!"}
+   ],
+   prac:["아침에: Let's go to school together!","친구에게: Let's go to school!","늦었을 때: Let's go to school now!"]},
+
+  {no:"018",cat:"🏠 일상생활",star:5,
+   ko:"배고파! / 맛있어!",en:"I'm hungry! / Yummy!",pron:"아임 헝그리! / 야미!",
+   chunk:[{en:"I'm hungry!",pron:"아임 헝그리!",ko:"배고파!"},{en:"Yummy!",pron:"야미!",ko:"맛있어!"}],
+   dial:[
+     {g:"M",role:"아이",en:"I'm hungry! Can I eat now?",pron:"아임 헝그리! 캔 아이 잇 나우?",ko:"배고파! 지금 먹어도 돼요?"},
+     {g:"F",role:"엄마",en:"Lunch is ready! Come eat!",pron:"런치 이즈 레디! 컴 잇!",ko:"점심 다 됐어! 와서 먹어!"},
+     {g:"M",role:"아이",en:"Yummy! This is so good!",pron:"야미! 디스 이즈 소우 굿!",ko:"맛있어! 이거 너무 맛있어요!"},
+     {g:"F",role:"엄마",en:"I'm glad you like it! Eat more!",pron:"아임 글래드 유 라이킷! 잇 모어!",ko:"좋아하니 다행이야! 더 먹어!"}
+   ],
+   prac:["배고플 때: I'm hungry! Can I have a snack?","맛있을 때: Yummy! This is delicious!","식사 후: I'm full! It was yummy!"]},
+
+  {no:"019",cat:"🏠 일상생활",star:4,
+   ko:"잘 자요! 좋은 꿈 꿔!",en:"Good night! Sweet dreams!",pron:"굿 나잇! 스윗 드림스!",
+   chunk:[{en:"Good night!",pron:"굿 나잇!",ko:"잘 자요!"},{en:"Sweet dreams!",pron:"스윗 드림스!",ko:"좋은 꿈 꿔!"}],
+   dial:[
+     {g:"F",role:"엄마",en:"It's bedtime! Are you sleepy?",pron:"잇츠 베드타임! 아 유 슬리피?",ko:"잘 시간이야! 졸려?"},
+     {g:"M",role:"아이",en:"Yes, I'm sleepy. Good night, Mommy!",pron:"예스, 아임 슬리피. 굿 나잇, 마미!",ko:"네, 졸려요. 잘 자요, 엄마!"},
+     {g:"F",role:"엄마",en:"Good night! Sweet dreams!",pron:"굿 나잇! 스윗 드림스!",ko:"잘 자! 좋은 꿈 꿔!"},
+     {g:"M",role:"아이",en:"You too! I love you!",pron:"유 투! 아이 러뷰!",ko:"엄마도요! 사랑해요!"}
+   ],
+   prac:["잠자리에서: Good night! Sweet dreams!","형제에게: Good night, brother! Sleep well!","아빠에게: Good night, Daddy!"]},
+
+  {no:"020",cat:"✈️ 여행 기초",star:5,
+   ko:"화장실이 어디 있나요?",en:"Where is the bathroom?",pron:"웨어 이즈 더 배스룸?",
+   chunk:[{en:"Where is",pron:"웨어 이즈",ko:"어디 있나요?"},{en:"the bathroom?",pron:"더 배스룸?",ko:"화장실이?"}],
+   dial:[
+     {g:"M",role:"아이",en:"Excuse me! Where is the bathroom?",pron:"익스큐즈 미! 웨어 이즈 더 배스룸?",ko:"실례합니다! 화장실이 어디 있나요?"},
+     {g:"F",role:"직원",en:"Down the hall and on the right!",pron:"다운 더 홀 앤드 온 더 라잇!",ko:"복도 끝에서 오른쪽이에요!"},
+     {g:"M",role:"아이",en:"Thank you so much!",pron:"땡큐 소우 머치!",ko:"정말 감사해요!"},
+     {g:"F",role:"직원",en:"No problem! Enjoy your visit!",pron:"노우 프라블럼! 인조이 유어 비짓!",ko:"문제없어요! 즐거운 방문 되세요!"}
+   ],
+   prac:["공항에서: Where is the bathroom, please?","식당에서: Excuse me! Where is the bathroom?","긴급할 때: I need the bathroom! Where is it?"]},
+];
+
+// ── Voice management ──
+let voices=[], voiceF=null, voiceM=null, globalSpd=1, curUtter=null, curPlayAll=null;
+
+function loadVoices(){
+  voices=speechSynthesis.getVoices();
+  const enV=voices.filter(v=>v.lang.startsWith('en'));
+  populateSel('selF', enV, ['Samantha','Victoria','Karen','Moira','Zira','Female','female','Google UK English Female','en-GB']);
+  populateSel('selM', enV, ['Daniel','Alex','Tom','Fred','David','Male','male','Google UK English Male','en-US']);
+  autoSelect();
+}
+speechSynthesis.onvoiceschanged=loadVoices;
+window.addEventListener('load', ()=>{setTimeout(loadVoices,300)});
+
+function populateSel(id, enV, prefer){
+  const sel=document.getElementById(id); sel.innerHTML='';
+  enV.forEach((v,i)=>{const o=document.createElement('option');o.value=i;o.textContent=v.name+' ('+v.lang+')';sel.appendChild(o)});
+}
+function autoSelect(){
+  const enV=voices.filter(v=>v.lang.startsWith('en'));
+  const fKeys=['Samantha','Victoria','Karen','Moira','Zira','female','Female','Google UK English Female'];
+  const mKeys=['Daniel','Alex','Tom','Fred','David','male','Male','Google UK English Male'];
+  let fi=enV.findIndex(v=>fKeys.some(k=>v.name.includes(k)));
+  let mi=enV.findIndex(v=>mKeys.some(k=>v.name.includes(k))&&v!==enV[fi]);
+  if(fi<0)fi=0;if(mi<0)mi=Math.min(1,enV.length-1);
+  document.getElementById('selF').value=fi;
+  document.getElementById('selM').value=mi;
+  voiceF=enV[fi]||null; voiceM=enV[mi]||null;
+}
+function updateVoice(g){
+  const enV=voices.filter(v=>v.lang.startsWith('en'));
+  if(g==='F') voiceF=enV[document.getElementById('selF').value]||null;
+  else voiceM=enV[document.getElementById('selM').value]||null;
+}
+function getVoice(g){ return g==='F'?(voiceF||null):(voiceM||null); }
+
+function speakText(text, gender, btn){
+  if(curUtter){speechSynthesis.cancel();curUtter=null;}
+  if(btn){btn.classList.add('on');btn.textContent=btn.textContent.replace('🔊','⏸');}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=globalSpd;
+  const v=getVoice(gender);if(v)u.voice=v;
+  u.onend=()=>{if(btn){btn.classList.remove('on');btn.textContent=btn.textContent.replace('⏸','🔊');}curUtter=null;};
+  u.onerror=()=>{if(btn){btn.classList.remove('on');btn.textContent=btn.textContent.replace('⏸','🔊');}curUtter=null;};
+  curUtter=u; speechSynthesis.speak(u);
+}
+
+function playAll(btn, patNo){
+  if(btn.classList.contains('ps-on')){
+    speechSynthesis.cancel();if(curPlayAll)clearTimeout(curPlayAll);
+    btn.classList.remove('ps-on');btn.textContent='▶ 전체 듣기';
+    document.querySelectorAll('#pw-'+patNo+' .dl').forEach(l=>l.classList.remove('spk'));
+    const prog=document.getElementById('pp-'+patNo);if(prog)prog.classList.remove('on');return;
+  }
+  const wrap=document.getElementById('pw-'+patNo);
+  if(!wrap.querySelector('.pd[open]'))wrap.querySelector('.pd').setAttribute('open','');
+  const lines=wrap.querySelectorAll('.dl');
+  const prog=document.getElementById('pp-'+patNo);
+  const sl=wrap.querySelector('.intv-sl');
+  const interval=parseFloat(sl?sl.value:1.5)*1000;
+  btn.classList.add('ps-on');btn.textContent='⏹ 정지';
+  let idx=0;
+  const next=()=>{
+    if(idx>=lines.length){btn.classList.remove('ps-on');btn.textContent='▶ 전체 듣기';lines.forEach(l=>l.classList.remove('spk'));if(prog)prog.classList.remove('on');return;}
+    lines.forEach(l=>l.classList.remove('spk'));lines[idx].classList.add('spk');
+    if(prog){prog.textContent=`${idx+1}/${lines.length}`;prog.classList.add('on');}
+    lines[idx].scrollIntoView({behavior:'smooth',block:'nearest'});
+    const en=lines[idx].querySelector('.dl-en').textContent;
+    const g=lines[idx].dataset.g||'F';
+    const u=new SpeechSynthesisUtterance(en);
+    u.lang='en-US';u.rate=globalSpd;const v=getVoice(g);if(v)u.voice=v;
+    u.onend=()=>{idx++;curPlayAll=setTimeout(next,interval);};
+    u.onerror=()=>{idx++;curPlayAll=setTimeout(next,interval);};
+    speechSynthesis.speak(u);
+  };next();
+}
+
+// ── Build ──
+function buildTOC(){
+  const grid=document.getElementById('tocGrid');
+  const cats={};PATS.forEach(p=>{if(!cats[p.cat])cats[p.cat]=[];cats[p.cat].push(p);});
+  Object.keys(cats).forEach(cat=>{
+    const lbl=document.createElement('div');lbl.style.cssText='grid-column:1/-1;font-weight:700;font-size:.78rem;color:#667eea;padding:4px 2px;margin-top:6px;border-bottom:1px solid #e2e8f0;';lbl.textContent=cat;grid.appendChild(lbl);
+    cats[cat].forEach(p=>{const a=document.createElement('a');a.className='toc-a';a.href='#pw-'+p.no;a.innerHTML=`<span class="toc-n">${p.no}</span><span>${p.ko}</span>`;grid.appendChild(a);});
+  });
+}
+
+function buildPats(){
+  const main=document.getElementById('mainArea');let lastCat='';
+  PATS.forEach(p=>{
+    if(p.cat!==lastCat){const h=document.createElement('div');h.className='cat-hdr';h.textContent=p.cat;main.appendChild(h);lastCat=p.cat;}
+    const w=document.createElement('div');w.className='pw';w.id='pw-'+p.no;w.dataset.ko=p.ko;w.dataset.en=p.en.toLowerCase();
+    w.innerHTML=makeHTML(p);main.appendChild(w);
+  });
+}
+
+function makeHTML(p){
+  const chunkItems=p.chunk.map(c=>`<div class="chunk-item"><div class="c-en">${c.en}</div><div class="c-pron">${c.pron}</div><div class="c-ko">${c.ko}</div></div>`).join('');
+  const dlines=p.dial.map((d,i)=>`
+    <div class="dl s${d.g}" id="dl-${p.no}-${i}" data-g="${d.g}">
+      <div class="spk-badge">${d.g==='F'?'👩 A':'👨 B'}<br><span style="font-size:.6rem;opacity:.8">${d.role}</span></div>
+      <div class="dl-text">
+        <div class="dl-en">${d.en}</div>
+        <div class="dl-pron">🔤 ${d.pron}</div>
+        <div class="dl-ko">🇰🇷 ${d.ko}</div>
+      </div>
+      <button class="btn-speak1" onclick="speakText('${escQ(d.en)}','${d.g}',this)">🔊 듣기</button>
+    </div>`).join('');
+  const prac=p.prac.map(r=>`<li>${r}</li>`).join('');
+  return `
+  <details class="pd">
+    <summary class="ps">
+      <span class="pnum">${p.no}</span>
+      <div style="flex:1">
+        <div class="q-ko">${p.ko}</div>
+        <div class="q-cat">${p.cat} &nbsp;·&nbsp; 영어 답 클릭해서 확인</div>
+      </div>
+      <span class="star">${'⭐'.repeat(p.star)}</span>
+    </summary>
+    <div class="pb">
+      <!-- English answer -->
+      <div class="ans-en-box">
+        <div class="ans-en-text">
+          <div class="ans-en-main">💬 ${p.en}</div>
+          <div class="ans-pron">🔤 발음: ${p.pron}</div>
+        </div>
+        <button class="btn-ans-speak" onclick="speakText('${escQ(p.en)}','F',this)">🔊 답 듣기</button>
+      </div>
+      <!-- Chunk -->
+      <div class="chunk-box">
+        <div class="chunk-label">📦 끊어읽기 (청크) — 영어 / 발음 / 한국어</div>
+        <div class="chunk-row">${chunkItems}</div>
+      </div>
+      <!-- Dialogue -->
+      <div class="dial-hdr">
+        <span class="dial-title">💬 실전 대화 &nbsp;<span style="font-size:.72rem;color:#a0aec0">👩=여자 👨=남자 목소리</span></span>
+        <button class="btn-play-all" onclick="playAll(this,'${p.no}')">▶ 전체 듣기</button>
+      </div>
+      <div class="play-ctrl">
+        <div class="intv-wrap">간격<input type="range" class="intv-sl" min=".5" max="3" step=".5" value="1.5" oninput="this.nextElementSibling.textContent=this.value+'s'"><span class="intv-val">1.5s</span></div>
+        <div style="width:1px;height:16px;background:var(--green-l)"></div>
+        <div class="spd-wrap">속도
+          <button class="sbtn" onclick="setLSpd(this,.75)">0.75x</button>
+          <button class="sbtn sa" onclick="setLSpd(this,1)">1x</button>
+          <button class="sbtn" onclick="setLSpd(this,1.25)">1.25x</button>
+        </div>
+        <span class="play-prog" id="pp-${p.no}">0/${p.dial.length}</span>
+      </div>
+      ${dlines}
+      <details class="prac-d"><summary>🎯 응용 연습</summary><ul class="prac-list">${prac}</ul></details>
+    </div>
+  </details>`;
+}
+
+function escQ(s){return s.replace(/'/g,"\\'")}
+function setSpd(v,btn){globalSpd=v;document.querySelectorAll('.ctrl-bar .sbtn').forEach(b=>b.classList.remove('sa'));btn.classList.add('sa');}
+function setLSpd(btn,v){globalSpd=v;btn.closest('.play-ctrl').querySelectorAll('.sbtn').forEach(b=>b.classList.remove('sa'));btn.classList.add('sa');}
+function expandAll(){document.querySelectorAll('.pd').forEach(d=>d.setAttribute('open',''));}
+function collapseAll(){document.querySelectorAll('.pd').forEach(d=>d.removeAttribute('open'));}
+function filterPats(){
+  const q=document.getElementById('sbox').value.toLowerCase();
+  document.querySelectorAll('.pw').forEach(w=>{w.classList.toggle('hidden',!(!q||w.dataset.ko.includes(q)||w.dataset.en.includes(q)));});
+  document.querySelectorAll('.cat-hdr').forEach(h=>{
+    let s=h.nextElementSibling,has=false;
+    while(s&&!s.classList.contains('cat-hdr')){if(!s.classList.contains('hidden'))has=true;s=s.nextElementSibling;}
+    h.classList.toggle('hidden',!has);
+  });
+}
+buildTOC();buildPats();
+</script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📚 전설의 초등 회화 150패턴</title>
+<style>
+:root{--F:#D63384;--M:#0d6efd;--bg:#f8f9fa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:#222;}
+h1{text-align:center;padding:18px;background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-size:1.4em;}
+.subtitle{text-align:center;background:#d4edda;color:#155724;padding:6px;font-size:.85em;}
+.voice-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;background:#fff;border-bottom:2px solid #dee2e6;}
+.voice-bar label{font-size:.82em;font-weight:600;}
+.voice-bar select{font-size:.8em;padding:3px 6px;border:1px solid #ccc;border-radius:6px;}
+.vdot{display:inline-block;width:10px;height:10px;border-radius:50%;}
+.vdot.vF{background:var(--F);}
+.vdot.vM{background:var(--M);}
+.ctrl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;background:#fff;border-bottom:1px solid #dee2e6;}
+.ctrl-bar label{font-size:.8em;color:#666;}
+.ctrl-bar select,.ctrl-bar input{font-size:.8em;padding:3px 7px;border:1px solid #ccc;border-radius:6px;}
+.play-btn{padding:6px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:.85em;}
+.play-btn.green{background:#28a745;color:#fff;}
+.play-btn.blue{background:#0d6efd;color:#fff;}
+.play-btn.red{background:#dc3545;color:#fff;}
+.play-btn:hover{opacity:.88;}
+.search-bar{padding:10px 16px;background:#fff;border-bottom:1px solid #dee2e6;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.search-bar input{flex:1;min-width:180px;max-width:340px;padding:7px 12px;border:1px solid #ccc;border-radius:20px;font-size:.9em;}
+.cat-filter{display:flex;flex-wrap:wrap;gap:5px;padding:10px 16px;background:#fff;border-bottom:1px solid #dee2e6;}
+.cat-btn{padding:4px 10px;border:1px solid #dee2e6;border-radius:16px;background:#fff;cursor:pointer;font-size:.78em;font-weight:600;}
+.cat-btn.active{background:#28a745;color:#fff;border-color:#28a745;}
+.cards{padding:12px 16px;max-width:900px;margin:0 auto;}
+details{background:#fff;border:1px solid #dee2e6;border-radius:12px;margin-bottom:10px;overflow:hidden;}
+details[open]{border-color:#28a745;box-shadow:0 2px 12px rgba(40,167,69,.12);}
+summary{list-style:none;padding:12px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;user-select:none;}
+summary::-webkit-details-marker{display:none;}
+.pnum{font-size:.75em;font-weight:700;color:#fff;background:#28a745;padding:2px 8px;border-radius:10px;white-space:nowrap;margin-top:2px;min-width:38px;text-align:center;}
+.sum-body{flex:1;}
+.q-ko{font-size:1.05em;font-weight:700;color:#155724;line-height:1.35;}
+.q-cat{font-size:.72em;color:#888;margin-top:2px;}
+.star-row{font-size:.85em;margin-top:3px;}
+.chev{font-size:.85em;color:#aaa;flex-shrink:0;margin-top:3px;}
+.card-body{padding:10px 14px 16px;}
+.ans-en-box{background:#f0fff4;border:1px solid #b8e6c8;border-radius:8px;padding:10px 14px;margin:8px 0;}
+.ans-en-main{font-size:1.1em;font-weight:700;color:#155724;}
+.ans-pron{font-size:.85em;color:#6f42c1;margin-top:3px;}
+.speak-main-btn{margin-top:6px;padding:5px 12px;background:#28a745;color:#fff;border:none;border-radius:7px;cursor:pointer;font-size:.8em;}
+.speak-main-btn:hover{background:#218838;}
+.section-title{font-size:.78em;font-weight:700;color:#555;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #eee;padding-bottom:3px;}
+.chunks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.chunk-item{border:1px solid #dee2e6;border-radius:8px;padding:6px 10px;text-align:center;min-width:70px;background:#fafafa;}
+.c-en{font-size:.9em;font-weight:700;color:#0d6efd;}
+.c-pron{font-size:.75em;color:#6f42c1;}
+.c-ko{font-size:.75em;color:#333;}
+.dial-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+.dl{padding:8px 12px;border-radius:8px;}
+.dl.sF{background:#fff0f8;border:1px solid #f5c6e0;}
+.dl.sM{background:#f0f5ff;border:1px solid #c6d8f5;}
+.dl-header{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.spk-badge{font-size:.75em;font-weight:700;}
+.spk-badge.F{color:var(--F);}
+.spk-badge.M{color:var(--M);}
+.dl-en{font-size:.9em;font-weight:600;}
+.dl-pron{font-size:.75em;color:#6f42c1;margin:1px 0;}
+.dl-ko{font-size:.78em;color:#555;}
+.speak-dl-btn{margin-top:4px;padding:3px 8px;border:none;border-radius:5px;cursor:pointer;font-size:.72em;color:#fff;}
+.speak-dl-btn.F{background:var(--F);}
+.speak-dl-btn.M{background:var(--M);}
+.speak-dl-btn:hover{opacity:.82;}
+.prac-list{list-style:none;}
+.prac-list li{font-size:.82em;padding:3px 0;border-bottom:1px solid #f5f5f5;color:#555;}
+.prac-list li::before{content:"💡 ";font-size:.9em;}
+.play-all-btn,.play-one-btn{padding:5px 12px;border:none;border-radius:7px;cursor:pointer;font-size:.78em;color:#fff;font-weight:600;}
+.play-all-btn{background:#28a745;}
+.play-one-btn{background:#0d6efd;}
+.play-all-btn:hover{background:#218838;}
+.play-one-btn:hover{background:#0b5ed7;}
+@media(max-width:600px){.voice-bar{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<h1>📚 전설의 초등 회화 150패턴</h1>
+<div class="subtitle">🇰🇷 한국어 문제 → 🇺🇸 영어 답변 | 끊어읽기 + 한국어 발음 | 여자/남자 목소리 구분</div>
+
+<div class="voice-bar">
+  <span class="vdot vF"></span><label>👩 여자(A):</label>
+  <select id="selF" onchange="updateVoice('F')"></select>
+  <span class="vdot vM"></span><label>👨 남자(B):</label>
+  <select id="selM" onchange="updateVoice('M')"></select>
+</div>
+
+<div class="ctrl-bar">
+  <label>⚡ 속도:</label>
+  <select id="speed">
+    <option value="0.75">0.75x</option>
+    <option value="0.9" selected>0.9x</option>
+    <option value="1.0">1.0x</option>
+    <option value="1.25">1.25x</option>
+  </select>
+  <label>⏱️ 간격:</label>
+  <input type="range" id="gap" min="0" max="3" step="0.5" value="1" style="width:80px;">
+  <span id="gapVal">1s</span>
+  <button class="play-btn red" onclick="stopAll()">⏹ 정지</button>
+  <button class="play-btn green" onclick="expandAll()">🔽 전체 펼치기</button>
+  <button class="play-btn blue" onclick="collapseAll()">🔼 전체 접기</button>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍 한국어/영어 검색..." oninput="filterCards()">
+  <button class="play-btn green" onclick="clearSearch()">✕ 초기화</button>
+</div>
+
+<div class="cat-filter" id="catFilter"></div>
+<div class="cards" id="cardsContainer"></div>
+
+<script>
+// ==================== DATA ====================
+const PATTERNS=[
+// ===== Part 1: 인사와 소개 001-020 =====
+{no:"001",cat:"👋 인사와소개",star:5,
+ ko:"안녕! 어떻게 지내?",en:"Hi there! How's it going?",pron:"하이 데어! 하우즈 잇 고잉?",
+ chunk:[{en:"Hi there!",pron:"하이 데어!",ko:"안녕!"},{en:"How's it",pron:"하우즈 잇",ko:"어떻게"},{en:"going?",pron:"고잉?",ko:"지내?"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hi there! How's it going?",pron:"하이 데어! 하우즈 잇 고잉?",ko:"안녕! 어떻게 지내?"},
+   {g:"M",role:"친구B",en:"Hey! Pretty good! How about you?",pron:"헤이! 프리티 굿! 하우 어바웃 유?",ko:"야! 꽤 좋아! 너는?"},
+   {g:"F",role:"친구A",en:"I'm doing great! Want to play basketball?",pron:"아임 두잉 그레이트! 원트 투 플레이 배스킷볼?",ko:"나 아주 잘 지내! 농구 할래?"},
+   {g:"M",role:"친구B",en:"Sure! That sounds fun!",pron:"슈어! 댓 사운즈 펀!",ko:"물론이지! 재미있을 것 같아!"},
+ ],
+ prac:["아침에: Hi there! How's it going today?","점심에: Hey! How's it going? Let's eat together!","주말에: Hi! How's it going? What did you do?"]},
+{no:"002",cat:"👋 인사와소개",star:5,
+ ko:"야! 뭐해?",en:"Hey! What's up?",pron:"헤이! 왓츠 업?",
+ chunk:[{en:"Hey!",pron:"헤이!",ko:"야!"},{en:"What's up,",pron:"왓츠 업,",ko:"별일 없어,"},{en:"dude?",pron:"두드?",ko:"친구야?"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hey! What's up, dude?",pron:"헤이! 왓츠 업, 두드?",ko:"야! 뭐해, 친구?"},
+   {g:"M",role:"친구B",en:"Not much! Just finished math class.",pron:"낫 머치! 저스트 피니쉬드 매쓰 클래스.",ko:"별일 없어! 방금 수학 수업 끝났어."},
+   {g:"F",role:"친구A",en:"The test was so hard! What's up after school?",pron:"더 테스트 워즈 쏘 하드! 왓츠 업 애프터 스쿨?",ko:"시험 너무 어려웠어! 방과 후에 뭐 해?"},
+   {g:"M",role:"친구B",en:"Nothing planned! Want to play basketball?",pron:"낫씽 플랜드! 원트 투 플레이 배스킷볼?",ko:"계획 없어! 농구 할래?"},
+ ],
+ prac:["점심시간: Hey! What's up? Want to eat together?","주말에: Hey! What's up this weekend?","온라인: Hey! What's up? Are you gaming?"]},
+{no:"003",cat:"👋 인사와소개",star:4,
+ ko:"다시 보니 좋다!",en:"Good to see you again!",pron:"굿 투 씨 유 어게인!",
+ chunk:[{en:"Good to see you",pron:"굿 투 씨 유",ko:"만나서 좋아"},{en:"again!",pron:"어게인!",ko:"다시!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hey! Good to see you again!",pron:"헤이! 굿 투 씨 유 어게인!",ko:"야! 다시 보니 좋다!"},
+   {g:"M",role:"친구B",en:"Good to see you too! How was your vacation?",pron:"굿 투 씨 유 투! 하우 워즈 유어 베케이션?",ko:"나도 보니 좋아! 방학 어땠어?"},
+   {g:"F",role:"친구A",en:"It was awesome! I went to the beach!",pron:"잇 워즈 어썸! 아이 웬트 투 더 비치!",ko:"최고였어! 해변에 갔어!"},
+   {g:"M",role:"친구B",en:"Good to see you back!",pron:"굿 투 씨 유 백!",ko:"돌아와서 다시 보니 좋다!"},
+ ],
+ prac:["친구에게: Good to see you! I missed you!","선생님께: Good to see you again, teacher!"]},
+{no:"004",cat:"👋 인사와소개",star:3,
+ ko:"오랜만이야!",en:"Long time no see!",pron:"롱 타임 노 씨!",
+ chunk:[{en:"Long time",pron:"롱 타임",ko:"오랜 시간"},{en:"no see!",pron:"노 씨!",ko:"보지 못했네!"},{en:"Where have you been?",pron:"웨어 해브 유 빈?",ko:"어디 있었어?"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hey! Long time no see! Where have you been?",pron:"헤이! 롱 타임 노 씨! 웨어 해브 유 빈?",ko:"야! 오랜만이야! 어디 있었어?"},
+   {g:"M",role:"친구B",en:"Hi! I went to my grandma's house for vacation.",pron:"하이! 아이 웬트 투 마이 그랜드마스 하우스 포 베케이션.",ko:"안녕! 방학 동안 할머니 댁에 갔었어."},
+   {g:"F",role:"친구A",en:"I went to the beach! It was so fun!",pron:"아이 웬트 투 더 비치! 잇 워즈 쏘 펀!",ko:"나는 해변에 갔어! 정말 재미있었어!"},
+   {g:"M",role:"친구B",en:"That sounds amazing! We should catch up soon!",pron:"댓 사운즈 어메이징! 위 슈드 캐치 업 순!",ko:"정말 멋지다! 우리 곧 만나서 얘기하자!"},
+ ],
+ prac:["오랜만 친구: Long time no see! I missed you!","전학 온 친구: Long time no see! How's your new school?"]},
+{no:"005",cat:"👋 인사와소개",star:5,
+ ko:"어떻게 지내?",en:"How's it going?",pron:"하우즈 잇 고잉?",
+ chunk:[{en:"Hey,",pron:"헤이,",ko:"야,"},{en:"how's it",pron:"하우즈 잇",ko:"어떻게"},{en:"going?",pron:"고잉?",ko:"지내?"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hey, how's it going?",pron:"헤이, 하우즈 잇 고잉?",ko:"야, 어떻게 지내?"},
+   {g:"M",role:"친구B",en:"Not bad! Just finished lunch. How about you?",pron:"낫 배드! 저스트 피니쉬드 런치. 하우 어바웃 유?",ko:"나쁘지 않아! 점심 막 먹었어. 너는?"},
+   {g:"F",role:"친구A",en:"Good! Want to play soccer during break?",pron:"굿! 원트 투 플레이 싸커 듀링 브레이크?",ko:"좋아! 쉬는 시간에 축구 할래?"},
+   {g:"M",role:"친구B",en:"Sure! Let's meet at the field!",pron:"슈어! 렛츠 밋 앳 더 필드!",ko:"물론! 운동장에서 만나자!"},
+ ],
+ prac:["점심: Hey, how's it going? Let's eat!","방과 후: How's it going? Want to study together?"]},
+{no:"006",cat:"👋 인사와소개",star:4,
+ ko:"새로운 일 있어?",en:"What's new with you?",pron:"왓츠 뉴 위드 유?",
+ chunk:[{en:"What's new",pron:"왓츠 뉴",ko:"무슨 새로운 일"},{en:"with you?",pron:"위드 유?",ko:"너에게?"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hey! What's new with you?",pron:"헤이! 왓츠 뉴 위드 유?",ko:"야! 새로운 일 있어?"},
+   {g:"M",role:"친구B",en:"I got a new puppy! His name is Max!",pron:"아이 갓 어 뉴 퍼피! 히즈 네임 이즈 맥스!",ko:"나 새 강아지 생겼어! 이름은 맥스야!"},
+   {g:"F",role:"친구A",en:"Really? That's awesome! What's new with you?",pron:"리얼리? 댓츠 어썸! 왓츠 뉴 위드 유?",ko:"진짜? 대박! 너는?"},
+   {g:"M",role:"친구B",en:"He's learning tricks! So cute!",pron:"히즈 러닝 트릭스! 쏘 큐트!",ko:"재주 배우고 있어! 너무 귀여워!"},
+ ],
+ prac:["친구에게: What's new? Anything exciting?","가족에게: What's new at school?"]},
+{no:"007",cat:"👋 인사와소개",star:5,
+ ko:"오늘 학교 어땠어?",en:"How was your day at school?",pron:"하우 워즈 유어 데이 앳 스쿨?",
+ chunk:[{en:"How was",pron:"하우 워즈",ko:"어떠했니"},{en:"your day",pron:"유어 데이",ko:"너의 하루는"},{en:"at school?",pron:"앳 스쿨?",ko:"학교에서?"}],
+ dial:[
+   {g:"F",role:"엄마",en:"Hi, sweetie! How was your day at school?",pron:"하이, 스위티! 하우 워즈 유어 데이 앳 스쿨?",ko:"안녕, 얘야! 학교에서 하루 어땠어?"},
+   {g:"M",role:"아이",en:"It was great! We had art class today!",pron:"잇 워즈 그레이트! 위 해드 아트 클래스 투데이!",ko:"좋았어요! 오늘 미술 수업했어요!"},
+   {g:"F",role:"엄마",en:"That sounds fun! How was your art project?",pron:"댓 사운즈 펀! 하우 워즈 유어 아트 프로젝트?",ko:"재미있겠다! 미술 과제는 어땠어?"},
+   {g:"M",role:"아이",en:"I drew a dinosaur! My teacher said it was good!",pron:"아이 드류 어 다이노소어! 마이 티쳐 세드 잇 워즈 굿!",ko:"공룡 그렸어요! 선생님이 잘했대요!"},
+ ],
+ prac:["엄마에게: How was your day? I missed you!","친구에게: How was your day today?"]},
+{no:"008",cat:"👋 인사와소개",star:5,
+ ko:"내일 학교에서 보자!",en:"See you tomorrow at school!",pron:"씨 유 투모로우 앳 스쿨!",
+ chunk:[{en:"See you",pron:"씨 유",ko:"보자"},{en:"tomorrow",pron:"투모로우",ko:"내일"},{en:"at school!",pron:"앳 스쿨!",ko:"학교에서!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"I had fun today! See you tomorrow at school!",pron:"아이 해드 펀 투데이! 씨 유 투모로우 앳 스쿨!",ko:"오늘 재미있었어! 내일 학교에서 보자!"},
+   {g:"M",role:"친구B",en:"Yeah, me too! See you tomorrow!",pron:"예, 미 투! 씨 유 투모로우!",ko:"응, 나도! 내일 봐!"},
+   {g:"F",role:"친구A",en:"Don't forget to bring the game!",pron:"돈트 포겟 투 브링 더 게임!",ko:"게임 가져오는 거 잊지 마!"},
+   {g:"M",role:"친구B",en:"I won't! See you tomorrow, buddy!",pron:"아이 원트! 씨 유 투모로우, 버디!",ko:"안 잊을게! 내일 보자, 친구!"},
+ ],
+ prac:["하교시: See you tomorrow at school!","주말 전: See you on Monday!"]},
+{no:"009",cat:"👋 인사와소개",star:4,
+ ko:"조심해서 가!",en:"Take care! See you later!",pron:"테이크 케어! 씨 유 레이터!",
+ chunk:[{en:"Take care!",pron:"테이크 케어!",ko:"조심해서 가!"},{en:"See you",pron:"씨 유",ko:"보자"},{en:"later!",pron:"레이터!",ko:"나중에!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"It's raining hard! Be careful on the way home!",pron:"잇츠 레이닝 하드! 비 케어풀 온 더 웨이 홈!",ko:"비가 많이 와! 집 가는 길 조심해!"},
+   {g:"M",role:"친구B",en:"Thanks! I will. Take care! See you later!",pron:"땡스! 아이 윌. 테이크 케어! 씨 유 레이터!",ko:"고마워! 그럴게. 조심해서 가! 나중에 봐!"},
+   {g:"F",role:"친구A",en:"You too! Take care! Don't get wet!",pron:"유 투! 테이크 케어! 돈트 겟 웻!",ko:"너도! 조심해! 비 맞지 마!"},
+ ],
+ prac:["친구에게: Take care on the way home!","비 오는 날: Take care! See you tomorrow!"]},
+{no:"010",cat:"👋 인사와소개",star:3,
+ ko:"좋은 하루 보내!",en:"Have a good one! Bye!",pron:"해브 어 굿 원! 바이!",
+ chunk:[{en:"Have",pron:"해브",ko:"가져라"},{en:"a good one!",pron:"어 굿 원!",ko:"좋은 하루를!"},{en:"Bye!",pron:"바이!",ko:"안녕!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"It's Friday! Have a good weekend!",pron:"잇츠 프라이데이! 해브 어 굿 위켄드!",ko:"금요일이야! 주말 잘 보내!"},
+   {g:"M",role:"친구B",en:"Thanks! Have a good one! Any plans?",pron:"땡스! 해브 어 굿 원! 애니 플랜즈?",ko:"고마워! 좋은 주말 보내! 계획 있어?"},
+   {g:"F",role:"친구A",en:"I'm going camping! Have a good one, everyone!",pron:"아임 고잉 캠핑! 해브 어 굿 원, 에브리원!",ko:"캠핑 가! 다들 좋은 주말 보내!"},
+   {g:"M",role:"친구B",en:"That sounds fun! Have a good one! Bye!",pron:"댓 사운즈 펀! 해브 어 굿 원! 바이!",ko:"재미있겠다! 좋은 주말! 잘 가!"},
+ ],
+ prac:["주말 전: Have a good one! See you Monday!","헤어질 때: Have a good one! Take care!"]},
+{no:"011",cat:"👋 인사와소개",star:4,
+ ko:"나는 서울, 한국에서 왔어.",en:"I'm from Seoul, Korea.",pron:"아임 프롬 서울, 코리아.",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"from Seoul,",pron:"프롬 서울,",ko:"서울 출신"},{en:"Korea.",pron:"코리아.",ko:"한국."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hi! I'm Tom. I'm from Seoul, Korea. Where are you from?",pron:"하이! 아임 톰. 아임 프롬 서울, 코리아. 웨어 아 유 프롬?",ko:"안녕! 나는 톰이야. 서울, 한국에서 왔어. 너는 어디 출신이야?"},
+   {g:"M",role:"친구B",en:"Nice to meet you! I'm from New York. Is Seoul big?",pron:"나이스 투 밋 유! 아임 프롬 뉴욕. 이즈 서울 빅?",ko:"만나서 반가워! 나는 뉴욕에서 왔어. 서울 크니?"},
+   {g:"F",role:"친구A",en:"Yes! It's huge! I'm from a city called Gangnam.",pron:"예스! 잇츠 휴지! 아임 프롬 어 시티 콜드 강남.",ko:"응! 엄청 커! 나는 강남이라는 도시에서 왔어."},
+ ],
+ prac:["소개할 때: I'm from [도시], Korea.","외국 친구에게: I'm from Seoul. It's the capital!"]},
+{no:"012",cat:"👋 인사와소개",star:4,
+ ko:"나는 오크 초등학교에 다녀.",en:"I go to Oak Elementary School.",pron:"아이 고 투 오크 엘리멘터리 스쿨.",
+ chunk:[{en:"I go",pron:"아이 고",ko:"나는 다녀"},{en:"to Oak",pron:"투 오크",ko:"오크에"},{en:"Elementary School.",pron:"엘리멘터리 스쿨.",ko:"초등학교."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hi! What school do you go to?",pron:"하이! 왓 스쿨 두 유 고 투?",ko:"안녕! 어느 학교 다녀?"},
+   {g:"M",role:"친구B",en:"I go to Oak Elementary School. You?",pron:"아이 고 투 오크 엘리멘터리 스쿨. 유?",ko:"나는 오크 초등학교에 다녀. 너는?"},
+   {g:"F",role:"친구A",en:"Me too! What class are you in?",pron:"미 투! 왓 클래스 아 유 인?",ko:"나도! 몇 반이야?"},
+ ],
+ prac:["자기소개: I go to [학교이름] Elementary School."]},
+{no:"013",cat:"👋 인사와소개",star:5,
+ ko:"나는 5학년이야.",en:"I'm in the 5th grade.",pron:"아임 인 더 피프쓰 그레이드.",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"in the",pron:"인 더",ko:"~안에"},{en:"5th grade.",pron:"피프쓰 그레이드.",ko:"5학년."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Hi! I'm in the 5th grade. What grade are you in?",pron:"하이! 아임 인 더 피프쓰 그레이드. 왓 그레이드 아 유 인?",ko:"안녕! 나는 5학년이야. 너는 몇 학년이야?"},
+   {g:"M",role:"친구B",en:"I'm in the 5th grade too! Same class?",pron:"아임 인 더 피프쓰 그레이드 투! 세임 클래스?",ko:"나도 5학년이야! 같은 반이야?"},
+   {g:"F",role:"친구A",en:"I'm in class 3. You?",pron:"아임 인 클래스 쓰리. 유?",ko:"나는 3반이야. 너는?"},
+   {g:"M",role:"친구B",en:"I'm in class 2! But we can still be friends!",pron:"아임 인 클래스 투! 벗 위 캔 스틸 비 프렌즈!",ko:"나는 2반이야! 그래도 친구할 수 있어!"},
+ ],
+ prac:["소개: I'm in the 5th grade at Oak School.","학년 변경: I'm in the 6th grade now!"]},
+{no:"014",cat:"👋 인사와소개",star:4,
+ ko:"내가 제일 좋아하는 과목은 수학이야.",en:"My favorite subject is math.",pron:"마이 페이버릿 서브젝트 이즈 매쓰.",
+ chunk:[{en:"My favorite",pron:"마이 페이버릿",ko:"내가 제일 좋아하는"},{en:"subject",pron:"서브젝트",ko:"과목은"},{en:"is math.",pron:"이즈 매쓰.",ko:"수학이야."}],
+ dial:[
+   {g:"F",role:"친구A",en:"What's your favorite subject?",pron:"왓츠 유어 페이버릿 서브젝트?",ko:"좋아하는 과목이 뭐야?"},
+   {g:"M",role:"친구B",en:"My favorite subject is math. I love solving problems!",pron:"마이 페이버릿 서브젝트 이즈 매쓰. 아이 러브 솔빙 프라블럼즈!",ko:"내 최애 과목은 수학이야. 문제 푸는 게 정말 좋아!"},
+ ],
+ prac:["My favorite subject is English / science / art."]},
+{no:"015",cat:"👋 인사와소개",star:4,
+ ko:"나는 그림 그리기를 잘해.",en:"I'm good at drawing.",pron:"아임 굿 앳 드로잉.",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"good at",pron:"굿 앳",ko:"~를 잘해"},{en:"drawing.",pron:"드로잉.",ko:"그림 그리기."}],
+ dial:[
+   {g:"F",role:"친구A",en:"What are you good at?",pron:"왓 아 유 굿 앳?",ko:"뭘 잘해?"},
+   {g:"M",role:"친구B",en:"I'm good at drawing. I can draw anything!",pron:"아임 굿 앳 드로잉. 아이 캔 드로 애니씽!",ko:"나는 그림 그리기를 잘해. 뭐든 다 그릴 수 있어!"},
+ ],
+ prac:["I'm good at math / singing / swimming / cooking."]},
+{no:"016",cat:"👋 인사와소개",star:3,
+ ko:"나는 스포츠를 잘하지 못해.",en:"I'm not good at sports.",pron:"아임 낫 굿 앳 스포츠.",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"not good at",pron:"낫 굿 앳",ko:"잘하지 못해"},{en:"sports.",pron:"스포츠.",ko:"스포츠를."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Do you like soccer?",pron:"두 유 라이크 싸커?",ko:"축구 좋아해?"},
+   {g:"M",role:"친구B",en:"I'm not good at sports. I prefer reading.",pron:"아임 낫 굿 앳 스포츠. 아이 프리퍼 리딩.",ko:"나는 스포츠를 잘하지 못해. 독서를 더 좋아해."},
+ ],
+ prac:["I'm not good at math but I try hard!"]},
+{no:"017",cat:"👋 인사와소개",star:4,
+ ko:"내 취미는 책 읽기야.",en:"My hobby is reading books.",pron:"마이 하비 이즈 리딩 북스.",
+ chunk:[{en:"My hobby",pron:"마이 하비",ko:"내 취미는"},{en:"is",pron:"이즈",ko:"~이야"},{en:"reading books.",pron:"리딩 북스.",ko:"책 읽기."}],
+ dial:[
+   {g:"F",role:"친구A",en:"What do you do in your free time?",pron:"왓 두 유 두 인 유어 프리 타임?",ko:"여가 시간에 뭐 해?"},
+   {g:"M",role:"친구B",en:"My hobby is reading books. I read every night!",pron:"마이 하비 이즈 리딩 북스. 아이 리드 에브리 나잇!",ko:"내 취미는 책 읽기야. 매일 밤 읽어!"},
+ ],
+ prac:["My hobby is playing games / cooking / drawing."]},
+{no:"018",cat:"👋 인사와소개",star:4,
+ ko:"나는 형이 한 명 있어.",en:"I have one older brother.",pron:"아이 해브 원 올더 브라더.",
+ chunk:[{en:"I have",pron:"아이 해브",ko:"나는 있어"},{en:"one",pron:"원",ko:"한 명"},{en:"older brother.",pron:"올더 브라더.",ko:"형을."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Do you have any siblings?",pron:"두 유 해브 애니 시블링즈?",ko:"형제자매 있어?"},
+   {g:"M",role:"친구B",en:"Yes! I have one older brother. He's very tall.",pron:"예스! 아이 해브 원 올더 브라더. 히즈 베리 톨.",ko:"응! 나는 형이 한 명 있어. 키가 매우 커."},
+ ],
+ prac:["I have one older sister / two younger brothers."]},
+{no:"019",cat:"👋 인사와소개",star:3,
+ ko:"나는 2015년에 태어났어.",en:"I was born in 2015.",pron:"아이 워즈 본 인 투싸우전드피프틴.",
+ chunk:[{en:"I was",pron:"아이 워즈",ko:"나는"},{en:"born",pron:"본",ko:"태어났어"},{en:"in 2015.",pron:"인 2015.",ko:"2015년에."}],
+ dial:[
+   {g:"F",role:"친구A",en:"When were you born?",pron:"웬 워 유 본?",ko:"언제 태어났어?"},
+   {g:"M",role:"친구B",en:"I was born in 2015. What about you?",pron:"아이 워즈 본 인 투싸우전드피프틴. 왓 어바웃 유?",ko:"나는 2015년에 태어났어. 너는?"},
+ ],
+ prac:["I was born in [연도]."]},
+{no:"020",cat:"👋 인사와소개",star:3,
+ ko:"나는 3년 동안 여기서 살아왔어.",en:"I've lived here for 3 years.",pron:"아이브 리브드 히어 포 쓰리 이어즈.",
+ chunk:[{en:"I've lived",pron:"아이브 리브드",ko:"나는 살아왔어"},{en:"here",pron:"히어",ko:"여기서"},{en:"for 3 years.",pron:"포 쓰리 이어즈.",ko:"3년 동안."}],
+ dial:[
+   {g:"F",role:"친구A",en:"How long have you lived here?",pron:"하우 롱 해브 유 리브드 히어?",ko:"여기서 얼마나 살았어?"},
+   {g:"M",role:"친구B",en:"I've lived here for 3 years. I love it!",pron:"아이브 리브드 히어 포 쓰리 이어즈. 아이 러브 잇!",ko:"나는 3년 동안 여기서 살아왔어. 정말 좋아!"},
+ ],
+ prac:["I've lived here for 2 / 5 / 10 years."]},
+// ===== Part 2: 감정과 상태 021-040 =====
+{no:"021",cat:"😊 감정과상태",star:5,
+ ko:"시험에 통과해서 너무 행복해!",en:"I'm so happy I passed the test!",pron:"아임 쏘 해피 아이 패스트 더 테스트!",
+ chunk:[{en:"I'm so happy",pron:"아임 쏘 해피",ko:"나는 너무 행복해"},{en:"I passed",pron:"아이 패스트",ko:"내가 통과해서"},{en:"the test!",pron:"더 테스트!",ko:"시험을!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"Guess what? I'm so happy! I passed the test!",pron:"게스 왓? 아임 쏘 해피! 아이 패스트 더 테스트!",ko:"있잖아? 나 너무 행복해! 시험에 통과했어!"},
+   {g:"M",role:"친구B",en:"Really? Congratulations! What did you get?",pron:"리얼리? 컨그래출레이션즈! 왓 디드 유 겟?",ko:"정말? 축하해! 몇 점 받았어?"},
+   {g:"F",role:"친구A",en:"I got an A! I studied so hard!",pron:"아이 갓 언 에이! 아이 스터디드 쏘 하드!",ko:"A를 받았어! 정말 열심히 공부했어!"},
+   {g:"M",role:"친구B",en:"Wow! Good job! I'm proud of you!",pron:"와우! 굿 잡! 아임 프라우드 오브 유!",ko:"와! 잘했어! 자랑스러워!"},
+ ],
+ prac:["선물 받았을 때: I'm so happy! I got a new bike!","이겼을 때: I'm so happy! Our team won!"]},
+{no:"022",cat:"😊 감정과상태",star:4,
+ ko:"오늘 기분이 정말 좋아!",en:"I'm feeling great today!",pron:"아임 필링 그레이트 투데이!",
+ chunk:[{en:"I'm feeling",pron:"아임 필링",ko:"나는 느끼고 있어"},{en:"great",pron:"그레이트",ko:"아주 좋게"},{en:"today!",pron:"투데이!",ko:"오늘!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"You look happy! What's up?",pron:"유 룩 해피! 왓츠 업?",ko:"기분 좋아 보여! 무슨 일이야?"},
+   {g:"M",role:"친구B",en:"I'm feeling great today! I slept well!",pron:"아임 필링 그레이트 투데이! 아이 슬렙트 웰!",ko:"오늘 기분이 정말 좋아! 잘 잤어!"},
+ ],
+ prac:["I'm feeling great! I had a good breakfast."]},
+{no:"023",cat:"😊 감정과상태",star:4,
+ ko:"나는 조금 슬퍼. 내 애완동물이 아파.",en:"I'm a little sad. My pet is sick.",pron:"아임 어 리틀 새드. 마이 펫 이즈 씩.",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"a little sad.",pron:"어 리틀 새드.",ko:"조금 슬퍼."},{en:"My pet",pron:"마이 펫",ko:"내 애완동물이"},{en:"is sick.",pron:"이즈 씩.",ko:"아파."}],
+ dial:[
+   {g:"F",role:"친구A",en:"You look upset. What's wrong?",pron:"유 룩 업셋. 왓츠 롱?",ko:"속상해 보여. 무슨 일이야?"},
+   {g:"M",role:"친구B",en:"I'm a little sad. My pet is sick.",pron:"아임 어 리틀 새드. 마이 펫 이즈 씩.",ko:"나는 조금 슬퍼. 내 애완동물이 아파."},
+   {g:"F",role:"친구A",en:"I'm sorry to hear that. I hope he gets better!",pron:"아임 쏘리 투 히어 댓. 아이 호프 히 겟츠 베터!",ko:"안타깝다. 빨리 낫길 바라!"},
+ ],
+ prac:["I'm a little sad. My friend moved away."]},
+{no:"024",cat:"😊 감정과상태",star:4,
+ ko:"나는 정말 속상해.",en:"I'm really upset about what happened.",pron:"아임 리얼리 업셋 어바웃 왓 해픈드.",
+ chunk:[{en:"I'm really upset",pron:"아임 리얼리 업셋",ko:"나는 정말 속상해"},{en:"about",pron:"어바웃",ko:"~에 대해"},{en:"what happened.",pron:"왓 해픈드.",ko:"일어난 일."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Are you okay? You seem upset.",pron:"아 유 오케이? 유 씸 업셋.",ko:"괜찮아? 속상해 보여."},
+   {g:"M",role:"친구B",en:"I'm really upset. Someone took my lunch!",pron:"아임 리얼리 업셋. 썸원 툭 마이 런치!",ko:"나는 정말 속상해. 누군가 내 점심을 가져갔어!"},
+ ],
+ prac:["I'm really upset. I lost my favorite book."]},
+{no:"025",cat:"😊 감정과상태",star:5,
+ ko:"여행 때문에 너무 신나!",en:"I'm so excited for the trip!",pron:"아임 쏘 익사이티드 포 더 트립!",
+ chunk:[{en:"I'm so excited",pron:"아임 쏘 익사이티드",ko:"나는 너무 신나"},{en:"for",pron:"포",ko:"~때문에"},{en:"the trip!",pron:"더 트립!",ko:"여행!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"We're going to Jeju Island tomorrow!",pron:"위어 고잉 투 제주 아일랜드 투모로우!",ko:"우리 내일 제주도에 가!"},
+   {g:"M",role:"친구B",en:"I'm so excited for the trip! I can't wait!",pron:"아임 쏘 익사이티드 포 더 트립! 아이 캔트 웨이트!",ko:"여행 때문에 너무 신나! 기다릴 수가 없어!"},
+ ],
+ prac:["I'm so excited for the game / the concert / the party!"]},
+{no:"026",cat:"😊 감정과상태",star:4,
+ ko:"나는 발표에 대해 약간 긴장돼.",en:"I'm kind of nervous about the presentation.",pron:"아임 카인드 오브 너버스 어바웃 더 프레젠테이션.",
+ chunk:[{en:"I'm kind of",pron:"아임 카인드 오브",ko:"나는 약간"},{en:"nervous",pron:"너버스",ko:"긴장돼"},{en:"about the presentation.",pron:"어바웃 더 프레젠테이션.",ko:"발표에 대해."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Are you ready for the presentation?",pron:"아 유 레디 포 더 프레젠테이션?",ko:"발표 준비 됐어?"},
+   {g:"M",role:"친구B",en:"I'm kind of nervous. What if I forget?",pron:"아임 카인드 오브 너버스. 왓 이프 아이 포겟?",ko:"약간 긴장돼. 잊어버리면 어떡하지?"},
+   {g:"F",role:"친구A",en:"You'll do great! You practiced a lot!",pron:"유윌 두 그레이트! 유 프랙티스트 어 랏!",ko:"잘 할 거야! 많이 연습했잖아!"},
+ ],
+ prac:["I'm kind of nervous about the test / the match."]},
+{no:"027",cat:"😊 감정과상태",star:3,
+ ko:"나는 정말 지루해. 할 것이 아무것도 없어.",en:"I'm super bored. There's nothing to do.",pron:"아임 수퍼 보어드. 데어즈 낫씽 투 두.",
+ chunk:[{en:"I'm super bored.",pron:"아임 수퍼 보어드.",ko:"나는 정말 지루해."},{en:"There's",pron:"데어즈",ko:"있어"},{en:"nothing to do.",pron:"낫씽 투 두.",ko:"할 것이 아무것도."}],
+ dial:[
+   {g:"F",role:"친구A",en:"I'm super bored. Want to play a game?",pron:"아임 수퍼 보어드. 원트 투 플레이 어 게임?",ko:"나는 정말 지루해. 게임 할래?"},
+   {g:"M",role:"친구B",en:"Sure! Which game do you want to play?",pron:"슈어! 위치 게임 두 유 원트 투 플레이?",ko:"물론! 어떤 게임 하고 싶어?"},
+ ],
+ prac:["I'm super bored. Let's do something fun!"]},
+{no:"028",cat:"😊 감정과상태",star:4,
+ ko:"시험에 대해 약간 걱정돼.",en:"I'm a bit worried about the test.",pron:"아임 어 빗 워리드 어바웃 더 테스트.",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"a bit worried",pron:"어 빗 워리드",ko:"약간 걱정돼"},{en:"about the test.",pron:"어바웃 더 테스트.",ko:"시험에 대해."}],
+ dial:[
+   {g:"F",role:"친구A",en:"I'm a bit worried about the test. Did you study?",pron:"아임 어 빗 워리드 어바웃 더 테스트. 디드 유 스터디?",ko:"시험에 대해 약간 걱정돼. 공부했어?"},
+   {g:"M",role:"친구B",en:"Yes! I studied all night. Don't worry!",pron:"예스! 아이 스터디드 올 나잇. 돈트 워리!",ko:"응! 밤새 공부했어. 걱정하지 마!"},
+ ],
+ prac:["I'm a bit worried about the match / the exam."]},
+{no:"029",cat:"😊 감정과상태",star:4,
+ ko:"나는 정말 피곤해. 늦게까지 깨어 있었어.",en:"I'm really tired. I stayed up late.",pron:"아임 리얼리 타이얼드. 아이 스테이드 업 레이트.",
+ chunk:[{en:"I'm really tired.",pron:"아임 리얼리 타이얼드.",ko:"나는 정말 피곤해."},{en:"I stayed up",pron:"아이 스테이드 업",ko:"나는 깨어 있었어"},{en:"late.",pron:"레이트.",ko:"늦게까지."}],
+ dial:[
+   {g:"F",role:"친구A",en:"You look tired! Are you okay?",pron:"유 룩 타이얼드! 아 유 오케이?",ko:"피곤해 보여! 괜찮아?"},
+   {g:"M",role:"친구B",en:"I'm really tired. I stayed up late watching TV.",pron:"아임 리얼리 타이얼드. 아이 스테이드 업 레이트 왓칭 티비.",ko:"나는 정말 피곤해. TV 보다가 늦게까지 깨어 있었어."},
+ ],
+ prac:["I'm really tired. I need to rest."]},
+{no:"030",cat:"😊 감정과상태",star:4,
+ ko:"이제 기분이 더 좋아졌어. 고마워!",en:"I'm feeling better now. Thanks!",pron:"아임 필링 베터 나우. 땡스!",
+ chunk:[{en:"I was sick,",pron:"아이 워즈 씩,",ko:"나는 아팠어,"},{en:"but",pron:"벗",ko:"하지만"},{en:"I'm feeling",pron:"아임 필링",ko:"나는 느끼고 있어"},{en:"better now.",pron:"베터 나우.",ko:"더 좋게 지금."}],
+ dial:[
+   {g:"F",role:"친구A",en:"How are you feeling? You were sick yesterday.",pron:"하우 아 유 필링? 유 워 씩 예스터데이.",ko:"기분 어때? 어제 아팠잖아."},
+   {g:"M",role:"친구B",en:"I'm feeling better now. Thanks for asking!",pron:"아임 필링 베터 나우. 땡스 포 어스킹!",ko:"이제 기분이 더 좋아졌어. 물어봐 줘서 고마워!"},
+ ],
+ prac:["I'm feeling better! I can come to school now."]},
+{no:"031",cat:"😊 감정과상태",star:4,
+ ko:"머리가 아파. 쉬어도 될까요?",en:"I have a headache. Can I rest?",pron:"아이 해브 어 헤드에이크. 캔 아이 레스트?",
+ chunk:[{en:"I have",pron:"아이 해브",ko:"나는 있어"},{en:"a headache.",pron:"어 헤드에이크.",ko:"두통이."},{en:"Can I",pron:"캔 아이",ko:"제가 해도 될까요"},{en:"rest?",pron:"레스트?",ko:"쉬기를?"}],
+ dial:[
+   {g:"M",role:"아이",en:"Teacher, I have a headache. Can I rest?",pron:"티쳐, 아이 해브 어 헤드에이크. 캔 아이 레스트?",ko:"선생님, 머리가 아파요. 쉬어도 될까요?"},
+   {g:"F",role:"선생님",en:"Of course! Go to the nurse's office.",pron:"오브 코스! 고 투 더 너시즈 오피스.",ko:"물론이죠! 보건실에 가세요."},
+ ],
+ prac:["I have a headache / stomachache / sore throat."]},
+{no:"032",cat:"😊 감정과상태",star:4,
+ ko:"배가 정말 심하게 아파.",en:"My stomach hurts really bad.",pron:"마이 스터먹 허츠 리얼리 배드.",
+ chunk:[{en:"My stomach",pron:"마이 스터먹",ko:"내 배가"},{en:"hurts",pron:"허츠",ko:"아파"},{en:"really bad.",pron:"리얼리 배드.",ko:"정말 심하게."}],
+ dial:[
+   {g:"M",role:"아이",en:"Mom, my stomach hurts really bad.",pron:"맘, 마이 스터먹 허츠 리얼리 배드.",ko:"엄마, 배가 정말 심하게 아파요."},
+   {g:"F",role:"엄마",en:"Oh no! Did you eat something bad?",pron:"오 노! 디드 유 잇 썸씽 배드?",ko:"안됐다! 뭔가 안 좋은 걸 먹었니?"},
+ ],
+ prac:["My stomach hurts. I need to see a doctor."]},
+{no:"033",cat:"😊 감정과상태",star:3,
+ ko:"어지러워. 앉아야 할 것 같아.",en:"I feel dizzy. I need to sit down.",pron:"아이 필 디지. 아이 니드 투 싯 다운.",
+ chunk:[{en:"I feel dizzy.",pron:"아이 필 디지.",ko:"나는 어지러워."},{en:"I need",pron:"아이 니드",ko:"나는 필요해"},{en:"to sit down.",pron:"투 싯 다운.",ko:"앉는 것이."}],
+ dial:[
+   {g:"M",role:"친구B",en:"I feel dizzy. Can I sit down?",pron:"아이 필 디지. 캔 아이 싯 다운?",ko:"어지러워. 앉아도 될까?"},
+   {g:"F",role:"친구A",en:"Sure! Are you okay? Do you need water?",pron:"슈어! 아 유 오케이? 두 유 니드 워터?",ko:"물론! 괜찮아? 물 필요해?"},
+ ],
+ prac:["I feel dizzy. I need to rest for a minute."]},
+{no:"034",cat:"😊 감정과상태",star:5,
+ ko:"배고파 죽겠어! 점심은 언제야?",en:"I'm starving! When's lunch?",pron:"아임 스타빙! 웬즈 런치?",
+ chunk:[{en:"I'm starving!",pron:"아임 스타빙!",ko:"나 배고파 죽겠어!"},{en:"When's",pron:"웬즈",ko:"언제야"},{en:"lunch?",pron:"런치?",ko:"점심은?"}],
+ dial:[
+   {g:"M",role:"친구B",en:"I'm starving! When's lunch? I can't wait!",pron:"아임 스타빙! 웬즈 런치? 아이 캔트 웨이트!",ko:"배고파 죽겠어! 점심은 언제야? 못 기다리겠어!"},
+   {g:"F",role:"친구A",en:"Only 10 more minutes! Let's hang on!",pron:"온리 텐 모어 미닛츠! 렛츠 행 온!",ko:"10분만 더! 조금만 버티자!"},
+ ],
+ prac:["I'm starving! Let's hurry to the cafeteria!"]},
+{no:"035",cat:"😊 감정과상태",star:4,
+ ko:"배불러 죽겠어! 너무 많이 먹었어.",en:"I'm stuffed! I ate too much.",pron:"아임 스터프트! 아이 에잇 투 머치.",
+ chunk:[{en:"I'm stuffed!",pron:"아임 스터프트!",ko:"나 배불러 죽겠어!"},{en:"I ate",pron:"아이 에잇",ko:"나는 먹었어"},{en:"too much.",pron:"투 머치.",ko:"너무 많이."}],
+ dial:[
+   {g:"M",role:"친구B",en:"I'm stuffed! I had three helpings!",pron:"아임 스터프트! 아이 해드 쓰리 헬핑즈!",ko:"배불러 죽겠어! 세 번이나 먹었어!"},
+   {g:"F",role:"친구A",en:"Three helpings? That's a lot!",pron:"쓰리 헬핑즈? 댓츠 어 랏!",ko:"세 번이나? 많이 먹었다!"},
+ ],
+ prac:["I'm stuffed! No dessert for me, thanks."]},
+{no:"036",cat:"😊 감정과상태",star:4,
+ ko:"얼어 죽겠어! 너무 추워!",en:"I'm freezing! It's so cold!",pron:"아임 프리징! 잇츠 쏘 콜드!",
+ chunk:[{en:"I'm freezing!",pron:"아임 프리징!",ko:"나 얼어 죽겠어!"},{en:"It's",pron:"잇츠",ko:"이건"},{en:"so cold!",pron:"쏘 콜드!",ko:"너무 추워!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"I'm freezing! Can we go inside?",pron:"아임 프리징! 캔 위 고 인사이드?",ko:"얼어 죽겠어! 안으로 들어가도 될까?"},
+   {g:"M",role:"친구B",en:"Me too! Let's get some hot chocolate!",pron:"미 투! 렛츠 겟 썸 핫 초콜릿!",ko:"나도! 핫초코 마시러 가자!"},
+ ],
+ prac:["I'm freezing! I forgot my jacket."]},
+{no:"037",cat:"😊 감정과상태",star:4,
+ ko:"더워 죽겠어! 너무 더워!",en:"I'm burning up! It's so hot!",pron:"아임 버닝 업! 잇츠 쏘 핫!",
+ chunk:[{en:"I'm burning up!",pron:"아임 버닝 업!",ko:"나 더워 죽겠어!"},{en:"It's",pron:"잇츠",ko:"이건"},{en:"so hot!",pron:"쏘 핫!",ko:"너무 더워!"}],
+ dial:[
+   {g:"M",role:"친구B",en:"I'm burning up! Can we find some shade?",pron:"아임 버닝 업! 캔 위 파인드 썸 쉐이드?",ko:"더워 죽겠어! 그늘 찾을까?"},
+   {g:"F",role:"친구A",en:"Good idea! Let's get some water too!",pron:"굿 아이디어! 렛츠 겟 썸 워터 투!",ko:"좋아! 물도 좀 마시자!"},
+ ],
+ prac:["I'm burning up! I need some cold water."]},
+{no:"038",cat:"😊 감정과상태",star:3,
+ ko:"잠 못 자겠어. 너무 신나.",en:"I can't sleep. I'm too excited.",pron:"아이 캔트 슬립. 아임 투 익사이티드.",
+ chunk:[{en:"I can't sleep.",pron:"아이 캔트 슬립.",ko:"나는 잠 못 자겠어."},{en:"I'm",pron:"아임",ko:"나는"},{en:"too excited.",pron:"투 익사이티드.",ko:"너무 신나."}],
+ dial:[
+   {g:"F",role:"친구A",en:"Why do you look so tired?",pron:"와이 두 유 룩 쏘 타이얼드?",ko:"왜 그렇게 피곤해 보여?"},
+   {g:"M",role:"친구B",en:"I can't sleep. I'm too excited about the trip!",pron:"아이 캔트 슬립. 아임 투 익사이티드 어바웃 더 트립!",ko:"잠 못 자겠어. 여행 때문에 너무 신나!"},
+ ],
+ prac:["I can't sleep. There's too much noise."]},
+{no:"039",cat:"😊 감정과상태",star:4,
+ ko:"기분이 좋아졌어. 고마워!",en:"I feel better. Thanks!",pron:"아이 필 베터. 땡스!",
+ chunk:[{en:"I feel better",pron:"아이 필 베터",ko:"나는 기분 좋아졌어"},{en:"now.",pron:"나우.",ko:"지금."},{en:"Thanks!",pron:"땡스!",ko:"고마워!"}],
+ dial:[
+   {g:"F",role:"친구A",en:"How are you feeling now?",pron:"하우 아 유 필링 나우?",ko:"지금 기분 어때?"},
+   {g:"M",role:"친구B",en:"I feel better! That medicine really helped.",pron:"아이 필 베터! 댓 메디신 리얼리 헬프트.",ko:"기분 좋아졌어! 그 약이 정말 도움이 됐어."},
+ ],
+ prac:["I feel better. I can play again now!"]},
+{no:"040",cat:"😊 감정과상태",star:4,
+ ko:"완전히 깨어 있어! 가자!",en:"I'm wide awake! Let's go!",pron:"아임 와이드 어웨이크! 렛츠 고!",
+ chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"wide awake!",pron:"와이드 어웨이크!",ko:"완전히 깨어 있어!"},{en:"Let's go!",pron:"렛츠 고!",ko:"가자!"}],
+ dial:[
+   {g:"M",role:"친구B",en:"I'm wide awake! Let's start the game!",pron:"아임 와이드 어웨이크! 렛츠 스타트 더 게임!",ko:"완전히 깨어 있어! 게임 시작하자!"},
+   {g:"F",role:"친구A",en:"Great energy! Let's go!",pron:"그레이트 에너지! 렛츠 고!",ko:"에너지 넘치네! 가자!"},
+ ],
+ prac:["I'm wide awake! Ready for the adventure!"]},
+// ===== Part 3: 일상 루틴 041-065 =====
+{no:"041",cat:"🏠 일상루틴",star:4,ko:"오전 7시에 일어났어.",en:"I woke up at 7 AM.",pron:"아이 워크 업 앳 세븐 에이엠.",chunk:[{en:"I",pron:"아이",ko:"나는"},{en:"woke up",pron:"워크 업",ko:"일어났어"},{en:"at 7 AM.",pron:"앳 세븐 에이엠.",ko:"오전 7시에."}],dial:[{g:"F",role:"친구A",en:"You look tired! What time did you wake up?",pron:"유 룩 타이얼드! 왓 타임 디드 유 웨이크 업?",ko:"피곤해 보여! 몇 시에 일어났어?"},{g:"M",role:"친구B",en:"I woke up at 6 AM. Had to study.",pron:"아이 워크 업 앳 씩스 에이엠. 해드 투 스터디.",ko:"6시에 일어났어. 공부해야 했어."}],prac:["I woke up at 6 / 7 / 8 AM.","I woke up late! I almost missed the bus!"]},
+{no:"042",cat:"🏠 일상루틴",star:4,ko:"학교를 위해 준비해야 해.",en:"I need to get ready for school.",pron:"아이 니드 투 겟 레디 포 스쿨.",chunk:[{en:"I need",pron:"아이 니드",ko:"나는 필요해"},{en:"to get ready",pron:"투 겟 레디",ko:"준비하는 것이"},{en:"for school.",pron:"포 스쿨.",ko:"학교를 위해."}],dial:[{g:"M",role:"아이",en:"I need to get ready for school! Where's my bag?",pron:"아이 니드 투 겟 레디 포 스쿨! 웨어즈 마이 백?",ko:"학교 준비해야 해! 내 가방 어딨어?"},{g:"F",role:"엄마",en:"It's by the door! Hurry up!",pron:"잇츠 바이 더 도어! 허리 업!",ko:"문 옆에 있어! 서둘러!"}],prac:["I need to get ready. I'll be quick!"]},
+{no:"043",cat:"🏠 일상루틴",star:5,ko:"늦고 있어! 서둘러!",en:"I'm running late! Hurry up!",pron:"아임 러닝 레이트! 허리 업!",chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"running late!",pron:"러닝 레이트!",ko:"늦어지고 있어!"},{en:"Hurry up!",pron:"허리 업!",ko:"서둘러!"}],dial:[{g:"F",role:"친구A",en:"Oh no! I'm running late! Hurry up!",pron:"오 노! 아임 러닝 레이트! 허리 업!",ko:"안돼! 늦고 있어! 서둘러!"},{g:"M",role:"친구B",en:"The bus leaves in 5 minutes! Let's run!",pron:"더 버스 리브즈 인 파이브 미닛츠! 렛츠 런!",ko:"버스 5분 후에 가! 뛰자!"}],prac:["I'm running late! Sorry!","I'm running late for class!"]},
+{no:"044",cat:"🏠 일상루틴",star:3,ko:"오늘 버스를 거의 놓칠 뻔 했어.",en:"I almost missed the bus today.",pron:"아이 올모스트 미스트 더 버스 투데이.",chunk:[{en:"I",pron:"아이",ko:"나는"},{en:"almost missed",pron:"올모스트 미스트",ko:"거의 놓쳤어"},{en:"the bus today.",pron:"더 버스 투데이.",ko:"버스를 오늘."}],dial:[{g:"M",role:"친구B",en:"I almost missed the bus today! I ran so fast!",pron:"아이 올모스트 미스트 더 버스 투데이! 아이 랜 쏘 패스트!",ko:"오늘 버스 거의 놓칠 뻔 했어! 정말 빨리 뛰었어!"},{g:"F",role:"친구A",en:"Lucky you! I missed it last week!",pron:"럭키 유! 아이 미스트 잇 라스트 위크!",ko:"다행이야! 나는 지난주에 놓쳤어!"}],prac:["I almost missed the bus! Never again!"]},
+{no:"045",cat:"🏠 일상루틴",star:3,ko:"아침으로 시리얼을 먹었어.",en:"I had cereal for breakfast.",pron:"아이 해드 씨리얼 포 브렉퍼스트.",chunk:[{en:"I had",pron:"아이 해드",ko:"나는 먹었어"},{en:"cereal",pron:"씨리얼",ko:"시리얼을"},{en:"for breakfast.",pron:"포 브렉퍼스트.",ko:"아침으로."}],dial:[{g:"F",role:"친구A",en:"What did you have for breakfast?",pron:"왓 디드 유 해브 포 브렉퍼스트?",ko:"아침 뭐 먹었어?"},{g:"M",role:"친구B",en:"I had cereal. It was quick and easy!",pron:"아이 해드 씨리얼. 잇 워즈 퀵 앤드 이지!",ko:"시리얼 먹었어. 빠르고 간단했어!"}],prac:["I had rice / toast / eggs for breakfast."]},
+{no:"046",cat:"🏠 일상루틴",star:3,ko:"아침 먹을 시간이 없었어.",en:"I didn't have time to eat breakfast.",pron:"아이 디든트 해브 타임 투 잇 브렉퍼스트.",chunk:[{en:"I didn't have",pron:"아이 디든트 해브",ko:"나는 가지지 못했어"},{en:"time",pron:"타임",ko:"시간을"},{en:"to eat breakfast.",pron:"투 잇 브렉퍼스트.",ko:"아침을 먹을."}],dial:[{g:"M",role:"친구B",en:"I didn't have time to eat. I'm already hungry!",pron:"아이 디든트 해브 타임 투 잇. 아임 올레디 헝그리!",ko:"아침 먹을 시간이 없었어. 벌써 배고파!"},{g:"F",role:"친구A",en:"Have some of my snack!",pron:"해브 썸 오브 마이 스낵!",ko:"내 간식 좀 먹어!"}],prac:["I didn't have time to eat. I overslept!"]},
+{no:"047",cat:"🏠 일상루틴",star:5,ko:"집에 숙제를 두고 왔어!",en:"I forgot my homework at home!",pron:"아이 포갓 마이 홈웍 앳 홈!",chunk:[{en:"I forgot",pron:"아이 포갓",ko:"나는 잊었어"},{en:"my homework",pron:"마이 홈웍",ko:"내 숙제를"},{en:"at home!",pron:"앳 홈!",ko:"집에!"}],dial:[{g:"M",role:"아이",en:"Oh no! I forgot my homework at home!",pron:"오 노! 아이 포갓 마이 홈웍 앳 홈!",ko:"안돼! 집에 숙제를 두고 왔어!"},{g:"F",role:"친구A",en:"Can you call your mom to bring it?",pron:"캔 유 콜 유어 맘 투 브링 잇?",ko:"엄마한테 가져다 달라고 전화할 수 있어?"}],prac:["I forgot my pencil / book / lunch at home!"]},
+{no:"048",cat:"🏠 일상루틴",star:3,ko:"엄마가 오늘 도시락을 싸 주셨어.",en:"My mom packed my lunch today.",pron:"마이 맘 팩트 마이 런치 투데이.",chunk:[{en:"My mom",pron:"마이 맘",ko:"우리 엄마가"},{en:"packed",pron:"팩트",ko:"쌌어"},{en:"my lunch today.",pron:"마이 런치 투데이.",ko:"내 점심을 오늘."}],dial:[{g:"F",role:"친구A",en:"What's in your lunchbox?",pron:"왓츠 인 유어 런치박스?",ko:"도시락에 뭐 있어?"},{g:"M",role:"친구B",en:"My mom packed kimbap! My favorite!",pron:"마이 맘 팩트 김밥! 마이 페이버릿!",ko:"엄마가 김밥 싸 주셨어! 내가 제일 좋아하는 것!"}],prac:["My mom packed sandwiches / rice balls for me."]},
+{no:"049",cat:"🏠 일상루틴",star:4,ko:"학교에 데려다 줄 수 있어요?",en:"Can you drive me to school?",pron:"캔 유 드라이브 미 투 스쿨?",chunk:[{en:"Can you",pron:"캔 유",ko:"당신은 할 수 있나요"},{en:"drive me",pron:"드라이브 미",ko:"나를 운전해서"},{en:"to school?",pron:"투 스쿨?",ko:"학교에?"}],dial:[{g:"M",role:"아이",en:"Dad, can you drive me to school? It's raining!",pron:"대드, 캔 유 드라이브 미 투 스쿨? 잇츠 레이닝!",ko:"아빠, 학교에 데려다 줄 수 있어요? 비 와요!"},{g:"F",role:"아빠",en:"Sure! Get your bag and let's go!",pron:"슈어! 겟 유어 백 앤드 렛츠 고!",ko:"물론이지! 가방 챙기고 가자!"}],prac:["Can you drive me to school? I'm running late!"]},
+{no:"050",cat:"🏠 일상루틴",star:3,ko:"오늘 학교까지 걸어갈 거야.",en:"I'll walk to school today.",pron:"아윌 워크 투 스쿨 투데이.",chunk:[{en:"I'll walk",pron:"아윌 워크",ko:"나는 걸어갈 거야"},{en:"to school",pron:"투 스쿨",ko:"학교에"},{en:"today.",pron:"투데이.",ko:"오늘."}],dial:[{g:"F",role:"친구A",en:"How do you get to school?",pron:"하우 두 유 겟 투 스쿨?",ko:"학교 어떻게 가?"},{g:"M",role:"친구B",en:"I'll walk today. It's a beautiful day!",pron:"아윌 워크 투데이. 잇츠 어 뷰티풀 데이!",ko:"오늘 걸어갈 거야. 날씨가 좋아서!"}],prac:["I'll walk / take the bus / ride my bike to school."]},
+{no:"051",cat:"🏠 일상루틴",star:4,ko:"스쿨버스가 왔어! 가자!",en:"The school bus is here! Let's go!",pron:"더 스쿨 버스 이즈 히어! 렛츠 고!",chunk:[{en:"The school bus",pron:"더 스쿨 버스",ko:"스쿨버스가"},{en:"is here!",pron:"이즈 히어!",ko:"여기 있어!"},{en:"Let's go!",pron:"렛츠 고!",ko:"가자!"}],dial:[{g:"F",role:"친구A",en:"The school bus is here! Let's go!",pron:"더 스쿨 버스 이즈 히어! 렛츠 고!",ko:"스쿨버스가 왔어! 가자!"},{g:"M",role:"친구B",en:"Wait! I forgot my water bottle!",pron:"웨이트! 아이 포갓 마이 워터 바틀!",ko:"잠깐! 물병 잊었어!"}],prac:["The school bus is here! Don't miss it!"]},
+{no:"052",cat:"🏠 일상루틴",star:3,ko:"오후 3시에 돌아올 거야.",en:"I'll be back at 3 PM.",pron:"아윌 비 백 앳 쓰리 피엠.",chunk:[{en:"I'll be back",pron:"아윌 비 백",ko:"나는 돌아올 거야"},{en:"at 3 PM.",pron:"앳 쓰리 피엠.",ko:"오후 3시에."}],dial:[{g:"M",role:"아이",en:"Mom, I'll be back at 3 PM.",pron:"맘, 아윌 비 백 앳 쓰리 피엠.",ko:"엄마, 오후 3시에 돌아올 거예요."},{g:"F",role:"엄마",en:"Okay! Be careful!",pron:"오케이! 비 케어풀!",ko:"알겠어! 조심해서 가!"}],prac:["I'll be back at 4 / 5 PM."]},
+{no:"053",cat:"🏠 일상루틴",star:4,ko:"배낭 잊지 마!",en:"Don't forget your backpack!",pron:"돈트 포겟 유어 백팩!",chunk:[{en:"Don't forget",pron:"돈트 포겟",ko:"잊지 마"},{en:"your backpack!",pron:"유어 백팩!",ko:"너의 배낭을!"}],dial:[{g:"F",role:"엄마",en:"Don't forget your backpack! And your lunch!",pron:"돈트 포겟 유어 백팩! 앤드 유어 런치!",ko:"배낭 잊지 마! 그리고 도시락도!"},{g:"M",role:"아이",en:"I've got everything! Bye, Mom!",pron:"아이브 갓 에브리씽! 바이, 맘!",ko:"다 챙겼어요! 안녕, 엄마!"}],prac:["Don't forget your homework / umbrella!"]},
+{no:"054",cat:"🏠 일상루틴",star:4,ko:"학교에서 좋은 하루 보내!",en:"Have a great day at school!",pron:"해브 어 그레이트 데이 앳 스쿨!",chunk:[{en:"Have",pron:"해브",ko:"가져라"},{en:"a great day",pron:"어 그레이트 데이",ko:"좋은 하루를"},{en:"at school!",pron:"앳 스쿨!",ko:"학교에서!"}],dial:[{g:"F",role:"엄마",en:"Have a great day at school! I love you!",pron:"해브 어 그레이트 데이 앳 스쿨! 아이 러브 유!",ko:"학교에서 좋은 하루 보내! 사랑해!"},{g:"M",role:"아이",en:"Thanks, Mom! I love you too!",pron:"땡스, 맘! 아이 러브 유 투!",ko:"고마워요, 엄마! 나도 사랑해요!"}],prac:["Have a great day! See you this afternoon!"]},
+{no:"055",cat:"🏠 일상루틴",star:5,ko:"나 집에 왔어요! 저녁 뭐예요?",en:"I'm home! What's for dinner?",pron:"아임 홈! 왓츠 포 디너?",chunk:[{en:"I'm home!",pron:"아임 홈!",ko:"나 집에 왔어요!"},{en:"What's",pron:"왓츠",ko:"무엇인가요"},{en:"for dinner?",pron:"포 디너?",ko:"저녁은?"}],dial:[{g:"M",role:"아이",en:"I'm home! What's for dinner? I'm starving!",pron:"아임 홈! 왓츠 포 디너? 아임 스타빙!",ko:"나 집에 왔어요! 저녁 뭐예요? 배고파 죽겠어요!"},{g:"F",role:"엄마",en:"We're having spaghetti! Wash your hands first!",pron:"위어 해빙 스파게티! 워쉬 유어 핸즈 퍼스트!",ko:"스파게티 먹을 거야! 먼저 손 씻어!"}],prac:["I'm home! How was your day, Mom?"]},
+{no:"056",cat:"🏠 일상루틴",star:3,ko:"학교에서 돌아왔어. 피곤했어.",en:"I'm back from school. It was tiring.",pron:"아임 백 프롬 스쿨. 잇 워즈 타이어링.",chunk:[{en:"I'm back",pron:"아임 백",ko:"나는 돌아왔어"},{en:"from school.",pron:"프롬 스쿨.",ko:"학교에서."},{en:"It was",pron:"잇 워즈",ko:"그것은"},{en:"tiring.",pron:"타이어링.",ko:"피곤했어."}],dial:[{g:"M",role:"아이",en:"I'm back from school. It was tiring today.",pron:"아임 백 프롬 스쿨. 잇 워즈 타이어링 투데이.",ko:"학교에서 돌아왔어. 오늘 피곤했어."},{g:"F",role:"엄마",en:"Rest a little before homework!",pron:"레스트 어 리틀 비포 홈웍!",ko:"숙제하기 전에 조금 쉬어!"}],prac:["I'm back from school. I'm really tired."]},
+{no:"057",cat:"🏠 일상루틴",star:4,ko:"오늘 숙제가 많아.",en:"I have a lot of homework today.",pron:"아이 해브 어 랏 오브 홈웍 투데이.",chunk:[{en:"I have",pron:"아이 해브",ko:"나는 있어"},{en:"a lot of homework",pron:"어 랏 오브 홈웍",ko:"숙제가 많이"},{en:"today.",pron:"투데이.",ko:"오늘."}],dial:[{g:"M",role:"아이",en:"I have a lot of homework today. No playtime!",pron:"아이 해브 어 랏 오브 홈웍 투데이. 노 플레이타임!",ko:"오늘 숙제가 많아. 놀 시간 없어!"},{g:"F",role:"친구A",en:"That's tough! I'll help you finish faster!",pron:"댓츠 터프! 아윌 헬프 유 피니쉬 패스터!",ko:"힘들겠다! 빨리 끝내도록 도와줄게!"}],prac:["I have a lot of homework. I'll be busy tonight."]},
+{no:"058",cat:"🏠 일상루틴",star:4,ko:"먼저 놀고 나서 숙제해도 될까요?",en:"Can I play first, then do homework?",pron:"캔 아이 플레이 퍼스트, 덴 두 홈웍?",chunk:[{en:"Can I play",pron:"캔 아이 플레이",ko:"제가 놀아도 될까요"},{en:"first,",pron:"퍼스트,",ko:"먼저,"},{en:"then do homework?",pron:"덴 두 홈웍?",ko:"그 다음 숙제?"}],dial:[{g:"M",role:"아이",en:"Mom, can I play first, then do homework?",pron:"맘, 캔 아이 플레이 퍼스트, 덴 두 홈웍?",ko:"엄마, 먼저 놀고 나서 숙제해도 될까요?"},{g:"F",role:"엄마",en:"Homework first! Then you can play!",pron:"홈웍 퍼스트! 덴 유 캔 플레이!",ko:"숙제 먼저! 그 다음에 놀 수 있어!"}],prac:["Can I have a snack first, then do homework?"]},
+{no:"059",cat:"🏠 일상루틴",star:3,ko:"저녁 냄새 정말 좋아!",en:"Dinner smells so good!",pron:"디너 스멜즈 쏘 굿!",chunk:[{en:"Dinner",pron:"디너",ko:"저녁이"},{en:"smells",pron:"스멜즈",ko:"냄새가 나"},{en:"so good!",pron:"쏘 굿!",ko:"정말 좋아!"}],dial:[{g:"M",role:"아이",en:"Dinner smells so good! What are we having?",pron:"디너 스멜즈 쏘 굿! 왓 아 위 해빙?",ko:"저녁 냄새 정말 좋아! 뭐 먹어요?"},{g:"F",role:"엄마",en:"Your favorite! Fried chicken!",pron:"유어 페이버릿! 프라이드 치킨!",ko:"네 최애! 치킨이야!"}],prac:["Dinner smells amazing! I can't wait to eat!"]},
+{no:"060",cat:"🏠 일상루틴",star:3,ko:"더 먹어도 될까요?",en:"Can I have more, please?",pron:"캔 아이 해브 모어, 플리즈?",chunk:[{en:"Can I have",pron:"캔 아이 해브",ko:"제가 먹어도 될까요"},{en:"more,",pron:"모어,",ko:"더,"},{en:"please?",pron:"플리즈?",ko:"제발요?"}],dial:[{g:"M",role:"아이",en:"This is delicious! Can I have more, please?",pron:"디스 이즈 딜리셔스! 캔 아이 해브 모어, 플리즈?",ko:"이거 맛있어요! 더 먹어도 될까요?"},{g:"F",role:"엄마",en:"Of course! There's plenty!",pron:"오브 코스! 데어즈 플렌티!",ko:"물론이지! 많이 있어!"}],prac:["Can I have more rice / juice / dessert, please?"]},
+{no:"061",cat:"🏠 일상루틴",star:3,ko:"저녁 식탁을 차릴게요.",en:"I'll set the table for dinner.",pron:"아윌 셋 더 테이블 포 디너.",chunk:[{en:"I'll",pron:"아윌",ko:"내가"},{en:"set the table",pron:"셋 더 테이블",ko:"식탁을 차릴게"},{en:"for dinner.",pron:"포 디너.",ko:"저녁을 위해."}],dial:[{g:"M",role:"아이",en:"I'll set the table for dinner. Where are the plates?",pron:"아윌 셋 더 테이블 포 디너. 웨어 아 더 플레이츠?",ko:"저녁 식탁 차릴게요. 그릇 어딨어요?"},{g:"F",role:"엄마",en:"In the cabinet! Thank you, honey!",pron:"인 더 캐비넷! 땡큐, 허니!",ko:"찬장에! 고마워, 얘야!"}],prac:["I'll set the table. I want to help!"]},
+{no:"062",cat:"🏠 일상루틴",star:4,ko:"오늘 밤 늦게까지 있어도 될까요?",en:"Can I stay up late tonight?",pron:"캔 아이 스테이 업 레이트 투나잇?",chunk:[{en:"Can I",pron:"캔 아이",ko:"제가 할 수 있나요"},{en:"stay up late",pron:"스테이 업 레이트",ko:"늦게까지 깨어 있는 것을"},{en:"tonight?",pron:"투나잇?",ko:"오늘 밤?"}],dial:[{g:"M",role:"아이",en:"Mom, can I stay up late tonight? There's a cool movie!",pron:"맘, 캔 아이 스테이 업 레이트 투나잇? 데어즈 어 쿨 무비!",ko:"엄마, 오늘 밤 늦게까지 있어도 될까요? 재미있는 영화가 있어요!"},{g:"F",role:"엄마",en:"Okay, but only until 10! School tomorrow!",pron:"오케이, 벗 온리 언틸 텐! 스쿨 투모로우!",ko:"좋아, 하지만 10시까지만! 내일 학교야!"}],prac:["Can I stay up late? It's a Friday night!"]},
+{no:"063",cat:"🏠 일상루틴",star:3,ko:"자기 전에 샤워해야 해.",en:"I need to take a shower before bed.",pron:"아이 니드 투 테이크 어 샤워 비포 베드.",chunk:[{en:"I need",pron:"아이 니드",ko:"나는 필요해"},{en:"to take a shower",pron:"투 테이크 어 샤워",ko:"샤워하는 것이"},{en:"before bed.",pron:"비포 베드.",ko:"자기 전에."}],dial:[{g:"M",role:"아이",en:"I need to take a shower before bed. I'll be quick!",pron:"아이 니드 투 테이크 어 샤워 비포 베드. 아윌 비 퀵!",ko:"자기 전에 샤워해야 해. 빨리 할게!"},{g:"F",role:"엄마",en:"Okay! Don't take too long!",pron:"오케이! 돈트 테이크 투 롱!",ko:"알겠어! 너무 오래 걸리지 마!"}],prac:["I need to take a shower. I played all day!"]},
+{no:"064",cat:"🏠 일상루틴",star:5,ko:"잘 자요, 여러분! 내일 봐요!",en:"Good night, everyone! See you tomorrow!",pron:"굿 나잇, 에브리원! 씨 유 투모로우!",chunk:[{en:"Good night,",pron:"굿 나잇,",ko:"잘 자요,"},{en:"everyone!",pron:"에브리원!",ko:"여러분!"},{en:"See you",pron:"씨 유",ko:"봐요"},{en:"tomorrow!",pron:"투모로우!",ko:"내일!"}],dial:[{g:"M",role:"아이",en:"Good night, everyone! See you tomorrow!",pron:"굿 나잇, 에브리원! 씨 유 투모로우!",ko:"잘 자요, 여러분! 내일 봐요!"},{g:"F",role:"엄마",en:"Good night, sweetheart! Sweet dreams!",pron:"굿 나잇, 스위트하트! 스윗 드림즈!",ko:"잘 자, 얘야! 좋은 꿈 꿔!"}],prac:["Good night, everyone! Sleep well!"]},
+{no:"065",cat:"🏠 일상루틴",star:4,ko:"나 이제 자러 갈 거야. 피곤해.",en:"I'm going to bed now. I'm tired.",pron:"아임 고잉 투 베드 나우. 아임 타이얼드.",chunk:[{en:"I'm going",pron:"아임 고잉",ko:"나는 가는 중이야"},{en:"to bed",pron:"투 베드",ko:"침대로"},{en:"now.",pron:"나우.",ko:"지금."},{en:"I'm tired.",pron:"아임 타이얼드.",ko:"나 피곤해."}],dial:[{g:"M",role:"아이",en:"I'm going to bed now. I'm really tired!",pron:"아임 고잉 투 베드 나우. 아임 리얼리 타이얼드!",ko:"나 이제 자러 갈 거야. 진짜 피곤해!"},{g:"F",role:"엄마",en:"Good night! Sleep well!",pron:"굿 나잇! 슬립 웰!",ko:"잘 자! 푹 자거라!"}],prac:["I'm going to bed. Big day tomorrow!"]},
+// ===== Part 4: 학교생활 066-085 =====
+{no:"066",cat:"🏫 학교생활",star:5,ko:"다음 수업 뭐야?",en:"What class do we have next?",pron:"왓 클래스 두 위 해브 넥스트?",chunk:[{en:"What class",pron:"왓 클래스",ko:"무슨 수업을"},{en:"do we have",pron:"두 위 해브",ko:"우리는 있어"},{en:"next?",pron:"넥스트?",ko:"다음에?"}],dial:[{g:"F",role:"친구A",en:"Hey, what class do we have next?",pron:"헤이, 왓 클래스 두 위 해브 넥스트?",ko:"야, 다음 수업 뭐야?"},{g:"M",role:"친구B",en:"I think we have English! Check your schedule!",pron:"아이 씽크 위 해브 잉글리쉬! 체크 유어 스케줄!",ko:"영어인 것 같아! 시간표 확인해봐!"},{g:"F",role:"친구A",en:"Oh yeah! What do we have after English?",pron:"오 예! 왓 두 위 해브 애프터 잉글리쉬?",ko:"아 맞다! 영어 다음에 뭐 있어?"},{g:"M",role:"친구B",en:"Science! I love science class!",pron:"사이언스! 아이 러브 사이언스 클래스!",ko:"과학! 나 과학 수업 좋아해!"}],prac:["What class do we have next? Math or science?"]},
+{no:"067",cat:"🏫 학교생활",star:4,ko:"점심 먹고 나서 과학 수업이 있어.",en:"I have science class after lunch.",pron:"아이 해브 사이언스 클래스 애프터 런치.",chunk:[{en:"I have",pron:"아이 해브",ko:"나는 있어"},{en:"science class",pron:"사이언스 클래스",ko:"과학 수업이"},{en:"after lunch.",pron:"애프터 런치.",ko:"점심 먹고 나서."}],dial:[{g:"F",role:"친구A",en:"What do you have after lunch?",pron:"왓 두 유 해브 애프터 런치?",ko:"점심 먹고 나서 뭐 있어?"},{g:"M",role:"친구B",en:"I have science class! We're doing an experiment!",pron:"아이 해브 사이언스 클래스! 위어 두잉 언 익스페리먼트!",ko:"과학 수업이야! 실험 할 거야!"}],prac:["I have PE / music / math class after lunch."]},
+{no:"068",cat:"🏫 학교생활",star:3,ko:"이 수업 정말 지루해. 졸려.",en:"This class is so boring. I'm sleepy.",pron:"디스 클래스 이즈 쏘 보어링. 아임 슬리피.",chunk:[{en:"This class",pron:"디스 클래스",ko:"이 수업은"},{en:"is so boring.",pron:"이즈 쏘 보어링.",ko:"정말 지루해."},{en:"I'm sleepy.",pron:"아임 슬리피.",ko:"나 졸려."}],dial:[{g:"M",role:"친구B",en:"(whispers) This class is so boring. I'm sleepy!",pron:"(위스퍼스) 디스 클래스 이즈 쏘 보어링. 아임 슬리피!",ko:"(속삭임) 이 수업 정말 지루해. 졸려!"},{g:"F",role:"친구A",en:"(whispers) Shh! The teacher will hear you!",pron:"(위스퍼스) 쉬! 더 티쳐 윌 히어 유!",ko:"(속삭임) 쉿! 선생님이 들으셔!"}],prac:["This class is tough, but I'll try to focus!"]},
+{no:"069",cat:"🏫 학교생활",star:5,ko:"이 문제를 이해 못 하겠어.",en:"I don't understand this problem.",pron:"아이 돈트 언더스탠드 디스 프라블럼.",chunk:[{en:"I",pron:"아이",ko:"나는"},{en:"don't understand",pron:"돈트 언더스탠드",ko:"이해하지 못해"},{en:"this problem.",pron:"디스 프라블럼.",ko:"이 문제를."}],dial:[{g:"M",role:"아이",en:"I don't understand this problem. Can you help?",pron:"아이 돈트 언더스탠드 디스 프라블럼. 캔 유 헬프?",ko:"이 문제를 이해 못 하겠어. 도와줄 수 있어?"},{g:"F",role:"친구A",en:"Sure! Which part is confusing?",pron:"슈어! 위치 파트 이즈 컨퓨징?",ko:"물론! 어느 부분이 헷갈려?"}],prac:["I don't understand this. Can you explain?"]},
+{no:"070",cat:"🏫 학교생활",star:5,ko:"다시 한번 설명해 줄 수 있어요?",en:"Can you explain it again, please?",pron:"캔 유 익스플레인 잇 어게인, 플리즈?",chunk:[{en:"Can you",pron:"캔 유",ko:"할 수 있어요"},{en:"explain it",pron:"익스플레인 잇",ko:"설명하기를"},{en:"again,",pron:"어게인,",ko:"다시,"},{en:"please?",pron:"플리즈?",ko:"제발요?"}],dial:[{g:"M",role:"아이",en:"Teacher, can you explain it again, please?",pron:"티쳐, 캔 유 익스플레인 잇 어게인, 플리즈?",ko:"선생님, 다시 한번 설명해 주실 수 있나요?"},{g:"F",role:"선생님",en:"Of course! Which part didn't you understand?",pron:"오브 코스! 위치 파트 디든트 유 언더스탠드?",ko:"물론이지! 어떤 부분을 이해 못 했니?"},{g:"M",role:"아이",en:"The first step. Can you explain that part?",pron:"더 퍼스트 스텝. 캔 유 익스플레인 댓 파트?",ko:"첫 번째 단계요. 그 부분 설명해 주실 수 있나요?"},{g:"F",role:"선생님",en:"Sure! Let me show you again.",pron:"슈어! 렛 미 쇼 유 어게인.",ko:"물론! 다시 보여줄게."}],prac:["Can you explain this again more slowly?"]},
+{no:"071",cat:"🏫 학교생활",star:4,ko:"이 수학 문제를 어떻게 풀어?",en:"How do you solve this math problem?",pron:"하우 두 유 솔브 디스 매쓰 프라블럼?",chunk:[{en:"How",pron:"하우",ko:"어떻게"},{en:"do you solve",pron:"두 유 솔브",ko:"너는 푸니"},{en:"this math problem?",pron:"디스 매쓰 프라블럼?",ko:"이 수학 문제를?"}],dial:[{g:"F",role:"친구A",en:"How do you solve this? I'm stuck!",pron:"하우 두 유 솔브 디스? 아임 스턱!",ko:"이 문제 어떻게 풀어? 막혔어!"},{g:"M",role:"친구B",en:"First, multiply. Then add the result!",pron:"퍼스트, 멀티플라이. 덴 애드 더 리절트!",ko:"먼저 곱하고. 그 다음 결과를 더해!"}],prac:["How do you solve this? Step by step, please."]},
+{no:"072",cat:"🏫 학교생활",star:4,ko:"지우개 빌려줄 수 있어?",en:"Can I borrow your eraser?",pron:"캔 아이 바로우 유어 이레이저?",chunk:[{en:"Can I",pron:"캔 아이",ko:"제가 할 수 있나요"},{en:"borrow",pron:"바로우",ko:"빌리는 것을"},{en:"your eraser?",pron:"유어 이레이저?",ko:"너의 지우개를?"}],dial:[{g:"F",role:"친구A",en:"Can I borrow your eraser? I forgot mine.",pron:"캔 아이 바로우 유어 이레이저? 아이 포갓 마인.",ko:"지우개 빌려줄 수 있어? 내 것을 깜빡했어."},{g:"M",role:"친구B",en:"Sure! Here you go!",pron:"슈어! 히어 유 고!",ko:"물론! 여기 있어!"}],prac:["Can I borrow your pencil / ruler / scissors?"]},
+{no:"073",cat:"🏫 학교생활",star:4,ko:"다음 시험을 위해 더 많이 공부해야 해.",en:"I need to study more for the next test.",pron:"아이 니드 투 스터디 모어 포 더 넥스트 테스트.",chunk:[{en:"I need",pron:"아이 니드",ko:"나는 필요해"},{en:"to study more",pron:"투 스터디 모어",ko:"더 많이 공부하는 것이"},{en:"for the next test.",pron:"포 더 넥스트 테스트.",ko:"다음 시험을 위해."}],dial:[{g:"M",role:"친구B",en:"I need to study more. My score wasn't good.",pron:"아이 니드 투 스터디 모어. 마이 스코어 워즌트 굿.",ko:"더 많이 공부해야 해. 점수가 좋지 않았어."},{g:"F",role:"친구A",en:"Let's study together! Two heads are better than one!",pron:"렛츠 스터디 투게더! 투 헤즈 아 베터 댄 원!",ko:"같이 공부하자! 둘이 하면 더 낫잖아!"}],prac:["I need to study more. The test is next week."]},
+{no:"074",cat:"🏫 학교생활",star:5,ko:"점심시간이야! 먹으러 가자!",en:"It's lunchtime! Let's go eat!",pron:"잇츠 런치타임! 렛츠 고 잇!",chunk:[{en:"It's",pron:"잇츠",ko:"지금은"},{en:"lunchtime!",pron:"런치타임!",ko:"점심시간이야!"},{en:"Let's go",pron:"렛츠 고",ko:"가자"},{en:"eat!",pron:"잇!",ko:"먹으러!"}],dial:[{g:"F",role:"친구A",en:"It's lunchtime! Let's go eat! I'm starving!",pron:"잇츠 런치타임! 렛츠 고 잇! 아임 스타빙!",ko:"점심시간이야! 먹으러 가자! 배고파 죽겠어!"},{g:"M",role:"친구B",en:"Let's go! I wonder what's on the menu today!",pron:"렛츠 고! 아이 원더 왓츠 온 더 메뉴 투데이!",ko:"가자! 오늘 메뉴가 뭔지 궁금해!"}],prac:["It's lunchtime! Race you to the cafeteria!"]},
+{no:"075",cat:"🏫 학교생활",star:5,ko:"점심에 같이 앉자!",en:"Let's sit together at lunch!",pron:"렛츠 싯 투게더 앳 런치!",chunk:[{en:"Let's",pron:"렛츠",ko:"우리"},{en:"sit together",pron:"싯 투게더",ko:"함께 앉자"},{en:"at lunch!",pron:"앳 런치!",ko:"점심에!"}],dial:[{g:"F",role:"친구A",en:"Let's sit together at lunch! I saved you a seat!",pron:"렛츠 싯 투게더 앳 런치! 아이 세이브드 유 어 싯!",ko:"점심에 같이 앉자! 자리 맡아뒀어!"},{g:"M",role:"친구B",en:"Thanks! You're the best!",pron:"땡스! 유어 더 베스트!",ko:"고마워! 최고야!"}],prac:["Let's sit together at lunch and talk!"]},
+{no:"076",cat:"🏫 학교생활",star:3,ko:"집에서 도시락을 가져왔어.",en:"I brought my lunch from home.",pron:"아이 브롯 마이 런치 프롬 홈.",chunk:[{en:"I",pron:"아이",ko:"나는"},{en:"brought",pron:"브롯",ko:"가져왔어"},{en:"my lunch",pron:"마이 런치",ko:"내 점심을"},{en:"from home.",pron:"프롬 홈.",ko:"집에서."}],dial:[{g:"M",role:"친구B",en:"I brought my lunch from home. Kimbap!",pron:"아이 브롯 마이 런치 프롬 홈. 김밥!",ko:"집에서 도시락을 가져왔어. 김밥이야!"},{g:"F",role:"친구A",en:"Yummy! Can I try some?",pron:"여미! 캔 아이 트라이 썸?",ko:"맛있겠다! 나도 조금 먹어봐도 돼?"}],prac:["I brought my lunch from home. Mom made sandwiches!"]},
+{no:"077",cat:"🏫 학교생활",star:4,ko:"저거 조금 먹어봐도 될까? 맛있어 보여!",en:"Can I try some of that? It looks good!",pron:"캔 아이 트라이 썸 오브 댓? 잇 룩스 굿!",chunk:[{en:"Can I try some",pron:"캔 아이 트라이 썸",ko:"조금 먹어봐도 될까"},{en:"of that?",pron:"오브 댓?",ko:"저것의?"},{en:"It looks good!",pron:"잇 룩스 굿!",ko:"맛있어 보여!"}],dial:[{g:"F",role:"친구A",en:"Can I try some of that? It looks so good!",pron:"캔 아이 트라이 썸 오브 댓? 잇 룩스 쏘 굿!",ko:"저거 조금 먹어봐도 될까? 정말 맛있어 보여!"},{g:"M",role:"친구B",en:"Sure! Here, have some!",pron:"슈어! 히어, 해브 썸!",ko:"물론이지! 여기, 먹어!"}],prac:["Can I try some? I'll share mine too!"]},
+{no:"078",cat:"🏫 학교생활",star:3,ko:"점심으로 뭐 가져왔어?",en:"What did you bring for lunch?",pron:"왓 디드 유 브링 포 런치?",chunk:[{en:"What",pron:"왓",ko:"무엇을"},{en:"did you bring",pron:"디드 유 브링",ko:"너는 가져왔니"},{en:"for lunch?",pron:"포 런치?",ko:"점심으로?"}],dial:[{g:"F",role:"친구A",en:"What did you bring for lunch?",pron:"왓 디드 유 브링 포 런치?",ko:"점심으로 뭐 가져왔어?"},{g:"M",role:"친구B",en:"Fried rice and dumplings! What about you?",pron:"프라이드 라이스 앤드 덤플링즈! 왓 어바웃 유?",ko:"볶음밥이랑 만두! 너는?"}],prac:["What did you bring for lunch? Smells delicious!"]},
+{no:"079",cat:"🏫 학교생활",star:3,ko:"오늘 급식이 꽤 맛있어.",en:"The cafeteria food is pretty good today.",pron:"더 카페테리아 푸드 이즈 프리티 굿 투데이.",chunk:[{en:"The cafeteria food",pron:"더 카페테리아 푸드",ko:"급식은"},{en:"is pretty good",pron:"이즈 프리티 굿",ko:"꽤 좋아"},{en:"today.",pron:"투데이.",ko:"오늘."}],dial:[{g:"M",role:"친구B",en:"The cafeteria food is pretty good today!",pron:"더 카페테리아 푸드 이즈 프리티 굿 투데이!",ko:"오늘 급식 꽤 맛있어!"},{g:"F",role:"친구A",en:"I know! The pasta is amazing!",pron:"아이 노우! 더 파스타 이즈 어메이징!",ko:"맞아! 파스타 정말 맛있어!"}],prac:["The cafeteria food is really good today!"]},
+{no:"080",cat:"🏫 학교생활",star:5,ko:"방과 후에 어울려 놀래?",en:"Do you want to hang out after school?",pron:"두 유 원트 투 행 아웃 애프터 스쿨?",chunk:[{en:"Do you want",pron:"두 유 원트",ko:"너 원하니"},{en:"to hang out",pron:"투 행 아웃",ko:"어울려 노는 것을"},{en:"after school?",pron:"애프터 스쿨?",ko:"학교 끝난 후에?"}],dial:[{g:"F",role:"친구A",en:"Do you want to hang out after school?",pron:"두 유 원트 투 행 아웃 애프터 스쿨?",ko:"방과 후에 어울려 놀래?"},{g:"M",role:"친구B",en:"Sure! Let's go to the park!",pron:"슈어! 렛츠 고 투 더 파크!",ko:"물론이지! 공원에 가자!"},{g:"F",role:"친구A",en:"Great! Meet you at the gate at 3:30!",pron:"그레이트! 밋 유 앳 더 게이트 앳 쓰리써티!",ko:"좋아! 3시 반에 정문에서 만나자!"}],prac:["Do you want to hang out this weekend?"]},
+{no:"081",cat:"🏫 학교생활",star:4,ko:"이번 주말에 재미있는 것 하자!",en:"Let's do something fun this weekend!",pron:"렛츠 두 썸씽 펀 디스 위켄드!",chunk:[{en:"Let's",pron:"렛츠",ko:"우리"},{en:"do something fun",pron:"두 썸씽 펀",ko:"재미있는 것 하자"},{en:"this weekend!",pron:"디스 위켄드!",ko:"이번 주말에!"}],dial:[{g:"M",role:"친구B",en:"Let's do something fun this weekend! Any ideas?",pron:"렛츠 두 썸씽 펀 디스 위켄드! 애니 아이디어즈?",ko:"이번 주말에 재미있는 것 하자! 아이디어 있어?"},{g:"F",role:"친구A",en:"How about bowling? I love bowling!",pron:"하우 어바웃 볼링? 아이 러브 볼링!",ko:"볼링 어때? 볼링 정말 좋아해!"}],prac:["Let's do something fun! How about a movie?"]},
+{no:"082",cat:"🏫 학교생활",star:5,ko:"너는 내 가장 친한 친구야!",en:"You're my best friend! Thanks for everything!",pron:"유어 마이 베스트 프렌드! 땡스 포 에브리씽!",chunk:[{en:"You're",pron:"유어",ko:"너는"},{en:"my best friend!",pron:"마이 베스트 프렌드!",ko:"내 가장 친한 친구야!"},{en:"Thanks for everything!",pron:"땡스 포 에브리씽!",ko:"모든 것에 감사해!"}],dial:[{g:"F",role:"친구A",en:"You're my best friend! You always help me!",pron:"유어 마이 베스트 프렌드! 유 올웨이즈 헬프 미!",ko:"너는 내 가장 친한 친구야! 항상 도와줘서!"},{g:"M",role:"친구B",en:"Aw, you're my best friend too!",pron:"오, 유어 마이 베스트 프렌드 투!",ko:"에이, 너도 내 가장 친한 친구야!"}],prac:["You're my best friend! I'm lucky to have you!"]},
+{no:"083",cat:"🏫 학교생활",star:5,ko:"숙제 도와줘서 고마워!",en:"Thanks for helping me with my homework!",pron:"땡스 포 헬핑 미 위드 마이 홈웍!",chunk:[{en:"Thanks for",pron:"땡스 포",ko:"고마워"},{en:"helping me",pron:"헬핑 미",ko:"나를 도와준 것에"},{en:"with my homework!",pron:"위드 마이 홈웍!",ko:"내 숙제와 함께!"}],dial:[{g:"M",role:"친구B",en:"Thanks for helping me with my homework! You're so smart!",pron:"땡스 포 헬핑 미 위드 마이 홈웍! 유어 쏘 스마트!",ko:"숙제 도와줘서 고마워! 너 정말 똑똑하다!"},{g:"F",role:"친구A",en:"No problem! What are friends for!",pron:"노 프라블럼! 왓 아 프렌즈 포!",ko:"천만에! 친구가 뭐 하러 있어!"}],prac:["Thanks for helping me! I couldn't do it without you!"]},
+{no:"084",cat:"🏫 학교생활",star:4,ko:"내가 말한 것에 대해 미안해.",en:"I'm sorry about what I said.",pron:"아임 쏘리 어바웃 왓 아이 세드.",chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"sorry about",pron:"쏘리 어바웃",ko:"미안해"},{en:"what I said.",pron:"왓 아이 세드.",ko:"내가 말한 것에 대해."}],dial:[{g:"F",role:"친구A",en:"I'm sorry about what I said yesterday. I was mean.",pron:"아임 쏘리 어바웃 왓 아이 세드 예스터데이. 아이 워즈 민.",ko:"어제 내가 말한 것에 대해 미안해. 나쁘게 말했어."},{g:"M",role:"친구B",en:"It's okay. I know you didn't mean it.",pron:"잇츠 오케이. 아이 노 유 디든트 민 잇.",ko:"괜찮아. 일부러 그런 게 아닌 거 알아."}],prac:["I'm sorry about what I said. Can we be friends again?"]},
+{no:"085",cat:"🏫 학교생활",star:5,ko:"괜찮아, 걱정하지 마.",en:"It's okay, don't worry about it.",pron:"잇츠 오케이, 돈트 워리 어바웃 잇.",chunk:[{en:"It's okay,",pron:"잇츠 오케이,",ko:"괜찮아,"},{en:"don't",pron:"돈트",ko:"하지 마"},{en:"worry",pron:"워리",ko:"걱정"},{en:"about it.",pron:"어바웃 잇.",ko:"그것에 대해."}],dial:[{g:"F",role:"친구A",en:"I'm really sorry I broke your pencil!",pron:"아임 리얼리 쏘리 아이 브로크 유어 펜슬!",ko:"네 연필 부러뜨려서 정말 미안해!"},{g:"M",role:"친구B",en:"It's okay, don't worry about it! I have more!",pron:"잇츠 오케이, 돈트 워리 어바웃 잇! 아이 해브 모어!",ko:"괜찮아, 걱정하지 마! 더 있어!"}],prac:["It's okay! Don't worry about it!"]},
+// ===== Part 5: 취미와 친구 086-105 =====
+{no:"086",cat:"🎮 취미와친구",star:4,ko:"나 요즘 비디오 게임에 빠졌어.",en:"I'm into video games these days.",pron:"아임 인투 비디오 게임즈 디즈 데이즈.",chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"into video games",pron:"인투 비디오 게임즈",ko:"비디오 게임에 빠졌어"},{en:"these days.",pron:"디즈 데이즈.",ko:"요즘."}],dial:[{g:"F",role:"친구A",en:"What do you do after school?",pron:"왓 두 유 두 애프터 스쿨?",ko:"방과 후에 뭐 해?"},{g:"M",role:"친구B",en:"I'm into video games these days. I play for hours!",pron:"아임 인투 비디오 게임즈 디즈 데이즈. 아이 플레이 포 아워즈!",ko:"요즘 비디오 게임에 빠졌어. 몇 시간씩 해!"}],prac:["I'm into cooking / reading / soccer these days."]},
+{no:"087",cat:"🎮 취미와친구",star:4,ko:"나는 과학에 정말 관심 있어.",en:"I'm really interested in science.",pron:"아임 리얼리 인터레스티드 인 사이언스.",chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"really interested",pron:"리얼리 인터레스티드",ko:"정말 관심 있어"},{en:"in science.",pron:"인 사이언스.",ko:"과학에."}],dial:[{g:"M",role:"친구B",en:"I'm really interested in science! I want to be a scientist!",pron:"아임 리얼리 인터레스티드 인 사이언스! 아이 원트 투 비 어 사이언티스트!",ko:"나는 과학에 정말 관심 있어! 과학자가 되고 싶어!"},{g:"F",role:"친구A",en:"That's cool! I'm interested in art!",pron:"댓츠 쿨! 아임 인터레스티드 인 아트!",ko:"멋지다! 나는 미술에 관심 있어!"}],prac:["I'm really interested in history / music / technology."]},
+{no:"088",cat:"🎮 취미와친구",star:5,ko:"친구들이랑 농구하는 것을 정말 좋아해.",en:"I love playing basketball with friends.",pron:"아이 러브 플레이잉 배스킷볼 위드 프렌즈.",chunk:[{en:"I love",pron:"아이 러브",ko:"나는 정말 좋아해"},{en:"playing basketball",pron:"플레이잉 배스킷볼",ko:"농구 하는 것을"},{en:"with friends.",pron:"위드 프렌즈.",ko:"친구들과."}],dial:[{g:"F",role:"친구A",en:"What's your favorite sport?",pron:"왓츠 유어 페이버릿 스포트?",ko:"좋아하는 운동이 뭐야?"},{g:"M",role:"친구B",en:"I love playing basketball with friends! We play every day!",pron:"아이 러브 플레이잉 배스킷볼 위드 프렌즈! 위 플레이 에브리 데이!",ko:"친구들이랑 농구하는 것을 정말 좋아해! 매일 해!"}],prac:["I love playing soccer / tennis / table tennis with friends."]},
+{no:"089",cat:"🎮 취미와친구",star:3,ko:"나 요즘 많이 읽고 있어.",en:"I've been reading a lot lately.",pron:"아이브 빈 리딩 어 랏 레이틀리.",chunk:[{en:"I've been",pron:"아이브 빈",ko:"나는 해오고 있어"},{en:"reading",pron:"리딩",ko:"읽기를"},{en:"a lot lately.",pron:"어 랏 레이틀리.",ko:"많이 요즘."}],dial:[{g:"M",role:"친구B",en:"I've been reading a lot lately! 3 books this month!",pron:"아이브 빈 리딩 어 랏 레이틀리! 쓰리 북스 디스 먼쓰!",ko:"요즘 많이 읽고 있어! 이달에 책 3권!"},{g:"F",role:"친구A",en:"Wow! What are you reading?",pron:"와우! 왓 아 유 리딩?",ko:"와! 뭐 읽고 있어?"}],prac:["I've been reading a lot lately. I love stories!"]},
+{no:"090",cat:"🎮 취미와친구",star:5,ko:"로블록스 해?",en:"Do you play Roblox?",pron:"두 유 플레이 로블록스?",chunk:[{en:"Do you",pron:"두 유",ko:"너는 하니"},{en:"play",pron:"플레이",ko:""},{en:"Roblox?",pron:"로블록스?",ko:"로블록스를?"}],dial:[{g:"F",role:"친구A",en:"Do you play Roblox? It's so fun!",pron:"두 유 플레이 로블록스? 잇츠 쏘 펀!",ko:"로블록스 해? 정말 재미있어!"},{g:"M",role:"친구B",en:"Yes! Let's play together after school!",pron:"예스! 렛츠 플레이 투게더 애프터 스쿨!",ko:"응! 방과 후에 같이 하자!"}],prac:["Do you play Minecraft / Fortnite?"]},
+{no:"091",cat:"🎮 취미와친구",star:4,ko:"나 기타 연주 배우고 있어.",en:"I'm learning to play guitar.",pron:"아임 러닝 투 플레이 기타.",chunk:[{en:"I'm learning",pron:"아임 러닝",ko:"나는 배우고 있어"},{en:"to play",pron:"투 플레이",ko:"연주하는 것을"},{en:"guitar.",pron:"기타.",ko:"기타를."}],dial:[{g:"M",role:"친구B",en:"I'm learning to play guitar! It's hard but fun!",pron:"아임 러닝 투 플레이 기타! 잇츠 하드 벗 펀!",ko:"나 기타 연주 배우고 있어! 어렵지만 재미있어!"},{g:"F",role:"친구A",en:"That's cool! Play something for me someday!",pron:"댓츠 쿨! 플레이 썸씽 포 미 썸데이!",ko:"멋지다! 언젠가 나한테 연주해줘!"}],prac:["I'm learning to play piano / drums / violin."]},
+{no:"092",cat:"🎮 취미와친구",star:4,ko:"나는 매일 피아노를 연습해.",en:"I practice piano every day.",pron:"아이 프랙티스 피아노 에브리 데이.",chunk:[{en:"I practice",pron:"아이 프랙티스",ko:"나는 연습해"},{en:"piano",pron:"피아노",ko:"피아노를"},{en:"every day.",pron:"에브리 데이.",ko:"매일."}],dial:[{g:"F",role:"친구A",en:"How do you get so good at piano?",pron:"하우 두 유 겟 쏘 굿 앳 피아노?",ko:"피아노를 어떻게 그렇게 잘해?"},{g:"M",role:"친구B",en:"I practice piano every day! Practice makes perfect!",pron:"아이 프랙티스 피아노 에브리 데이! 프랙티스 메익스 퍼펙트!",ko:"매일 피아노 연습해! 연습이 완벽을 만들지!"}],prac:["I practice soccer / English / drawing every day."]},
+{no:"093",cat:"🎮 취미와친구",star:4,ko:"나는 학교 축구팀 소속이야.",en:"I'm on the school soccer team.",pron:"아임 온 더 스쿨 싸커 팀.",chunk:[{en:"I'm",pron:"아임",ko:"나는"},{en:"on the",pron:"온 더",ko:"~에 있어"},{en:"school soccer team.",pron:"스쿨 싸커 팀.",ko:"학교 축구팀."}],dial:[{g:"M",role:"친구B",en:"I'm on the school soccer team! We have a game Friday!",pron:"아임 온 더 스쿨 싸커 팀! 위 해브 어 게임 프라이데이!",ko:"나는 학교 축구팀이야! 금요일에 경기 있어!"},{g:"F",role:"친구A",en:"Really? I'll come and cheer for you!",pron:"리얼리? 아윌 컴 앤드 치어 포 유!",ko:"진짜? 응원하러 갈게!"}],prac:["I'm on the basketball / swimming / baseball team."]},
+{no:"094",cat:"🎮 취미와친구",star:4,ko:"방과 후에 연습이 있어.",en:"We have practice after school.",pron:"위 해브 프랙티스 애프터 스쿨.",chunk:[{en:"We have",pron:"위 해브",ko:"우리는 있어"},{en:"practice",pron:"프랙티스",ko:"연습이"},{en:"after school.",pron:"애프터 스쿨.",ko:"방과 후에."}],dial:[{g:"F",role:"친구A",en:"Can you hang out today?",pron:"캔 유 행 아웃 투데이?",ko:"오늘 놀 수 있어?"},{g:"M",role:"친구B",en:"Sorry! We have practice after school. Maybe tomorrow?",pron:"쏘리! 위 해브 프랙티스 애프터 스쿨. 메이비 투모로우?",ko:"미안! 방과 후에 연습 있어. 내일은 어때?"}],prac:["We have practice! I can't miss it."]},
+{no:"095",cat:"🎮 취미와친구",star:5,ko:"내가 그 경기를 이겼어!",en:"I won the game! It was close!",pron:"아이 원 더 게임! 잇 워즈 클로스!",chunk:[{en:"I won",pron:"아이 원",ko:"나는 이겼어"},{en:"the game!",pron:"더 게임!",ko:"그 경기를!"},{en:"It was close!",pron:"잇 워즈 클로스!",ko:"정말 아슬아슬했어!"}],dial:[{g:"M",role:"친구B",en:"I won the game! It was so close!",pron:"아이 원 더 게임! 잇 워즈 쏘 클로스!",ko:"내가 그 경기를 이겼어! 정말 아슬아슬했어!"},{g:"F",role:"친구A",en:"Congrats! I knew you could do it!",pron:"컨그래츠! 아이 뉴 유 쿠드 두 잇!",ko:"축하해! 할 수 있을 줄 알았어!"}],prac:["I won the game! Best day ever!"]},
+{no:"096",cat:"🎮 취미와친구",star:5,ko:"토요일에 시간 있어?",en:"Are you free on Saturday?",pron:"아 유 프리 온 새터데이?",chunk:[{en:"Are you",pron:"아 유",ko:"너는 있니"},{en:"free",pron:"프리",ko:"자유롭게"},{en:"on Saturday?",pron:"온 새터데이?",ko:"토요일에?"}],dial:[{g:"F",role:"친구A",en:"Are you free on Saturday? I want to go to the mall!",pron:"아 유 프리 온 새터데이? 아이 원트 투 고 투 더 몰!",ko:"토요일에 시간 있어? 쇼핑몰 가고 싶어!"},{g:"M",role:"친구B",en:"Yes, I'm free! Let's go!",pron:"예스, 아임 프리! 렛츠 고!",ko:"응, 시간 있어! 가자!"}],prac:["Are you free on Sunday / this weekend?"]},
+{no:"097",cat:"🎮 취미와친구",star:5,ko:"재미있겠다! 나도 끼워줘!",en:"That sounds fun! Count me in!",pron:"댓 사운즈 펀! 카운트 미 인!",chunk:[{en:"That",pron:"댓",ko:"그것은"},{en:"sounds fun!",pron:"사운즈 펀!",ko:"재미있겠다!"},{en:"Count me in!",pron:"카운트 미 인!",ko:"나도 끼워줘!"}],dial:[{g:"M",role:"친구B",en:"We're going to the bowling alley this Saturday!",pron:"위어 고잉 투 더 볼링 앨리 디스 새터데이!",ko:"이번 주 토요일에 볼링장에 갈 거야!"},{g:"F",role:"친구A",en:"That sounds fun! Count me in!",pron:"댓 사운즈 펀! 카운트 미 인!",ko:"재미있겠다! 나도 끼워줘!"}],prac:["That sounds fun! Count me in! I love bowling!"]},
+{no:"098",cat:"🎮 취미와친구",star:4,ko:"오후 2시에 공원에서 만나자.",en:"Let's meet at the park at 2 PM.",pron:"렛츠 밋 앳 더 파크 앳 투 피엠.",chunk:[{en:"Let's meet",pron:"렛츠 밋",ko:"만나자"},{en:"at the park",pron:"앳 더 파크",ko:"공원에서"},{en:"at 2 PM.",pron:"앳 투 피엠.",ko:"오후 2시에."}],dial:[{g:"F",role:"친구A",en:"Let's meet at the park at 2 PM tomorrow!",pron:"렛츠 밋 앳 더 파크 앳 투 피엠 투모로우!",ko:"내일 오후 2시에 공원에서 만나자!"},{g:"M",role:"친구B",en:"Sounds good! I'll be there!",pron:"사운즈 굿! 아윌 비 데어!",ko:"좋아! 거기 있을게!"}],prac:["Let's meet at the library / mall / school at 3 PM."]},
+{no:"099",cat:"🎮 취미와친구",star:4,ko:"내일 우리 집에 올 수 있어?",en:"Can you come to my house tomorrow?",pron:"캔 유 컴 투 마이 하우스 투모로우?",chunk:[{en:"Can you come",pron:"캔 유 컴",ko:"너 올 수 있니"},{en:"to my house",pron:"투 마이 하우스",ko:"내 집에"},{en:"tomorrow?",pron:"투모로우?",ko:"내일?"}],dial:[{g:"M",role:"친구B",en:"Can you come to my house tomorrow? We can play games!",pron:"캔 유 컴 투 마이 하우스 투모로우? 위 캔 플레이 게임즈!",ko:"내일 우리 집에 올 수 있어? 게임 할 수 있어!"},{g:"F",role:"친구A",en:"Let me ask my mom! I think she'll say yes!",pron:"렛 미 애스크 마이 맘! 아이 씽크 쉬윌 세이 예스!",ko:"엄마한테 물어볼게! 된다고 할 것 같아!"}],prac:["Can you come to my house this weekend?"]},
+{no:"100",cat:"🎮 취미와친구",star:5,ko:"생일 파티 열 거야! 초대됐어!",en:"I'm having a birthday party! You're invited!",pron:"아임 해빙 어 버스데이 파티! 유어 인바이티드!",chunk:[{en:"I'm having",pron:"아임 해빙",ko:"나는 열 거야"},{en:"a birthday party!",pron:"어 버스데이 파티!",ko:"생일 파티를!"},{en:"You're invited!",pron:"유어 인바이티드!",ko:"너 초대됐어!"}],dial:[{g:"F",role:"친구A",en:"I'm having a birthday party next Friday! You're invited!",pron:"아임 해빙 어 버스데이 파티 넥스트 프라이데이! 유어 인바이티드!",ko:"다음 금요일에 생일 파티 열 거야! 너 초대됐어!"},{g:"M",role:"친구B",en:"Really? I'll definitely come! Happy early birthday!",pron:"리얼리? 아윌 데피니틀리 컴! 해피 얼리 버스데이!",ko:"진짜? 꼭 갈게! 미리 생일 축하해!"}],prac:["I'm having a party! Can you come?"]},
+{no:"101",cat:"🎮 취미와친구",star:4,ko:"이번 주말에 뭐 하고 싶어?",en:"What do you want to do this weekend?",pron:"왓 두 유 원트 투 두 디스 위켄드?",chunk:[{en:"What",pron:"왓",ko:"무엇을"},{en:"do you want to do",pron:"두 유 원트 투 두",ko:"너는 하고 싶니"},{en:"this weekend?",pron:"디스 위켄드?",ko:"이번 주말에?"}],dial:[{g:"M",role:"친구B",en:"What do you want to do this weekend?",pron:"왓 두 유 원트 투 두 디스 위켄드?",ko:"이번 주말에 뭐 하고 싶어?"},{g:"F",role:"친구A",en:"I want to see a movie! Want to come?",pron:"아이 원트 투 씨 어 무비! 원트 투 컴?",ko:"영화 보고 싶어! 같이 갈래?"}],prac:["What do you want to do? I have some ideas!"]},
+{no:"102",cat:"🎮 취미와친구",star:4,ko:"같이 영화 보자.",en:"Let's watch a movie together.",pron:"렛츠 왓치 어 무비 투게더.",chunk:[{en:"Let's watch",pron:"렛츠 왓치",ko:"보자"},{en:"a movie",pron:"어 무비",ko:"영화를"},{en:"together.",pron:"투게더.",ko:"함께."}],dial:[{g:"F",role:"친구A",en:"Let's watch a movie together this Saturday!",pron:"렛츠 왓치 어 무비 투게더 디스 새터데이!",ko:"이번 주 토요일에 같이 영화 보자!"},{g:"M",role:"친구B",en:"Great idea! Which movie do you want to see?",pron:"그레이트 아이디어! 위치 무비 두 유 원트 투 씨?",ko:"좋은 생각이야! 어떤 영화 보고 싶어?"}],prac:["Let's watch a movie / play games / cook together!"]},
+{no:"103",cat:"🎮 취미와친구",star:4,ko:"기다릴 수가 없어! 정말 재미있을 거야!",en:"I can't wait! This will be so much fun!",pron:"아이 캔트 웨이트! 디스 윌 비 쏘 머치 펀!",chunk:[{en:"I can't wait!",pron:"아이 캔트 웨이트!",ko:"나는 기다릴 수 없어!"},{en:"This will be",pron:"디스 윌 비",ko:"이것은 될 거야"},{en:"so much fun!",pron:"쏘 머치 펀!",ko:"정말 재미있게!"}],dial:[{g:"M",role:"친구B",en:"Only 2 days until the trip! I can't wait!",pron:"온리 투 데이즈 언틸 더 트립! 아이 캔트 웨이트!",ko:"여행까지 이틀 남았어! 기다릴 수가 없어!"},{g:"F",role:"친구A",en:"Me neither! This will be so much fun!",pron:"미 니더! 디스 윌 비 쏘 머치 펀!",ko:"나도! 정말 재미있을 거야!"}],prac:["I can't wait for the weekend! It'll be amazing!"]},
+{no:"104",cat:"🎮 취미와친구",star:4,ko:"엄마가 된다고 했어! 갈 수 있어!",en:"My mom said yes! I can come!",pron:"마이 맘 세드 예스! 아이 캔 컴!",chunk:[{en:"My mom",pron:"마이 맘",ko:"우리 엄마가"},{en:"said yes!",pron:"세드 예스!",ko:"된다고 했어!"},{en:"I can come!",pron:"아이 캔 컴!",ko:"나 갈 수 있어!"}],dial:[{g:"F",role:"친구A",en:"Can you come to my party?",pron:"캔 유 컴 투 마이 파티?",ko:"내 파티에 올 수 있어?"},{g:"M",role:"친구B",en:"My mom said yes! I can come! I'm so excited!",pron:"마이 맘 세드 예스! 아이 캔 컴! 아임 쏘 익사이티드!",ko:"엄마가 된다고 했어! 갈 수 있어! 너무 신나!"}],prac:["My mom said yes! See you at the party!"]},
+{no:"105",cat:"🎮 취미와친구",star:4,ko:"미안, 못 갈 것 같아. 가족 일이야.",en:"Sorry, I can't make it. Family thing.",pron:"쏘리, 아이 캔트 메이크 잇. 패밀리 씽.",chunk:[{en:"Sorry,",pron:"쏘리,",ko:"미안,"},{en:"I can't make it.",pron:"아이 캔트 메이크 잇.",ko:"나는 못 갈 것 같아."},{en:"Family thing.",pron:"패밀리 씽.",ko:"가족 일이야."}],dial:[{g:"F",role:"친구A",en:"Are you coming to the game on Saturday?",pron:"아 유 커밍 투 더 게임 온 새터데이?",ko:"토요일에 경기에 올 거야?"},{g:"M",role:"친구B",en:"Sorry, I can't make it. Family thing. Next time!",pron:"쏘리, 아이 캔트 메이크 잇. 패밀리 씽. 넥스트 타임!",ko:"미안, 못 갈 것 같아. 가족 일이야. 다음에!"}],prac:["Sorry, I can't make it. I have another plan."]},
+// ===== Part 6: 여행 준비 106-120 =====
+{no:"106",cat:"✈️ 여행준비",star:5,ko:"우리 여행 가! 너무 신나!",en:"We're going on a trip! I'm so excited!",pron:"위어 고잉 온 어 트립! 아임 쏘 익사이티드!",chunk:[{en:"We're going",pron:"위어 고잉",ko:"우리는 가는 중이야"},{en:"on a trip!",pron:"온 어 트립!",ko:"여행을!"},{en:"I'm so excited!",pron:"아임 쏘 익사이티드!",ko:"나 너무 신나!"}],dial:[{g:"F",role:"엄마",en:"Kids, guess what? We're going on a trip!",pron:"키즈, 게스 왓? 위어 고잉 온 어 트립!",ko:"애들아, 있잖아? 우리 여행 가!"},{g:"M",role:"아이",en:"Really? Where are we going?",pron:"리얼리? 웨어 아 위 고잉?",ko:"정말요? 우리 어디 가요?"},{g:"F",role:"엄마",en:"We're going to Jeju Island!",pron:"위어 고잉 투 제주 아일랜드!",ko:"제주도에 가!"},{g:"M",role:"아이",en:"Wow! I'm so excited! When are we leaving?",pron:"와우! 아임 쏘 익사이티드! 웬 아 위 리빙?",ko:"와! 너무 신나요! 언제 떠나요?"}],prac:["We're going on a field trip! I'm so excited!","We're going camping this weekend! Can't wait!"]},
+{no:"107",cat:"✈️ 여행준비",star:4,ko:"우리 어디 가는 거야?",en:"Where are we going?",pron:"웨어 아 위 고잉?",chunk:[{en:"Where",pron:"웨어",ko:"어디로"},{en:"are we",pron:"아 위",ko:"우리는"},{en:"going?",pron:"고잉?",ko:"가는 거야?"}],dial:[{g:"M",role:"아이",en:"Mom, where are we going? Tell me!",pron:"맘, 웨어 아 위 고잉? 텔 미!",ko:"엄마, 우리 어디 가는 거예요? 말해줘요!"},{g:"F",role:"엄마",en:"It's a surprise! You'll see!",pron:"잇츠 어 서프라이즈! 유윌 씨!",ko:"비밀이야! 보면 알아!"}],prac:["Where are we going? I can't wait to find out!"]},
+{no:"108",cat:"✈️ 여행준비",star:4,ko:"언제 우리 떠나는 거야?",en:"When are we leaving?",pron:"웬 아 위 리빙?",chunk:[{en:"When",pron:"웬",ko:"언제"},{en:"are we",pron:"아 위",ko:"우리는"},{en:"leaving?",pron:"리빙?",ko:"떠나는 거야?"}],dial:[{g:"M",role:"아이",en:"When are we leaving? I want to pack now!",pron:"웬 아 위 리빙? 아이 원트 투 팩 나우!",ko:"언제 떠나요? 지금 짐 싸고 싶어요!"},{g:"F",role:"엄마",en:"Saturday morning! Start packing tomorrow!",pron:"새터데이 모닝! 스타트 패킹 투모로우!",ko:"토요일 아침이야! 내일 짐 싸기 시작해!"}],prac:["When are we leaving? I need to get ready!"]},
+{no:"109",cat:"✈️ 여행준비",star:3,ko:"거기서 얼마나 있을 거야?",en:"How long will we stay there?",pron:"하우 롱 윌 위 스테이 데어?",chunk:[{en:"How long",pron:"하우 롱",ko:"얼마나 오래"},{en:"will we stay",pron:"윌 위 스테이",ko:"우리는 머무를 거야"},{en:"there?",pron:"데어?",ko:"거기에?"}],dial:[{g:"M",role:"아이",en:"How long will we stay there?",pron:"하우 롱 윌 위 스테이 데어?",ko:"거기서 얼마나 있을 거예요?"},{g:"F",role:"엄마",en:"Three days! We'll have so much fun!",pron:"쓰리 데이즈! 위윌 해브 쏘 머치 펀!",ko:"3일! 정말 재미있을 거야!"}],prac:["How long will we stay? 3 days? 1 week?"]},
+{no:"110",cat:"✈️ 여행준비",star:4,ko:"짐을 싸야 해.",en:"I need to pack my bag.",pron:"아이 니드 투 팩 마이 백.",chunk:[{en:"I need",pron:"아이 니드",ko:"나는 필요해"},{en:"to pack",pron:"투 팩",ko:"짐 싸는 것이"},{en:"my bag.",pron:"마이 백.",ko:"내 가방을."}],dial:[{g:"M",role:"아이",en:"I need to pack my bag. What should I bring?",pron:"아이 니드 투 팩 마이 백. 왓 슈드 아이 브링?",ko:"짐을 싸야 해. 뭘 가져가야 해?"},{g:"F",role:"엄마",en:"Clothes, toothbrush, and your book!",pron:"클로즈, 투쓰브러쉬, 앤드 유어 북!",ko:"옷이랑 칫솔이랑 책이랑!"}],prac:["I need to pack my bag. Don't forget sunscreen!"]},
+{no:"111",cat:"✈️ 여행준비",star:4,ko:"여권 잊지 마!",en:"Don't forget your passport!",pron:"돈트 포겟 유어 패스포트!",chunk:[{en:"Don't forget",pron:"돈트 포겟",ko:"잊지 마"},{en:"your passport!",pron:"유어 패스포트!",ko:"너의 여권을!"}],dial:[{g:"F",role:"엄마",en:"Don't forget your passport! It's very important!",pron:"돈트 포겟 유어 패스포트! 잇츠 베리 임포턴트!",ko:"여권 잊지 마! 정말 중요해!"},{g:"M",role:"아이",en:"I already put it in my bag! Don't worry!",pron:"아이 올레디 풋 잇 인 마이 백! 돈트 워리!",ko:"이미 가방에 넣었어요! 걱정하지 마세요!"}],prac:["Don't forget your ticket / camera / phone charger!"]},
+{no:"112",cat:"✈️ 여행준비",star:3,ko:"내 티켓 바로 여기 있어.",en:"I have my ticket right here.",pron:"아이 해브 마이 티킷 라잇 히어.",chunk:[{en:"I have",pron:"아이 해브",ko:"나는 가지고 있어"},{en:"my ticket",pron:"마이 티킷",ko:"내 티켓을"},{en:"right here.",pron:"라잇 히어.",ko:"바로 여기에."}],dial:[{g:"M",role:"아이",en:"I have my ticket right here! All ready to go!",pron:"아이 해브 마이 티킷 라잇 히어! 올 레디 투 고!",ko:"내 티켓 바로 여기 있어요! 다 준비됐어요!"},{g:"F",role:"엄마",en:"Great! Let's head to the airport!",pron:"그레이트! 렛츠 헤드 투 디 에어포트!",ko:"좋아! 공항으로 출발하자!"}],prac:["I have my ticket / passport right here."]},
+{no:"113",cat:"✈️ 여행준비",star:4,ko:"뭘 싸야 할까?",en:"What should I pack?",pron:"왓 슈드 아이 팩?",chunk:[{en:"What",pron:"왓",ko:"무엇을"},{en:"should I",pron:"슈드 아이",ko:"내가"},{en:"pack?",pron:"팩?",ko:"싸야 할까?"}],dial:[{g:"M",role:"아이",en:"Mom, what should I pack for the trip?",pron:"맘, 왓 슈드 아이 팩 포 더 트립?",ko:"엄마, 여행에 뭘 싸야 해요?"},{g:"F",role:"엄마",en:"Clothes, shoes, and your camera!",pron:"클로즈, 슈즈, 앤드 유어 카메라!",ko:"옷이랑 신발이랑 카메라!"}],prac:["What should I pack? I don't want to forget anything!"]},
+{no:"114",cat:"✈️ 여행준비",star:3,ko:"따뜻한 옷을 싸. 거기는 추워.",en:"Pack warm clothes. It's cold there.",pron:"팩 웜 클로즈. 잇츠 콜드 데어.",chunk:[{en:"Pack",pron:"팩",ko:"싸라"},{en:"warm clothes.",pron:"웜 클로즈.",ko:"따뜻한 옷을."},{en:"It's cold there.",pron:"잇츠 콜드 데어.",ko:"거기는 추워."}],dial:[{g:"F",role:"엄마",en:"Pack warm clothes. It's cold there in winter!",pron:"팩 웜 클로즈. 잇츠 콜드 데어 인 윈터!",ko:"따뜻한 옷 싸라. 거기 겨울에 추워!"},{g:"M",role:"아이",en:"Okay! How many jackets should I pack?",pron:"오케이! 하우 매니 재킷츠 슈드 아이 팩?",ko:"알겠어요! 재킷을 몇 개나 싸야 해요?"}],prac:["Pack light clothes. It's hot and sunny there."]},
+{no:"115",cat:"✈️ 여행준비",star:4,ko:"갈 준비 됐어! 출발하자!",en:"I'm ready to go! Let's leave!",pron:"아임 레디 투 고! 렛츠 리브!",chunk:[{en:"I'm ready",pron:"아임 레디",ko:"나는 준비됐어"},{en:"to go!",pron:"투 고!",ko:"가기를!"},{en:"Let's leave!",pron:"렛츠 리브!",ko:"떠나자!"}],dial:[{g:"M",role:"아이",en:"I'm ready to go! Let's leave now!",pron:"아임 레디 투 고! 렛츠 리브 나우!",ko:"갈 준비 됐어요! 지금 출발해요!"},{g:"F",role:"엄마",en:"Let's go! Adventure awaits!",pron:"렛츠 고! 어드벤쳐 어웨이츠!",ko:"가자! 모험이 기다린다!"}],prac:["I'm ready to go! This is going to be amazing!"]},
+{no:"116",cat:"✈️ 여행준비",star:4,ko:"어디서 체크인하나요?",en:"Where do we check in?",pron:"웨어 두 위 체크 인?",chunk:[{en:"Where",pron:"웨어",ko:"어디서"},{en:"do we",pron:"두 위",ko:"우리는"},{en:"check in?",pron:"체크 인?",ko:"체크인하나요?"}],dial:[{g:"M",role:"아이",en:"Mom, where do we check in?",pron:"맘, 웨어 두 위 체크 인?",ko:"엄마, 어디서 체크인해요?"},{g:"F",role:"엄마",en:"Follow me! The counter is over there!",pron:"팔로 미! 더 카운터 이즈 오버 데어!",ko:"따라와! 카운터는 저기야!"}],prac:["Where do we check in? I can't find the counter."]},
+{no:"117",cat:"✈️ 여행준비",star:4,ko:"여기 내 탑승권이에요.",en:"Here's my boarding pass.",pron:"히어즈 마이 보딩 패스.",chunk:[{en:"Here's",pron:"히어즈",ko:"여기 있어요"},{en:"my boarding pass.",pron:"마이 보딩 패스.",ko:"내 탑승권이."}],dial:[{g:"F",role:"직원",en:"Can I see your boarding pass?",pron:"캔 아이 씨 유어 보딩 패스?",ko:"탑승권 보여주시겠어요?"},{g:"M",role:"아이",en:"Here's my boarding pass!",pron:"히어즈 마이 보딩 패스!",ko:"여기 내 탑승권이에요!"}],prac:["Here's my boarding pass. We're in seats 14A and B!"]},
+{no:"118",cat:"✈️ 여행준비",star:3,ko:"우리 비행기는 몇 번 게이트야?",en:"What gate is our flight?",pron:"왓 게이트 이즈 아워 플라이트?",chunk:[{en:"What gate",pron:"왓 게이트",ko:"몇 번 게이트"},{en:"is",pron:"이즈",ko:"~인가요"},{en:"our flight?",pron:"아워 플라이트?",ko:"우리 비행기는?"}],dial:[{g:"M",role:"아이",en:"What gate is our flight? I can't find it!",pron:"왓 게이트 이즈 아워 플라이트? 아이 캔트 파인드 잇!",ko:"우리 비행기 몇 번 게이트야? 못 찾겠어요!"},{g:"F",role:"엄마",en:"Gate 15! Let's hurry!",pron:"게이트 피프틴! 렛츠 허리!",ko:"15번 게이트야! 서둘러!"}],prac:["What gate is our flight? Let me check the board."]},
+{no:"119",cat:"✈️ 여행준비",star:3,ko:"언제 탑승하나요?",en:"When do we board?",pron:"웬 두 위 보드?",chunk:[{en:"When",pron:"웬",ko:"언제"},{en:"do we",pron:"두 위",ko:"우리는"},{en:"board?",pron:"보드?",ko:"탑승하나요?"}],dial:[{g:"M",role:"아이",en:"When do we board? I'm excited!",pron:"웬 두 위 보드? 아임 익사이티드!",ko:"언제 탑승해요? 신나요!"},{g:"F",role:"엄마",en:"In 20 minutes! Let's wait here.",pron:"인 투웬티 미닛츠! 렛츠 웨이트 히어.",ko:"20분 후에! 여기서 기다리자."}],prac:["When do we board? I don't want to miss it!"]},
+{no:"120",cat:"✈️ 여행준비",star:5,ko:"비행기가 지금 탑승 중이야! 가자!",en:"The plane is boarding now! Let's go!",pron:"더 플레인 이즈 보딩 나우! 렛츠 고!",chunk:[{en:"The plane",pron:"더 플레인",ko:"비행기가"},{en:"is boarding",pron:"이즈 보딩",ko:"탑승 중이야"},{en:"now!",pron:"나우!",ko:"지금!"},{en:"Let's go!",pron:"렛츠 고!",ko:"가자!"}],dial:[{g:"F",role:"엄마",en:"The plane is boarding now! Let's go!",pron:"더 플레인 이즈 보딩 나우! 렛츠 고!",ko:"비행기가 지금 탑승 중이야! 가자!"},{g:"M",role:"아이",en:"Finally! I'm so excited to fly!",pron:"파이널리! 아임 쏘 익사이티드 투 플라이!",ko:"드디어! 비행기 타는 것 너무 신나요!"}],prac:["The plane is boarding! Get your bags!"]},
+// ===== Part 7: 여행 장소 121-135 =====
+{no:"121",cat:"🗺️ 여행장소",star:5,ko:"이 장소 정말 놀라워!",en:"This place is amazing!",pron:"디스 플레이스 이즈 어메이징!",chunk:[{en:"This place",pron:"디스 플레이스",ko:"이 장소는"},{en:"is",pron:"이즈",ko:"~이다"},{en:"amazing!",pron:"어메이징!",ko:"놀라워!"}],dial:[{g:"M",role:"아이",en:"This place is amazing! I've never seen anything like it!",pron:"디스 플레이스 이즈 어메이징! 아이브 네버 씬 애니씽 라이크 잇!",ko:"이 장소 정말 놀라워! 이런 곳은 처음이야!"},{g:"F",role:"친구A",en:"I know! Let's take lots of photos!",pron:"아이 노우! 렛츠 테이크 랏츠 오브 포토즈!",ko:"맞아! 사진 많이 찍자!"}],prac:["This place is amazing! I want to come back!"]},
+{no:"122",cat:"🗺️ 여행장소",star:5,ko:"여기서 사진 찍을 수 있을까요?",en:"Can we take a picture here?",pron:"캔 위 테이크 어 픽처 히어?",chunk:[{en:"Can we",pron:"캔 위",ko:"우리가 할 수 있나요"},{en:"take a picture",pron:"테이크 어 픽처",ko:"사진 찍는 것을"},{en:"here?",pron:"히어?",ko:"여기서?"}],dial:[{g:"M",role:"아이",en:"Excuse me! Can we take a picture here?",pron:"익스큐즈 미! 캔 위 테이크 어 픽처 히어?",ko:"실례합니다! 여기서 사진 찍을 수 있나요?"},{g:"F",role:"직원",en:"Of course! It's a beautiful spot!",pron:"오브 코스! 잇츠 어 뷰티풀 스팟!",ko:"물론이죠! 아름다운 장소예요!"}],prac:["Can we take a picture with the sign?"]},
+{no:"123",cat:"🗺️ 여행장소",star:4,ko:"해변에 가고 싶어.",en:"I want to see the beach.",pron:"아이 원트 투 씨 더 비치.",chunk:[{en:"I want",pron:"아이 원트",ko:"나는 원해"},{en:"to see",pron:"투 씨",ko:"보는 것을"},{en:"the beach.",pron:"더 비치.",ko:"해변을."}],dial:[{g:"M",role:"아이",en:"I want to see the beach! Can we go?",pron:"아이 원트 투 씨 더 비치! 캔 위 고?",ko:"해변에 가고 싶어요! 가도 될까요?"},{g:"F",role:"엄마",en:"Of course! Let's go after breakfast!",pron:"오브 코스! 렛츠 고 애프터 브렉퍼스트!",ko:"물론이지! 아침 먹고 가자!"}],prac:["I want to see the mountains / museum / market."]},
+{no:"124",cat:"🗺️ 여행장소",star:4,ko:"거기는 어떻게 가나요?",en:"How do we get there?",pron:"하우 두 위 겟 데어?",chunk:[{en:"How",pron:"하우",ko:"어떻게"},{en:"do we get",pron:"두 위 겟",ko:"우리는 가나요"},{en:"there?",pron:"데어?",ko:"거기로?"}],dial:[{g:"M",role:"아이",en:"How do we get there? Is it far?",pron:"하우 두 위 겟 데어? 이즈 잇 파?",ko:"거기는 어떻게 가요? 멀어요?"},{g:"F",role:"엄마",en:"We'll take the subway! It's easy!",pron:"위윌 테이크 더 서브웨이! 잇츠 이지!",ko:"지하철 타고 가! 쉬워!"}],prac:["How do we get there? By bus or subway?"]},
+{no:"125",cat:"🗺️ 여행장소",star:3,ko:"여기서 멀어요?",en:"Is it far from here?",pron:"이즈 잇 파 프롬 히어?",chunk:[{en:"Is it",pron:"이즈 잇",ko:"그것은"},{en:"far",pron:"파",ko:"멀까요"},{en:"from here?",pron:"프롬 히어?",ko:"여기서?"}],dial:[{g:"M",role:"아이",en:"Is it far from here? My legs are tired!",pron:"이즈 잇 파 프롬 히어? 마이 레그즈 아 타이얼드!",ko:"여기서 멀어요? 다리가 피곤해요!"},{g:"F",role:"엄마",en:"Just 5 more minutes! You can do it!",pron:"저스트 파이브 모어 미닛츠! 유 캔 두 잇!",ko:"5분만 더! 할 수 있어!"}],prac:["Is it far from here? Can we take a taxi?"]},
+{no:"126",cat:"🗺️ 여행장소",star:4,ko:"내일 박물관에 가자.",en:"Let's go to the museum tomorrow.",pron:"렛츠 고 투 더 뮤지엄 투모로우.",chunk:[{en:"Let's go",pron:"렛츠 고",ko:"가자"},{en:"to the museum",pron:"투 더 뮤지엄",ko:"박물관에"},{en:"tomorrow.",pron:"투모로우.",ko:"내일."}],dial:[{g:"F",role:"친구A",en:"Let's go to the museum tomorrow! It's free for kids!",pron:"렛츠 고 투 더 뮤지엄 투모로우! 잇츠 프리 포 키즈!",ko:"내일 박물관에 가자! 어린이는 무료야!"},{g:"M",role:"친구B",en:"Great idea! I love museums!",pron:"그레이트 아이디어! 아이 러브 뮤지엄즈!",ko:"좋은 생각이야! 나 박물관 좋아해!"}],prac:["Let's go to the aquarium / zoo / park tomorrow."]},
+{no:"127",cat:"🗺️ 여행장소",star:5,ko:"이거 정말 멋지다! 저것 봐!",en:"This is so cool! Look at that!",pron:"디스 이즈 쏘 쿨! 룩 앳 댓!",chunk:[{en:"This",pron:"디스",ko:"이건"},{en:"is so cool!",pron:"이즈 쏘 쿨!",ko:"정말 멋져!"},{en:"Look at that!",pron:"룩 앳 댓!",ko:"저것 봐!"}],dial:[{g:"M",role:"아이",en:"This is so cool! Look at that huge waterfall!",pron:"디스 이즈 쏘 쿨! 룩 앳 댓 휴지 워터폴!",ko:"이거 정말 멋지다! 저 거대한 폭포 봐!"},{g:"F",role:"친구A",en:"Wow! It's beautiful! Can we go closer?",pron:"와우! 잇츠 뷰티풀! 캔 위 고 클로저?",ko:"와! 아름답다! 더 가까이 가도 될까?"}],prac:["This is so cool! I've never seen this before!"]},
+{no:"128",cat:"🗺️ 여행장소",star:5,ko:"정말 재미있어!",en:"I'm having so much fun!",pron:"아임 해빙 쏘 머치 펀!",chunk:[{en:"I'm having",pron:"아임 해빙",ko:"나는 가지고 있어"},{en:"so much fun!",pron:"쏘 머치 펀!",ko:"정말 많은 재미를!"}],dial:[{g:"M",role:"아이",en:"I'm having so much fun! Best trip ever!",pron:"아임 해빙 쏘 머치 펀! 베스트 트립 에버!",ko:"정말 재미있어! 최고의 여행이야!"},{g:"F",role:"엄마",en:"I'm glad! Are you enjoying everything?",pron:"아임 글래드! 아 유 인조이잉 에브리씽?",ko:"다행이야! 모든 게 다 즐거워?"}],prac:["I'm having so much fun! This is amazing!"]},
+{no:"129",cat:"🗺️ 여행장소",star:4,ko:"여기 다시 올 수 있을까요?",en:"Can we come back here again?",pron:"캔 위 컴 백 히어 어게인?",chunk:[{en:"Can we",pron:"캔 위",ko:"우리가 할 수 있나요"},{en:"come back",pron:"컴 백",ko:"다시 오는 것을"},{en:"here again?",pron:"히어 어게인?",ko:"여기로 다시?"}],dial:[{g:"M",role:"아이",en:"Can we come back here again? I don't want to leave!",pron:"캔 위 컴 백 히어 어게인? 아이 돈트 원트 투 리브!",ko:"여기 다시 올 수 있어요? 떠나기 싫어요!"},{g:"F",role:"엄마",en:"Yes! We'll come back someday!",pron:"예스! 위윌 컴 백 썸데이!",ko:"응! 언젠가 다시 올게!"}],prac:["Can we come back here next year?"]},
+{no:"130",cat:"🗺️ 여행장소",star:5,ko:"이 장소가 정말 좋아! 아름다워!",en:"I love this place! It's beautiful!",pron:"아이 러브 디스 플레이스! 잇츠 뷰티풀!",chunk:[{en:"I love",pron:"아이 러브",ko:"나는 좋아해"},{en:"this place!",pron:"디스 플레이스!",ko:"이 장소를!"},{en:"It's beautiful!",pron:"잇츠 뷰티풀!",ko:"아름다워!"}],dial:[{g:"M",role:"아이",en:"I love this place! It's so beautiful!",pron:"아이 러브 디스 플레이스! 잇츠 쏘 뷰티풀!",ko:"이 장소가 정말 좋아! 너무 아름다워!"},{g:"F",role:"친구A",en:"Me too! Let's take a photo to remember it!",pron:"미 투! 렛츠 테이크 어 포토 투 리멤버 잇!",ko:"나도! 기억하려고 사진 찍자!"}],prac:["I love this view! It's so peaceful!"]},
+{no:"131",cat:"🗺️ 여행장소",star:3,ko:"이게 우리 호텔 방이야. 좋네!",en:"This is our hotel room. It's nice!",pron:"디스 이즈 아워 호텔 룸. 잇츠 나이스!",chunk:[{en:"This is",pron:"디스 이즈",ko:"이것은"},{en:"our hotel room.",pron:"아워 호텔 룸.",ko:"우리 호텔 방이야."},{en:"It's nice!",pron:"잇츠 나이스!",ko:"좋네!"}],dial:[{g:"M",role:"아이",en:"This is our hotel room. It's nice! I love the view!",pron:"디스 이즈 아워 호텔 룸. 잇츠 나이스! 아이 러브 더 뷰!",ko:"이게 우리 호텔 방이구나. 좋다! 뷰가 좋아!"},{g:"F",role:"엄마",en:"Yes! We'll have a great time here!",pron:"예스! 위윌 해브 어 그레이트 타임 히어!",ko:"응! 여기서 즐거운 시간 보낼 거야!"}],prac:["This is our room. It's bigger than I expected!"]},
+{no:"132",cat:"🗺️ 여행장소",star:4,ko:"수영장이 어디 있나요?",en:"Where's the swimming pool?",pron:"웨어즈 더 스위밍 풀?",chunk:[{en:"Where's",pron:"웨어즈",ko:"어디 있나요"},{en:"the swimming pool?",pron:"더 스위밍 풀?",ko:"수영장이?"}],dial:[{g:"M",role:"아이",en:"Where's the swimming pool? I want to swim!",pron:"웨어즈 더 스위밍 풀? 아이 원트 투 스윔!",ko:"수영장이 어디 있나요? 수영하고 싶어요!"},{g:"F",role:"직원",en:"It's on the 3rd floor! Open until 9 PM!",pron:"잇츠 온 더 써드 플로어! 오픈 언틸 나인 피엠!",ko:"3층에 있어요! 오후 9시까지 열려요!"}],prac:["Where's the gym / restaurant / elevator?"]},
+{no:"133",cat:"🗺️ 여행장소",star:3,ko:"아침 식사가 몇 시예요?",en:"What time is breakfast?",pron:"왓 타임 이즈 브렉퍼스트?",chunk:[{en:"What time",pron:"왓 타임",ko:"몇 시인가요"},{en:"is",pron:"이즈",ko:"~인지"},{en:"breakfast?",pron:"브렉퍼스트?",ko:"아침 식사가?"}],dial:[{g:"M",role:"아이",en:"What time is breakfast? I'm already hungry!",pron:"왓 타임 이즈 브렉퍼스트? 아임 올레디 헝그리!",ko:"아침 식사가 몇 시예요? 벌써 배고파요!"},{g:"F",role:"직원",en:"Breakfast is from 7 to 10 AM, sir!",pron:"브렉퍼스트 이즈 프롬 세븐 투 텐 에이엠, 써!",ko:"아침 식사는 오전 7시에서 10시까지예요!"}],prac:["What time is the hotel checkout?"]},
+{no:"134",cat:"🗺️ 여행장소",star:4,ko:"와이파이 사용할 수 있나요?",en:"Can I use the Wi-Fi?",pron:"캔 아이 유즈 더 와이파이?",chunk:[{en:"Can I",pron:"캔 아이",ko:"제가 할 수 있나요"},{en:"use",pron:"유즈",ko:"사용하는 것을"},{en:"the Wi-Fi?",pron:"더 와이파이?",ko:"와이파이를?"}],dial:[{g:"M",role:"아이",en:"Can I use the Wi-Fi? What's the password?",pron:"캔 아이 유즈 더 와이파이? 왓츠 더 패스워드?",ko:"와이파이 사용할 수 있나요? 비밀번호가 뭐예요?"},{g:"F",role:"직원",en:"The password is on the card on your desk!",pron:"더 패스워드 이즈 온 더 카드 온 유어 데스크!",ko:"비밀번호는 책상 위 카드에 있어요!"}],prac:["Can I use the Wi-Fi to video call my grandma?"]},
+{no:"135",cat:"🗺️ 여행장소",star:3,ko:"이 호텔이 마음에 들어! 방이 커!",en:"I like this hotel! The room is big!",pron:"아이 라이크 디스 호텔! 더 룸 이즈 빅!",chunk:[{en:"I like",pron:"아이 라이크",ko:"나는 좋아해"},{en:"this hotel!",pron:"디스 호텔!",ko:"이 호텔을!"},{en:"The room is big!",pron:"더 룸 이즈 빅!",ko:"방이 커!"}],dial:[{g:"M",role:"아이",en:"I like this hotel! The room is big and the bed is comfy!",pron:"아이 라이크 디스 호텔! 더 룸 이즈 빅 앤드 더 베드 이즈 컴피!",ko:"이 호텔이 마음에 들어! 방이 크고 침대가 편안해!"},{g:"F",role:"엄마",en:"I'm glad! We chose a good place!",pron:"아임 글래드! 위 초즈 어 굿 플레이스!",ko:"다행이야! 좋은 곳을 골랐네!"}],prac:["I like this hotel! The pool is amazing!"]},
+// ===== Part 8: 여행 쇼핑 136-145 =====
+{no:"136",cat:"🛍️ 여행쇼핑",star:5,ko:"이거 사도 돼요? 정말 귀여워요!",en:"Can I buy this? It's so cute!",pron:"캔 아이 바이 디스? 잇츠 쏘 큐트!",chunk:[{en:"Can I",pron:"캔 아이",ko:"제가 할 수 있나요"},{en:"buy",pron:"바이",ko:"사는 것을"},{en:"this?",pron:"디스?",ko:"이것을?"},{en:"It's so cute!",pron:"잇츠 쏘 큐트!",ko:"정말 귀여워!"}],dial:[{g:"M",role:"아이",en:"Mom, look! Can I buy this? It's so cute!",pron:"맘, 룩! 캔 아이 바이 디스? 잇츠 쏘 큐트!",ko:"엄마, 봐요! 이거 사도 돼요? 정말 귀여워요!"},{g:"F",role:"엄마",en:"Let me see. How much is it?",pron:"렛 미 씨. 하우 머치 이즈 잇?",ko:"내가 볼게. 얼마니?"},{g:"M",role:"아이",en:"It's $10. Please, Mom!",pron:"잇츠 텐 달러즈. 플리즈, 맘!",ko:"10달러예요. 제발요, 엄마!"},{g:"F",role:"엄마",en:"Okay. But that's your only souvenir!",pron:"오케이. 벗 댓츠 유어 온리 수버니어!",ko:"좋아. 하지만 그게 네 유일한 기념품이야!"}],prac:["Can I buy this toy? I've been saving money!","Can I buy this shirt? It fits perfectly!"]},
+{no:"137",cat:"🛍️ 여행쇼핑",star:5,ko:"이거 얼마예요?",en:"How much is this?",pron:"하우 머치 이즈 디스?",chunk:[{en:"How much",pron:"하우 머치",ko:"얼마인가요"},{en:"is",pron:"이즈",ko:"~인지"},{en:"this?",pron:"디스?",ko:"이것은?"}],dial:[{g:"M",role:"아이",en:"Excuse me, how much is this?",pron:"익스큐즈 미, 하우 머치 이즈 디스?",ko:"실례합니다, 이거 얼마예요?"},{g:"F",role:"직원",en:"That's $15.99. Would you like it?",pron:"댓츠 피프틴 나인티나인. 우드 유 라이크 잇?",ko:"15.99달러예요. 원하세요?"}],prac:["How much is this bag / hat / keychain?"]},
+{no:"138",cat:"🛍️ 여행쇼핑",star:4,ko:"이건 너무 비싸요. 더 싼 것 있나요?",en:"It's too expensive. Do you have a cheaper one?",pron:"잇츠 투 익스펜시브. 두 유 해브 어 치퍼 원?",chunk:[{en:"It's too expensive.",pron:"잇츠 투 익스펜시브.",ko:"이건 너무 비싸요."},{en:"Do you have",pron:"두 유 해브",ko:"당신은 가지고 있나요"},{en:"a cheaper one?",pron:"어 치퍼 원?",ko:"더 싼 것을?"}],dial:[{g:"M",role:"아이",en:"It's too expensive. Do you have a cheaper one?",pron:"잇츠 투 익스펜시브. 두 유 해브 어 치퍼 원?",ko:"이건 너무 비싸요. 더 싼 것 있나요?"},{g:"F",role:"직원",en:"Yes! This one is $8. It's similar!",pron:"예스! 디스 원 이즈 에잇 달러즈. 잇츠 시밀러!",ko:"네! 이건 8달러예요. 비슷해요!"}],prac:["It's too expensive. Do you have anything smaller?"]},
+{no:"139",cat:"🛍️ 여행쇼핑",star:4,ko:"친구를 위한 기념품을 사고 싶어.",en:"I want to buy a souvenir for my friend.",pron:"아이 원트 투 바이 어 수버니어 포 마이 프렌드.",chunk:[{en:"I want",pron:"아이 원트",ko:"나는 원해"},{en:"to buy",pron:"투 바이",ko:"사는 것을"},{en:"a souvenir",pron:"어 수버니어",ko:"기념품을"},{en:"for my friend.",pron:"포 마이 프렌드.",ko:"내 친구를 위한."}],dial:[{g:"M",role:"아이",en:"I want to buy a souvenir for my friend. What's popular?",pron:"아이 원트 투 바이 어 수버니어 포 마이 프렌드. 왓츠 파퓰러?",ko:"친구를 위한 기념품을 사고 싶어요. 뭐가 인기 있나요?"},{g:"F",role:"직원",en:"These keychains are very popular with kids!",pron:"디즈 키체인즈 아 베리 파퓰러 위드 키즈!",ko:"이 열쇠고리들이 어린이들 사이에서 매우 인기 있어요!"}],prac:["I want to buy a souvenir for my mom / teacher."]},
+{no:"140",cat:"🛍️ 여행쇼핑",star:4,ko:"이거 입어봐도 될까요?",en:"Can I try this on?",pron:"캔 아이 트라이 디스 온?",chunk:[{en:"Can I",pron:"캔 아이",ko:"제가 할 수 있나요"},{en:"try",pron:"트라이",ko:"입어보는 것을"},{en:"this on?",pron:"디스 온?",ko:"이것을?"}],dial:[{g:"M",role:"아이",en:"Can I try this on? I'm not sure about the size.",pron:"캔 아이 트라이 디스 온? 아임 낫 슈어 어바웃 더 사이즈.",ko:"이거 입어봐도 될까요? 사이즈가 맞는지 모르겠어요."},{g:"F",role:"직원",en:"Of course! The fitting room is over there!",pron:"오브 코스! 더 피팅 룸 이즈 오버 데어!",ko:"물론이죠! 탈의실은 저기예요!"}],prac:["Can I try this on? It looks like my size!"]},
+{no:"141",cat:"🛍️ 여행쇼핑",star:3,ko:"이거 파란색으로 있나요?",en:"Do you have this in blue?",pron:"두 유 해브 디스 인 블루?",chunk:[{en:"Do you have",pron:"두 유 해브",ko:"당신은 가지고 있나요"},{en:"this",pron:"디스",ko:"이것을"},{en:"in blue?",pron:"인 블루?",ko:"파란색으로?"}],dial:[{g:"M",role:"아이",en:"Do you have this in blue? I love blue!",pron:"두 유 해브 디스 인 블루? 아이 러브 블루!",ko:"이거 파란색으로 있나요? 파란색 좋아해요!"},{g:"F",role:"직원",en:"Yes! Here's the blue one!",pron:"예스! 히어즈 더 블루 원!",ko:"네! 파란색 여기 있어요!"}],prac:["Do you have this in red / green / smaller?"]},
+{no:"142",cat:"🛍️ 여행쇼핑",star:4,ko:"이거로 살게요. 고마워요!",en:"I'll take this one. Thank you!",pron:"아윌 테이크 디스 원. 땡큐!",chunk:[{en:"I'll take",pron:"아윌 테이크",ko:"나는 가질게요"},{en:"this one.",pron:"디스 원.",ko:"이것을."},{en:"Thank you!",pron:"땡큐!",ko:"고마워요!"}],dial:[{g:"M",role:"아이",en:"I'll take this one. Thank you!",pron:"아윌 테이크 디스 원. 땡큐!",ko:"이거로 살게요. 고마워요!"},{g:"F",role:"직원",en:"Great choice! That'll be $12.50!",pron:"그레이트 초이스! 댓윌 비 트웰브 피프티!",ko:"좋은 선택이에요! 12달러 50센트예요!"}],prac:["I'll take this one. Do you have a bag?"]},
+{no:"143",cat:"🛍️ 여행쇼핑",star:3,ko:"이거 담을 봉투 받을 수 있나요?",en:"Can I get a bag for this?",pron:"캔 아이 겟 어 백 포 디스?",chunk:[{en:"Can I get",pron:"캔 아이 겟",ko:"제가 받을 수 있나요"},{en:"a bag",pron:"어 백",ko:"가방을"},{en:"for this?",pron:"포 디스?",ko:"이것을 위한?"}],dial:[{g:"M",role:"아이",en:"Can I get a bag for this? It's a gift!",pron:"캔 아이 겟 어 백 포 디스? 잇츠 어 기프트!",ko:"이거 담을 봉투 받을 수 있나요? 선물이에요!"},{g:"F",role:"직원",en:"Of course! Would you like a gift box too?",pron:"오브 코스! 우드 유 라이크 어 기프트 박스 투?",ko:"물론이죠! 선물 상자도 원하시나요?"}],prac:["Can I get a bag? I have lots of things!"]},
+{no:"144",cat:"🛍️ 여행쇼핑",star:4,ko:"이거 완벽해! 정말 마음에 들어!",en:"This is perfect! I love it!",pron:"디스 이즈 퍼펙트! 아이 러브 잇!",chunk:[{en:"This",pron:"디스",ko:"이건"},{en:"is perfect!",pron:"이즈 퍼펙트!",ko:"완벽해!"},{en:"I love it!",pron:"아이 러브 잇!",ko:"정말 마음에 들어!"}],dial:[{g:"M",role:"아이",en:"This is perfect! I love it! I'll take it!",pron:"디스 이즈 퍼펙트! 아이 러브 잇! 아윌 테이크 잇!",ko:"이거 완벽해! 정말 마음에 들어! 이거로 할게요!"},{g:"F",role:"엄마",en:"Great! You have good taste!",pron:"그레이트! 유 해브 굿 테이스트!",ko:"좋아! 안목이 좋구나!"}],prac:["This is perfect! It's exactly what I wanted!"]},
+{no:"145",cat:"🛍️ 여행쇼핑",star:4,ko:"저기 있는 저 가게에 가자.",en:"Let's go to that store over there.",pron:"렛츠 고 투 댓 스토어 오버 데어.",chunk:[{en:"Let's go",pron:"렛츠 고",ko:"가자"},{en:"to that store",pron:"투 댓 스토어",ko:"저 가게에"},{en:"over there.",pron:"오버 데어.",ko:"저기 있는."}],dial:[{g:"M",role:"아이",en:"Let's go to that store over there! It looks interesting!",pron:"렛츠 고 투 댓 스토어 오버 데어! 잇 룩스 인터레스팅!",ko:"저기 있는 저 가게에 가자! 흥미로워 보여!"},{g:"F",role:"엄마",en:"Okay! But no more buying! Just looking!",pron:"오케이! 벗 노 모어 바잉! 저스트 루킹!",ko:"좋아! 하지만 더 이상 사지 말고! 구경만!"}],prac:["Let's go to that restaurant over there! Looks delicious!"]},
+// ===== Part 9: 질문과 대답 146-150 =====
+{no:"146",cat:"❓ 질문과대답",star:5,ko:"이게 무슨 뜻이야?",en:"What does this mean?",pron:"왓 더즈 디스 민?",chunk:[{en:"What does",pron:"왓 더즈",ko:"무엇을 하나요"},{en:"this",pron:"디스",ko:"이것이"},{en:"mean?",pron:"민?",ko:"의미하기를?"}],dial:[{g:"M",role:"아이",en:"Excuse me! What does this word mean?",pron:"익스큐즈 미! 왓 더즈 디스 워드 민?",ko:"실례합니다! 이 단어가 무슨 뜻이에요?"},{g:"F",role:"선생님",en:"That means 'wonderful'. It's a positive word!",pron:"댓 민즈 원더풀. 잇츠 어 파지티브 워드!",ko:"그건 '놀라운'이라는 뜻이야. 긍정적인 단어야!"}],prac:["What does 'amazing' / 'hilarious' / 'gorgeous' mean?"]},
+{no:"147",cat:"❓ 질문과대답",star:5,ko:"이거 도와줄 수 있어?",en:"Can you help me with this?",pron:"캔 유 헬프 미 위드 디스?",chunk:[{en:"Can you",pron:"캔 유",ko:"당신은 할 수 있나요"},{en:"help me",pron:"헬프 미",ko:"나를 돕는 것을"},{en:"with this?",pron:"위드 디스?",ko:"이것과 함께?"}],dial:[{g:"M",role:"아이",en:"Can you help me with this math problem?",pron:"캔 유 헬프 미 위드 디스 매쓰 프라블럼?",ko:"이 수학 문제 도와줄 수 있어?"},{g:"F",role:"친구A",en:"Sure! Let me take a look!",pron:"슈어! 렛 미 테이크 어 룩!",ko:"물론이지! 내가 볼게!"}],prac:["Can you help me with my project / luggage?"]},
+{no:"148",cat:"❓ 질문과대답",star:5,ko:"화장실이 어디 있나요?",en:"Where's the bathroom?",pron:"웨어즈 더 배쓰룸?",chunk:[{en:"Where's",pron:"웨어즈",ko:"어디 있나요"},{en:"the bathroom?",pron:"더 배쓰룸?",ko:"화장실이?"}],dial:[{g:"M",role:"아이",en:"Excuse me, where's the bathroom?",pron:"익스큐즈 미, 웨어즈 더 배쓰룸?",ko:"실례합니다, 화장실이 어디 있나요?"},{g:"F",role:"직원",en:"Down the hall, on the right! Can't miss it!",pron:"다운 더 홀, 온 더 라잇! 캔트 미스 잇!",ko:"복도 끝, 오른쪽이에요! 쉽게 찾을 거예요!"}],prac:["Where's the bathroom? I really need to go!"]},
+{no:"149",cat:"❓ 질문과대답",star:4,ko:"지금 우리 뭐 할까?",en:"What should we do now?",pron:"왓 슈드 위 두 나우?",chunk:[{en:"What",pron:"왓",ko:"무엇을"},{en:"should we do",pron:"슈드 위 두",ko:"해야 할까 우리가"},{en:"now?",pron:"나우?",ko:"지금?"}],dial:[{g:"M",role:"아이",en:"What should we do now? I'm bored!",pron:"왓 슈드 위 두 나우? 아임 보어드!",ko:"지금 우리 뭐 할까? 지루해!"},{g:"F",role:"친구A",en:"Let's play a board game! That's always fun!",pron:"렛츠 플레이 어 보드 게임! 댓츠 올웨이즈 펀!",ko:"보드게임 하자! 항상 재미있잖아!"}],prac:["What should we do? It's a free day!"]},
+{no:"150",cat:"❓ 질문과대답",star:5,ko:"그거 좋은데! 그것을 하자!",en:"That sounds great! Let's do it!",pron:"댓 사운즈 그레이트! 렛츠 두 잇!",chunk:[{en:"That",pron:"댓",ko:"그것은"},{en:"sounds great!",pron:"사운즈 그레이트!",ko:"좋은데!"},{en:"Let's do it!",pron:"렛츠 두 잇!",ko:"그것을 하자!"}],dial:[{g:"F",role:"친구A",en:"How about going to the water park tomorrow?",pron:"하우 어바웃 고잉 투 더 워터 파크 투모로우?",ko:"내일 워터파크 가는 거 어때?"},{g:"M",role:"친구B",en:"That sounds great! Let's do it! I can't wait!",pron:"댓 사운즈 그레이트! 렛츠 두 잇! 아이 캔트 웨이트!",ko:"그거 좋은데! 그것을 하자! 기다릴 수가 없어!"},{g:"F",role:"친구A",en:"Awesome! I'll ask my mom right now!",pron:"어썸! 아윌 애스크 마이 맘 라잇 나우!",ko:"좋아! 지금 바로 엄마한테 물어볼게!"}],prac:["That sounds great! Let's go together!","That sounds great! Count me in!"]},
+];
+
+// ==================== VOICE ====================
+let voices=[],voiceF=null,voiceM=null;
+function loadVoices(){
+  voices=speechSynthesis.getVoices();
+  const enV=voices.filter(v=>v.lang.startsWith('en'));
+  if(!enV.length){setTimeout(loadVoices,300);return;}
+  populateSel('selF',enV,['Samantha','Victoria','Karen','Moira','Zira','Female']);
+  populateSel('selM',enV,['Daniel','Alex','Tom','Fred','David','Male']);
+  autoSelect();
+}
+function populateSel(id,enV,keys){
+  const sel=document.getElementById(id);
+  sel.innerHTML='';
+  enV.forEach((v,i)=>{const o=document.createElement('option');o.value=i;o.textContent=v.name;sel.appendChild(o);});
+  const fi=enV.findIndex(v=>keys.some(k=>v.name.includes(k)));
+  if(fi>=0)sel.value=fi;
+}
+function autoSelect(){
+  const enV=voices.filter(v=>v.lang.startsWith('en'));
+  const fK=['Samantha','Victoria','Karen','Moira','Zira','female'];
+  const mK=['Daniel','Alex','Tom','Fred','David','male'];
+  let fi=enV.findIndex(v=>fK.some(k=>v.name.includes(k)));
+  let mi=enV.findIndex(v=>mK.some(k=>v.name.includes(k)));
+  if(fi<0)fi=0; if(mi<0||mi===fi)mi=Math.min(1,enV.length-1);
+  voiceF=enV[fi]||null; voiceM=enV[mi]||null;
+}
+function updateVoice(g){
+  const enV=voices.filter(v=>v.lang.startsWith('en'));
+  const idx=parseInt(document.getElementById(g==='F'?'selF':'selM').value);
+  if(g==='F')voiceF=enV[idx]||null; else voiceM=enV[idx]||null;
+}
+speechSynthesis.onvoiceschanged=loadVoices; loadVoices();
+
+function getSpd(){return parseFloat(document.getElementById('speed').value)||0.9;}
+function getGap(){return parseFloat(document.getElementById('gap').value)||1;}
+
+function speakText(txt,g,btn){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  const v=(g==='F'?voiceF:voiceM)||voiceF||null;
+  if(v)u.voice=v; u.rate=getSpd(); u.lang='en-US';
+  if(btn){const orig=btn.textContent;btn.textContent='▶ 재생중...';u.onend=()=>{btn.textContent=orig;};}
+  speechSynthesis.speak(u);
+}
+
+let playing=false;
+function stopAll(){
+  playing=false; speechSynthesis.cancel();
+}
+
+// ==================== CATEGORIES ====================
+const allCats=[...new Set(PATTERNS.map(p=>p.cat))];
+let activeCat='all';
+
+function buildCatFilter(){
+  const div=document.getElementById('catFilter');
+  div.innerHTML='';
+  const all=document.createElement('button');
+  all.className='cat-btn active';all.textContent='📋 전체';
+  all.onclick=()=>filterCat('all',all);
+  div.appendChild(all);
+  allCats.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='cat-btn';btn.textContent=c;
+    btn.onclick=()=>filterCat(c,btn);
+    div.appendChild(btn);
+  });
+}
+
+function filterCat(cat,btn){
+  activeCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filterCards();
+}
+
+function filterCards(){
+  const term=document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('details[data-no]').forEach(d=>{
+    const cat=d.dataset.cat||'';
+    const q=(d.dataset.ko||'').toLowerCase();
+    const a=(d.dataset.en||'').toLowerCase();
+    const catMatch=(activeCat==='all'||cat===activeCat);
+    const termMatch=!term||q.includes(term)||a.includes(term);
+    d.style.display=(catMatch&&termMatch)?'':'none';
+  });
+}
+
+function clearSearch(){
+  document.getElementById('searchInput').value='';
+  filterCards();
+}
+
+function expandAll(){document.querySelectorAll('details').forEach(d=>d.open=true);}
+function collapseAll(){document.querySelectorAll('details').forEach(d=>d.open=false);}
+
+// ==================== RENDER ====================
+function stars(n){return '⭐'.repeat(n)+'☆'.repeat(5-n);}
+
+function buildChunks(chunks){
+  return chunks.map(c=>`<div class="chunk-item">
+    <div class="c-en">${c.en}</div>
+    <div class="c-pron">${c.pron}</div>
+    <div class="c-ko">${c.ko}</div>
+  </div>`).join('');
+}
+
+function buildDial(dial,no){
+  return dial.map((d,i)=>{
+    const badge=d.g==='F'?`👩 ${d.role||'A'}`:`👨 ${d.role||'B'}`;
+    const spkEn=d.en.replace(/'/g,"\\'");
+    return `<div class="dl s${d.g}" data-g="${d.g}">
+      <div class="dl-header">
+        <span class="spk-badge ${d.g}">${badge}</span>
+        <button class="speak-dl-btn ${d.g}" onclick="speakText('${spkEn}','${d.g}',this)">🔊 듣기</button>
+      </div>
+      <div class="dl-en">${d.en}</div>
+      <div class="dl-pron">🔤 ${d.pron}</div>
+      <div class="dl-ko">🇰🇷 ${d.ko}</div>
+    </div>`;
+  }).join('');
+}
+
+function playAllDial(no){
+  const details=document.querySelector(`details[data-no="${no}"]`);
+  const lines=details.querySelectorAll('.dl');
+  if(!lines.length)return;
+  playing=true;
+  let idx=0;
+  function next(){
+    if(!playing||idx>=lines.length)return;
+    lines.forEach(l=>l.style.outline='');
+    lines[idx].style.outline='2px solid #28a745';
+    lines[idx].scrollIntoView({behavior:'smooth',block:'nearest'});
+    const en=lines[idx].querySelector('.dl-en').textContent;
+    const g=lines[idx].dataset.g||'F';
+    const u=new SpeechSynthesisUtterance(en);
+    const v=(g==='F'?voiceF:voiceM)||voiceF||null;
+    if(v)u.voice=v; u.rate=getSpd(); u.lang='en-US';
+    u.onend=()=>{
+      lines[idx].style.outline='';
+      idx++;
+      if(idx<lines.length&&playing){
+        setTimeout(next,getGap()*1000);
+      }
+    };
+    speechSynthesis.speak(u);
+  }
+  next();
+}
+
+function renderCards(){
+  const con=document.getElementById('cardsContainer');
+  con.innerHTML='';
+  PATTERNS.forEach(p=>{
+    const det=document.createElement('details');
+    det.dataset.no=p.no;
+    det.dataset.cat=p.cat;
+    det.dataset.ko=p.ko;
+    det.dataset.en=p.en;
+
+    const spkEn=p.en.replace(/'/g,"\\'");
+    det.innerHTML=`
+      <summary>
+        <span class="pnum">${p.no}</span>
+        <div class="sum-body">
+          <div class="q-ko">${p.ko}</div>
+          <div class="q-cat">${p.cat} &nbsp;|&nbsp; 영어 답 클릭해서 확인</div>
+          <div class="star-row">${stars(p.star)}</div>
+        </div>
+        <span class="chev">▼</span>
+      </summary>
+      <div class="card-body">
+        <div class="ans-en-box">
+          <div class="ans-en-main">💬 ${p.en}</div>
+          <div class="ans-pron">🔤 발음: ${p.pron}</div>
+          <button class="speak-main-btn" onclick="speakText('${spkEn}','F',this)">🔊 전체 듣기</button>
+        </div>
+        <div class="section-title">🧩 끊어읽기 (청크)</div>
+        <div class="chunks">${buildChunks(p.chunk)}</div>
+        <div class="section-title">💬 실전 대화
+          <button class="play-all-btn" style="margin-left:8px;font-size:.72em;" onclick="playAllDial('${p.no}')">▶ 전체 듣기</button>
+          <button class="play-btn red" style="margin-left:4px;font-size:.72em;padding:3px 8px;" onclick="stopAll()">⏹ 정지</button>
+        </div>
+        <div class="dial-list">${buildDial(p.dial,p.no)}</div>
+        ${p.prac?`<div class="section-title">🎯 응용 연습</div>
+        <ul class="prac-list">${p.prac.map(pr=>`<li>${pr}</li>`).join('')}</ul>`:''}
+      </div>`;
+    con.appendChild(det);
+  });
+
+  // Gap display
+  document.getElementById('gap').oninput=function(){
+    document.getElementById('gapVal').textContent=this.value+'s';
+  };
+}
+
+buildCatFilter();
+renderCards();
+</script>
+</body>
+</html>
