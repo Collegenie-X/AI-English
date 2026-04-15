@@ -152,6 +152,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
 
   // 단어 바뀔 때 자동 발음
   useEffect(() => {
+    if (!item) return
     const t = setTimeout(playWord, 280)
     return () => clearTimeout(t)
   }, [idx, pool]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -194,7 +195,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
         {/* ── Gradient header ── */}
         <div
           className="dialog-header-gradient"
-          style={{ background: `linear-gradient(135deg, ${catColor}, ${catColor}bb)` }}
+          style={{ background: `linear-gradient(135deg, ${currentCatColor}, ${currentCatColor}bb)` }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <span style={{ color: 'white', fontWeight: 900, fontSize: '1.05rem' }}>{catName}</span>
@@ -302,7 +303,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
 
         {/* ── Progress bar ── */}
         <div style={{ height: '5px', background: '#f0f0f0', overflow: 'hidden' }}>
-          <div style={{ height: '100%', background: catColor, width: `${pct}%`, transition: 'width 0.45s cubic-bezier(0.22,1,0.36,1)' }} />
+          <div style={{ height: '100%', background: currentCatColor, width: `${pct}%`, transition: 'width 0.45s cubic-bezier(0.22,1,0.36,1)' }} />
         </div>
 
         {/* ── Hero: left-nav · emoji · right-nav ── */}
@@ -441,8 +442,8 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
                       cursor: 'pointer', textAlign: 'left',
                       fontFamily: 'inherit', width: '100%', transition: 'background 0.15s',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = `${catColor}22`)}
-                    onMouseLeave={e => (e.currentTarget.style.background = `${catColor}0f`)}
+                    onMouseEnter={e => (e.currentTarget.style.background = `${currentCatColor}22`)}
+                    onMouseLeave={e => (e.currentTarget.style.background = `${currentCatColor}0f`)}
                   >
                     <span style={{ fontSize: '16px', flexShrink: 0, color: catColor }}>
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
