@@ -748,7 +748,7 @@ export default function HomePage() {
                   background: 'rgba(88,204,2,0.12)', border: '1.5px solid rgba(88,204,2,0.3)',
                 }}>
                   <span style={{ fontSize: '1rem' }}>🔄</span>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#8fdd2e' }}>새 콘텐츠 & 기능 계속 업데이트 중</span>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#8fdd2e' }}>회원 가입없이 무료로 사용 가능 </span>
                 </div>
               </div>
             </div>
