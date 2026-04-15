@@ -1498,11 +1498,16 @@
     }
 
     /* ── 그리드 ── */
-    .puzzle-grid-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+    .puzzle-grid-wrap {
+      display: block; width: 100%;
+      margin-bottom: 14px; box-sizing: border-box;
+      padding: 0 2px;
+    }
     .puzzle-grid {
-      display: grid; gap: 6px;
-      background: #c9b8ef; padding: 12px;
-      border-radius: 20px;
+      display: grid; gap: 5px;
+      background: #c9b8ef; padding: 10px;
+      border-radius: 20px; width: 100%;
+      box-sizing: border-box;
       box-shadow: 0 4px 20px rgba(126,87,194,0.28);
     }
     .puzzle-cell {
@@ -1513,11 +1518,13 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.07);
       user-select: none; border: 2.5px solid transparent;
       position: relative;
+      aspect-ratio: 1;
+      min-width: 0; min-height: 0;
     }
-    /* 난이도별 셀 크기 */
-    .diff-easy   .puzzle-cell { width: 74px; height: 74px; font-size: 1.55em; }
-    .diff-medium .puzzle-cell { width: 62px; height: 62px; font-size: 1.38em; }
-    .diff-hard   .puzzle-cell { width: 54px; height: 54px; font-size: 1.22em; }
+    /* 난이도별 폰트만 조절 (크기는 grid 1fr로 자동) */
+    .diff-easy   .puzzle-cell { font-size: clamp(1.1em, 5.5vw, 1.7em); }
+    .diff-medium .puzzle-cell { font-size: clamp(0.95em, 4.5vw, 1.45em); }
+    .diff-hard   .puzzle-cell { font-size: clamp(0.85em, 3.8vw, 1.28em); }
 
     .puzzle-cell:hover:not(.found-0):not(.found-1):not(.found-2):not(.found-3):not(.found-4) {
       transform: scale(1.09); box-shadow: 0 4px 12px rgba(126,87,194,0.22);
