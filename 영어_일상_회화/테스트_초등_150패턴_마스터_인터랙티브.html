@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏫 초등 150패턴 마스터 테스트 (인터랙티브)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#f0f4ff;color:#333}
+header{background:linear-gradient(135deg,#4f7ef5,#7b52e0);color:#fff;padding:18px 20px;text-align:center}
+header h1{font-size:1.4em;margin-bottom:6px}
+header p{font-size:.85em;opacity:.9}
+.score-bar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:12px 16px;background:#fff;border-bottom:2px solid #e0e7ff;font-size:.85em}
+.sc-box{background:#f0f4ff;border-radius:10px;padding:6px 14px;font-weight:700}
+.sc-box.ok{color:#22c55e}.sc-box.ng{color:#ef4444}.sc-box.tot{color:#6366f1}
+.voice-panel{background:#fff;padding:10px 16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #e0e7ff;font-size:.82em}
+.voice-panel label{font-weight:600;color:#555}
+.voice-panel select{border:1.5px solid #c7d2fe;border-radius:8px;padding:4px 8px;font-size:.82em;color:#333;background:#f8f9ff;cursor:pointer}
+.speed-ctrl{display:flex;align-items:center;gap:8px;font-size:.82em;background:#fff;padding:8px 16px;border-bottom:1px solid #e0e7ff}
+.speed-ctrl span{font-weight:600;color:#555}
+.spd-btn{border:1.5px solid #c7d2fe;background:#f0f4ff;color:#4f7ef5;border-radius:8px;padding:4px 10px;cursor:pointer;font-weight:700;font-size:.82em}
+.spd-btn.active{background:#4f7ef5;color:#fff}
+.filter-bar{display:flex;gap:8px;padding:10px 16px;background:#fff;border-bottom:1px solid #e0e7ff;overflow-x:auto;flex-wrap:nowrap}
+.filter-bar button{border:1.5px solid #c7d2fe;background:#f8f9ff;color:#444;border-radius:20px;padding:5px 14px;cursor:pointer;white-space:nowrap;font-size:.82em;font-weight:600;transition:all .2s}
+.filter-bar button.active{background:#4f7ef5;color:#fff;border-color:#4f7ef5}
+.search-bar{padding:10px 16px;background:#fff;border-bottom:1px solid #e0e7ff}
+.search-bar input{width:100%;border:1.5px solid #c7d2fe;border-radius:10px;padding:7px 14px;font-size:.85em;outline:none}
+.search-bar input:focus{border-color:#4f7ef5}
+.progress-wrap{padding:8px 16px;background:#fff;border-bottom:1px solid #e0e7ff;font-size:.8em;color:#555}
+.prog-bar{height:8px;background:#e0e7ff;border-radius:4px;margin-top:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#4f7ef5,#7b52e0);border-radius:4px;transition:width .4s}
+.container{max-width:800px;margin:0 auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.qcard{background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(79,126,245,.1);overflow:hidden;border:1.5px solid #e0e7ff;transition:border-color .2s}
+.qcard:hover{border-color:#c7d2fe}
+.qcard summary{list-style:none;padding:14px 16px;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.qcard summary::-webkit-details-marker{display:none}
+.q-num{background:linear-gradient(135deg,#4f7ef5,#7b52e0);color:#fff;border-radius:8px;padding:3px 9px;font-size:.78em;font-weight:700;white-space:nowrap;min-width:44px;text-align:center}
+.q-body{flex:1}
+.q-type-badge{display:inline-block;font-size:.7em;padding:2px 8px;border-radius:10px;margin-bottom:4px;font-weight:600}
+.badge-ko2en{background:#dbeafe;color:#1d4ed8}
+.badge-en2ko{background:#dcfce7;color:#15803d}
+.badge-chunk{background:#fef3c7;color:#92400e}
+.badge-sit{background:#fce7f3;color:#9d174d}
+.q-text{font-size:1em;font-weight:700;color:#1e3a8a;line-height:1.4}
+.q-text.en{color:#166534;font-style:italic}
+.q-en-audio{display:flex;align-items:center;gap:8px;margin-top:6px}
+.q-en-pron{font-size:.8em;color:#6b7280;background:#f9fafb;padding:3px 8px;border-radius:6px}
+.speak-q-btn{border:none;background:#dcfce7;color:#15803d;border-radius:8px;padding:4px 10px;cursor:pointer;font-size:.8em;font-weight:700}
+.speak-q-btn:hover{background:#bbf7d0}
+.hint-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:6px 10px;margin-top:6px;font-size:.82em;color:#78350f}
+.hint-lv{font-weight:700;margin-right:4px}
+.hint-txt{color:#92400e;font-family:monospace}
+.q-arrow{margin-left:auto;color:#9ca3af;font-size:1em;transition:transform .2s}
+details[open] .q-arrow{transform:rotate(180deg)}
+.ans-section{padding:0 16px 14px}
+.ans-box{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.ans-box.ko{background:#f0fdf4;border-color:#bbf7d0}
+.ans-box.chunk{background:#fffbeb;border-color:#fde68a}
+.ans-box.sit{background:#fdf2f8;border-color:#f9a8d4}
+.ans-en{font-size:1em;font-weight:700;color:#0c4a6e;margin-bottom:4px}
+.ans-pron{font-size:.82em;color:#64748b;background:#e0f2fe;padding:3px 8px;border-radius:6px;display:inline-block;margin-bottom:6px}
+.ans-ko{font-size:1em;font-weight:700;color:#14532d}
+.ans-chunk-ctx{font-size:.88em;color:#555;line-height:1.6}
+.ans-chunk{display:inline-block;background:#fef9c3;border:1.5px dashed #f59e0b;border-radius:6px;padding:2px 10px;font-weight:700;color:#92400e;font-size:1em;margin:2px}
+.ans-sit-ctx{font-size:.88em;color:#555;font-style:italic;background:#fdf2f8;border-radius:6px;padding:6px 10px;margin-bottom:6px}
+.speak-btn{border:none;background:#0ea5e9;color:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:.82em;font-weight:700;display:flex;align-items:center;gap:4px}
+.speak-btn:hover{background:#0284c7}
+.speak-btn.playing{background:#ef4444}
+.score-btns{display:flex;gap:8px;margin-top:8px}
+.btn-ok{border:none;background:#22c55e;color:#fff;border-radius:8px;padding:6px 14px;cursor:pointer;font-weight:700;font-size:.82em}
+.btn-ok:hover{background:#16a34a}
+.btn-ng{border:none;background:#ef4444;color:#fff;border-radius:8px;padding:6px 14px;cursor:pointer;font-weight:700;font-size:.82em}
+.btn-ng:hover{background:#dc2626}
+.btn-ok.selected{box-shadow:0 0 0 3px #86efac;transform:scale(1.05)}
+.btn-ng.selected{box-shadow:0 0 0 3px #fca5a5;transform:scale(1.05)}
+.reveal-btn{border:none;background:#6366f1;color:#fff;border-radius:8px;padding:7px 16px;cursor:pointer;font-weight:700;font-size:.85em;width:100%;margin-bottom:10px}
+.reveal-btn:hover{background:#4f46e5}
+.cat-label{font-size:.75em;color:#9ca3af;font-weight:600;margin-bottom:2px}
+.no-result{text-align:center;padding:40px;color:#9ca3af;font-size:1em}
+.expand-btns{display:flex;gap:8px;padding:8px 16px;background:#fff;border-bottom:1px solid #e0e7ff}
+.expand-btns button{border:1.5px solid #c7d2fe;background:#f0f4ff;color:#4f7ef5;border-radius:8px;padding:5px 14px;cursor:pointer;font-size:.82em;font-weight:700}
+.expand-btns button:hover{background:#4f7ef5;color:#fff}
+@media(max-width:500px){.q-text{font-size:.92em}.score-bar{gap:8px}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏫 초등 150패턴 마스터 테스트</h1>
+  <p>Part 1: 한글→영어 (50) · Part 2: 영어→한글 (50) · Part 3: 청크 채우기 (30) · Part 4: 대화완성 (20)</p>
+</header>
+
+<div class="score-bar">
+  <div class="sc-box ok">✅ 맞음: <span id="sc-ok">0</span></div>
+  <div class="sc-box ng">❌ 틀림: <span id="sc-ng">0</span></div>
+  <div class="sc-box tot">📊 총점: <span id="sc-tot">0</span>/150</div>
+  <div class="sc-box" style="color:#6366f1">🎯 정확도: <span id="sc-pct">0</span>%</div>
+</div>
+
+<div class="voice-panel">
+  <span>🎙️ 음성 설정:</span>
+  <label>👩 여성:</label>
+  <select id="voiceF" onchange="updateVoice()"></select>
+  <label>👨 남성:</label>
+  <select id="voiceM" onchange="updateVoice()"></select>
+</div>
+
+<div class="speed-ctrl">
+  <span>🎚️ 속도:</span>
+  <button class="spd-btn" onclick="setSpeed(0.75)">0.75x</button>
+  <button class="spd-btn" onclick="setSpeed(0.9)">0.9x</button>
+  <button class="spd-btn active" onclick="setSpeed(1.0)">1.0x</button>
+  <button class="spd-btn" onclick="setSpeed(1.25)">1.25x</button>
+</div>
+
+<div class="filter-bar" id="filterBar">
+  <button class="active" onclick="filterPart('all')">📚 전체</button>
+  <button onclick="filterPart(1)">Part 1 · 한글→영어</button>
+  <button onclick="filterPart(2)">Part 2 · 영어→한글</button>
+  <button onclick="filterPart(3)">Part 3 · 청크채우기</button>
+  <button onclick="filterPart(4)">Part 4 · 대화완성</button>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍 문제 검색..." oninput="filterSearch()">
+</div>
+
+<div class="progress-wrap">
+  <div id="prog-label">전체 진행률: 0 / 150</div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div class="expand-btns">
+  <button onclick="expandAll()">📂 전체 열기</button>
+  <button onclick="collapseAll()">📁 전체 닫기</button>
+  <button onclick="resetScores()">🔄 점수 초기화</button>
+</div>
+
+<div class="container" id="qContainer"></div>
+
+<script>
+const DATA=[
+// ─────────────── Part 1: 한글→영어 (001-050) ───────────────
+{no:"001",p:1,cat:"인사와소개",hint:"🟢",hintT:"H_ t_ _ _ _! H_ _'s it g_ _ _ _?",
+ q:"안녕! 어떻게 지내?",ans:"Hi there! How's it going?",pron:"하이 데어! 하우즈 잇 고잉?",t:"ko2en"},
+{no:"002",p:1,cat:"인사와소개",hint:"🟡",hintT:"(3단어)",
+ q:"야! 뭐해?",ans:"Hey! What's up?",pron:"헤이! 왓츠 업?",t:"ko2en"},
+{no:"003",p:1,cat:"인사와소개",hint:"🟢",hintT:"G_ _ _ to s_ _ you!",
+ q:"다시 보니 좋다!",ans:"Good to see you!",pron:"굳 투 씨 유!",t:"ko2en"},
+{no:"004",p:1,cat:"인사와소개",hint:"🟡",hintT:"(4단어)",
+ q:"오랜만이야!",ans:"Long time no see!",pron:"롱 타임 노 씨!",t:"ko2en"},
+{no:"005",p:1,cat:"인사와소개",hint:"🟢",hintT:"H_ _'s it g_ _ _ _?",
+ q:"어떻게 지내?",ans:"How's it going?",pron:"하우즈 잇 고잉?",t:"ko2en"},
+{no:"006",p:1,cat:"인사와소개",hint:"🟡",hintT:"(6단어)",
+ q:"학교에서 하루 어땠어?",ans:"How was your day at school?",pron:"하우 워즈 유어 데이 앳 스쿨?",t:"ko2en"},
+{no:"007",p:1,cat:"인사와소개",hint:"🟢",hintT:"S_ _ you t_ _ _ _ _ _ _ at s_ _ _ _ _!",
+ q:"내일 학교에서 보자!",ans:"See you tomorrow at school!",pron:"씨 유 투모로우 앳 스쿨!",t:"ko2en"},
+{no:"008",p:1,cat:"인사와소개",hint:"🟡",hintT:"(2단어)",
+ q:"조심해서 가!",ans:"Take care!",pron:"테이크 케어!",t:"ko2en"},
+{no:"009",p:1,cat:"인사와소개",hint:"🟢",hintT:"I'm f_ _ _ Seoul, K_ _ _ _.",
+ q:"나는 서울, 한국에서 왔어.",ans:"I'm from Seoul, Korea.",pron:"아임 프롬 서울, 코리아.",t:"ko2en"},
+{no:"010",p:1,cat:"인사와소개",hint:"🟡",hintT:"(5단어)",
+ q:"나는 5학년이야.",ans:"I'm in the 5th grade.",pron:"아임 인 더 피프스 그레이드.",t:"ko2en"},
+
+{no:"011",p:1,cat:"감정과상태",hint:"🟢",hintT:"I'm s_ h_ _ _ _! I p_ _ _ _ _ the test!",
+ q:"나는 시험에 통과해서 너무 행복해!",ans:"I'm so happy! I passed the test!",pron:"아임 소 해피! 아이 패스트 더 테스트!",t:"ko2en"},
+{no:"012",p:1,cat:"감정과상태",hint:"🟡",hintT:"(6단어)",
+ q:"나는 여행 때문에 너무 신나!",ans:"I'm so excited for the trip!",pron:"아임 소 익사이티드 포 더 트립!",t:"ko2en"},
+{no:"013",p:1,cat:"감정과상태",hint:"🟢",hintT:"I'm k_ _ _ of n_ _ _ _ _ _.",
+ q:"나는 약간 긴장돼.",ans:"I'm kind of nervous.",pron:"아임 카인드 오브 너버스.",t:"ko2en"},
+{no:"014",p:1,cat:"감정과상태",hint:"🟡",hintT:"(3단어)",
+ q:"나는 정말 피곤해.",ans:"I'm really tired.",pron:"아임 리얼리 타이어드.",t:"ko2en"},
+{no:"015",p:1,cat:"감정과상태",hint:"🟢",hintT:"I h_ _ _ a h_ _ _ _ _ _ _.",
+ q:"나는 두통이 있어.",ans:"I have a headache.",pron:"아이 해브 어 헤드에이크.",t:"ko2en"},
+{no:"016",p:1,cat:"감정과상태",hint:"🟡",hintT:"(2단어)",
+ q:"나 배고파 죽겠어!",ans:"I'm starving!",pron:"아임 스타빙!",t:"ko2en"},
+{no:"017",p:1,cat:"감정과상태",hint:"🟢",hintT:"I'm s_ _ _ _ _ _!",
+ q:"나 배불러 죽겠어!",ans:"I'm stuffed!",pron:"아임 스터프드!",t:"ko2en"},
+{no:"018",p:1,cat:"감정과상태",hint:"🟡",hintT:"(4단어)",
+ q:"나는 기분이 좋아졌어.",ans:"I feel better now.",pron:"아이 필 베터 나우.",t:"ko2en"},
+{no:"019",p:1,cat:"감정과상태",hint:"🟢",hintT:"I'm w_ _ _ a_ _ _ _!",
+ q:"나는 완전히 깨어 있어!",ans:"I'm wide awake!",pron:"아임 와이드 어웨이크!",t:"ko2en"},
+{no:"020",p:1,cat:"감정과상태",hint:"🟡",hintT:"(3단어)",
+ q:"나는 잠을 못 자겠어.",ans:"I can't sleep.",pron:"아이 캔트 슬립.",t:"ko2en"},
+
+{no:"021",p:1,cat:"일상루틴",hint:"🟢",hintT:"I w_ _ _ up at 7 AM.",
+ q:"나는 오전 7시에 일어났어.",ans:"I woke up at 7 AM.",pron:"아이 워크 업 앳 세븐 에이엠.",t:"ko2en"},
+{no:"022",p:1,cat:"일상루틴",hint:"🟡",hintT:"(3단어)",
+ q:"나는 늦고 있어!",ans:"I'm running late!",pron:"아임 러닝 레이트!",t:"ko2en"},
+{no:"023",p:1,cat:"일상루틴",hint:"🟢",hintT:"I a_ _ _ _ _ m_ _ _ _ _ the bus.",
+ q:"나는 거의 버스를 놓칠 뻔했어.",ans:"I almost missed the bus.",pron:"아이 올모스트 미스트 더 버스.",t:"ko2en"},
+{no:"024",p:1,cat:"일상루틴",hint:"🟡",hintT:"(5단어)",
+ q:"엄마가 내 점심을 싸주셨어.",ans:"My mom packed my lunch.",pron:"마이 맘 팩트 마이 런치.",t:"ko2en"},
+{no:"025",p:1,cat:"일상루틴",hint:"🟢",hintT:"C_ _ you d_ _ _ _ me to school?",
+ q:"나를 학교에 데려다줄 수 있나요?",ans:"Can you drive me to school?",pron:"캔 유 드라이브 미 투 스쿨?",t:"ko2en"},
+{no:"026",p:1,cat:"일상루틴",hint:"🟡",hintT:"(5단어)",
+ q:"나 집에 왔어! 저녁 뭐야?",ans:"I'm home! What's for dinner?",pron:"아임 홈! 왓츠 포 디너?",t:"ko2en"},
+{no:"027",p:1,cat:"일상루틴",hint:"🟢",hintT:"I h_ _ _ to do my h_ _ _ _ _ _ _ first.",
+ q:"나는 숙제를 먼저 해야 해.",ans:"I have to do my homework first.",pron:"아이 해브 투 두 마이 홈워크 퍼스트.",t:"ko2en"},
+{no:"028",p:1,cat:"일상루틴",hint:"🟡",hintT:"(6단어)",
+ q:"밖에 나가서 놀아도 돼?",ans:"Can I go outside and play?",pron:"캔 아이 고 아웃사이드 앤 플레이?",t:"ko2en"},
+{no:"029",p:1,cat:"일상루틴",hint:"🟢",hintT:"I'm g_ _ _ _ to bed n_ _.",
+ q:"나는 지금 침대로 가는 중이야.",ans:"I'm going to bed now.",pron:"아임 고잉 투 베드 나우.",t:"ko2en"},
+{no:"030",p:1,cat:"일상루틴",hint:"🟡",hintT:"(2단어)",
+ q:"잘 자, 여러분!",ans:"Good night, everyone!",pron:"굳 나이트, 에브리원!",t:"ko2en"},
+
+{no:"031",p:1,cat:"학교생활",hint:"🟢",hintT:"W_ _ _ class do we h_ _ _ next?",
+ q:"다음 수업 뭐야?",ans:"What class do we have next?",pron:"왓 클래스 두 위 해브 넥스트?",t:"ko2en"},
+{no:"032",p:1,cat:"학교생활",hint:"🟡",hintT:"(5단어)",
+ q:"이 수업은 정말 지루해.",ans:"This class is so boring.",pron:"디스 클래스 이즈 소 보링.",t:"ko2en"},
+{no:"033",p:1,cat:"학교생활",hint:"🟢",hintT:"I d_ _'t u_ _ _ _ _ _ _ _ _ this.",
+ q:"나는 이것을 이해하지 못해.",ans:"I don't understand this.",pron:"아이 돈트 언더스탠드 디스.",t:"ko2en"},
+{no:"034",p:1,cat:"학교생활",hint:"🟡",hintT:"(5단어)",
+ q:"다시 설명해 줄 수 있어?",ans:"Can you explain it again?",pron:"캔 유 익스플레인 잇 어게인?",t:"ko2en"},
+{no:"035",p:1,cat:"학교생활",hint:"🟢",hintT:"It's l_ _ _ _ _ _ _ _! Let's go e_ _!",
+ q:"점심시간이야! 먹으러 가자!",ans:"It's lunchtime! Let's go eat!",pron:"잇츠 런치타임! 렛츠 고 잇!",t:"ko2en"},
+{no:"036",p:1,cat:"학교생활",hint:"🟡",hintT:"(5단어)",
+ q:"점심에 같이 앉자!",ans:"Let's sit together at lunch!",pron:"렛츠 싯 투게더 앳 런치!",t:"ko2en"},
+{no:"037",p:1,cat:"학교생활",hint:"🟢",hintT:"I b_ _ _ _ _ _ my lunch from h_ _ _.",
+ q:"나는 집에서 점심을 가져왔어.",ans:"I brought my lunch from home.",pron:"아이 브롯 마이 런치 프롬 홈.",t:"ko2en"},
+{no:"038",p:1,cat:"학교생활",hint:"🟡",hintT:"(6단어)",
+ q:"방과 후에 어울려 놀래?",ans:"Do you want to hang out?",pron:"두 유 원트 투 행 아웃?",t:"ko2en"},
+{no:"039",p:1,cat:"학교생활",hint:"🟢",hintT:"You're my b_ _ _ friend!",
+ q:"너는 내 가장 친한 친구야!",ans:"You're my best friend!",pron:"유어 마이 베스트 프렌드!",t:"ko2en"},
+{no:"040",p:1,cat:"학교생활",hint:"🟡",hintT:"(5단어)",
+ q:"숙제 도와줘서 고마워!",ans:"Thanks for helping me!",pron:"땡스 포 헬핑 미!",t:"ko2en"},
+
+{no:"041",p:1,cat:"취미와친구",hint:"🟢",hintT:"I'm i_ _ _ video games these d_ _ _.",
+ q:"나는 요즘 비디오 게임에 빠져 있어.",ans:"I'm into video games these days.",pron:"아임 인투 비디오 게임즈 디즈 데이즈.",t:"ko2en"},
+{no:"042",p:1,cat:"취미와친구",hint:"🟡",hintT:"(5단어)",
+ q:"나는 친구들과 농구하는 것을 좋아해.",ans:"I love playing basketball.",pron:"아이 러브 플레잉 바스켓볼.",t:"ko2en"},
+{no:"043",p:1,cat:"취미와친구",hint:"🟢",hintT:"I've been r_ _ _ _ _ _ a lot l_ _ _ _ _.",
+ q:"나는 요즘 많이 읽고 있어.",ans:"I've been reading a lot lately.",pron:"아이브 빈 리딩 어 랏 레이틀리.",t:"ko2en"},
+{no:"044",p:1,cat:"취미와친구",hint:"🟡",hintT:"(5단어)",
+ q:"너 토요일에 시간 있어?",ans:"Are you free on Saturday?",pron:"아 유 프리 온 새터데이?",t:"ko2en"},
+{no:"045",p:1,cat:"취미와친구",hint:"🟢",hintT:"That s_ _ _ _ _ fun! C_ _ _ _ me in!",
+ q:"재미있을 것 같아! 나도 끼워줘!",ans:"That sounds fun! Count me in!",pron:"댓 사운즈 펀! 카운트 미 인!",t:"ko2en"},
+{no:"046",p:1,cat:"취미와친구",hint:"🟡",hintT:"(5단어)",
+ q:"공원에서 만나자.",ans:"Let's meet at the park.",pron:"렛츠 밋 앳 더 파크.",t:"ko2en"},
+{no:"047",p:1,cat:"취미와친구",hint:"🟢",hintT:"I'm h_ _ _ _ _ a birthday p_ _ _ _!",
+ q:"나는 생일 파티를 열 거야!",ans:"I'm having a birthday party!",pron:"아임 해빙 어 버스데이 파티!",t:"ko2en"},
+{no:"048",p:1,cat:"취미와친구",hint:"🟡",hintT:"(3단어)",
+ q:"기다릴 수가 없어!",ans:"I can't wait!",pron:"아이 캔트 웨이트!",t:"ko2en"},
+{no:"049",p:1,cat:"취미와친구",hint:"🟢",hintT:"My mom s_ _ _ yes!",
+ q:"엄마가 된다고 하셨어!",ans:"My mom said yes!",pron:"마이 맘 세드 예스!",t:"ko2en"},
+{no:"050",p:1,cat:"취미와친구",hint:"🟡",hintT:"(5단어)",
+ q:"미안, 나는 못 갈 것 같아.",ans:"Sorry, I can't make it.",pron:"쏘리, 아이 캔트 메이크 잇.",t:"ko2en"},
+
+// ─────────────── Part 2: 영어→한글 (051-100) ───────────────
+{no:"051",p:2,cat:"여행준비",hint:"🟢",hintT:"우리 _ _ _ 가!",
+ q:"We're going on a trip!",qPron:"위어 고잉 온 어 트립!",ans:"우리 여행 가!",t:"en2ko"},
+{no:"052",p:2,cat:"여행준비",hint:"🟡",hintT:"(4글자)",
+ q:"Where are we going?",qPron:"웨어 아 위 고잉?",ans:"어디로 가는 거야?",t:"en2ko"},
+{no:"053",p:2,cat:"여행준비",hint:"🟢",hintT:"_ _ 떠나는 거야?",
+ q:"When are we leaving?",qPron:"웬 아 위 리빙?",ans:"언제 떠나는 거야?",t:"en2ko"},
+{no:"054",p:2,cat:"여행준비",hint:"🟡",hintT:"(4글자)",
+ q:"I need to pack my bag.",qPron:"아이 니드 투 팩 마이 백.",ans:"짐 싸야 해.",t:"en2ko"},
+{no:"055",p:2,cat:"여행준비",hint:"🟢",hintT:"_ _ _ 잊지 마!",
+ q:"Don't forget your passport!",qPron:"돈트 포겟 유어 패스포트!",ans:"여권 잊지 마!",t:"en2ko"},
+{no:"056",p:2,cat:"여행준비",hint:"🟡",hintT:"(5글자)",
+ q:"I'm ready to go!",qPron:"아임 레디 투 고!",ans:"갈 준비됐어!",t:"en2ko"},
+{no:"057",p:2,cat:"여행준비",hint:"🟢",hintT:"어디서 _ _ _ _ _ 하나요?",
+ q:"Where can I check in for my flight?",qPron:"웨어 캔 아이 체크 인 포 마이 플라이트?",ans:"어디서 체크인하나요?",t:"en2ko"},
+{no:"058",p:2,cat:"여행준비",hint:"🟡",hintT:"(5글자)",
+ q:"I'd like a window seat, please.",qPron:"아이드 라이크 어 윈도우 싯, 플리즈.",ans:"창가 좌석 주세요.",t:"en2ko"},
+{no:"059",p:2,cat:"여행준비",hint:"🟢",hintT:"몇 번 _ _ _ _ 인가요?",
+ q:"What gate is our flight?",qPron:"왓 게이트 이즈 아워 플라이트?",ans:"몇 번 게이트인가요?",t:"en2ko"},
+{no:"060",p:2,cat:"여행준비",hint:"🟡",hintT:"(5글자)",
+ q:"The plane is boarding now!",qPron:"더 플레인 이즈 보딩 나우!",ans:"비행기 탑승 중이야!",t:"en2ko"},
+
+{no:"061",p:2,cat:"여행장소",hint:"🟢",hintT:"이 장소는 _ _ _ _!",
+ q:"This place is amazing!",qPron:"디스 플레이스 이즈 어메이징!",ans:"이 장소는 놀라워!",t:"en2ko"},
+{no:"062",p:2,cat:"여행장소",hint:"🟡",hintT:"(5글자)",
+ q:"Can we take a picture?",qPron:"캔 위 테이크 어 픽처?",ans:"사진 찍을 수 있어?",t:"en2ko"},
+{no:"063",p:2,cat:"여행장소",hint:"🟢",hintT:"어떻게 거기 _ _ _?",
+ q:"How do we get there?",qPron:"하우 두 위 겟 데어?",ans:"어떻게 거기 가?",t:"en2ko"},
+{no:"064",p:2,cat:"여행장소",hint:"🟡",hintT:"(4글자)",
+ q:"Is it far from here?",qPron:"이즈 잇 파 프롬 히어?",ans:"여기서 멀어?",t:"en2ko"},
+{no:"065",p:2,cat:"여행장소",hint:"🟢",hintT:"정말 _ _ _ _ _!",
+ q:"I'm having so much fun!",qPron:"아임 해빙 소 머치 펀!",ans:"정말 재미있어!",t:"en2ko"},
+{no:"066",p:2,cat:"여행장소",hint:"🟡",hintT:"(5글자)",
+ q:"I love this place!",qPron:"아이 러브 디스 플레이스!",ans:"이 장소 좋아해!",t:"en2ko"},
+{no:"067",p:2,cat:"여행장소",hint:"🟢",hintT:"이것은 우리 _ _ _ _ 방이야.",
+ q:"This is our hotel room.",qPron:"디스 이즈 아워 호텔 룸.",ans:"이것은 우리 호텔 방이야.",t:"en2ko"},
+{no:"068",p:2,cat:"여행장소",hint:"🟡",hintT:"(4글자)",
+ q:"Where's the swimming pool?",qPron:"웨어즈 더 스위밍 풀?",ans:"수영장 어디 있어?",t:"en2ko"},
+{no:"069",p:2,cat:"여행장소",hint:"🟢",hintT:"아침 식사 몇 _ _ 야?",
+ q:"What time is breakfast?",qPron:"왓 타임 이즈 브렉퍼스트?",ans:"아침 식사 몇 시야?",t:"en2ko"},
+{no:"070",p:2,cat:"여행장소",hint:"🟡",hintT:"(5글자)",
+ q:"I like this hotel!",qPron:"아이 라이크 디스 호텔!",ans:"이 호텔 좋아해!",t:"en2ko"},
+
+{no:"071",p:2,cat:"여행쇼핑",hint:"🟢",hintT:"이거 _ _ 도 돼?",
+ q:"Can I buy this?",qPron:"캔 아이 바이 디스?",ans:"이거 사도 돼?",t:"en2ko"},
+{no:"072",p:2,cat:"여행쇼핑",hint:"🟡",hintT:"(3글자)",
+ q:"How much is this?",qPron:"하우 머치 이즈 디스?",ans:"이거 얼마야?",t:"en2ko"},
+{no:"073",p:2,cat:"여행쇼핑",hint:"🟢",hintT:"너무 _ _ _ _.",
+ q:"It's too expensive.",qPron:"잇츠 투 익스펜시브.",ans:"너무 비싸.",t:"en2ko"},
+{no:"074",p:2,cat:"여행쇼핑",hint:"🟡",hintT:"(4글자)",
+ q:"I want to buy a souvenir.",qPron:"아이 원트 투 바이 어 수베니어.",ans:"기념품 사고 싶어.",t:"en2ko"},
+{no:"075",p:2,cat:"여행쇼핑",hint:"🟢",hintT:"이거 _ _ _ _ _ 도 돼?",
+ q:"Can I try this on?",qPron:"캔 아이 트라이 디스 온?",ans:"이거 입어봐도 돼?",t:"en2ko"},
+{no:"076",p:2,cat:"여행쇼핑",hint:"🟡",hintT:"(4글자)",
+ q:"I'll take this one.",qPron:"아일 테이크 디스 원.",ans:"이거 살게요.",t:"en2ko"},
+{no:"077",p:2,cat:"여행쇼핑",hint:"🟢",hintT:"이건 _ _ _ _!",
+ q:"This is perfect!",qPron:"디스 이즈 퍼펙트!",ans:"이건 완벽해!",t:"en2ko"},
+{no:"078",p:2,cat:"여행쇼핑",hint:"🟡",hintT:"(5글자)",
+ q:"Let's go to that store.",qPron:"렛츠 고 투 댓 스토어.",ans:"저 가게 가자.",t:"en2ko"},
+{no:"079",p:2,cat:"여행쇼핑",hint:"🟢",hintT:"이거 _ _ _ _ 있어요?",
+ q:"Do you have this in blue?",qPron:"두 유 해브 디스 인 블루?",ans:"이거 파란색 있어요?",t:"en2ko"},
+{no:"080",p:2,cat:"여행쇼핑",hint:"🟡",hintT:"(4글자)",
+ q:"Can I get a bag?",qPron:"캔 아이 겟 어 백?",ans:"가방 받을 수 있어요?",t:"en2ko"},
+
+{no:"081",p:2,cat:"질문과대답",hint:"🟢",hintT:"이게 무슨 _ _ 이야?",
+ q:"What does this mean?",qPron:"왓 더즈 디스 민?",ans:"이게 무슨 뜻이야?",t:"en2ko"},
+{no:"082",p:2,cat:"질문과대답",hint:"🟡",hintT:"(4글자)",
+ q:"Can you help me?",qPron:"캔 유 헬프 미?",ans:"도와줄 수 있어?",t:"en2ko"},
+{no:"083",p:2,cat:"질문과대답",hint:"🟢",hintT:"_ _ _ _ 어디 있어?",
+ q:"Where's the bathroom?",qPron:"웨어즈 더 배쓰룸?",ans:"화장실 어디 있어?",t:"en2ko"},
+{no:"084",p:2,cat:"질문과대답",hint:"🟡",hintT:"(4글자)",
+ q:"What should we do?",qPron:"왓 슈드 위 두?",ans:"뭐 할까?",t:"en2ko"},
+{no:"085",p:2,cat:"질문과대답",hint:"🟢",hintT:"_ _ _ _!",
+ q:"That sounds great!",qPron:"댓 사운즈 그레잇!",ans:"좋은데!",t:"en2ko"},
+{no:"086",p:2,cat:"질문과대답",hint:"🟡",hintT:"(4글자)",
+ q:"I'm running a bit late.",qPron:"아임 러닝 어 빗 레이트.",ans:"약간 늦어.",t:"en2ko"},
+{no:"087",p:2,cat:"질문과대답",hint:"🟢",hintT:"기다리게 해서 _ _ _ _.",
+ q:"Sorry to keep you waiting.",qPron:"쏘리 투 킵 유 웨이팅.",ans:"기다리게 해서 미안.",t:"en2ko"},
+{no:"088",p:2,cat:"질문과대답",hint:"🟡",hintT:"(5글자)",
+ q:"I really appreciate your help.",qPron:"아이 리얼리 어프리쉬에이트 유어 헬프.",ans:"도움 정말 감사해.",t:"en2ko"},
+{no:"089",p:2,cat:"질문과대답",hint:"🟢",hintT:"나쁜 감정 _ _ _.",
+ q:"No hard feelings.",qPron:"노 하드 필링즈.",ans:"나쁜 감정 없어.",t:"en2ko"},
+{no:"090",p:2,cat:"질문과대답",hint:"🟡",hintT:"(6글자)",
+ q:"You should be proud of yourself.",qPron:"유 슈드 비 프라우드 오브 유어셀프.",ans:"자랑스러워해야 해.",t:"en2ko"},
+{no:"091",p:2,cat:"질문과대답",hint:"🟢",hintT:"행운을 _ _ _ _!",
+ q:"Keep your fingers crossed!",qPron:"킵 유어 핑거즈 크로스트!",ans:"행운을 빌어!",t:"en2ko"},
+{no:"092",p:2,cat:"질문과대답",hint:"🟡",hintT:"(4글자)",
+ q:"You've got this!",qPron:"유브 갓 디스!",ans:"할 수 있어!",t:"en2ko"},
+{no:"093",p:2,cat:"질문과대답",hint:"🟢",hintT:"_ _ _ _!",
+ q:"Hang in there!",qPron:"행 인 데어!",ans:"버텨!",t:"en2ko"},
+{no:"094",p:2,cat:"질문과대답",hint:"🟡",hintT:"(5글자)",
+ q:"Everything will work out.",qPron:"에브리씽 윌 워크 아웃.",ans:"다 잘 될 거야.",t:"en2ko"},
+{no:"095",p:2,cat:"질문과대답",hint:"🟢",hintT:"이 과목 _ _ _ _ _.",
+ q:"I'm struggling with this subject.",qPron:"아임 스트러글링 위드 디스 서브젝트.",ans:"이 과목 어려워.",t:"en2ko"},
+{no:"096",p:2,cat:"질문과대답",hint:"🟡",hintT:"(4글자)",
+ q:"I finally figured it out!",qPron:"아이 파이널리 피겨드 잇 아웃!",ans:"드디어 알아냈어!",t:"en2ko"},
+{no:"097",p:2,cat:"질문과대답",hint:"🟢",hintT:"시험 _ _ _ _!",
+ q:"I aced the test!",qPron:"아이 에이스드 더 테스트!",ans:"시험 잘 봤어!",t:"en2ko"},
+{no:"098",p:2,cat:"질문과대답",hint:"🟡",hintT:"(5글자)",
+ q:"I nailed the presentation!",qPron:"아이 네일드 더 프레젠테이션!",ans:"발표 완벽했어!",t:"en2ko"},
+{no:"099",p:2,cat:"질문과대답",hint:"🟢",hintT:"재미있는 거 _ _ _!",
+ q:"Let's do something fun!",qPron:"렛츠 두 썸씽 펀!",ans:"재미있는 거 하자!",t:"en2ko"},
+{no:"100",p:2,cat:"질문과대답",hint:"🟡",hintT:"(6글자)",
+ q:"You're my best friend!",qPron:"유어 마이 베스트 프렌드!",ans:"넌 내 가장 친한 친구야!",t:"en2ko"},
+
+// ─────────────── Part 3: 청크 채우기 (101-130) ───────────────
+{no:"101",p:3,cat:"청크채우기",hint:"🟢",hintT:"H_ _'s",
+ q:"Hi there! / _____ / it going?",ans:"How's",pron:"하우즈",ctx:"Hi there! / <b>___</b> / it going?",t:"chunk"},
+{no:"102",p:3,cat:"청크채우기",hint:"🟡",hintT:"(6글자)",
+ q:"I'm / so happy! / I _____ / the test!",ans:"passed",pron:"패스트",ctx:"I'm / so happy! / I <b>___</b> / the test!",t:"chunk"},
+{no:"103",p:3,cat:"청크채우기",hint:"🟢",hintT:"a_",
+ q:"I woke up / _____ / 7 AM.",ans:"at",pron:"앳",ctx:"I woke up / <b>___</b> / 7 AM.",t:"chunk"},
+{no:"104",p:3,cat:"청크채우기",hint:"🟡",hintT:"(7글자)",
+ q:"I'm / _____ / late! / Hurry up!",ans:"running",pron:"러닝",ctx:"I'm / <b>___</b> / late! / Hurry up!",t:"chunk"},
+{no:"105",p:3,cat:"청크채우기",hint:"🟢",hintT:"h_ _ _",
+ q:"What class / do we / _____ / next?",ans:"have",pron:"해브",ctx:"What class / do we / <b>___</b> / next?",t:"chunk"},
+{no:"106",p:3,cat:"청크채우기",hint:"🟡",hintT:"(7글자)",
+ q:"Can you / _____ / it again?",ans:"explain",pron:"익스플레인",ctx:"Can you / <b>___</b> / it again?",t:"chunk"},
+{no:"107",p:3,cat:"청크채우기",hint:"🟢",hintT:"t_ _ _ _ _ _ _",
+ q:"Let's / sit _____ / at lunch!",ans:"together",pron:"투게더",ctx:"Let's / sit <b>___</b> / at lunch!",t:"chunk"},
+{no:"108",p:3,cat:"청크채우기",hint:"🟡",hintT:"(4글자)",
+ q:"I'm / _____ / video games / these days.",ans:"into",pron:"인투",ctx:"I'm / <b>___</b> / video games / these days.",t:"chunk"},
+{no:"109",p:3,cat:"청크채우기",hint:"🟢",hintT:"f_ _ _",
+ q:"Are you / _____ / on Saturday?",ans:"free",pron:"프리",ctx:"Are you / <b>___</b> / on Saturday?",t:"chunk"},
+{no:"110",p:3,cat:"청크채우기",hint:"🟡",hintT:"(3글자)",
+ q:"That / sounds / _____! / Count me in!",ans:"fun!",pron:"펀",ctx:"That / sounds / <b>___</b>! / Count me in!",t:"chunk"},
+{no:"111",p:3,cat:"청크채우기",hint:"🟢",hintT:"g_ _ _ _",
+ q:"We're / _____ / on a trip!",ans:"going",pron:"고잉",ctx:"We're / <b>___</b> / on a trip!",t:"chunk"},
+{no:"112",p:3,cat:"청크채우기",hint:"🟡",hintT:"(4글자)",
+ q:"I need / to _____ / my bag.",ans:"pack",pron:"팩",ctx:"I need / to <b>___</b> / my bag.",t:"chunk"},
+{no:"113",p:3,cat:"청크채우기",hint:"🟢",hintT:"c_ _ _ _ in",
+ q:"Where / can I / _____ / for my flight?",ans:"check in",pron:"체크 인",ctx:"Where / can I / <b>___</b> / for my flight?",t:"chunk"},
+{no:"114",p:3,cat:"청크채우기",hint:"🟡",hintT:"(6글자)",
+ q:"I'd like / a _____ / seat, / please.",ans:"window",pron:"윈도우",ctx:"I'd like / a <b>___</b> / seat, / please.",t:"chunk"},
+{no:"115",p:3,cat:"청크채우기",hint:"🟢",hintT:"a_ _ _ _ _ _",
+ q:"This place / is / _____!",ans:"amazing!",pron:"어메이징",ctx:"This place / is / <b>___</b>!",t:"chunk"},
+{no:"116",p:3,cat:"청크채우기",hint:"🟡",hintT:"(3글자)",
+ q:"How / do we / _____ / there?",ans:"get",pron:"겟",ctx:"How / do we / <b>___</b> / there?",t:"chunk"},
+{no:"117",p:3,cat:"청크채우기",hint:"🟢",hintT:"b_ _",
+ q:"Can I / _____ / this?",ans:"buy",pron:"바이",ctx:"Can I / <b>___</b> / this?",t:"chunk"},
+{no:"118",p:3,cat:"청크채우기",hint:"🟡",hintT:"(4글자)",
+ q:"How much / is / _____?",ans:"this?",pron:"디스",ctx:"How much / is / <b>___</b>?",t:"chunk"},
+{no:"119",p:3,cat:"청크채우기",hint:"🟢",hintT:"s_ _ _ _ _ _ _",
+ q:"I want / to buy / a _____.",ans:"souvenir.",pron:"수베니어",ctx:"I want / to buy / a <b>___</b>.",t:"chunk"},
+{no:"120",p:3,cat:"청크채우기",hint:"🟡",hintT:"(4글자)",
+ q:"I'll / _____ / this one.",ans:"take",pron:"테이크",ctx:"I'll / <b>___</b> / this one.",t:"chunk"},
+{no:"121",p:3,cat:"청크채우기",hint:"🟢",hintT:"m_ _ _",
+ q:"What / does / this / _____?",ans:"mean?",pron:"민",ctx:"What / does / this / <b>___</b>?",t:"chunk"},
+{no:"122",p:3,cat:"청크채우기",hint:"🟡",hintT:"(4글자)",
+ q:"Can you / _____ / me?",ans:"help",pron:"헬프",ctx:"Can you / <b>___</b> / me?",t:"chunk"},
+{no:"123",p:3,cat:"청크채우기",hint:"🟢",hintT:"l_ _ _",
+ q:"I'm / running / a bit / _____.",ans:"late.",pron:"레이트",ctx:"I'm / running / a bit / <b>___</b>.",t:"chunk"},
+{no:"124",p:3,cat:"청크채우기",hint:"🟡",hintT:"(10글자)",
+ q:"I really / _____ / your help.",ans:"appreciate",pron:"어프리쉬에이트",ctx:"I really / <b>___</b> / your help.",t:"chunk"},
+{no:"125",p:3,cat:"청크채우기",hint:"🟢",hintT:"g_ _",
+ q:"You've / _____ / this!",ans:"got",pron:"갓",ctx:"You've / <b>___</b> / this!",t:"chunk"},
+{no:"126",p:3,cat:"청크채우기",hint:"🟡",hintT:"(7글자)",
+ q:"I / _____ / figured it out!",ans:"finally",pron:"파이널리",ctx:"I / <b>___</b> / figured it out!",t:"chunk"},
+{no:"127",p:3,cat:"청크채우기",hint:"🟢",hintT:"a_ _ _",
+ q:"I / _____ / the test!",ans:"aced",pron:"에이스드",ctx:"I / <b>___</b> / the test!",t:"chunk"},
+{no:"128",p:3,cat:"청크채우기",hint:"🟡",hintT:"(3글자)",
+ q:"Let's / do / something / _____!",ans:"fun!",pron:"펀",ctx:"Let's / do / something / <b>___</b>!",t:"chunk"},
+{no:"129",p:3,cat:"청크채우기",hint:"🟢",hintT:"b_ _ _",
+ q:"You're / my / _____ / friend!",ans:"best",pron:"베스트",ctx:"You're / my / <b>___</b> / friend!",t:"chunk"},
+{no:"130",p:3,cat:"청크채우기",hint:"🟡",hintT:"(4글자)",
+ q:"Everything / will / _____ / out.",ans:"work",pron:"워크",ctx:"Everything / will / <b>___</b> / out.",t:"chunk"},
+
+// ─────────────── Part 4: 대화완성 (131-150) ───────────────
+{no:"131",p:4,cat:"대화완성",hint:"🟢",hintT:"H_ _'s it g_ _ _ _?",
+ q:"A: Hi there! _____\nB: Hey! Pretty good! How about you?\n\n💬 A가 할 말은?",
+ sit:"학교에서 친구를 만났을 때",ans:"How's it going?",pron:"하우즈 잇 고잉?",t:"situation"},
+{no:"132",p:4,cat:"대화완성",hint:"🟡",hintT:"(6단어)",
+ q:"A: Guess what? _____\nB: Really? Congratulations!\n\n💬 A가 할 말은?",
+ sit:"시험 결과를 친구에게 말할 때",ans:"I'm so happy! I passed the test!",pron:"아임 소 해피! 아이 패스트 더 테스트!",t:"situation"},
+{no:"133",p:4,cat:"대화완성",hint:"🟢",hintT:"I'm r_ _ _ _ _ _ late!",
+ q:"A: Oh no! _____ Hurry up!\nB: Okay! Let's run!\n\n💬 A가 할 말은?",
+ sit:"아침에 늦었을 때",ans:"I'm running late!",pron:"아임 러닝 레이트!",t:"situation"},
+{no:"134",p:4,cat:"대화완성",hint:"🟡",hintT:"(4단어)",
+ q:"A: Teacher, _____ Can you help?\nB: Of course! Let me explain again.\n\n💬 A가 할 말은?",
+ sit:"수업 중 이해가 안 될 때",ans:"I don't understand this.",pron:"아이 돈트 언더스탠드 디스.",t:"situation"},
+{no:"135",p:4,cat:"대화완성",hint:"🟢",hintT:"L_ _'s go e_ _!",
+ q:"A: It's lunchtime! _____\nB: Okay! Let's sit together!\n\n💬 A가 할 말은?",
+ sit:"점심시간에 친구에게",ans:"Let's go eat!",pron:"렛츠 고 잇!",t:"situation"},
+{no:"136",p:4,cat:"대화완성",hint:"🟡",hintT:"(5단어)",
+ q:"A: _____ this Saturday?\nB: Not really. What do you want to do?\n\n💬 A가 할 말은?",
+ sit:"친구에게 주말 계획 물어볼 때",ans:"Are you free on Saturday?",pron:"아 유 프리 온 새터데이?",t:"situation"},
+{no:"137",p:4,cat:"대화완성",hint:"🟢",hintT:"That s_ _ _ _ _ fun!",
+ q:"A: Want to go to the movies?\nB: _____ Count me in!\n\n💬 B가 할 말은?",
+ sit:"친구 제안에 동의할 때",ans:"That sounds fun!",pron:"댓 사운즈 펀!",t:"situation"},
+{no:"138",p:4,cat:"대화완성",hint:"🟡",hintT:"(5단어)",
+ q:"A: _____ I'm so excited!\nB: Wow! Where are you going?\n\n💬 A가 할 말은?",
+ sit:"여행 소식을 전할 때",ans:"We're going on a trip!",pron:"위어 고잉 온 어 트립!",t:"situation"},
+{no:"139",p:4,cat:"대화완성",hint:"🟢",hintT:"Where can I c_ _ _ _ in for my flight?",
+ q:"A: Excuse me. _____\nB: What's your destination?\n\n💬 A가 할 말은?",
+ sit:"공항에서 체크인할 때",ans:"Where can I check in for my flight?",pron:"웨어 캔 아이 체크 인 포 마이 플라이트?",t:"situation"},
+{no:"140",p:4,cat:"대화완성",hint:"🟡",hintT:"(4단어)",
+ q:"A: Wow! _____ Look at that!\nB: I know! It's beautiful!\n\n💬 A가 할 말은?",
+ sit:"관광지에서 감탄할 때",ans:"This place is amazing!",pron:"디스 플레이스 이즈 어메이징!",t:"situation"},
+{no:"141",p:4,cat:"대화완성",hint:"🟢",hintT:"Can I b_ _ this?",
+ q:"A: Mom, look! _____ It's so cute!\nB: Let me see. How much is it?\n\n💬 A가 할 말은?",
+ sit:"기념품 가게에서",ans:"Can I buy this?",pron:"캔 아이 바이 디스?",t:"situation"},
+{no:"142",p:4,cat:"대화완성",hint:"🟡",hintT:"(4단어)",
+ q:"A: _____ I really like it.\nB: It's $10.\n\n💬 A가 할 말은?",
+ sit:"가격을 물어볼 때",ans:"How much is this?",pron:"하우 머치 이즈 디스?",t:"situation"},
+{no:"143",p:4,cat:"대화완성",hint:"🟢",hintT:"Can you h_ _ _ me?",
+ q:"A: _____ I'm lost.\nB: Of course! Where do you need to go?\n\n💬 A가 할 말은?",
+ sit:"도움을 요청할 때",ans:"Can you help me?",pron:"캔 유 헬프 미?",t:"situation"},
+{no:"144",p:4,cat:"대화완성",hint:"🟡",hintT:"(6단어)",
+ q:"A: _____ Traffic was terrible.\nB: No problem! I just got here too.\n\n💬 A가 할 말은?",
+ sit:"늦어서 사과할 때",ans:"Sorry to keep you waiting.",pron:"쏘리 투 킵 유 웨이팅.",t:"situation"},
+{no:"145",p:4,cat:"대화완성",hint:"🟢",hintT:"You've g_ _ this!",
+ q:"A: I'm so nervous about the test tomorrow.\nB: Don't worry! _____ You studied hard!\n\n💬 B가 할 말은?",
+ sit:"친구를 격려할 때",ans:"You've got this!",pron:"유브 갓 디스!",t:"situation"},
+{no:"146",p:4,cat:"대화완성",hint:"🟡",hintT:"(4단어)",
+ q:"A: How was the test?\nB: _____ I studied so hard!\n\n💬 B가 할 말은?",
+ sit:"시험을 잘 봤을 때",ans:"I aced the test!",pron:"아이 에이스드 더 테스트!",t:"situation"},
+{no:"147",p:4,cat:"대화완성",hint:"🟢",hintT:"I really a_ _ _ _ _ _ _ _ _ your help.",
+ q:"A: Thanks for helping me!\nB: You're welcome! Anytime!\nA: _____ You're the best!\n\n💬 A가 할 말은?",
+ sit:"친구에게 감사할 때",ans:"I really appreciate your help.",pron:"아이 리얼리 어프리쉬에이트 유어 헬프.",t:"situation"},
+{no:"148",p:4,cat:"대화완성",hint:"🟡",hintT:"(4단어)",
+ q:"A: I'm worried about the presentation.\nB: _____ I know you can do it!\n\n💬 B가 할 말은?",
+ sit:"친구를 위로할 때",ans:"Everything will work out.",pron:"에브리씽 윌 워크 아웃.",t:"situation"},
+{no:"149",p:4,cat:"대화완성",hint:"🟢",hintT:"Let's do something f_ _!",
+ q:"A: I'm so bored. What should we do?\nB: _____ Want to play basketball?\n\n💬 B가 할 말은?",
+ sit:"재미있는 것을 제안할 때",ans:"Let's do something fun!",pron:"렛츠 두 썸씽 펀!",t:"situation"},
+{no:"150",p:4,cat:"대화완성",hint:"🟡",hintT:"(5단어)",
+ q:"A: Thanks for always being there for me.\nB: Of course! _____ We're best friends!\n\n💬 B가 할 말은?",
+ sit:"가장 친한 친구에게",ans:"You're my best friend!",pron:"유어 마이 베스트 프렌드!",t:"situation"},
+];
+
+// ─── STATE ───
+let spd=1.0;
+let voiceF=null,voiceM=null;
+let allVoices=[];
+let scores={};
+let curPart='all';
+let curSearch='';
+
+// ─── VOICE ───
+function loadVoices(){
+  allVoices=speechSynthesis.getVoices();
+  const fSel=document.getElementById('voiceF');
+  const mSel=document.getElementById('voiceM');
+  fSel.innerHTML='';mSel.innerHTML='';
+  allVoices.forEach((v,i)=>{
+    const o=document.createElement('option');
+    o.value=i;o.textContent=`${v.name} (${v.lang})`;
+    fSel.appendChild(o.cloneNode(true));
+    mSel.appendChild(o);
+  });
+  // auto-select female voice
+  const fNames=['Samantha','Victoria','Karen','Zira','Google UK English Female','Yuna','Kyoko'];
+  const mNames=['Daniel','Alex','Tom','David','Google UK English Male','Fred'];
+  let fi=allVoices.findIndex(v=>fNames.some(n=>v.name.includes(n)));
+  let mi=allVoices.findIndex(v=>mNames.some(n=>v.name.includes(n)));
+  if(fi<0)fi=0;
+  if(mi<0)mi=Math.min(1,allVoices.length-1);
+  fSel.value=fi;mSel.value=mi;
+  voiceF=allVoices[fi];voiceM=allVoices[mi];
+}
+function updateVoice(){
+  voiceF=allVoices[document.getElementById('voiceF').value];
+  voiceM=allVoices[document.getElementById('voiceM').value];
+}
+speechSynthesis.onvoiceschanged=loadVoices;
+loadVoices();
+
+// ─── SPEAK ───
+function speakText(txt,g,btn){
+  if(!txt)return;
+  speechSynthesis.cancel();
+  if(btn&&btn.classList.contains('playing')){btn.classList.remove('playing');btn.textContent='🔊 영어 듣기';return;}
+  document.querySelectorAll('.speak-btn.playing').forEach(b=>{b.classList.remove('playing');b.textContent='🔊 영어 듣기';});
+  const u=new SpeechSynthesisUtterance(txt);
+  u.rate=spd;u.pitch=g==='F'?1.15:0.9;
+  const v=g==='F'?voiceF:voiceM;
+  if(v)u.voice=v;
+  if(btn){btn.classList.add('playing');btn.textContent='⏹ 중지';}
+  u.onend=()=>{if(btn){btn.classList.remove('playing');btn.textContent='🔊 영어 듣기';}};
+  u.onerror=()=>{if(btn){btn.classList.remove('playing');btn.textContent='🔊 영어 듣기';}};
+  speechSynthesis.speak(u);
+}
+
+// ─── SPEED ───
+function setSpeed(s){
+  spd=s;
+  document.querySelectorAll('.spd-btn').forEach(b=>{
+    b.classList.toggle('active',parseFloat(b.textContent)===s);
+  });
+}
+
+// ─── SCORE ───
+let okCnt=0,ngCnt=0;
+function markScore(no,type){
+  const prev=scores[no];
+  if(prev===type){scores[no]=null;}else{scores[no]=type;}
+  recalcScore();
+  updateProgress();
+  const card=document.querySelector(`[data-no="${no}"]`);
+  if(card){
+    const btnOk=card.querySelector('.btn-ok');
+    const btnNg=card.querySelector('.btn-ng');
+    if(btnOk)btnOk.classList.toggle('selected',scores[no]==='ok');
+    if(btnNg)btnNg.classList.toggle('selected',scores[no]==='ng');
+  }
+}
+function recalcScore(){
+  okCnt=Object.values(scores).filter(v=>v==='ok').length;
+  ngCnt=Object.values(scores).filter(v=>v==='ng').length;
+  const tot=okCnt+ngCnt;
+  document.getElementById('sc-ok').textContent=okCnt;
+  document.getElementById('sc-ng').textContent=ngCnt;
+  document.getElementById('sc-tot').textContent=tot;
+  document.getElementById('sc-pct').textContent=tot?Math.round(okCnt/tot*100):0;
+}
+function resetScores(){
+  scores={};okCnt=0;ngCnt=0;
+  document.querySelectorAll('.btn-ok,.btn-ng').forEach(b=>b.classList.remove('selected'));
+  recalcScore();updateProgress();
+}
+
+// ─── PROGRESS ───
+function updateProgress(){
+  const visible=Array.from(document.querySelectorAll('.qcard')).filter(c=>c.style.display!=='none');
+  const answered=visible.filter(c=>scores[c.dataset.no]).length;
+  const total=visible.length;
+  document.getElementById('prog-label').textContent=`진행률: ${answered} / ${total}`;
+  document.getElementById('prog-fill').style.width=total?(answered/total*100)+'%':'0%';
+}
+
+// ─── BUILD HTML ───
+function buildTypeLabel(t){
+  switch(t){
+    case'ko2en':return'<span class="q-type-badge badge-ko2en">🇰🇷→🇺🇸 한글→영어</span>';
+    case'en2ko':return'<span class="q-type-badge badge-en2ko">🇺🇸→🇰🇷 영어→한글</span>';
+    case'chunk':return'<span class="q-type-badge badge-chunk">🧩 청크 채우기</span>';
+    case'situation':return'<span class="q-type-badge badge-sit">💬 대화 완성</span>';
+  }return'';
+}
+
+function buildCard(q){
+  const typeLbl=buildTypeLabel(q.t);
+  const catLbl=`<div class="cat-label">📁 ${q.cat}</div>`;
+
+  // ─ Question display in summary ─
+  let qDisplay='';
+  if(q.t==='en2ko'){
+    // English question with audio button shown in summary
+    qDisplay=`
+      <div class="q-en-audio">
+        <span class="q-text en">🔊 ${q.q}</span>
+        <button class="speak-q-btn" onclick="event.stopPropagation();speakText('${escQ(q.q)}','F',null)">▶ 듣기</button>
+      </div>
+      ${q.qPron?`<div class="q-en-pron">🔤 ${q.qPron}</div>`:''}
+    `;
+  } else if(q.t==='chunk'){
+    qDisplay=`<div class="q-text">🧩 ${q.q}</div>`;
+  } else if(q.t==='situation'){
+    qDisplay=`<div class="q-text">💬 상황: <em>${q.sit||''}</em></div>`;
+  } else {
+    qDisplay=`<div class="q-text">🇰🇷 ${q.q}</div>`;
+  }
+
+  // ─ Hint ─
+  const hintHTML=`<div class="hint-box"><span class="hint-lv">${q.hint}</span><span class="hint-txt">${q.hintT}</span></div>`;
+
+  // ─ Answer box ─
+  let ansHTML='';
+  if(q.t==='ko2en'||q.t==='situation'){
+    const safeAns=escQ(q.ans);
+    ansHTML=`
+      <div class="ans-box ${q.t==='situation'?'sit':''}">
+        ${q.t==='situation'?`<div class="ans-sit-ctx">${q.q.replace(/\n/g,'<br>')}</div>`:''}
+        <div class="ans-en">💬 ${q.ans}</div>
+        <div class="ans-pron">🔤 발음: ${q.pron}</div>
+        <button class="speak-btn" onclick="speakText('${safeAns}','F',this)">🔊 영어 듣기</button>
+      </div>`;
+  } else if(q.t==='en2ko'){
+    ansHTML=`
+      <div class="ans-box ko">
+        <div class="ans-ko">🇰🇷 ${q.ans}</div>
+      </div>`;
+  } else if(q.t==='chunk'){
+    const safeAns=escQ(q.ans);
+    ansHTML=`
+      <div class="ans-box chunk">
+        <div class="ans-chunk-ctx">${q.ctx||q.q} → <span class="ans-chunk">「 ${q.ans} 」</span></div>
+        <div class="ans-pron" style="margin-top:6px">🔤 발음: ${q.pron}</div>
+        <button class="speak-btn" style="margin-top:6px" onclick="speakText('${safeAns}','F',this)">🔊 영어 듣기</button>
+      </div>`;
+  }
+
+  const okSel=scores[q.no]==='ok'?'selected':'';
+  const ngSel=scores[q.no]==='ng'?'selected':'';
+
+  return `
+<details class="qcard" data-no="${q.no}" data-part="${q.p}">
+  <summary class="qcard-sum">
+    <span class="q-num">No.${q.no}</span>
+    <div class="q-body">
+      ${catLbl}
+      ${typeLbl}
+      ${qDisplay}
+      ${hintHTML}
+    </div>
+    <span class="q-arrow">▼</span>
+  </summary>
+  <div class="ans-section">
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">🔓 정답 보기</button>
+    <div style="display:none">
+      ${ansHTML}
+      <div class="score-btns">
+        <button class="btn-ok ${okSel}" onclick="markScore('${q.no}','ok')">✅ 맞음</button>
+        <button class="btn-ng ${ngSel}" onclick="markScore('${q.no}','ng')">❌ 틀림</button>
+      </div>
+    </div>
+  </div>
+</details>`;
+}
+
+function escQ(s){return(s||'').replace(/'/g,"\\'").replace(/\n/g,' ');}
+
+function renderCards(){
+  const container=document.getElementById('qContainer');
+  let filtered=DATA.filter(q=>{
+    if(curPart!=='all'&&q.p!==curPart)return false;
+    if(curSearch){
+      const s=curSearch.toLowerCase();
+      if(!q.q.toLowerCase().includes(s)&&!q.ans.toLowerCase().includes(s)&&!q.cat.toLowerCase().includes(s))return false;
+    }
+    return true;
+  });
+  if(filtered.length===0){
+    container.innerHTML='<div class="no-result">🔍 검색 결과가 없습니다.</div>';
+    updateProgress();return;
+  }
+  container.innerHTML=filtered.map(buildCard).join('');
+  updateProgress();
+}
+
+function filterPart(p){
+  curPart=p;
+  document.querySelectorAll('.filter-bar button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCards();
+}
+
+function filterSearch(){
+  curSearch=document.getElementById('searchInput').value.trim();
+  renderCards();
+}
+
+function expandAll(){document.querySelectorAll('.qcard').forEach(d=>d.setAttribute('open',''));}
+function collapseAll(){document.querySelectorAll('.qcard').forEach(d=>d.removeAttribute('open'));}
+
+renderCards();
+</script>
+</body>
+</html>
