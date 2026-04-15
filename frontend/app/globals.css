@@ -81,7 +81,7 @@
 
 @theme inline {
   --font-sans: 'Nunito', 'Nunito Fallback', sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-mono: 'Courier New', monospace;
 
   --color-game-green:        var(--game-green);
   --color-game-green-dark:   var(--game-green-dark);

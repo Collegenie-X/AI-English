@@ -133,6 +133,33 @@ export interface ConvDialogData {
   situations: ConvDialogSituation[]
 }
 
+// ── Korean sentence learning types (conversation_1000.json) ──
+export interface KoSentenceItem {
+  id: number
+  english: string
+  question: string
+  answer: string        // Korean translation
+  chunks: string[]
+  phonics: string
+  tips: string
+}
+
+export interface KoSituationGroup {
+  id: number
+  emoji: string
+  name: string
+  nameEn: string
+  color: string
+  sentences: KoSentenceItem[]
+}
+
+export interface KoSentenceContent {
+  title: string
+  description: string
+  version: string
+  situations: KoSituationGroup[]
+}
+
 // ── Korean word learning types ──
 export interface KoWordItem {
   id: string

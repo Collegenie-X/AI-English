@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import type { KoWordItem } from '@/types/content'
 import { KoPhonicsDialog, type WordWithCat } from '@/components/dialog/KoPhonicsDialog'
 
@@ -47,35 +47,97 @@ function speakSyllable(s: string) {
   window.speechSynthesis.speak(u)
 }
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const copy = [...arr]
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]]
+  }
+  return copy
+}
+
+// ── 단어 + 어떤 카테고리 색인지 함께 보관 ──
+interface PoolItem {
+  word: KoWordItem
+  catColor: string
+  catName: string
+}
+
 export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLearnDialogProps) {
-  const [activeCatId, setActiveCatId] = useState(initialCatId ?? cats[0]?.id ?? '')
+  // 멀티 선택 상태 — 초기값: initialCatId 가 있으면 그 카테고리만, 없으면 전체
+  const [selectedCatIds, setSelectedCatIds] = useState<Set<string>>(
+    () => new Set(initialCatId ? [initialCatId] : cats.map(c => c.id))
+  )
 
-  const activeCat = cats.find(c => c.id === activeCatId) ?? cats[0]
-  const words     = activeCat?.words ?? []
-  const catName   = activeCat?.name  ?? ''
-  const catColor  = activeCat?.color ?? '#FF4B4B'
+  // 현재 보여줄 단어 풀 (선택된 카테고리 합산 후 셔플)
+  const [pool, setPool] = useState<PoolItem[]>([])
+  const [idx, setIdx]   = useState(0)
 
-  const initialIdx = initialWord && activeCat
-    ? Math.max(0, (activeCat.words).findIndex(w => w.id === initialWord.id))
-    : 0
-
-  const [idx, setIdx]               = useState(initialIdx)
   const [autoPlay, setAutoPlay]     = useState(false)
   const [playingIdx, setPlayingIdx] = useState<number | null>(null)
   const [speaking, setSpeaking]     = useState(false)
   const [phonicsSyl, setPhonics]    = useState<{ syllable: string; sylIdx: number } | null>(null)
+  const [shuffleAnim, setShuffleAnim] = useState(false)
   const autoRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const allWordsWithCat: WordWithCat[] = cats.flatMap(c =>
     c.words.map(w => ({ word: w, catColor: c.color }))
   )
 
-  const item      = words[idx] ?? words[0]
+  // ── 풀 빌드 ──
+  const buildPool = useCallback((ids: Set<string>, startWord?: KoWordItem): PoolItem[] => {
+    const raw = cats
+      .filter(c => ids.has(c.id))
+      .flatMap(c => c.words.map(w => ({ word: w, catColor: c.color, catName: c.name })))
+    const shuffled = shuffleArray(raw)
+    if (startWord) {
+      const si = shuffled.findIndex(p => p.word.id === startWord.id)
+      if (si > 0) { const [el] = shuffled.splice(si, 1); shuffled.unshift(el) }
+    }
+    return shuffled
+  }, [cats])
+
+  // 초기 풀 생성
+  useEffect(() => {
+    const initial = buildPool(selectedCatIds, initialWord)
+    setPool(initial)
+    setIdx(0)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const refreshPool = () => {
+    window.speechSynthesis?.cancel()
+    setAutoPlay(false)
+    setSpeaking(false)
+    setShuffleAnim(true)
+    setTimeout(() => setShuffleAnim(false), 400)
+    const newPool = buildPool(selectedCatIds)
+    setPool(newPool)
+    setIdx(0)
+  }
+
+  // 카테고리 토글
+  const toggleCat = (catId: string) => {
+    setSelectedCatIds(prev => {
+      const next = new Set(prev)
+      if (next.has(catId) && next.size === 1) return prev  // 마지막 하나는 해제 불가
+      next.has(catId) ? next.delete(catId) : next.add(catId)
+      // 선택 변경 시 즉시 새 풀 빌드
+      const newPool = buildPool(next)
+      setPool(newPool)
+      setIdx(0)
+      window.speechSynthesis?.cancel()
+      setAutoPlay(false)
+      return next
+    })
+  }
+
+  const item      = pool[idx]?.word
+  const catColor  = pool[idx]?.catColor ?? cats[0]?.color ?? '#58CC02'
+  const catName   = pool[idx]?.catName  ?? ''
   const syllables = item ? Array.from(item.word) : []
 
-  if (!item) return null
-
   const playWord = useCallback(() => {
+    if (!item) return
     if (typeof window === 'undefined' || !window.speechSynthesis) return
     window.speechSynthesis.cancel()
     const u = new SpeechSynthesisUtterance(item.word)
@@ -88,45 +150,42 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
     window.speechSynthesis.speak(u)
   }, [item])
 
-  // Auto-play on idx or category change
+  // 단어 바뀔 때 자동 발음
   useEffect(() => {
     const t = setTimeout(playWord, 280)
     return () => clearTimeout(t)
-  }, [idx, activeCatId])
+  }, [idx, pool]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Auto-play carousel
+  // 자동 재생
   useEffect(() => {
     if (!autoPlay) return
     autoRef.current = setTimeout(() => {
-      if (idx < words.length - 1) setIdx(i => i + 1)
+      if (idx < pool.length - 1) setIdx(i => i + 1)
       else setAutoPlay(false)
     }, 2600)
     return () => { if (autoRef.current) clearTimeout(autoRef.current) }
-  }, [autoPlay, idx, words.length])
+  }, [autoPlay, idx, pool.length])
 
-  // Keyboard nav
+  // 키보드 네비게이션
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape')     { onClose(); return }
-      if (e.key === 'ArrowLeft')  setIdx(i => Math.max(0, i - 1))
-      if (e.key === 'ArrowRight') setIdx(i => Math.min(words.length - 1, i + 1))
+      if (e.key === 'ArrowLeft')  { setAutoPlay(false); setIdx(i => Math.max(0, i - 1)) }
+      if (e.key === 'ArrowRight') { setAutoPlay(false); setIdx(i => Math.min(pool.length - 1, i + 1)) }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [onClose, words.length])
-
-  const switchCat = (catId: string) => {
-    window.speechSynthesis?.cancel()
-    setSpeaking(false)
-    setAutoPlay(false)
-    setActiveCatId(catId)
-    setIdx(0)
-  }
+  }, [onClose, pool.length])
 
   const handlePrev = () => { setAutoPlay(false); setIdx(i => Math.max(0, i - 1)) }
-  const handleNext = () => { setAutoPlay(false); setIdx(i => Math.min(words.length - 1, i + 1)) }
+  const handleNext = () => { setAutoPlay(false); setIdx(i => Math.min(pool.length - 1, i + 1)) }
 
-  const pct = ((idx + 1) / words.length) * 100
+  const pct = pool.length > 0 ? ((idx + 1) / pool.length) * 100 : 0
+
+  // 선택된 카테고리 수
+  const selectedCount = selectedCatIds.size
+
+  if (!item) return null
 
   return (
     <div className="dialog-overlay" onClick={onClose} role="dialog" aria-modal aria-label={`${item.word} 학습`}>
@@ -146,35 +205,98 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
           <button className="dialog-close-btn" onClick={onClose} aria-label="닫기">✕</button>
         </div>
 
-        {/* ── Category tabs (multiple categories) ── */}
+        {/* ── Multi-select category tabs ── */}
         {cats.length > 1 && (
-          <div
-            style={{ display: 'flex', gap: '6px', overflowX: 'auto', padding: '10px 14px 8px', background: 'white', borderBottom: '1px solid #f0f0f0' }}
-            className="scrollbar-hide"
-          >
-            {cats.map(cat => {
-              const isActive = cat.id === activeCatId
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => switchCat(cat.id)}
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '4px',
-                    padding: '5px 12px', borderRadius: '20px',
-                    border: `2px solid ${isActive ? cat.color : '#e0e0e0'}`,
-                    background: isActive ? cat.color : 'white',
-                    color: isActive ? 'white' : '#666',
-                    fontFamily: 'inherit', fontSize: '0.8rem', fontWeight: 800,
-                    cursor: 'pointer', flexShrink: 0, transition: 'all 0.15s',
-                    boxShadow: isActive ? `0 3px 8px ${cat.color}44` : 'none',
-                  }}
+          <div style={{ background: 'white', borderBottom: '1px solid #f0f0f0' }}>
+            <div
+              style={{ display: 'flex', gap: '6px', overflowX: 'auto', padding: '10px 12px 8px' }}
+              className="scrollbar-hide"
+            >
+              {/* 전체 선택/해제 버튼 */}
+              <button
+                onClick={() => {
+                  const allIds = new Set(cats.map(c => c.id))
+                  const isAll  = selectedCatIds.size === cats.length
+                  const next   = isAll ? new Set([cats[0].id]) : allIds
+                  setSelectedCatIds(next)
+                  const newPool = buildPool(next)
+                  setPool(newPool); setIdx(0)
+                  window.speechSynthesis?.cancel(); setAutoPlay(false)
+                }}
+                style={{
+                  flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '4px',
+                  padding: '5px 12px', borderRadius: '20px', border: 'none',
+                  background: selectedCatIds.size === cats.length
+                    ? 'linear-gradient(135deg,#7c3aed,#9d4edd)' : '#f0f0f0',
+                  color: selectedCatIds.size === cats.length ? 'white' : '#888',
+                  fontFamily: 'inherit', fontSize: '0.78rem', fontWeight: 800, cursor: 'pointer',
+                }}
+              >
+                {selectedCatIds.size === cats.length ? '✓ 전체' : '전체'}
+              </button>
+
+              <div style={{ width: '1px', height: '24px', background: '#e0e0e0', flexShrink: 0, alignSelf: 'center' }} />
+
+              {cats.map(cat => {
+                const isActive = selectedCatIds.has(cat.id)
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => toggleCat(cat.id)}
+                    style={{
+                      flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '4px',
+                      padding: '5px 12px', borderRadius: '20px',
+                      border: `2px solid ${isActive ? cat.color : '#e0e0e0'}`,
+                      background: isActive ? cat.color : 'white',
+                      color: isActive ? 'white' : '#666',
+                      fontFamily: 'inherit', fontSize: '0.8rem', fontWeight: 800,
+                      cursor: 'pointer', transition: 'all 0.15s',
+                      boxShadow: isActive ? `0 3px 8px ${cat.color}44` : 'none',
+                      transform: isActive ? 'translateY(-1px)' : 'none',
+                      opacity: selectedCatIds.size === 1 && isActive ? 1 : 1,
+                    }}
+                    title={selectedCatIds.size === 1 && isActive ? '최소 1개 선택 필요' : ''}
+                  >
+                    {isActive && <span style={{ fontSize: '0.65rem' }}>✓</span>}
+                    <span style={{ fontSize: '0.9rem' }}>{cat.icon}</span>
+                    {cat.name}
+                    <span style={{ fontSize: '0.7rem', opacity: 0.75 }}>({cat.words.length})</span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* 선택 요약 + 새로고침 버튼 */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px 8px' }}>
+              <span style={{ fontSize: '0.75rem', color: '#aaa', fontWeight: 600 }}>
+                {selectedCount}개 선택 · 총 {pool.length}단어
+              </span>
+              <button
+                onClick={refreshPool}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '5px',
+                  padding: '5px 13px', borderRadius: '14px',
+                  border: `1.5px solid ${catColor}55`,
+                  background: `${catColor}10`, color: catColor,
+                  fontFamily: 'inherit', fontSize: '0.78rem', fontWeight: 800,
+                  cursor: 'pointer', transition: 'all 0.15s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = catColor + '22')}
+                onMouseLeave={e => (e.currentTarget.style.background = catColor + '10')}
+                aria-label="단어 순서 새로고침"
+              >
+                <svg
+                  width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  style={{ transition: 'transform 0.4s', transform: shuffleAnim ? 'rotate(360deg)' : 'none' }}
                 >
-                  <span style={{ fontSize: '0.9rem' }}>{cat.icon}</span>
-                  {cat.name}
-                  <span style={{ fontSize: '0.7rem', opacity: 0.75 }}>({cat.words.length})</span>
-                </button>
-              )
-            })}
+                  <polyline points="23 4 23 10 17 10"/>
+                  <polyline points="1 20 1 14 7 14"/>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+                새로고침
+              </button>
+            </div>
           </div>
         )}
 
@@ -205,7 +327,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
             }}
           >◀</button>
 
-          {/* Center: emoji + word + wave */}
+          {/* Center */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
             <div
               onClick={playWord} role="button" aria-label={`${item.word} 듣기`}
@@ -235,31 +357,31 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
             </div>
 
             <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#aaa' }}>
-              {idx + 1} / {words.length}
+              {idx + 1} / {pool.length}
             </span>
           </div>
 
           {/* → Next */}
           <button
-            onClick={handleNext} disabled={idx === words.length - 1} aria-label="다음"
+            onClick={handleNext} disabled={idx === pool.length - 1} aria-label="다음"
             style={{
               width: 44, height: 44, flexShrink: 0,
               border: 'none', borderRadius: '50%',
-              background: idx === words.length - 1 ? '#f5f5f5' : catColor,
-              color: idx === words.length - 1 ? '#ccc' : 'white',
-              cursor: idx === words.length - 1 ? 'not-allowed' : 'pointer',
+              background: idx === pool.length - 1 ? '#f5f5f5' : catColor,
+              color: idx === pool.length - 1 ? '#ccc' : 'white',
+              cursor: idx === pool.length - 1 ? 'not-allowed' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '1.1rem', fontWeight: 900, fontFamily: 'inherit',
-              boxShadow: idx === words.length - 1 ? 'none' : `0 4px 16px ${catColor}55`,
+              boxShadow: idx === pool.length - 1 ? 'none' : `0 4px 16px ${catColor}55`,
               margin: '0 14px 0 10px', transition: 'all 0.15s',
             }}
           >▶</button>
         </div>
 
-        {/* ── Body: syllables + 영어 + sentences + controls ── */}
+        {/* ── Body ── */}
         <div style={{ padding: '0 22px 22px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
 
-          {/* Syllable blocks — click to speak; long-press/double-click opens phonics */}
+          {/* Syllable blocks */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
             {syllables.map((s, i) => {
               const sc = SYL_COLORS[i % SYL_COLORS.length]
@@ -268,8 +390,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
                 <button
                   key={i}
                   onClick={() => {
-                    setPlayingIdx(i)
-                    speakSyllable(s)
+                    setPlayingIdx(i); speakSyllable(s)
                     setTimeout(() => setPlayingIdx(null), 900)
                     setPhonics({ syllable: s, sylIdx: i })
                   }}
@@ -381,7 +502,6 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
         }
       `}</style>
 
-      {/* Phonics analysis popup */}
       {phonicsSyl && (
         <KoPhonicsDialog
           syllable={phonicsSyl.syllable}
