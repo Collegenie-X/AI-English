@@ -1284,9 +1284,9 @@
     }
     .puzzle-overlay.open { opacity: 1; pointer-events: all; }
     .puzzle-dialog {
-      background: white; border-radius: 28px;
+      background: #f3eeff; border-radius: 28px;
       box-shadow: 0 28px 70px rgba(0,0,0,0.32);
-      width: 100%; max-width: 430px;
+      width: 100%; max-width: 460px;
       max-height: 96vh; overflow-y: auto;
       transform: scale(0.82) translateY(30px);
       transition: transform 0.32s cubic-bezier(0.34,1.4,0.64,1);
@@ -1325,12 +1325,13 @@
 
     /* ── 난이도 탭 ── */
     .puzzle-diff-tabs {
-      display: flex; gap: 6px; padding: 14px 16px 0;
+      display: flex; gap: 8px; padding: 14px 16px 10px;
+      background: #f3eeff; justify-content: center;
     }
     .puzzle-diff-btn {
-      flex: 1; padding: 10px 8px; border: 2.5px solid #e0e0e0;
+      flex: 1; padding: 10px 8px; border: 2.5px solid #d1c4e9;
       border-radius: 16px; cursor: pointer; font-family: var(--font);
-      font-size: 0.9em; font-weight: 700; background: white;
+      font-size: 0.88em; font-weight: 700; background: white;
       color: #666; transition: all var(--transition); text-align: center;
     }
     .puzzle-diff-btn:hover:not(.active) { border-color: #7E57C2; color: #7E57C2; }
@@ -1350,11 +1351,72 @@
       box-shadow: 0 3px 12px rgba(239,83,80,0.4);
     }
 
+    /* ── 시작 화면 (난이도 선택) ── */
+    .puzzle-start-screen {
+      padding: 16px 16px 0;
+    }
+    .puzzle-pool-subtitle {
+      text-align: center; color: #9C27B0; font-size: 0.88em;
+      margin-bottom: 16px; font-weight: 700;
+    }
+    .puzzle-diff-options {
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
+    }
+    .puzzle-diff-option {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-radius: 18px;
+      border: 2.5px solid #e0e0e0; cursor: pointer;
+      background: white; transition: all 0.22s; user-select: none;
+    }
+    .puzzle-diff-option:hover { border-color: #9d4edd; transform: translateY(-1px); }
+    .puzzle-diff-option.selected.easy   { border-color: #43e97b; background: #f4fff8; }
+    .puzzle-diff-option.selected.medium { border-color: #FB8C00; background: #fffbf0; }
+    .puzzle-diff-option.selected.hard   { border-color: #ef5350; background: #fff5f5; }
+    .pdo-dot {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .pdo-info { flex: 1; }
+    .pdo-name { font-size: 1.08em; font-weight: 900; color: #2c3e50; }
+    .pdo-desc { font-size: 0.82em; color: #888; margin-top: 3px; }
+    .pdo-check { font-size: 1.2em; font-weight: 900; opacity: 0; transition: opacity 0.2s; }
+    .puzzle-diff-option.selected.easy   .pdo-check { opacity: 1; color: #2E7D32; }
+    .puzzle-diff-option.selected.medium .pdo-check { opacity: 1; color: #E65100; }
+    .puzzle-diff-option.selected.hard   .pdo-check { opacity: 1; color: #C62828; }
+    .puzzle-game-start-btn {
+      width: 100%; padding: 17px; border: none; border-radius: 22px;
+      background: linear-gradient(135deg, #7E57C2, #9C27B0);
+      color: white; font-family: var(--font); font-size: 1.12em; font-weight: 900;
+      cursor: pointer; box-shadow: 0 6px 22px rgba(124,58,237,0.45);
+      transition: all 0.22s; margin-bottom: 18px; letter-spacing: -0.5px;
+    }
+    .puzzle-game-start-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(124,58,237,0.55); }
+    .puzzle-game-start-btn:active { transform: translateY(0); }
+
+    /* ── 정답 폭발 Flash 효과 ── */
+    @keyframes correctFlash {
+      0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.6); }
+      30%  { opacity: 1; transform: translate(-50%,-50%) scale(1.18); }
+      70%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%,-50%) scale(1.1); }
+    }
+    @keyframes rainbowBorder {
+      0%,100% { border-color: #f00; }
+      20%     { border-color: #ff0; }
+      40%     { border-color: #0f0; }
+      60%     { border-color: #0ff; }
+      80%     { border-color: #00f; }
+    }
+    .all-correct-flash {
+      animation: rainbowBorder 0.7s linear 3;
+    }
+
     /* ── 선택 주제 정보 표시 ── */
     .puzzle-source-info {
-      padding: 6px 10px 0;
+      padding: 6px 16px 8px;
       display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;
       justify-content: center; font-size: 0.8em; color: #888; overflow: hidden;
+      background: #f3eeff;
     }
     .puzzle-source-chip {
       display: inline-flex; align-items: center; justify-content: center;
@@ -1380,15 +1442,19 @@
     }
 
     /* ── 퍼즐 바디 ── */
-    .pdlg-body { padding: 14px 10px 22px; }
+    .pdlg-body {
+      padding: 14px 14px 22px;
+      background: #f3eeff;
+      text-align: center;
+    }
 
     /* ── 상단 타겟 이미지 카드 3개 ── */
     .puzzle-targets {
-      width: 340px; margin: 0 auto;
-      height: 135px;
-      padding-top: 10px;
-      display: flex; gap: 4px; justify-content: center;
-      margin-bottom: 14px; flex-wrap: nowrap; overflow-x: hidden; align-items: stretch;
+      width: 100%; max-width: 420px; margin: 0 auto;
+      height: 140px;
+      padding-top: 6px;
+      display: flex; gap: 8px; justify-content: center;
+      margin-bottom: 10px; flex-wrap: nowrap; overflow-x: hidden; align-items: stretch;
     }
     .puzzle-target-card {
       background: #f5f0ff; border-radius: 12px;
@@ -1426,18 +1492,18 @@
 
     /* ── 안내 문구 ── */
     .puzzle-instruction {
-      text-align: center; font-size: 0.9em; color: #7E57C2;
-      margin-bottom: 12px; background: #F3E5F5;
-      border-radius: 12px; padding: 8px 12px; font-weight: 700;
+      text-align: center; font-size: 0.85em; color: #7E57C2;
+      margin-bottom: 10px; background: rgba(255,255,255,0.55);
+      border-radius: 12px; padding: 7px 12px; font-weight: 700;
     }
 
     /* ── 그리드 ── */
     .puzzle-grid-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
     .puzzle-grid {
-      display: grid; gap: 4px;
-      background: #EDE7F6; padding: 8px;
-      border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(126,87,194,0.18);
+      display: grid; gap: 6px;
+      background: #c9b8ef; padding: 12px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(126,87,194,0.28);
     }
     .puzzle-cell {
       background: white; border-radius: 10px;
@@ -1449,9 +1515,9 @@
       position: relative;
     }
     /* 난이도별 셀 크기 */
-    .diff-easy   .puzzle-cell { width: 78px; height: 78px; font-size: 1.6em; }
-    .diff-medium .puzzle-cell { width: 66px; height: 66px; font-size: 1.42em; }
-    .diff-hard   .puzzle-cell { width: 56px; height: 56px; font-size: 1.24em; }
+    .diff-easy   .puzzle-cell { width: 74px; height: 74px; font-size: 1.55em; }
+    .diff-medium .puzzle-cell { width: 62px; height: 62px; font-size: 1.38em; }
+    .diff-hard   .puzzle-cell { width: 54px; height: 54px; font-size: 1.22em; }
 
     .puzzle-cell:hover:not(.found-0):not(.found-1):not(.found-2):not(.found-3):not(.found-4) {
       transform: scale(1.09); box-shadow: 0 4px 12px rgba(126,87,194,0.22);
@@ -1577,14 +1643,16 @@
     /* ── 컨트롤 버튼 ── */
     .puzzle-controls { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
     .puzzle-hint-box {
-      text-align: center; font-size: 0.88em; color: #888;
-      margin-top: 6px; min-height: 20px; padding: 0 8px;
+      text-align: center; font-size: 0.88em; color: #6A1B9A;
+      margin-top: 6px; min-height: 20px; padding: 4px 8px;
+      background: rgba(255,255,255,0.5); border-radius: 10px;
+      font-weight: 700;
     }
 
     /* ── 진행 바 ── */
-    .puzzle-progress-bar { background: #EDE7F6; border-radius: 16px; height: 9px; overflow: hidden; margin-bottom: 10px; }
-    .puzzle-progress-fill { height: 100%; background: linear-gradient(90deg,#7E57C2,#9C27B0); border-radius: 16px; transition: width 0.5s ease; }
-    .puzzle-progress-text { text-align: center; font-size: 0.82em; color: #9E9E9E; margin-bottom: 6px; }
+    .puzzle-progress-bar { background: rgba(255,255,255,0.45); border-radius: 16px; height: 9px; overflow: hidden; margin-bottom: 6px; }
+    .puzzle-progress-fill { height: 100%; background: linear-gradient(90deg,#7E57C2,#ce93d8); border-radius: 16px; transition: width 0.5s ease; }
+    .puzzle-progress-text { text-align: center; font-size: 0.82em; color: #7E57C2; margin-bottom: 6px; font-weight: 700; }
 
     /* ── 완료 화면 ── */
     .puzzle-complete { text-align: center; padding: 16px 8px; animation: fadeInUp 0.5s ease; }
@@ -1753,18 +1821,46 @@
     /* 다이얼로그 헤더 */
     .qdlg-header {
       background: linear-gradient(135deg,#FF9800,#FF5722);
-      border-radius: 28px 28px 0 0; padding: 18px 22px;
+      border-radius: 28px 28px 0 0; padding: 16px 20px;
       display: flex; align-items: center; justify-content: space-between;
       color: white;
     }
-    .qdlg-header h2 { font-size: 1.25em; margin: 0; letter-spacing: -0.5px; }
+    .qdlg-header-left { flex: 1; min-width: 0; }
+    .qdlg-header h2 { font-size: 1.2em; margin: 0; letter-spacing: -0.5px; }
+    .qdlg-subtitle { font-size: 0.78em; opacity: 0.82; font-weight: 600; margin-top: 2px; }
     .qdlg-close-btn {
       width: 36px; height: 36px; border-radius: 50%;
       background: rgba(255,255,255,0.25); border: none; cursor: pointer;
       font-size: 1.1em; color: white; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
+      transition: background 0.2s; flex-shrink: 0;
     }
     .qdlg-close-btn:hover { background: rgba(255,255,255,0.45); }
+
+    /* ── 시작 화면 ── */
+    .qdlg-section-title {
+      font-size: 0.82em; font-weight: 900; color: #aaa;
+      letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .qdlg-type-row {
+      display: flex; gap: 10px; margin-bottom: 22px;
+    }
+    .qdlg-type-card {
+      flex: 1; padding: 16px 10px; border: 2.5px solid #e0e0e0;
+      border-radius: 18px; cursor: pointer; font-family: var(--font);
+      font-size: 0.95em; font-weight: 700; background: white; color: #999;
+      transition: all 0.22s; display: flex; align-items: center;
+      justify-content: center; gap: 8px;
+    }
+    .qdlg-type-card:hover:not(.active) { border-color: #FF9800; color: #FF6F00; }
+    .qdlg-type-card.active {
+      background: linear-gradient(135deg,#FF9800,#FF5722);
+      color: white; border-color: transparent;
+      box-shadow: 0 4px 16px rgba(255,152,0,0.38);
+    }
+    .qdlg-type-card-icon { font-size: 1.2em; }
+    .qdlg-pool-info {
+      font-size: 0.8em; color: #bbb; text-align: center; margin: -8px 0 18px;
+    }
 
     /* ============================================================
        단어 카드 → 듣기모드 다이얼로그 오버레이
@@ -2224,20 +2320,59 @@
       </div>
       <button class="pdlg-close-btn" onclick="closePuzzleDialog()" title="닫기">✕</button>
     </div>
-    <!-- 난이도 탭 -->
-    <div class="puzzle-diff-tabs">
-      <button class="puzzle-diff-btn active easy" data-diff="easy"
-              onclick="setPuzzleDiff('easy')">🟢 초급 (4×4)</button>
-      <button class="puzzle-diff-btn medium" data-diff="medium"
-              onclick="setPuzzleDiff('medium')">🟡 중급 (5×5)</button>
-      <button class="puzzle-diff-btn hard" data-diff="hard"
-              onclick="setPuzzleDiff('hard')">🔴 고급 (6×6)</button>
+
+    <!-- ── 시작 화면 (난이도 선택) ── -->
+    <div class="puzzle-start-screen" id="puzzle-start-screen">
+      <div class="puzzle-pool-subtitle" id="puzzle-pool-subtitle">기초 단어 · 단어 풀</div>
+      <div class="puzzle-diff-options">
+        <div class="puzzle-diff-option selected easy" data-diff="easy"
+             onclick="selectPuzzleDiff('easy')">
+          <span class="pdo-dot" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"></span>
+          <div class="pdo-info">
+            <div class="pdo-name">초급</div>
+            <div class="pdo-desc">4×4 격자 · 3단어 찾기</div>
+          </div>
+          <span class="pdo-check">✓</span>
+        </div>
+        <div class="puzzle-diff-option medium" data-diff="medium"
+             onclick="selectPuzzleDiff('medium')">
+          <span class="pdo-dot" style="background:linear-gradient(135deg,#FDD835,#FB8C00)"></span>
+          <div class="pdo-info">
+            <div class="pdo-name">중급</div>
+            <div class="pdo-desc">5×5 격자 · 3단어 찾기 (가로·세로)</div>
+          </div>
+          <span class="pdo-check">✓</span>
+        </div>
+        <div class="puzzle-diff-option hard" data-diff="hard"
+             onclick="selectPuzzleDiff('hard')">
+          <span class="pdo-dot" style="background:linear-gradient(135deg,#ef5350,#e91e63)"></span>
+          <div class="pdo-info">
+            <div class="pdo-name">고급</div>
+            <div class="pdo-desc">6×6 격자 · 음절 순서 찾기</div>
+          </div>
+          <span class="pdo-check">✓</span>
+        </div>
+      </div>
+      <button class="puzzle-game-start-btn" onclick="startPuzzleGame()">▶ 퍼즐 시작</button>
     </div>
-    <!-- 선택된 주제 표시 (필터 자동 연동) -->
-    <div class="puzzle-source-info" id="puzzle-source-info"></div>
-    <!-- 퍼즐 본문 -->
-    <div class="pdlg-body">
-      <div id="puzzle-content"></div>
+
+    <!-- ── 게임 화면 ── -->
+    <div id="puzzle-game-area" style="display:none">
+      <!-- 난이도 탭 -->
+      <div class="puzzle-diff-tabs">
+        <button class="puzzle-diff-btn active easy" data-diff="easy"
+                onclick="setPuzzleDiff('easy')">🟢 초급 (4×4)</button>
+        <button class="puzzle-diff-btn medium" data-diff="medium"
+                onclick="setPuzzleDiff('medium')">🟡 중급 (5×5)</button>
+        <button class="puzzle-diff-btn hard" data-diff="hard"
+                onclick="setPuzzleDiff('hard')">🔴 고급 (6×6)</button>
+      </div>
+      <!-- 선택된 주제 표시 (필터 자동 연동) -->
+      <div class="puzzle-source-info" id="puzzle-source-info"></div>
+      <!-- 퍼즐 본문 -->
+      <div class="pdlg-body">
+        <div id="puzzle-content"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -2249,34 +2384,69 @@
   <div class="quiz-dialog-box" id="quiz-dialog-box">
     <!-- 헤더 -->
     <div class="qdlg-header">
-      <h2 id="qdlg-title">🎯 퀴즈모드</h2>
+      <div class="qdlg-header-left">
+        <h2 id="qdlg-title">🎯 퀴즈모드</h2>
+        <div class="qdlg-subtitle" id="qdlg-subtitle"></div>
+      </div>
       <button class="qdlg-close-btn" onclick="closeQuizDialog()" title="닫기">✕</button>
     </div>
-    <!-- 본문: 퀴즈 바로 시작 -->
+    <!-- 본문 -->
     <div class="qdlg-body" id="qdlg-body">
-      <!-- 퀴즈 타입 탭 -->
-      <div class="quiz-type-tabs" id="quiz-type-tabs">
-        <button class="quiz-type-btn active" data-type="multiple"
-                onclick="setQuizType('multiple')">📋 객관식</button>
-        <button class="quiz-type-btn" data-type="typing"
-                onclick="setQuizType('typing')">⌨️ 주관식 (타자)</button>
-      </div>
-      <!-- 문제 수 슬라이더 -->
-      <div class="quiz-count-slider-row" id="quiz-count-slider-row">
-        <span class="qcs-label">📝 문제 수</span>
-        <div class="qcs-track-wrap">
-          <input type="range" class="qcs-range" id="qdlg-count-slider"
-                 min="3" max="30" value="10"
-                 oninput="onQuizCountSliderInput(this.value)"
-                 onchange="onQuizCountSliderChange(this.value)">
+
+      <!-- ── [A] 시작 화면 ── -->
+      <div id="qdlg-start-screen">
+        <div class="qdlg-section-title">출제 방식</div>
+        <div class="qdlg-type-row" id="qdlg-type-row">
+          <button class="qdlg-type-card active" data-type="multiple"
+                  onclick="setQuizSetupType('multiple')">
+            <span class="qdlg-type-card-icon">📋</span> 객관식
+          </button>
+          <button class="qdlg-type-card" data-type="typing"
+                  onclick="setQuizSetupType('typing')">
+            <span class="qdlg-type-card-icon">⌨️</span> 주관식
+          </button>
         </div>
-        <span class="qcs-value" id="qdlg-count-value">10문제</span>
+        <div class="qdlg-section-title">문제 수</div>
+        <div class="quiz-count-slider-row" id="quiz-count-slider-row">
+          <div class="qcs-track-wrap">
+            <input type="range" class="qcs-range" id="qdlg-count-slider"
+                   min="3" max="30" value="10"
+                   oninput="onQuizCountSliderInput(this.value)">
+          </div>
+          <span class="qcs-value" id="qdlg-count-value">10문제</span>
+        </div>
+        <div class="qdlg-pool-info" id="qdlg-pool-info"></div>
+        <button class="qdlg-start-btn" onclick="startQuizFromSetup()">▶ 퀴즈 시작</button>
       </div>
-      <div class="qdlg-quiz-panel" id="qdlg-quiz-panel">
-        <div class="quiz-panel">
-          <div id="qdlg-quiz-content"></div>
+
+      <!-- ── [B] 퀴즈 진행 화면 ── -->
+      <div id="qdlg-quiz-screen" style="display:none">
+        <!-- 퀴즈 타입 탭 -->
+        <div class="quiz-type-tabs" id="quiz-type-tabs">
+          <button class="quiz-type-btn active" data-type="multiple"
+                  onclick="setQuizType('multiple')">📋 객관식</button>
+          <button class="quiz-type-btn" data-type="typing"
+                  onclick="setQuizType('typing')">⌨️ 주관식 (타자)</button>
+        </div>
+        <!-- 문제 수 슬라이더 -->
+        <div class="quiz-count-slider-row" id="quiz-count-slider-row-quiz">
+          <span class="qcs-label">📝 문제 수</span>
+          <div class="qcs-track-wrap">
+            <input type="range" class="qcs-range" id="qdlg-count-slider-quiz"
+                   min="3" max="30" value="10"
+                   oninput="onQuizCountSliderInputQuiz(this.value)"
+                   onchange="onQuizCountSliderChange(this.value)">
+          </div>
+          <span class="qcs-value" id="qdlg-count-value-quiz">10문제</span>
+        </div>
+        <!-- 퀴즈 콘텐츠 -->
+        <div class="qdlg-quiz-panel" id="qdlg-quiz-panel">
+          <div class="quiz-panel">
+            <div id="qdlg-quiz-content"></div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -3148,68 +3318,111 @@ function openQuizDialog() {
   if (!WORD_DATA) return;
 
   // ── 모든 재생 완전 중단 ──
-  // 1) 자동재생 타이머 중단
   stopAutoPlay();
-  // 2) TTS 즉시 취소
   if (window.speechSynthesis) speechSynthesis.cancel();
-  // 3) wv-overlay (전체 듣기 다이얼로그) 닫기
   const wvOv = document.getElementById('wv-overlay');
   if (wvOv && wvOv.classList.contains('open')) {
     wvOv.classList.remove('open');
-    // selectedCats 복원 (카드 클릭으로 열렸을 때)
     if (state._prevSelectedCats) {
       state.selectedCats = state._prevSelectedCats;
       delete state._prevSelectedCats;
     }
   }
-  // 4) 퀴즈 카운트다운 타이머 중단
   if (state.quiz.countdownTimer) {
     clearInterval(state.quiz.countdownTimer);
     state.quiz.countdownTimer = null;
   }
-  // 5) 재생 중인 카드 하이라이트 초기화
   document.querySelectorAll('.word-card.playing, .word-card.focused, .word-card.reading-highlight')
     .forEach(el => el.classList.remove('playing', 'focused', 'reading-highlight'));
 
-  // 선택된 카테고리 기반으로 바로 퀴즈 시작
+  // 선택된 카테고리 pool 계산
   const cats = getSelectedCats();
   const pool = cats.length ? cats.flatMap(c => c.words) : getAllWords();
-
   if (!pool.length) { alert('단어가 없어요! 주제를 선택해주세요.'); return; }
 
-  // 선택된 주제명 헤더에 표시
-  const catNames = cats.length
-    ? cats.map(c => c.icon + ' ' + c.name).join(', ')
-    : '전체';
-  document.getElementById('qdlg-title').textContent = `🎯 ${catNames}`;
-
-  // pool 저장 및 totalCount 설정
+  // pool 저장
   state.quiz.pool       = shuffle([...pool]);
   state.quiz.totalCount = Math.min(state.quiz.totalCount || 10, pool.length);
-  state.quiz.words      = state.quiz.pool.slice(0, state.quiz.totalCount);
-  state.quiz.idx      = 0;
-  state.quiz.score    = 0;
-  state.quiz.answered = false;
-  state.quiz.started  = true;
-  state.quiz.streak   = 0;
-  state.quiz.maxStreak= 0;
+  state.quiz.started    = false;
 
-  // 탭 active 상태 초기화
+  // 헤더: 카테고리명 + 단어 수
+  const catNames = cats.length ? cats.map(c => c.icon + ' ' + c.name).join(', ') : '전체';
+  document.getElementById('qdlg-title').textContent = catNames + ' 퀴즈';
+  document.getElementById('qdlg-subtitle').textContent = `${pool.length}단어 풀`;
+
+  // 풀 정보 텍스트
+  const poolInfo = document.getElementById('qdlg-pool-info');
+  if (poolInfo) poolInfo.textContent = `전체 ${pool.length}단어 중 랜덤 출제`;
+
+  // 시작 화면 / 퀴즈 화면 표시
+  document.getElementById('qdlg-start-screen').style.display = 'block';
+  document.getElementById('qdlg-quiz-screen').style.display  = 'none';
+
+  // 시작 화면 타입 버튼 active 동기화
+  document.querySelectorAll('.qdlg-type-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === state.quiz.quizType);
+  });
+
+  // 슬라이더 초기화 (시작 화면용)
+  _initQuizCountSlider(pool.length);
+
+  // 다이얼로그 열기
+  document.getElementById('quiz-dialog-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function startQuizFromSetup() {
+  const pool = state.quiz.pool;
+  if (!pool || !pool.length) return;
+
+  // 슬라이더 값 읽기
+  const slider = document.getElementById('qdlg-count-slider');
+  const count  = slider ? parseInt(slider.value) : (state.quiz.totalCount || 10);
+  state.quiz.totalCount = count;
+
+  // 퀴즈 상태 초기화
+  state.quiz.words     = shuffle([...pool]).slice(0, count);
+  state.quiz.idx       = 0;
+  state.quiz.score     = 0;
+  state.quiz.answered  = false;
+  state.quiz.started   = true;
+  state.quiz.streak    = 0;
+  state.quiz.maxStreak = 0;
+  state.quiz.hintUsed  = false;
+
+  // 헤더 제목 업데이트
+  const titleEl = document.getElementById('qdlg-title');
+  if (titleEl) {
+    const cats = getSelectedCats();
+    const catNames = cats.length ? cats.map(c => c.icon + ' ' + c.name).join(', ') : '전체';
+    titleEl.textContent = `🎯 ${catNames}`;
+  }
+  const subtitleEl = document.getElementById('qdlg-subtitle');
+  if (subtitleEl) subtitleEl.textContent = `${count}문제`;
+
+  // 퀴즈 탭 active 동기화
   document.querySelectorAll('.quiz-type-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.type === state.quiz.quizType);
   });
 
-  // 다이얼로그 열기 → 바로 문제 표시
-  document.getElementById('quiz-dialog-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  // 퀴즈 화면용 슬라이더 초기화
+  _initQuizScreenSlider(pool.length, count);
 
-  // 슬라이더 초기화
-  _initQuizCountSlider(pool.length);
+  // 화면 전환
+  document.getElementById('qdlg-start-screen').style.display = 'none';
+  document.getElementById('qdlg-quiz-screen').style.display  = 'block';
 
   renderCurrentQuizQuestion();
 }
 
-/* ── 문제 수 슬라이더 ── */
+function setQuizSetupType(type) {
+  state.quiz.quizType = type;
+  document.querySelectorAll('.qdlg-type-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === type);
+  });
+}
+
+/* ── 문제 수 슬라이더 (시작 화면) ── */
 function _initQuizCountSlider(poolSize) {
   const slider = document.getElementById('qdlg-count-slider');
   const valEl  = document.getElementById('qdlg-count-value');
@@ -3218,6 +3431,19 @@ function _initQuizCountSlider(poolSize) {
   slider.max   = maxQ;
   slider.min   = Math.min(3, maxQ);
   slider.value = Math.min(state.quiz.totalCount, maxQ);
+  _updateSliderStyle(slider);
+  if (valEl) valEl.textContent = slider.value + '문제';
+}
+
+/* ── 문제 수 슬라이더 (퀴즈 진행 화면) ── */
+function _initQuizScreenSlider(poolSize, currentCount) {
+  const slider = document.getElementById('qdlg-count-slider-quiz');
+  const valEl  = document.getElementById('qdlg-count-value-quiz');
+  if (!slider) return;
+  const maxQ = Math.min(poolSize, 50);
+  slider.max   = maxQ;
+  slider.min   = Math.min(3, maxQ);
+  slider.value = Math.min(currentCount, maxQ);
   _updateSliderStyle(slider);
   if (valEl) valEl.textContent = slider.value + '문제';
 }
@@ -3235,19 +3461,35 @@ function onQuizCountSliderInput(val) {
   if (slider) _updateSliderStyle(slider);
 }
 
+function onQuizCountSliderInputQuiz(val) {
+  const slider = document.getElementById('qdlg-count-slider-quiz');
+  const valEl  = document.getElementById('qdlg-count-value-quiz');
+  if (valEl) {
+    valEl.textContent = val + '문제';
+    valEl.classList.remove('pop');
+    void valEl.offsetWidth;
+    valEl.classList.add('pop');
+    setTimeout(() => valEl.classList.remove('pop'), 320);
+  }
+  if (slider) _updateSliderStyle(slider);
+}
+
 function onQuizCountSliderChange(val) {
   const n = parseInt(val);
   if (!state.quiz.pool || !state.quiz.pool.length) return;
   state.quiz.totalCount = n;
-  // 결과 화면이면 무시, 문제 진행 중이면 재시작 확인
   const newWords = shuffle([...state.quiz.pool]).slice(0, n);
-  state.quiz.words    = newWords;
-  state.quiz.idx      = 0;
-  state.quiz.score    = 0;
-  state.quiz.answered = false;
-  state.quiz.streak   = 0;
-  state.quiz.maxStreak= 0;
+  state.quiz.words     = newWords;
+  state.quiz.idx       = 0;
+  state.quiz.score     = 0;
+  state.quiz.answered  = false;
+  state.quiz.streak    = 0;
+  state.quiz.maxStreak = 0;
+  state.quiz.hintUsed  = false;
   if (state.quiz.countdownTimer) { clearInterval(state.quiz.countdownTimer); state.quiz.countdownTimer = null; }
+  // 헤더 subtitle 업데이트
+  const subtitleEl = document.getElementById('qdlg-subtitle');
+  if (subtitleEl) subtitleEl.textContent = `${n}문제`;
   // 카운터 칩 즉시 업데이트
   const counterChip = document.getElementById('qdlg-counter-chip');
   if (counterChip) counterChip.textContent = `1 / ${n}`;
@@ -3652,7 +3894,7 @@ function renderQuizDialogResult() {
       </div>
       <div class="result-buttons">
         <button class="btn btn-orange" onclick="restartQuizDialog()">🔄 다시 도전</button>
-        <button class="btn btn-blue" onclick="toggleQuizTypeFromResult()" id="result-toggle-type-btn">⌨️ 모드 전환</button>
+        <button class="btn btn-purple" onclick="backToQuizSetup()">⚙️ 설정으로</button>
         <button class="btn btn-gray"   onclick="closeQuizDialog()">✕ 닫기</button>
       </div>
     </div>`;
@@ -3662,18 +3904,44 @@ function renderQuizDialogResult() {
 }
 
 function restartQuizDialog() {
-  // 같은 선택 주제로 바로 재시작
-  const cats = getSelectedCats();
-  const pool = cats.length ? cats.flatMap(c => c.words) : getAllWords();
-  if (!pool.length) { closeQuizDialog(); return; }
-  state.quiz.words    = shuffle([...pool]);
-  state.quiz.idx      = 0;
-  state.quiz.score    = 0;
-  state.quiz.answered = false;
-  state.quiz.streak   = 0;
-  state.quiz.maxStreak= 0;
-  state.quiz.hintUsed = false;
+  const pool = state.quiz.pool;
+  if (!pool || !pool.length) { closeQuizDialog(); return; }
+  state.quiz.words     = shuffle([...pool]).slice(0, state.quiz.totalCount);
+  state.quiz.idx       = 0;
+  state.quiz.score     = 0;
+  state.quiz.answered  = false;
+  state.quiz.streak    = 0;
+  state.quiz.maxStreak = 0;
+  state.quiz.hintUsed  = false;
+  // 헤더 subtitle 업데이트
+  const subtitleEl = document.getElementById('qdlg-subtitle');
+  if (subtitleEl) subtitleEl.textContent = `${state.quiz.totalCount}문제`;
   renderCurrentQuizQuestion();
+}
+
+function backToQuizSetup() {
+  if (state.quiz.countdownTimer) {
+    clearInterval(state.quiz.countdownTimer);
+    state.quiz.countdownTimer = null;
+  }
+  state.quiz.started = false;
+  // 헤더 원복
+  const cats = getSelectedCats();
+  const catNames = cats.length ? cats.map(c => c.icon + ' ' + c.name).join(', ') : '전체';
+  document.getElementById('qdlg-title').textContent = catNames + ' 퀴즈';
+  const pool = state.quiz.pool || [];
+  document.getElementById('qdlg-subtitle').textContent = `${pool.length}단어 풀`;
+  const poolInfo = document.getElementById('qdlg-pool-info');
+  if (poolInfo) poolInfo.textContent = `전체 ${pool.length}단어 중 랜덤 출제`;
+  // 타입 카드 동기화
+  document.querySelectorAll('.qdlg-type-card').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === state.quiz.quizType);
+  });
+  // 슬라이더 동기화
+  _initQuizCountSlider(pool.length);
+  // 화면 전환
+  document.getElementById('qdlg-start-screen').style.display = 'block';
+  document.getElementById('qdlg-quiz-screen').style.display  = 'none';
 }
 
 /* ============================================================
@@ -4798,7 +5066,7 @@ const PUZZLE_CONFIG = {
     name:          '초급',
     gridSize:      4,
     targetCount:   3,        // ★ 라운드당 고정 단어 수
-    totalRounds:   5,        // ★ 총 라운드 수
+    totalRounds:   3,        // ★ 총 라운드 수
     fillerCount:   3,
     directions:    ['H'],
     showEasyHints: true,
@@ -4832,6 +5100,54 @@ const PUZZLE_CONFIG = {
   }
 };
 
+/* ── 시작 화면 ↔ 게임 화면 전환 ── */
+function _showPuzzleStartScreen() {
+  const startEl = document.getElementById('puzzle-start-screen');
+  const gameEl  = document.getElementById('puzzle-game-area');
+  if (startEl) startEl.style.display = '';
+  if (gameEl)  gameEl.style.display  = 'none';
+
+  // 단어 풀 정보 업데이트
+  const pool = getSelectedWords();
+  const subtitle = document.getElementById('puzzle-pool-subtitle');
+  if (subtitle) subtitle.textContent = `기초 단어 · ${pool ? pool.length : 0}단어 풀`;
+
+  // 선택 난이도 동기화
+  document.querySelectorAll('.puzzle-diff-option').forEach(el => {
+    const diff = el.dataset.diff;
+    el.classList.toggle('selected', diff === puzzleState.difficulty);
+    ['easy','medium','hard'].forEach(d => el.classList.remove(d));
+    el.classList.add(diff);
+  });
+  _updatePuzzleDiffBadge('');
+}
+
+function selectPuzzleDiff(diff) {
+  puzzleState.difficulty = diff;
+  document.querySelectorAll('.puzzle-diff-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.diff === diff);
+  });
+}
+
+function startPuzzleGame() {
+  const startEl = document.getElementById('puzzle-start-screen');
+  const gameEl  = document.getElementById('puzzle-game-area');
+  if (startEl) startEl.style.display = 'none';
+  if (gameEl)  gameEl.style.display  = '';
+
+  // 게임 내 난이도 탭 동기화
+  const diff = puzzleState.difficulty;
+  document.querySelectorAll('.puzzle-diff-btn').forEach(b => {
+    ['easy','medium','hard'].forEach(d => b.classList.remove(d));
+    b.classList.toggle('active', b.dataset.diff === diff);
+    if (b.dataset.diff === diff) b.classList.add(diff);
+  });
+  _updatePuzzleDiffBadge(diff);
+
+  resetPuzzleRounds();
+  startPuzzleFromSelected();
+}
+
 /* ── 다이얼로그 열기/닫기 ─────────── */
 function openPuzzleDialog() {
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -4840,6 +5156,20 @@ function openPuzzleDialog() {
 
   document.getElementById('puzzle-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // 시작 화면 숨기고 바로 게임 시작
+  const startEl = document.getElementById('puzzle-start-screen');
+  const gameEl  = document.getElementById('puzzle-game-area');
+  if (startEl) startEl.style.display = 'none';
+  if (gameEl)  gameEl.style.display  = '';
+
+  const diff = puzzleState.difficulty;
+  document.querySelectorAll('.puzzle-diff-btn').forEach(b => {
+    ['easy','medium','hard'].forEach(d => b.classList.remove(d));
+    b.classList.toggle('active', b.dataset.diff === diff);
+    if (b.dataset.diff === diff) b.classList.add(diff);
+  });
+  _updatePuzzleDiffBadge(diff);
   resetPuzzleRounds();
   startPuzzleFromSelected();
 }
@@ -4848,6 +5178,7 @@ function closePuzzleDialog() {
   document.getElementById('puzzle-overlay').classList.remove('open');
   document.body.style.overflow = '';
   clearTimeout(puzzleState.hintTimeout);
+  clearTimeout(puzzleState.roundTimer);
   // 모드 버튼 active 복원
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
   const lb = document.querySelector('.mode-btn[data-mode="learn"]');
@@ -5305,7 +5636,14 @@ function renderPuzzleGame(cat, cfg) {
   }).join('');
 
   content.innerHTML = `
+    <div class="puzzle-round-bar" style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px">
+      <span class="round-label" style="font-size:0.8em;color:#9E9E9E">라운드</span>
+      <div class="round-dots">${roundDots}</div>
+    </div>
+    <div class="puzzle-progress-bar"><div class="puzzle-progress-fill" id="puzzle-prog-fill" style="width:0%"></div></div>
+    <div class="puzzle-progress-text" id="puzzle-prog-text">0 / ${puzzleState.targetWords.length} 발견 🔍</div>
     <div class="puzzle-targets">${targetCardsHtml}</div>
+    <div class="puzzle-instruction">${dirHint}</div>
     <div class="puzzle-grid-wrap">
       <div class="puzzle-grid ${cfg.cellClass}" id="puzzle-grid"
            style="grid-template-columns:repeat(${gs},1fr);touch-action:none"
@@ -5313,6 +5651,11 @@ function renderPuzzleGame(cat, cfg) {
            ontouchend="puzzleTouchEnd(event)">
         ${gridHtml}
       </div>
+    </div>
+    <div class="puzzle-hint-box" id="puzzle-hint-box">💡 단어를 찾아보세요!</div>
+    <div class="puzzle-controls">
+      <button class="btn btn-sm btn-purple" onclick="puzzleHint()">💡 힌트</button>
+      <button class="btn btn-sm btn-gray"   onclick="pdlgRefresh(this)">🔄 새 단어</button>
     </div>
   `;
 
@@ -5686,20 +6029,34 @@ function triggerWordExplosion(lastR, lastC, pl, colorIdx) {
     setTimeout(() => lastCellEl.classList.remove('cell-burst'), 700);
   }
 
+  // ★ 정답 Flash 텍스트 (고급)
+  const flashMsg2 = document.createElement('div');
+  flashMsg2.style.cssText = `
+    position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+    font-size:2.6em; font-weight:900; color:#E91E63;
+    animation: correctFlash 0.85s ease forwards;
+    z-index:9999; pointer-events:none; font-family:var(--font);
+    text-shadow: 0 0 24px rgba(233,30,99,0.7), 0 4px 12px rgba(0,0,0,0.15);
+    white-space:nowrap;
+  `;
+  flashMsg2.textContent = `🌟 "${pl.word.word}" 완성!`;
+  document.body.appendChild(flashMsg2);
+  setTimeout(() => flashMsg2.remove(), 900);
+
   // 별 터지기 오버레이 (화면 중앙)
-  const emojis = ['⭐','✨','🌟','💥','🎉','🎊'];
-  const stars  = ['⭐','🌟','✨'];
-  for (let i = 0; i < 5; i++) {
+  const emojis = ['⭐','✨','🌟','💥','🎉','🎊','💫','🌈'];
+  for (let i = 0; i < 8; i++) {
     setTimeout(() => {
       const overlay = document.createElement('div');
       overlay.className = 'starburst-overlay';
       overlay.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      overlay.style.fontSize = (1.4 + Math.random() * 1.2) + 'em';
       const vw = window.innerWidth, vh = window.innerHeight;
-      overlay.style.left = (vw * 0.2 + Math.random() * vw * 0.6) + 'px';
-      overlay.style.top  = (vh * 0.2 + Math.random() * vh * 0.5) + 'px';
+      overlay.style.left = (vw * 0.1 + Math.random() * vw * 0.8) + 'px';
+      overlay.style.top  = (vh * 0.1 + Math.random() * vh * 0.7) + 'px';
       document.body.appendChild(overlay);
-      setTimeout(() => overlay.remove(), 900);
-    }, i * 110);
+      setTimeout(() => overlay.remove(), 1000);
+    }, i * 90);
   }
 }
 
@@ -5744,20 +6101,34 @@ function puzzleCheckWord(wordText, cells) {
       if (boxEl) { boxEl.classList.add(`done-${colorIdx}`); boxEl.textContent = syl; }
     });
 
-    // ★ 별 터지기 오버레이 (초급/중급도 동일 효과)
-    const lastCell = cells[cells.length - 1];
-    const emojis2 = ['⭐','✨','🌟','💥','🎉','🎊'];
-    for (let i = 0; i < 4; i++) {
+    // ★ 정답 Flash 텍스트
+    const flashMsg = document.createElement('div');
+    flashMsg.style.cssText = `
+      position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+      font-size:2.6em; font-weight:900; color:#7E57C2;
+      animation: correctFlash 0.85s ease forwards;
+      z-index:9999; pointer-events:none; font-family:var(--font);
+      text-shadow: 0 0 24px rgba(124,58,237,0.7), 0 4px 12px rgba(0,0,0,0.15);
+      white-space:nowrap;
+    `;
+    flashMsg.textContent = `🎉 "${matched.word.word}" 정답!`;
+    document.body.appendChild(flashMsg);
+    setTimeout(() => flashMsg.remove(), 900);
+
+    // ★ 별 터지기 오버레이
+    const emojis2 = ['⭐','✨','🌟','💥','🎉','🎊','🌈','💫'];
+    for (let i = 0; i < 8; i++) {
       setTimeout(() => {
         const ov = document.createElement('div');
         ov.className = 'starburst-overlay';
         ov.textContent = emojis2[Math.floor(Math.random() * emojis2.length)];
+        ov.style.fontSize = (1.4 + Math.random() * 1.2) + 'em';
         const vw = window.innerWidth, vh = window.innerHeight;
-        ov.style.left = (vw * 0.15 + Math.random() * vw * 0.7) + 'px';
-        ov.style.top  = (vh * 0.15 + Math.random() * vh * 0.6) + 'px';
+        ov.style.left = (vw * 0.1 + Math.random() * vw * 0.8) + 'px';
+        ov.style.top  = (vh * 0.1 + Math.random() * vh * 0.7) + 'px';
         document.body.appendChild(ov);
-        setTimeout(() => ov.remove(), 900);
-      }, i * 100);
+        setTimeout(() => ov.remove(), 1000);
+      }, i * 80);
     }
 
     // 진행 업데이트
@@ -5766,10 +6137,10 @@ function puzzleCheckWord(wordText, cells) {
     showPuzzleHintBox(`🎉 "${matched.word.word}" 찾았어요! 대단해요!`);
     speak(matched.word.word);
     playCorrectSound();
-    showConfetti(22);
+    showConfetti(30);
 
     if (puzzleState.foundCount >= puzzleState.targetWords.length) {
-      setTimeout(renderPuzzleComplete, 1300);
+      setTimeout(renderPuzzleComplete, 1400);
     }
   } else {
     cells.forEach(({r, c}) => {
@@ -5981,9 +6352,41 @@ function renderPuzzleComplete() {
 
   } else {
     // ════════════════════════════════
-    // 5라운드 전체 완료 — 그랜드 피날레
+    // 3라운드 전체 완료 — 그랜드 피날레
     // ════════════════════════════════
     showConfetti(80);
+
+    // 그랜드 피날레 Flash
+    const finaleFlash = document.createElement('div');
+    finaleFlash.style.cssText = `
+      position:fixed; left:50%; top:40%; transform:translate(-50%,-50%);
+      font-size:2.8em; font-weight:900;
+      background: linear-gradient(135deg,#7E57C2,#E91E63);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation: correctFlash 1.1s ease forwards;
+      z-index:9999; pointer-events:none; font-family:var(--font);
+      white-space:nowrap;
+    `;
+    finaleFlash.textContent = '🏆 완벽해요! 최고예요! 🏆';
+    document.body.appendChild(finaleFlash);
+    setTimeout(() => finaleFlash.remove(), 1200);
+
+    // 별 폭죽 연속 발사
+    const finaleEmojis = ['🎊','🎉','⭐','🌟','✨','💫','🏆','🎈'];
+    for (let i = 0; i < 16; i++) {
+      setTimeout(() => {
+        const ov = document.createElement('div');
+        ov.className = 'starburst-overlay';
+        ov.textContent = finaleEmojis[Math.floor(Math.random() * finaleEmojis.length)];
+        ov.style.fontSize = (1.6 + Math.random() * 1.8) + 'em';
+        const vw = window.innerWidth, vh = window.innerHeight;
+        ov.style.left = (vw * 0.05 + Math.random() * vw * 0.9) + 'px';
+        ov.style.top  = (vh * 0.05 + Math.random() * vh * 0.85) + 'px';
+        document.body.appendChild(ov);
+        setTimeout(() => ov.remove(), 1200);
+      }, i * 80);
+    }
 
     const diffOrder = ['easy','medium','hard'];
     const currIdx   = diffOrder.indexOf(puzzleState.difficulty);
