@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   title: 'LingoBaby — 한글 & 영어 게임 학습',
   description: '유아·초등 대상 한글 단어와 영어 학습. 듣기, 퍼즐, 객관식, 주관식, 속도 5가지 게임 모드로 즐겁게 배워요.',
   generator: 'v0.app',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
 }
 
 export const viewport: Viewport = {
