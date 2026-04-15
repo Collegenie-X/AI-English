@@ -124,10 +124,16 @@ export function KoPhonicsDialog({ syllable, sylIdx, excludeId, allWords, onClose
               {/* 초성 */}
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#aaa', marginBottom: '5px' }}>초성</div>
-                <div style={{ width: 70, height: 70, borderRadius: '16px', background: '#EDE7F6', border: '2px solid #d1c4e9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
+                <button
+                  onClick={() => speakSyl(CHO_NAME[decomp.cho] ?? decomp.cho)}
+                  style={{ width: 70, height: 70, borderRadius: '16px', background: '#EDE7F6', border: '2px solid #d1c4e9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', cursor: 'pointer', fontFamily: 'inherit', transition: 'transform 0.1s, box-shadow 0.1s' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.boxShadow = '0 4px 12px #d1c4e9' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
+                  aria-label={`초성 ${CHO_NAME[decomp.cho] ?? decomp.cho} 발음 듣기`}
+                >
                   <span style={{ fontSize: '1.8rem', fontWeight: 900, color: '#5e35b1' }}>{decomp.cho}</span>
                   <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#9575cd' }}>{CHO_NAME[decomp.cho] ?? decomp.cho}</span>
-                </div>
+                </button>
               </div>
 
               <span style={{ fontSize: '1.5rem', color: '#ccc', fontWeight: 300, marginTop: '16px' }}>+</span>
@@ -135,10 +141,16 @@ export function KoPhonicsDialog({ syllable, sylIdx, excludeId, allWords, onClose
               {/* 중성 */}
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#aaa', marginBottom: '5px' }}>중성</div>
-                <div style={{ width: 70, height: 70, borderRadius: '16px', background: '#E8F5E9', border: '2px solid #c8e6c9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
+                <button
+                  onClick={() => speakSyl(JUNG_NAME[decomp.jung] ?? decomp.jung)}
+                  style={{ width: 70, height: 70, borderRadius: '16px', background: '#E8F5E9', border: '2px solid #c8e6c9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', cursor: 'pointer', fontFamily: 'inherit', transition: 'transform 0.1s, box-shadow 0.1s' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.boxShadow = '0 4px 12px #c8e6c9' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
+                  aria-label={`중성 ${JUNG_NAME[decomp.jung] ?? decomp.jung} 발음 듣기`}
+                >
                   <span style={{ fontSize: '1.8rem', fontWeight: 900, color: '#2e7d32' }}>{decomp.jung}</span>
                   <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#43a047' }}>{JUNG_NAME[decomp.jung] ?? decomp.jung}</span>
-                </div>
+                </button>
               </div>
 
               {/* 종성 (if present) */}
@@ -147,10 +159,16 @@ export function KoPhonicsDialog({ syllable, sylIdx, excludeId, allWords, onClose
                   <span style={{ fontSize: '1.5rem', color: '#ccc', fontWeight: 300, marginTop: '16px' }}>+</span>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#aaa', marginBottom: '5px' }}>종성</div>
-                    <div style={{ width: 70, height: 70, borderRadius: '16px', background: '#FFF3E0', border: '2px solid #ffe0b2', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
+                    <button
+                      onClick={() => speakSyl(CHO_NAME[decomp.jong] ?? decomp.jong)}
+                      style={{ width: 70, height: 70, borderRadius: '16px', background: '#FFF3E0', border: '2px solid #ffe0b2', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', cursor: 'pointer', fontFamily: 'inherit', transition: 'transform 0.1s, box-shadow 0.1s' }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.boxShadow = '0 4px 12px #ffe0b2' }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
+                      aria-label={`종성 ${CHO_NAME[decomp.jong] ?? decomp.jong} 발음 듣기`}
+                    >
                       <span style={{ fontSize: '1.8rem', fontWeight: 900, color: '#e65100' }}>{decomp.jong}</span>
-                      <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#fb8c00' }}>{decomp.jong}</span>
-                    </div>
+                      <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#fb8c00' }}>{CHO_NAME[decomp.jong] ?? decomp.jong}</span>
+                    </button>
                   </div>
                 </>
               )}
