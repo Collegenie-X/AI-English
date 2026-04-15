@@ -148,6 +148,7 @@ export default function KoreanPage() {
   const [selectedCatWords, setSelectedCatWords] = useState<KoWordItem[]>([])
   const [selectedCatName, setSelectedCatName]   = useState('')
   const [selectedCatColor, setSelectedCatColor] = useState('#FF4B4B')
+  const [selectedCatId, setSelectedCatId] = useState('')
 
   // Learn dialog: receives all selected categories with colors
   const [learnCats, setLearnCats]             = useState<DialogCat[]>([])

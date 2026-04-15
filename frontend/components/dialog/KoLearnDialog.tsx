@@ -90,11 +90,11 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
 
   // Auto-play on idx or category change
   useEffect(() => {
+    if (!item) return
     const t = setTimeout(playWord, 280)
     return () => clearTimeout(t)
   }, [idx, activeCatId])
 
-  // Auto-play carousel
   useEffect(() => {
     if (!autoPlay) return
     autoRef.current = setTimeout(() => {
@@ -104,7 +104,6 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
     return () => { if (autoRef.current) clearTimeout(autoRef.current) }
   }, [autoPlay, idx, words.length])
 
-  // Keyboard nav
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape')     { onClose(); return }
@@ -126,7 +125,32 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
   const handlePrev = () => { setAutoPlay(false); setIdx(i => Math.max(0, i - 1)) }
   const handleNext = () => { setAutoPlay(false); setIdx(i => Math.min(words.length - 1, i + 1)) }
 
-  const pct = ((idx + 1) / words.length) * 100
+  const toggleCat = (catId: string) => {
+    setSelectedCatIds(prev => {
+      const next = new Set(prev)
+      if (next.has(catId) && next.size > 1) {
+        next.delete(catId)
+      } else {
+        next.add(catId)
+      }
+      const newWords = buildShuffledWords(next)
+      setWords(newWords)
+      setIdx(0)
+      setAutoPlay(false)
+      return next
+    })
+  }
+
+  const handleShuffle = () => {
+    const newWords = buildShuffledWords(selectedCatIds)
+    setWords(newWords)
+    setIdx(0)
+    setAutoPlay(false)
+  }
+
+  const pct = words.length > 0 ? ((idx + 1) / words.length) * 100 : 0
+
+  if (!item) return null
 
   return (
     <div className="dialog-overlay" onClick={onClose} role="dialog" aria-modal aria-label={`${item.word} 학습`}>
@@ -135,7 +159,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
         {/* ── Gradient header ── */}
         <div
           className="dialog-header-gradient"
-          style={{ background: `linear-gradient(135deg, ${catColor}, ${catColor}bb)` }}
+          style={{ background: `linear-gradient(135deg, ${currentCatColor}, ${currentCatColor}bb)` }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <span style={{ color: 'white', fontWeight: 900, fontSize: '1.05rem' }}>{catName}</span>
@@ -180,7 +204,7 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
 
         {/* ── Progress bar ── */}
         <div style={{ height: '5px', background: '#f0f0f0', overflow: 'hidden' }}>
-          <div style={{ height: '100%', background: catColor, width: `${pct}%`, transition: 'width 0.45s cubic-bezier(0.22,1,0.36,1)' }} />
+          <div style={{ height: '100%', background: currentCatColor, width: `${pct}%`, transition: 'width 0.45s cubic-bezier(0.22,1,0.36,1)' }} />
         </div>
 
         {/* ── Hero: left-nav · emoji · right-nav ── */}
@@ -320,8 +344,8 @@ export function KoLearnDialog({ cats, initialCatId, initialWord, onClose }: KoLe
                       cursor: 'pointer', textAlign: 'left',
                       fontFamily: 'inherit', width: '100%', transition: 'background 0.15s',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = `${catColor}22`)}
-                    onMouseLeave={e => (e.currentTarget.style.background = `${catColor}0f`)}
+                    onMouseEnter={e => (e.currentTarget.style.background = `${currentCatColor}22`)}
+                    onMouseLeave={e => (e.currentTarget.style.background = `${currentCatColor}0f`)}
                   >
                     <span style={{ fontSize: '16px', flexShrink: 0, color: catColor }}>
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
