@@ -27,16 +27,6 @@ const SYL_COLORS = [
 ]
 
 const CAT_COLORS = ['#FF4B4B', '#FF9600', '#58CC02', '#1CB0F6', '#CE82FF', '#00C2A0']
-const RANDOM_COUNT = 12   // 랜덤 섹션에 보여줄 단어 수
-
-function shufflePick<T>(arr: T[], n: number): T[] {
-  const copy = [...arr]
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy.slice(0, Math.min(n, copy.length))
-}
 
 // ── Word card ─────────────────────────────────────────────────────────────────
 function KoWordCard({ item, bgColor, onClick }: {
@@ -217,7 +207,6 @@ export default function KoreanPage() {
   const { settings, update: updateVoice } = useVoiceSettings()
 
   // ── Random words state ────────────────────────────────────────────────────
-  const [randomWords, setRandomWords] = useState<{ item: KoWordItem; color: string }[]>([])
 
   // Load word data
   useEffect(() => {
@@ -231,12 +220,6 @@ export default function KoreanPage() {
       })
       .catch(err => console.error('words.json 로드 실패:', err))
   }, [])
-
-  // Refresh random when selected categories change (word stages)
-  useEffect(() => {
-    if (activeStage === 3) return
-    refreshRandom()
-  }, [selectedCatIds, activeStage]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Load sentence data (stage 3 + 4)
   useEffect(() => {
@@ -286,13 +269,6 @@ export default function KoreanPage() {
 
   const resetListened = () => setListenedIds(new Set())
 
-  const refreshRandom = useCallback(() => {
-    const pool = displayCats.flatMap((c, ci) =>
-      c.words.map(w => ({ item: w, color: CAT_COLORS[stageCats.indexOf(c) % CAT_COLORS.length] }))
-    )
-    setRandomWords(shufflePick(pool, RANDOM_COUNT))
-  }, [displayCats, stageCats])
-
   const toggleCatOpen  = (id: string) => setOpenCatIds(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   const toggleSitOpen  = (id: number) => setOpenSitIds(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   const expandAll      = () => setOpenCatIds(new Set(displayCats.map(c => c.id)))
@@ -333,50 +309,6 @@ export default function KoreanPage() {
       }
     }
   }
-
-  // ── Word stage content (stage 1, 2, review word section) ─────────────────
-  const WordFilterPanel = () => (
-    <div style={{ background: 'white', borderRadius: '20px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)', marginBottom: '10px', overflow: 'hidden' }}>
-      <button
-        onClick={() => setFilterOpen(v => !v)}
-        style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'linear-gradient(135deg,#7c3aed,#9d4edd)', padding: '10px 16px', border: 'none', cursor: 'pointer' }}
-      >
-        <span style={{ color: 'white', fontWeight: 800, fontSize: '0.9rem' }}>주제 필터</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ background: 'rgba(255,255,255,0.2)', color: 'white', borderRadius: '12px', padding: '2px 10px', fontSize: '0.78rem', fontWeight: 700 }}>
-            {selectedCatIds.size > 0 ? `${selectedCatIds.size}개 선택` : '전체'}
-          </span>
-          <span style={{ color: 'white', fontSize: '0.8rem', transition: 'transform 0.3s', transform: filterOpen ? 'rotate(0deg)' : 'rotate(180deg)', display: 'inline-block' }}>▲</span>
-        </div>
-      </button>
-      {filterOpen && (
-        <div style={{ padding: '10px 14px 14px', borderTop: '1px solid #f0f0f0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-            <button onClick={selectAll} style={{ padding: '5px 14px', border: 'none', borderRadius: '20px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.82rem', fontWeight: 700, background: selectedCatIds.size === stageCats.length ? 'linear-gradient(135deg,#ef5350,#e91e63)' : 'linear-gradient(135deg,#4caf50,#66bb6a)', color: 'white' }}>
-              {selectedCatIds.size === stageCats.length ? '전체 해제' : '전체 선택'}
-            </button>
-            <button onClick={() => setSelectedCatIds(new Set())} style={{ padding: '5px 14px', border: '1.5px solid #ddd', borderRadius: '20px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.82rem', fontWeight: 700, background: 'white', color: '#666' }}>선택 초기화</button>
-            <span style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#e91e63', fontWeight: 700, whiteSpace: 'nowrap' }}>
-              {displayCats.reduce((a, c) => a + c.words.reduce((b, w) => b + (w.sentences?.length ?? 0), 0), 0)}문장 재생 예정
-            </span>
-          </div>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {stageCats.map((cat, ci) => {
-              const isActive = selectedCatIds.has(cat.id)
-              const color = CAT_COLORS[ci % CAT_COLORS.length]
-              return (
-                <button key={cat.id} onClick={() => toggleCat(cat.id)} style={{ padding: '6px 14px', border: `2px solid ${isActive ? 'transparent' : '#e0e0e0'}`, borderRadius: '20px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.82rem', fontWeight: 700, background: isActive ? color : 'white', color: isActive ? 'white' : '#555', boxShadow: isActive ? `0 3px 10px ${color}44` : 'none', transform: isActive ? 'translateY(-1px)' : 'none', transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  {isActive && <span style={{ fontWeight: 900 }}>✓ </span>}
-                  {cat.icon} {cat.name}
-                  <span style={{ fontSize: '0.72rem', opacity: 0.7 }}>({cat.words.length})</span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  )
 
   const WordActionBar = () => (
     <div style={{ background: 'white', borderRadius: '20px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)', marginBottom: '10px', overflow: 'hidden' }}>
@@ -759,53 +691,6 @@ export default function KoreanPage() {
 
       <div className="max-w-5xl mx-auto px-3 sm:px-4" style={{ paddingTop: '16px' }}>
 
-        {/* ── Random words section (word stages) ── */}
-        {activeStage !== 3 && randomWords.length > 0 && (
-          <div style={{ background: 'white', borderRadius: '20px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)', marginBottom: '12px', overflow: 'hidden' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: `linear-gradient(135deg,${stageDef.color},${stageDef.dark})` }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '1rem' }}>🎲</span>
-                <span style={{ color: 'white', fontWeight: 800, fontSize: '0.9rem' }}>랜덤 단어</span>
-                <span style={{ background: 'rgba(255,255,255,0.2)', color: 'white', borderRadius: '10px', padding: '2px 8px', fontSize: '0.72rem', fontWeight: 700 }}>
-                  선택된 카테고리에서 {randomWords.length}개
-                </span>
-              </div>
-              <button
-                onClick={refreshRandom}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '5px',
-                  padding: '6px 14px', border: '2px solid rgba(255,255,255,0.6)',
-                  borderRadius: '16px', background: 'rgba(255,255,255,0.15)', color: 'white',
-                  fontFamily: 'inherit', fontSize: '0.8rem', fontWeight: 800, cursor: 'pointer',
-                  transition: 'background 0.15s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.28)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
-                aria-label="랜덤 새로고침"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
-                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                </svg>
-                새로고침
-              </button>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '10px', padding: '12px' }}>
-              {randomWords.map(({ item, color }) => (
-                <KoWordCard
-                  key={`rand-${item.id}`}
-                  item={item}
-                  bgColor={color}
-                  onClick={() => {
-                    openLearnAt(item, cats.find(c => c.words.some(w => w.id === item.id))?.id ?? '')
-                    setListenedIds(prev => new Set([...prev, item.id]))
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
         {activeStage === 3 ? (
           /* ── 3단계: 생활 문장 ── */
           <>
@@ -816,7 +701,6 @@ export default function KoreanPage() {
         ) : activeStage === 4 ? (
           /* ── 4단계: 전체 복습 (단어 + 문장) ── */
           <>
-            {wordContent && <WordFilterPanel />}
             {wordContent && <WordActionBar />}
             <WordCategoryList />
             {sentenceContent && (
@@ -834,7 +718,6 @@ export default function KoreanPage() {
         ) : (
           /* ── 1단계 / 2단계: 단어 ── */
           <>
-            {wordContent && <WordFilterPanel />}
             {wordContent && <WordActionBar />}
             <WordCategoryList />
           </>
