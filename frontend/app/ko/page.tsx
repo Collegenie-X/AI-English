@@ -201,6 +201,7 @@ export default function KoreanPage() {
   const [selectedCatWords, setSelectedCatWords] = useState<KoWordItem[]>([])
   const [selectedCatName, setSelectedCatName]   = useState('')
   const [selectedCatColor, setSelectedCatColor] = useState('#FF4B4B')
+  const [selectedCatIcon, setSelectedCatIcon]   = useState('🎯')
   const [learnCats, setLearnCats]               = useState<DialogCat[]>([])
   const [learnInitialCatId, setLearnInitialCatId] = useState('')
 
@@ -286,8 +287,9 @@ export default function KoreanPage() {
   const openLearnAt = (item: KoWordItem | null, catId: string) => {
     setSelectedWord(item); setLearnInitialCatId(catId); setLearnCats(buildDialogCats()); setLearnOpen(true)
   }
-  const openQuiz   = (catWords: KoWordItem[], catName: string, catColor: string) => {
-    setSelectedCatWords(catWords); setSelectedCatName(catName); setSelectedCatColor(catColor); setQuizOpen(true)
+  const openQuiz = (catWords: KoWordItem[], catName: string, catColor: string, catIcon = '🎯') => {
+    setSelectedCatWords(catWords); setSelectedCatName(catName)
+    setSelectedCatColor(catColor); setSelectedCatIcon(catIcon); setQuizOpen(true)
   }
   const openPuzzle = (catWords: KoWordItem[], catName: string, catColor: string) => {
     setSelectedCatWords(catWords); setSelectedCatName(catName); setSelectedCatColor(catColor); setPuzzleOpen(true)
@@ -336,7 +338,7 @@ export default function KoreanPage() {
             <GrpBtn label="학습 모드" icon="📖" color="#1CB0F6" disabled={quizWords.length === 0}
               onClick={() => openLearnAt(null, displayCats[0]?.id ?? '')} />
             <GrpBtn label="퀴즈 모드" icon="❓" color="#FF9600" disabled={quizWords.length === 0}
-              onClick={() => openQuiz(quizWords, stageDef.subtitle, stageDef.color)} />
+              onClick={() => openQuiz(quizWords, stageDef.subtitle, stageDef.color, stageDef.icon)} />
             <GrpBtn label="낱말 퀴즈" icon="🔤" color="#e91e63" last disabled={quizWords.length < 4}
               onClick={() => openPuzzle(quizWords, stageDef.subtitle, stageDef.color)} />
           </div>
@@ -376,7 +378,7 @@ export default function KoreanPage() {
                     <button onClick={() => openLearnAt(cat.words[0], cat.id)} style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', padding: '5px 9px', border: 'none', borderRadius: '10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.72rem', fontWeight: 800, background: '#58CC02', color: 'white' }}>
                       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden><polygon points="5,3 19,12 5,21" /></svg>학습
                     </button>
-                    <button onClick={() => openQuiz(cat.words, cat.name, catColor)} style={{ padding: '5px 9px', border: 'none', borderRadius: '10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.72rem', fontWeight: 800, background: '#FF9600', color: 'white' }}>퀴즈</button>
+                    <button onClick={() => openQuiz(cat.words, cat.name, catColor, cat.icon)} style={{ padding: '5px 9px', border: 'none', borderRadius: '10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.72rem', fontWeight: 800, background: '#FF9600', color: 'white' }}>퀴즈</button>
                     <button onClick={() => openPuzzle(cat.words, cat.name, catColor)} disabled={cat.words.length < 4} style={{ padding: '5px 9px', border: 'none', borderRadius: '10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.72rem', fontWeight: 800, background: '#7c3aed', color: 'white', opacity: cat.words.length < 4 ? 0.5 : 1 }}>낱말</button>
                   </div>
                 </div>
@@ -731,7 +733,8 @@ export default function KoreanPage() {
       )}
       {quizOpen && (
         <KoQuizDialog words={selectedCatWords} allWords={cats.flatMap(c => c.words)}
-          catName={selectedCatName} catColor={selectedCatColor} onClose={() => setQuizOpen(false)} />
+          catName={selectedCatName} catColor={selectedCatColor} catIcon={selectedCatIcon}
+          onClose={() => setQuizOpen(false)} />
       )}
       {puzzleOpen && (
         <KoPuzzleDialog words={selectedCatWords} catName={selectedCatName} catColor={selectedCatColor}
