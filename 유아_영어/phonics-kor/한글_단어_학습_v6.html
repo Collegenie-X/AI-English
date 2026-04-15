@@ -1296,37 +1296,44 @@
     /* ── 다이얼로그 헤더 ── */
     .pdlg-header {
       background: linear-gradient(135deg,#7E57C2,#9C27B0);
-      border-radius: 28px 28px 0 0; padding: 16px 20px;
+      border-radius: 28px 28px 0 0; padding: 14px 18px;
       display: flex; align-items: center; justify-content: space-between;
-      color: white; flex-wrap: wrap; gap: 8px;
+      color: white; gap: 8px;
     }
-    .pdlg-header-left { display: flex; align-items: center; gap: 10px; }
-    .pdlg-title { font-size: 1.2em; font-weight: 900; }
-    .pdlg-close-btn {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: rgba(255,255,255,0.25); border: none; cursor: pointer;
-      font-size: 1em; color: white; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s; flex-shrink: 0;
+    .pdlg-header-left  { display: flex; align-items: center; gap: 8px; }
+    .pdlg-header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .pdlg-title { font-size: 1.15em; font-weight: 900; }
+    .pdlg-counter {
+      background: rgba(255,255,255,0.22); border-radius: 12px;
+      padding: 3px 10px; font-size: 0.88em; font-weight: 900; color: white;
+      letter-spacing: 1px;
     }
-    .pdlg-close-btn:hover { background: rgba(255,255,255,0.45); }
-    .pdlg-refresh-btn {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: #ede7f6; border: 1.5px solid #ce93d8; cursor: pointer;
-      font-size: 0.95em; color: #7E57C2;
-      display: inline-flex; align-items: center; justify-content: center;
-      transition: background 0.2s, transform 0.45s; flex-shrink: 0;
-      vertical-align: middle;
+    .pdlg-refresh-header {
+      padding: 5px 12px; border-radius: 14px; border: none; cursor: pointer;
+      background: rgba(255,255,255,0.25); color: white;
+      font-family: var(--font); font-size: 0.82em; font-weight: 700;
+      transition: background 0.2s;
     }
-    .pdlg-refresh-btn:hover { background: #d1c4e9; }
-    .pdlg-refresh-btn.spinning { animation: refreshSpin 0.45s ease; }
+    .pdlg-refresh-header:hover  { background: rgba(255,255,255,0.4); }
+    .pdlg-refresh-header.spinning { animation: refreshSpin 0.45s ease; }
     @keyframes refreshSpin {
       from { transform: rotate(0deg); } to { transform: rotate(360deg); }
     }
+    .pdlg-close-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.22); border: none; cursor: pointer;
+      font-size: 1em; color: white; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .pdlg-close-btn:hover { background: rgba(255,255,255,0.42); }
+    /* legacy — keep for compat */
+    .pdlg-refresh-btn { display: none; }
 
     /* ── 난이도 탭 ── */
     .puzzle-diff-tabs {
-      display: flex; gap: 8px; padding: 14px 16px 10px;
-      background: #f3eeff; justify-content: center;
+      display: flex; gap: 8px; padding: 12px 16px 8px;
+      background: white; justify-content: center;
+      border-bottom: 1px solid #f0eaff;
     }
     .puzzle-diff-btn {
       flex: 1; padding: 10px 8px; border: 2.5px solid #d1c4e9;
@@ -1443,26 +1450,57 @@
 
     /* ── 퍼즐 바디 ── */
     .pdlg-body {
-      padding: 14px 14px 22px;
-      background: #f3eeff;
-      text-align: center;
+      padding: 16px 16px 24px;
+      background: white;
     }
 
-    /* ── 상단 타겟 이미지 카드 3개 ── */
-    .puzzle-targets {
-      width: 100%; max-width: 420px; margin: 0 auto;
-      height: 140px;
-      padding-top: 6px;
-      display: flex; gap: 8px; justify-content: center;
-      margin-bottom: 10px; flex-wrap: nowrap; overflow-x: hidden; align-items: stretch;
+    /* ── 찾아야 할 단어 섹션 ── */
+    .pzl-section-label {
+      font-size: 0.85em; color: #888; font-weight: 700;
+      margin-bottom: 10px; text-align: left;
     }
-    .puzzle-target-card {
-      background: #f5f0ff; border-radius: 12px;
-      border: 2.5px solid #d1c4e9; padding: 10px 6px;
-      text-align: center; min-width: 0; max-width: none; flex: 1 1 0;
-      transition: all var(--transition); position: relative;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.09), 0 0 14px rgba(255,255,255,0.32);
+    .pzl-chips-row {
+      display: flex; gap: 10px; justify-content: center;
+      margin-bottom: 14px; flex-wrap: nowrap;
     }
+    .pzl-chip {
+      flex: 1; max-width: 130px;
+      background: #ede7f6; border-radius: 16px;
+      border: 2.5px solid #d1c4e9; padding: 12px 8px 10px;
+      text-align: center; cursor: pointer; transition: all 0.2s;
+      position: relative;
+    }
+    .pzl-chip.found {
+      background: linear-gradient(135deg,#E8F5E9,#C8E6C9);
+      border-color: #4CAF50;
+    }
+    .pzl-chip.found::after {
+      content: '✅'; position: absolute; top: -8px; right: -6px; font-size: 1em;
+    }
+    .pzl-chip:active { transform: scale(0.95); }
+    .pzl-chip-emoji { font-size: 2.4em; display: block; line-height: 1; margin-bottom: 4px; }
+    .pzl-chip-emoji img.emoji { width: 44px; height: 44px; }
+    .pzl-chip-word {
+      font-size: 0.9em; font-weight: 900; color: #2c3e50; display: block;
+    }
+    .pzl-chip.found .pzl-chip-word { color: #2E7D32; }
+    .pzl-syl-row {
+      display: flex; gap: 3px; justify-content: center; margin-top: 5px; flex-wrap: wrap;
+    }
+    .pzl-syl-box {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: rgba(255,255,255,0.6); border: 1.5px solid #c4a8f0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72em; font-weight: 900; color: #7E57C2;
+    }
+    .pzl-syl-box.hit { background: #7E57C2; color: white; border-color: #7E57C2; }
+    .pzl-syl-box.hit-0 { background: #66BB6A; border-color: #43A047; color: white; }
+    .pzl-syl-box.hit-1 { background: #42A5F5; border-color: #1976D2; color: white; }
+    .pzl-syl-box.hit-2 { background: #FFA726; border-color: #E65100; color: white; }
+
+    /* ── 상단 타겟 이미지 카드 (레거시 — 현재 미사용) ── */
+    .puzzle-targets { display: none; }
+    .puzzle-target-card { display: none; }
     .puzzle-target-card.found {
       background: linear-gradient(135deg,#E8F5E9,#C8E6C9);
       border-color: #4CAF50;
@@ -1499,32 +1537,28 @@
 
     /* ── 그리드 ── */
     .puzzle-grid-wrap {
-      display: block; width: 100%;
-      margin-bottom: 14px; box-sizing: border-box;
-      padding: 0 2px;
+      display: flex; justify-content: center;
+      margin-bottom: 12px;
     }
     .puzzle-grid {
-      display: grid; gap: 5px;
-      background: #c9b8ef; padding: 10px;
-      border-radius: 20px; width: 100%;
-      box-sizing: border-box;
-      box-shadow: 0 4px 20px rgba(126,87,194,0.28);
+      display: grid; gap: 6px;
+      background: #d4b8f0; padding: 10px;
+      border-radius: 20px;
+      box-shadow: 0 4px 18px rgba(126,87,194,0.22);
     }
     .puzzle-cell {
       background: white; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; color: #333;
-      cursor: pointer; transition: all 0.16s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+      font-weight: 700; color: #2c3e50;
+      cursor: pointer; transition: transform 0.12s, background 0.15s, border-color 0.15s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
       user-select: none; border: 2.5px solid transparent;
       position: relative;
-      aspect-ratio: 1;
-      min-width: 0; min-height: 0;
     }
-    /* 난이도별 폰트만 조절 (크기는 grid 1fr로 자동) */
-    .diff-easy   .puzzle-cell { font-size: clamp(1.1em, 5.5vw, 1.7em); }
-    .diff-medium .puzzle-cell { font-size: clamp(0.95em, 4.5vw, 1.45em); }
-    .diff-hard   .puzzle-cell { font-size: clamp(0.85em, 3.8vw, 1.28em); }
+    /* 난이도별 셀 크기 */
+    .diff-easy   .puzzle-cell { width: 76px; height: 76px; font-size: 1.55em; }
+    .diff-medium .puzzle-cell { width: 64px; height: 64px; font-size: 1.38em; }
+    .diff-hard   .puzzle-cell { width: 54px; height: 54px; font-size: 1.22em; }
 
     .puzzle-cell:hover:not(.found-0):not(.found-1):not(.found-2):not(.found-3):not(.found-4) {
       transform: scale(1.09); box-shadow: 0 4px 12px rgba(126,87,194,0.22);
@@ -1626,7 +1660,8 @@
       85%  { transform: scale(0.96); }
       100% { transform: scale(1) rotate(0deg); }
     }
-    .puzzle-target-card.word-explode { animation: wordExplode 0.72s ease forwards; }
+    .puzzle-target-card.word-explode,
+    .pzl-chip.word-explode { animation: wordExplode 0.72s ease forwards; }
 
     @keyframes cellBurst {
       0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,200,0,0.9); }
@@ -2318,69 +2353,36 @@
 <!-- ===== 🧩 낱말 퍼즐 다이얼로그 ===== -->
 <div class="puzzle-overlay" id="puzzle-overlay" onclick="puzzleOverlayClick(event)">
   <div class="puzzle-dialog" id="puzzle-dialog">
-    <!-- 헤더 -->
+
+    <!-- ── 헤더 ── -->
     <div class="pdlg-header">
       <div class="pdlg-header-left">
-        <span style="font-size:1.4em">🧩</span>
+        <span style="font-size:1.3em">🧩</span>
         <span class="pdlg-title">낱말 퍼즐</span>
         <span id="puzzle-diff-badge"></span>
       </div>
-      <button class="pdlg-close-btn" onclick="closePuzzleDialog()" title="닫기">✕</button>
+      <div class="pdlg-header-right">
+        <span class="pdlg-counter" id="puzzle-header-counter">0/3</span>
+        <button class="pdlg-refresh-header" onclick="pdlgRefresh(this)" title="새로고침">새로고침</button>
+        <button class="pdlg-close-btn" onclick="closePuzzleDialog()" title="닫기">✕</button>
+      </div>
     </div>
 
-    <!-- ── 시작 화면 (난이도 선택) ── -->
-    <div class="puzzle-start-screen" id="puzzle-start-screen">
-      <div class="puzzle-pool-subtitle" id="puzzle-pool-subtitle">기초 단어 · 단어 풀</div>
-      <div class="puzzle-diff-options">
-        <div class="puzzle-diff-option selected easy" data-diff="easy"
-             onclick="selectPuzzleDiff('easy')">
-          <span class="pdo-dot" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"></span>
-          <div class="pdo-info">
-            <div class="pdo-name">초급</div>
-            <div class="pdo-desc">4×4 격자 · 3단어 찾기</div>
-          </div>
-          <span class="pdo-check">✓</span>
-        </div>
-        <div class="puzzle-diff-option medium" data-diff="medium"
-             onclick="selectPuzzleDiff('medium')">
-          <span class="pdo-dot" style="background:linear-gradient(135deg,#FDD835,#FB8C00)"></span>
-          <div class="pdo-info">
-            <div class="pdo-name">중급</div>
-            <div class="pdo-desc">5×5 격자 · 3단어 찾기 (가로·세로)</div>
-          </div>
-          <span class="pdo-check">✓</span>
-        </div>
-        <div class="puzzle-diff-option hard" data-diff="hard"
-             onclick="selectPuzzleDiff('hard')">
-          <span class="pdo-dot" style="background:linear-gradient(135deg,#ef5350,#e91e63)"></span>
-          <div class="pdo-info">
-            <div class="pdo-name">고급</div>
-            <div class="pdo-desc">6×6 격자 · 음절 순서 찾기</div>
-          </div>
-          <span class="pdo-check">✓</span>
-        </div>
-      </div>
-      <button class="puzzle-game-start-btn" onclick="startPuzzleGame()">▶ 퍼즐 시작</button>
+    <!-- ── 난이도 탭 ── -->
+    <div class="puzzle-diff-tabs">
+      <button class="puzzle-diff-btn active easy" data-diff="easy"
+              onclick="setPuzzleDiff('easy')">🟢 초급 (4×4)</button>
+      <button class="puzzle-diff-btn medium" data-diff="medium"
+              onclick="setPuzzleDiff('medium')">🟡 중급 (5×5)</button>
+      <button class="puzzle-diff-btn hard" data-diff="hard"
+              onclick="setPuzzleDiff('hard')">🔴 고급 (6×6)</button>
     </div>
 
-    <!-- ── 게임 화면 ── -->
-    <div id="puzzle-game-area" style="display:none">
-      <!-- 난이도 탭 -->
-      <div class="puzzle-diff-tabs">
-        <button class="puzzle-diff-btn active easy" data-diff="easy"
-                onclick="setPuzzleDiff('easy')">🟢 초급 (4×4)</button>
-        <button class="puzzle-diff-btn medium" data-diff="medium"
-                onclick="setPuzzleDiff('medium')">🟡 중급 (5×5)</button>
-        <button class="puzzle-diff-btn hard" data-diff="hard"
-                onclick="setPuzzleDiff('hard')">🔴 고급 (6×6)</button>
-      </div>
-      <!-- 선택된 주제 표시 (필터 자동 연동) -->
-      <div class="puzzle-source-info" id="puzzle-source-info"></div>
-      <!-- 퍼즐 본문 -->
-      <div class="pdlg-body">
-        <div id="puzzle-content"></div>
-      </div>
+    <!-- ── 퍼즐 본문 ── -->
+    <div class="pdlg-body">
+      <div id="puzzle-content"></div>
     </div>
+
   </div>
 </div>
 
@@ -5107,54 +5109,6 @@ const PUZZLE_CONFIG = {
   }
 };
 
-/* ── 시작 화면 ↔ 게임 화면 전환 ── */
-function _showPuzzleStartScreen() {
-  const startEl = document.getElementById('puzzle-start-screen');
-  const gameEl  = document.getElementById('puzzle-game-area');
-  if (startEl) startEl.style.display = '';
-  if (gameEl)  gameEl.style.display  = 'none';
-
-  // 단어 풀 정보 업데이트
-  const pool = getSelectedWords();
-  const subtitle = document.getElementById('puzzle-pool-subtitle');
-  if (subtitle) subtitle.textContent = `기초 단어 · ${pool ? pool.length : 0}단어 풀`;
-
-  // 선택 난이도 동기화
-  document.querySelectorAll('.puzzle-diff-option').forEach(el => {
-    const diff = el.dataset.diff;
-    el.classList.toggle('selected', diff === puzzleState.difficulty);
-    ['easy','medium','hard'].forEach(d => el.classList.remove(d));
-    el.classList.add(diff);
-  });
-  _updatePuzzleDiffBadge('');
-}
-
-function selectPuzzleDiff(diff) {
-  puzzleState.difficulty = diff;
-  document.querySelectorAll('.puzzle-diff-option').forEach(el => {
-    el.classList.toggle('selected', el.dataset.diff === diff);
-  });
-}
-
-function startPuzzleGame() {
-  const startEl = document.getElementById('puzzle-start-screen');
-  const gameEl  = document.getElementById('puzzle-game-area');
-  if (startEl) startEl.style.display = 'none';
-  if (gameEl)  gameEl.style.display  = '';
-
-  // 게임 내 난이도 탭 동기화
-  const diff = puzzleState.difficulty;
-  document.querySelectorAll('.puzzle-diff-btn').forEach(b => {
-    ['easy','medium','hard'].forEach(d => b.classList.remove(d));
-    b.classList.toggle('active', b.dataset.diff === diff);
-    if (b.dataset.diff === diff) b.classList.add(diff);
-  });
-  _updatePuzzleDiffBadge(diff);
-
-  resetPuzzleRounds();
-  startPuzzleFromSelected();
-}
-
 /* ── 다이얼로그 열기/닫기 ─────────── */
 function openPuzzleDialog() {
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -5164,21 +5118,18 @@ function openPuzzleDialog() {
   document.getElementById('puzzle-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // 시작 화면 숨기고 바로 게임 시작
-  const startEl = document.getElementById('puzzle-start-screen');
-  const gameEl  = document.getElementById('puzzle-game-area');
-  if (startEl) startEl.style.display = 'none';
-  if (gameEl)  gameEl.style.display  = '';
+  _syncDiffTabs(puzzleState.difficulty);
+  resetPuzzleRounds();
+  startPuzzleFromSelected();
+}
 
-  const diff = puzzleState.difficulty;
+function _syncDiffTabs(diff) {
   document.querySelectorAll('.puzzle-diff-btn').forEach(b => {
     ['easy','medium','hard'].forEach(d => b.classList.remove(d));
     b.classList.toggle('active', b.dataset.diff === diff);
     if (b.dataset.diff === diff) b.classList.add(diff);
   });
   _updatePuzzleDiffBadge(diff);
-  resetPuzzleRounds();
-  startPuzzleFromSelected();
 }
 
 function closePuzzleDialog() {
@@ -5200,10 +5151,7 @@ function puzzleOverlayClick(e) {
 function setPuzzleDiff(diff) {
   clearTimeout(puzzleState.roundTimer);
   puzzleState.difficulty = diff;
-  document.querySelectorAll('.puzzle-diff-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.diff === diff);
-  });
-  _updatePuzzleDiffBadge(diff);
+  _syncDiffTabs(diff);
   resetPuzzleRounds();
   startPuzzleFromSelected();
 }
@@ -5566,46 +5514,42 @@ function startPuzzle() {
   startPuzzleFromSelected();
 }
 
+/* ── 헤더 카운터 업데이트 ────────── */
+function _updateHeaderCounter() {
+  const el = document.getElementById('puzzle-header-counter');
+  if (!el) return;
+  const found = puzzleState.foundCount || 0;
+  const total = puzzleState.targetWords ? puzzleState.targetWords.length : 3;
+  el.textContent = `${found}/${total}`;
+}
+
 /* ── 게임 화면 렌더링 ─────────────── */
 function renderPuzzleGame(cat, cfg) {
   const content = document.getElementById('puzzle-content');
   if (!content) return;
   const scattered = puzzleState.scatteredMode;
 
-  // ★ 배치된 단어 없으면 재생성
   if (!puzzleState.targetWords || puzzleState.targetWords.length === 0) {
-    startPuzzleFromSelected();
-    return;
+    startPuzzleFromSelected(); return;
   }
 
-  // ── 타겟 카드 HTML ──
-  const targetCardsHtml = puzzleState.targetWords.map((w, wIdx) => {
-    const pl = puzzleState.allPlaced.find(p => p.word.id === w.id);
+  // ── 워드 칩 HTML ──
+  const chipsHtml = puzzleState.targetWords.map((w, wIdx) => {
+    const pl      = puzzleState.allPlaced.find(p => p.word.id === w.id);
     const isFound = pl && pl.found;
+    const prog    = puzzleState.wordProgress[w.id] || 0;
 
-    // 고급 모드: 음절 진행 박스 표시
-    let bottomHtml = '';
-    {  // 전체 모드 공통: 음절 진행 박스 (? → 찾으면 글자)
-      if (isFound) {
-        const boxes2 = w.syllables.map((syl, i) => `<span class="syl-box done-${wIdx}" id="sylbox-${w.id}-${i}">${syl}</span>`).join('');
-        bottomHtml = `<div class="syl-progress">${boxes2}</div>`;
-      } else {
-        const prog = puzzleState.wordProgress[w.id] || 0;
-        const boxes = w.syllables.map((syl, i) => {
-          const cls = i < prog ? `done-${wIdx}` : '';
-          return `<span class="syl-box ${cls}" id="sylbox-${w.id}-${i}">${i < prog ? syl : '?'}</span>`;
-        }).join('');
-        bottomHtml = `<div class="syl-progress">${boxes}</div>`;
-      }
-    }
+    const sylBoxes = w.syllables.map((syl, i) => {
+      const hitCls = i < prog ? `hit-${wIdx}` : '';
+      return `<span class="pzl-syl-box ${hitCls}" id="sylbox-${w.id}-${i}">${i < prog ? syl : '?'}</span>`;
+    }).join('');
 
     return `
-    <div class="puzzle-target-card ${isFound ? 'found' : ''}" id="ptc-${w.id}"
-         onclick="speakPuzzleCard('${w.word.replace(/'/g,"\\'")}', '${w.id}'); puzzleCardHint(${w.id})"
-         style="cursor:pointer">
-      <span class="puzzle-target-emoji" id="pte-${w.id}">${w.emoji}</span>
-      <div class="puzzle-target-word">${w.word}</div>
-      ${bottomHtml}
+    <div class="pzl-chip ${isFound ? 'found' : ''}" id="ptc-${w.id}"
+         onclick="speakPuzzleCard('${w.word.replace(/'/g,"\\'")}','${w.id}');puzzleCardHint(${w.id})">
+      <span class="pzl-chip-emoji" id="pte-${w.id}">${w.emoji}</span>
+      <span class="pzl-chip-word">${w.word}</span>
+      <div class="pzl-syl-row">${sylBoxes}</div>
     </div>`;
   }).join('');
 
@@ -5617,43 +5561,38 @@ function renderPuzzleGame(cat, cfg) {
       gridHtml += `<div class="puzzle-cell" id="pc-${r}-${c}"
         data-r="${r}" data-c="${c}"
         onmousedown="puzzleDragStart(event,${r},${c})"
-        onmousemove="puzzleDragOver(${r},${c})"
-        onmouseup="puzzleDragEnd(event)"
         ontouchstart="puzzleTouchStart(event,${r},${c})"
         >${puzzleState.grid[r][c]}</div>`;
     }
   }
 
-  // 안내 문구 (난이도별)
-  let dirHint = '';
-  if (scattered) {
-    dirHint = '🔍 음절을 <b>순서대로</b> 하나씩 탭해요!<br>숨겨진 단어를 찾아보세요!';
-  } else if (cfg.directions.length === 1) {
-    dirHint = '👆 가로(→) 방향으로만 단어가 숨어있어요!<br>끌거나 한 글자씩 탭해 보세요!';
-  } else {
-    dirHint = '👆 가로(→)·세로(↓) 방향으로 단어가 숨어있어요!<br>끌거나 한 글자씩 탭해 보세요!';
-  }
+  // ── 안내 문구 ──
+  const dirHint = scattered
+    ? '격자에서 단어의 글자들을 <b>순서대로</b> 탭하세요'
+    : cfg.directions.length === 1
+      ? '격자에서 단어를 <b>가로로 드래그</b>하거나 글자를 순서대로 탭하세요'
+      : '격자에서 단어를 <b>드래그</b>하거나 글자를 순서대로 탭하세요';
 
-  // 라운드 도트 HTML
+  // ── 라운드 도트 ──
   const roundDots = Array.from({length: puzzleState.totalRounds}, (_, i) => {
-    const n = i + 1;
-    const cls = n < puzzleState.currentRound ? 'done'
-              : n === puzzleState.currentRound ? 'active' : '';
+    const n   = i + 1;
+    const cls = n < puzzleState.currentRound ? 'done' : n === puzzleState.currentRound ? 'active' : '';
     return `<span class="round-dot ${cls}">${n}</span>`;
   }).join('');
 
   content.innerHTML = `
-    <div class="puzzle-round-bar" style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px">
-      <span class="round-label" style="font-size:0.8em;color:#9E9E9E">라운드</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span class="pzl-section-label" style="margin-bottom:0">찾아야 할 단어</span>
       <div class="round-dots">${roundDots}</div>
     </div>
-    <div class="puzzle-progress-bar"><div class="puzzle-progress-fill" id="puzzle-prog-fill" style="width:0%"></div></div>
-    <div class="puzzle-progress-text" id="puzzle-prog-text">0 / ${puzzleState.targetWords.length} 발견 🔍</div>
-    <div class="puzzle-targets">${targetCardsHtml}</div>
+    <div class="pzl-chips-row">${chipsHtml}</div>
     <div class="puzzle-instruction">${dirHint}</div>
     <div class="puzzle-grid-wrap">
       <div class="puzzle-grid ${cfg.cellClass}" id="puzzle-grid"
-           style="grid-template-columns:repeat(${gs},1fr);touch-action:none"
+           style="grid-template-columns:repeat(${gs},auto);touch-action:none"
+           onmousemove="puzzleGridMouseMove(event)"
+           onmouseup="puzzleGridMouseUp(event)"
+           onmouseleave="puzzleGridMouseLeave(event)"
            ontouchmove="puzzleTouchMove(event)"
            ontouchend="puzzleTouchEnd(event)">
         ${gridHtml}
@@ -5662,9 +5601,10 @@ function renderPuzzleGame(cat, cfg) {
     <div class="puzzle-hint-box" id="puzzle-hint-box">💡 단어를 찾아보세요!</div>
     <div class="puzzle-controls">
       <button class="btn btn-sm btn-purple" onclick="puzzleHint()">💡 힌트</button>
-      <button class="btn btn-sm btn-gray"   onclick="pdlgRefresh(this)">🔄 새 단어</button>
     </div>
   `;
+
+  _updateHeaderCounter();
 
   // Twemoji 적용
   puzzleState.targetWords.forEach(w => {
@@ -5672,25 +5612,34 @@ function renderPuzzleGame(cat, cfg) {
     if (el) applyTwemoji(el);
   });
 
-  // 초급/중급 모드 — 첫 글자 테두리 힌트
+  // 초급 — 첫 글자 테두리 힌트
   if (cfg.showEasyHints && !scattered) {
-    puzzleState.allPlaced.forEach((pl) => {
+    puzzleState.allPlaced.forEach(pl => {
       if (!pl.isTarget) return;
       const tIdx = puzzleState.targetWords.findIndex(t => t.id === pl.word.id);
       if (tIdx < 0 || pl.cells.length === 0) return;
-      const firstCell = pl.cells[0];
-      const el = document.getElementById(`pc-${firstCell.r}-${firstCell.c}`);
+      const el = document.getElementById(`pc-${pl.cells[0].r}-${pl.cells[0].c}`);
       if (el) el.classList.add(`easy-hint-${tIdx}`);
     });
   }
 }
 
-/* ── 셀 클릭 처리 (모드 분기) ──────── */
 /* ═══════════════════════════════════════════════════════════
-   초급/중급 드래그 & 탭 인터랙션
+   드래그 & 탭 인터랙션
 ═══════════════════════════════════════════════════════════ */
 let _puzzleDrag = { active: false, startR: -1, startC: -1,
                     cells: [], direction: null, moved: false };
+
+/* ── 그리드 레벨 마우스 이벤트 (드래그 정확도 보장) ── */
+function puzzleGridMouseMove(event) {
+  if (!_puzzleDrag.active || puzzleState.scatteredMode) return;
+  const el = document.elementFromPoint(event.clientX, event.clientY);
+  if (!el || !el.classList.contains('puzzle-cell')) return;
+  const r = parseInt(el.dataset.r), c = parseInt(el.dataset.c);
+  if (!isNaN(r) && !isNaN(c)) puzzleDragOver(r, c);
+}
+function puzzleGridMouseUp(event)    { puzzleDragEnd(event); }
+function puzzleGridMouseLeave(event) { if (_puzzleDrag.active) puzzleDragEnd(event); }
 
 function _clearDragVisual() {
   document.querySelectorAll('.puzzle-cell.selected-start, .puzzle-cell.selected-path')
@@ -5975,59 +5924,54 @@ function puzzleCellClickScattered(r, c) {
 
   const totalSyls = matchedPl.word.syllables.length;
   if (matchedProgress + 1 >= totalSyls) {
-    // 🎉 단어 완성!
     matchedPl.found = true;
     puzzleState.foundCount++;
-    setTimeout(() => triggerWordExplosion(r, c, matchedPl, matchedColorIdx), 100);
-    showPuzzleHintBox(`🎉 "${matchedPl.word.word}" 완성! 🎆`);
+    _markChipFound(matchedPl.word.id, matchedColorIdx, matchedPl.word.syllables);
+    _showCorrectEffect(matchedPl.word.word);
+    showPuzzleHintBox(`🎉 "${matchedPl.word.word}" 완성!`);
     speak(matchedPl.word.word);
     playCorrectSound();
-    showConfetti(35);
+    showConfetti(28);
     updatePuzzleProgressBar();
     if (puzzleState.foundCount >= puzzleState.targetWords.length) {
-      setTimeout(renderPuzzleComplete, 1600);
+      setTimeout(renderPuzzleComplete, 1300);
     }
   } else {
     const remaining = totalSyls - (matchedProgress + 1);
-    showPuzzleHintBox(`👍 "${matchedPl.word.word}" ${matchedProgress+1}/${totalSyls} — ${remaining}글자 더!`);
+    showPuzzleHintBox(`👍 ${matchedProgress+1}/${totalSyls} — ${remaining}글자 더!`);
     updatePuzzleProgressBar();
   }
 }
 
-/* ── 음절 박스 업데이트 ─────────────── */
+/* ── 음절 박스 업데이트 (새 pzl-syl-box) ── */
 function updateSylBox(wordId, progress, sylIdx, colorIdx, sylText) {
   const boxEl = document.getElementById(`sylbox-${wordId}-${sylIdx}`);
-  if (boxEl) {
-    boxEl.classList.add(`done-${colorIdx}`);
-    boxEl.textContent = sylText;
-  }
+  if (!boxEl) return;
+  boxEl.classList.remove('hit-0','hit-1','hit-2');
+  boxEl.classList.add(`hit-${colorIdx}`);
+  boxEl.textContent = sylText;
 }
 
-/* ── 진행 바 업데이트 ───────────────── */
+/* ── 진행 업데이트 ───────────────────── */
 function updatePuzzleProgressBar() {
-  const total   = puzzleState.targetWords.length;
-  const pct     = Math.round((puzzleState.foundCount / total) * 100);
-  const fillEl  = document.getElementById('puzzle-prog-fill');
-  const textEl  = document.getElementById('puzzle-prog-text');
-  if (fillEl) fillEl.style.width = pct + '%';
-  if (textEl) textEl.textContent = `${puzzleState.foundCount} / ${total} 발견 🔍`;
+  _updateHeaderCounter();
+}
+
+/* ── 칩 완성 처리 ─────────────────────── */
+function _markChipFound(wordId, colorIdx, syllables) {
+  const chipEl = document.getElementById(`ptc-${wordId}`);
+  if (!chipEl) return;
+  chipEl.classList.add('found','word-explode');
+  setTimeout(() => chipEl.classList.remove('word-explode'), 750);
+  syllables.forEach((syl, i) => {
+    const b = document.getElementById(`sylbox-${wordId}-${i}`);
+    if (b) { b.classList.remove('hit-0','hit-1','hit-2'); b.classList.add(`hit-${colorIdx}`); b.textContent = syl; }
+  });
 }
 
 /* ── 단어 완성 폭발 효과 ────────────── */
 function triggerWordExplosion(lastR, lastC, pl, colorIdx) {
-  // 카드 폭발 애니
-  const cardEl = document.getElementById(`ptc-${pl.word.id}`);
-  if (cardEl) {
-    cardEl.classList.add('found', 'word-explode');
-    const badge = cardEl.querySelector('.puzzle-target-badge');
-    if (badge) badge.textContent = '✓ 찾았어요!';
-    // 음절 박스 전체 완성 처리
-    pl.word.syllables.forEach((syl, i) => {
-      const boxEl = document.getElementById(`sylbox-${pl.word.id}-${i}`);
-      if (boxEl) { boxEl.classList.add(`done-${colorIdx}`); boxEl.textContent = syl; }
-    });
-    setTimeout(() => cardEl.classList.remove('word-explode'), 750);
-  }
+  _markChipFound(pl.word.id, colorIdx, pl.word.syllables);
 
   // 마지막 셀 burst
   const lastCellEl = document.getElementById(`pc-${lastR}-${lastC}`);
@@ -6077,77 +6021,36 @@ function puzzleCheckWord(wordText, cells) {
     matched.found = true;
     const colorIdx = puzzleState.foundCount++;
 
-    // 선택한 셀 하이라이트 (글자 매칭 → 어느 셀이든 정답 인정)
+    // 정답 셀 하이라이트
+    const hintCls = ['easy-hint-0','easy-hint-1','easy-hint-2','easy-hint-3','easy-hint-4'];
     cells.forEach(({r, c}) => {
       const el = document.getElementById(`pc-${r}-${c}`);
       if (el) {
-        el.classList.remove('selected-path','selected-start',
-          'easy-hint-0','easy-hint-1','easy-hint-2','easy-hint-3','easy-hint-4');
+        el.classList.remove('selected-path','selected-start',...hintCls);
         el.classList.add(`found-${colorIdx}`, 'found-bounce');
         setTimeout(() => el.classList.remove('found-bounce'), 500);
       }
     });
-
-    // 원래 배치된 셀에 힌트 클래스가 남아있으면 제거 (위치 다른 경우 대비)
-    const hintCls = ['easy-hint-0','easy-hint-1','easy-hint-2','easy-hint-3','easy-hint-4'];
     matched.cells.forEach(({r, c}) => {
       const el = document.getElementById(`pc-${r}-${c}`);
       if (el) el.classList.remove(...hintCls, 'selected-start', 'selected-path');
     });
 
-    // 타겟 카드 업데이트 + 흔들림 효과 + 음절 박스 오픈
-    const tcEl = document.getElementById(`ptc-${matched.word.id}`);
-    if (tcEl) {
-      tcEl.classList.add('found', 'word-explode');
-      setTimeout(() => tcEl.classList.remove('word-explode'), 750);
-    }
-    // ★ syl-box 전체 완성 (? → 실제 글자 + 색상)
+    // 칩 완성 처리
     puzzleState.wordProgress[matched.word.id] = matched.word.syllables.length;
-    matched.word.syllables.forEach((syl, i) => {
-      const boxEl = document.getElementById(`sylbox-${matched.word.id}-${i}`);
-      if (boxEl) { boxEl.classList.add(`done-${colorIdx}`); boxEl.textContent = syl; }
-    });
+    _markChipFound(matched.word.id, colorIdx, matched.word.syllables);
 
-    // ★ 정답 Flash 텍스트
-    const flashMsg = document.createElement('div');
-    flashMsg.style.cssText = `
-      position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
-      font-size:2.6em; font-weight:900; color:#7E57C2;
-      animation: correctFlash 0.85s ease forwards;
-      z-index:9999; pointer-events:none; font-family:var(--font);
-      text-shadow: 0 0 24px rgba(124,58,237,0.7), 0 4px 12px rgba(0,0,0,0.15);
-      white-space:nowrap;
-    `;
-    flashMsg.textContent = `🎉 "${matched.word.word}" 정답!`;
-    document.body.appendChild(flashMsg);
-    setTimeout(() => flashMsg.remove(), 900);
+    // 정답 특수효과
+    _showCorrectEffect(matched.word.word);
 
-    // ★ 별 터지기 오버레이
-    const emojis2 = ['⭐','✨','🌟','💥','🎉','🎊','🌈','💫'];
-    for (let i = 0; i < 8; i++) {
-      setTimeout(() => {
-        const ov = document.createElement('div');
-        ov.className = 'starburst-overlay';
-        ov.textContent = emojis2[Math.floor(Math.random() * emojis2.length)];
-        ov.style.fontSize = (1.4 + Math.random() * 1.2) + 'em';
-        const vw = window.innerWidth, vh = window.innerHeight;
-        ov.style.left = (vw * 0.1 + Math.random() * vw * 0.8) + 'px';
-        ov.style.top  = (vh * 0.1 + Math.random() * vh * 0.7) + 'px';
-        document.body.appendChild(ov);
-        setTimeout(() => ov.remove(), 1000);
-      }, i * 80);
-    }
-
-    // 진행 업데이트
     updatePuzzleProgressBar();
-
-    showPuzzleHintBox(`🎉 "${matched.word.word}" 찾았어요! 대단해요!`);
+    showPuzzleHintBox(`🎉 "${matched.word.word}" 찾았어요!`);
     speak(matched.word.word);
     playCorrectSound();
-    showConfetti(30);
+    showConfetti(28);
 
     if (puzzleState.foundCount >= puzzleState.targetWords.length) {
-      setTimeout(renderPuzzleComplete, 1400);
+      setTimeout(renderPuzzleComplete, 1300);
     }
   } else {
     cells.forEach(({r, c}) => {
@@ -6155,11 +6058,43 @@ function puzzleCheckWord(wordText, cells) {
       if (el) {
         el.classList.remove('selected-path','selected-start');
         el.classList.add('wrong-flash');
-        setTimeout(() => el.classList.remove('wrong-flash'), 450);
+        setTimeout(() => el.classList.remove('wrong-flash'), 420);
       }
     });
-    showPuzzleHintBox('😊 다시 해봐요! 첫 글자 → 끝 글자 탭~');
+    showPuzzleHintBox('😊 다시 해봐요!');
     playWrongSound();
+  }
+}
+
+/* ── 정답 특수효과 ─────────────────── */
+function _showCorrectEffect(word) {
+  // Flash 텍스트
+  const flash = document.createElement('div');
+  flash.style.cssText = `
+    position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);
+    font-size:2.4em;font-weight:900;color:#7E57C2;
+    animation:correctFlash 0.8s ease forwards;
+    z-index:9999;pointer-events:none;font-family:var(--font);
+    text-shadow:0 0 20px rgba(124,58,237,0.65);white-space:nowrap;
+  `;
+  flash.textContent = `🎉 ${word}`;
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 850);
+
+  // 별 폭죽
+  const emojis = ['⭐','✨','🌟','🎉','🎊','💫'];
+  for (let i = 0; i < 7; i++) {
+    setTimeout(() => {
+      const ov = document.createElement('div');
+      ov.className = 'starburst-overlay';
+      ov.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      ov.style.fontSize = (1.2 + Math.random()) + 'em';
+      const vw = innerWidth, vh = innerHeight;
+      ov.style.left = (vw * 0.1 + Math.random() * vw * 0.8) + 'px';
+      ov.style.top  = (vh * 0.1 + Math.random() * vh * 0.7) + 'px';
+      document.body.appendChild(ov);
+      setTimeout(() => ov.remove(), 900);
+    }, i * 70);
   }
 }
 
@@ -6267,12 +6202,11 @@ function puzzleCardHint(wordId) {
   showPuzzleHintBox(`💡 "${pl.word.word}"의 첫 글자 → "${nextSyl}"`);
 }
 
-/* ── 타겟 카드 found 갱신 (한 글자 탭 완성 후) ── */
+/* ── 타겟 칩 found 갱신 (한 글자 탭 완성 후) ── */
 function updatePuzzleTargetCard(wordId, colorIdx) {
-  const cardEl = document.getElementById(`ptc-${wordId}`);
-  if (!cardEl) return;
-  cardEl.classList.add('found', 'word-explode');
-  setTimeout(() => cardEl.classList.remove('word-explode'), 750);
+  const pl = puzzleState.allPlaced.find(p => p.word.id == wordId);
+  if (pl) _markChipFound(wordId, colorIdx, pl.word.syllables);
+  _updateHeaderCounter();
 }
 
 /* ── TTS ─────────────────────────── */
