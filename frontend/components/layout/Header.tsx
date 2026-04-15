@@ -53,7 +53,7 @@ function IconLibrary() {
 const NAV_ITEMS = [
   { href: '/ko',         label: '한글',   color: '#FF86C8', bg: '#FFD6EE', Icon: IconBook    },
   { href: '/en',         label: '영어',   color: '#1CB0F6', bg: '#D0F0FF', Icon: IconStar    },
-  { href: '/en/phonics', label: '회화',   color: '#58CC02', bg: '#D7F5A8', Icon: IconBubble  },
+  { href: '/conversation', label: '회화',   color: '#58CC02', bg: '#D7F5A8', Icon: IconBubble  },
   { href: '/resources',  label: '자료실', color: '#00C2A0', bg: '#B0F0E8', Icon: IconLibrary },
   { href: '/my',         label: '기록',   color: '#FFD900', bg: '#FFF5B0', Icon: IconTrophy  },
 ]
