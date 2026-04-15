@@ -1,7 +1,7 @@
 {
   "lang": "ko",
-  "title": "한글 단어 유아",
-  "description": "유아 대상 기초 한글 단어 학습",
+  "title": "한글 단어 유아 확장판",
+  "description": "유아 대상 기초 한글 단어 학습 (확장판 ~200단어)",
   "categories": [
     {
       "id": "animals",
@@ -9,14 +9,26 @@
       "icon": "🐾",
       "color": "#e53935",
       "words": [
-        { "id": "a1", "word": "강아지", "meaning": "puppy", "emoji": "🐶", "sentences": ["강아지가 짖어요.", "강아지는 귀여워요."] },
-        { "id": "a2", "word": "고양이", "meaning": "cat", "emoji": "🐱", "sentences": ["고양이가 야옹 해요.", "고양이는 털이 부드러워요."] },
-        { "id": "a3", "word": "토끼", "meaning": "rabbit", "emoji": "🐰", "sentences": ["토끼가 뛰어요.", "토끼는 귀가 길어요."] },
-        { "id": "a4", "word": "원숭이", "meaning": "monkey", "emoji": "🐒", "sentences": ["원숭이가 나무에 올라요.", "원숭이는 바나나를 좋아해요."] },
-        { "id": "a5", "word": "코끼리", "meaning": "elephant", "emoji": "🐘", "sentences": ["코끼리는 코가 길어요.", "코끼리는 몸이 커요."] },
-        { "id": "a6", "word": "기린", "meaning": "giraffe", "emoji": "🦒", "sentences": ["기린은 목이 길어요.", "기린이 나뭇잎을 먹어요."] },
-        { "id": "a7", "word": "사자", "meaning": "lion", "emoji": "🦁", "sentences": ["사자가 으르렁거려요.", "사자는 동물의 왕이에요."] },
-        { "id": "a8", "word": "곰", "meaning": "bear", "emoji": "🐻", "sentences": ["곰이 꿀을 먹어요.", "곰은 겨울잠을 자요."] }
+        { "id": "a1",  "word": "강아지",  "meaning": "puppy",       "emoji": "🐶", "sentences": ["강아지가 짖어요.", "강아지는 귀여워요."] },
+        { "id": "a2",  "word": "고양이",  "meaning": "cat",         "emoji": "🐱", "sentences": ["고양이가 야옹 해요.", "고양이는 털이 부드러워요."] },
+        { "id": "a3",  "word": "토끼",    "meaning": "rabbit",      "emoji": "🐰", "sentences": ["토끼가 뛰어요.", "토끼는 귀가 길어요."] },
+        { "id": "a4",  "word": "원숭이",  "meaning": "monkey",      "emoji": "🐒", "sentences": ["원숭이가 나무에 올라요.", "원숭이는 바나나를 좋아해요."] },
+        { "id": "a5",  "word": "코끼리",  "meaning": "elephant",    "emoji": "🐘", "sentences": ["코끼리는 코가 길어요.", "코끼리는 몸이 커요."] },
+        { "id": "a6",  "word": "기린",    "meaning": "giraffe",     "emoji": "🦒", "sentences": ["기린은 목이 길어요.", "기린이 나뭇잎을 먹어요."] },
+        { "id": "a7",  "word": "사자",    "meaning": "lion",        "emoji": "🦁", "sentences": ["사자가 으르렁거려요.", "사자는 동물의 왕이에요."] },
+        { "id": "a8",  "word": "곰",      "meaning": "bear",        "emoji": "🐻", "sentences": ["곰이 꿀을 먹어요.", "곰은 겨울잠을 자요."] },
+        { "id": "a9",  "word": "펭귄",    "meaning": "penguin",     "emoji": "🐧", "sentences": ["펭귄이 뒤뚱뒤뚱 걸어요.", "펭귄은 추운 곳에 살아요."] },
+        { "id": "a10", "word": "개구리",  "meaning": "frog",        "emoji": "🐸", "sentences": ["개구리가 개굴개굴 울어요.", "개구리가 연못에 살아요."] },
+        { "id": "a11", "word": "거북이",  "meaning": "turtle",      "emoji": "🐢", "sentences": ["거북이가 천천히 걸어요.", "거북이는 등껍질이 있어요."] },
+        { "id": "a12", "word": "캥거루",  "meaning": "kangaroo",    "emoji": "🦘", "sentences": ["캥거루가 폴짝 뛰어요.", "캥거루 배에 아기가 있어요."] },
+        { "id": "a13", "word": "얼룩말",  "meaning": "zebra",       "emoji": "🦓", "sentences": ["얼룩말에 줄무늬가 있어요.", "얼룩말이 달려요."] },
+        { "id": "a14", "word": "고릴라",  "meaning": "gorilla",     "emoji": "🦍", "sentences": ["고릴라가 힘이 세요.", "고릴라는 정글에 살아요."] },
+        { "id": "a15", "word": "하마",    "meaning": "hippo",       "emoji": "🦛", "sentences": ["하마가 강에 살아요.", "하마는 입이 커요."] },
+        { "id": "a16", "word": "악어",    "meaning": "crocodile",   "emoji": "🐊", "sentences": ["악어는 이빨이 날카로워요.", "악어가 물속에 있어요."] },
+        { "id": "a17", "word": "호랑이",  "meaning": "tiger",       "emoji": "🐯", "sentences": ["호랑이가 어흥 해요.", "호랑이에 줄무늬가 있어요."] },
+        { "id": "a18", "word": "독수리",  "meaning": "eagle",       "emoji": "🦅", "sentences": ["독수리가 하늘을 날아요.", "독수리는 눈이 날카로워요."] },
+        { "id": "a19", "word": "돌고래",  "meaning": "dolphin",     "emoji": "🐬", "sentences": ["돌고래가 바다에서 헤엄쳐요.", "돌고래는 영리해요."] },
+        { "id": "a20", "word": "물고기",  "meaning": "fish",        "emoji": "🐟", "sentences": ["물고기가 헤엄쳐요.", "물고기는 물속에 살아요."] }
       ]
     },
     {
@@ -25,14 +37,41 @@
       "icon": "🍎",
       "color": "#e91e63",
       "words": [
-        { "id": "f1", "word": "사과", "meaning": "apple", "emoji": "🍎", "sentences": ["사과가 빨개요.", "사과를 먹어요."] },
-        { "id": "f2", "word": "바나나", "meaning": "banana", "emoji": "🍌", "sentences": ["바나나가 노래요.", "바나나는 달아요."] },
-        { "id": "f3", "word": "딸기", "meaning": "strawberry", "emoji": "🍓", "sentences": ["딸기가 빨개요.", "딸기는 맛있어요."] },
-        { "id": "f4", "word": "포도", "meaning": "grape", "emoji": "🍇", "sentences": ["포도는 보라색이에요.", "포도를 먹어요."] },
-        { "id": "f5", "word": "수박", "meaning": "watermelon", "emoji": "🍉", "sentences": ["수박은 시원해요.", "수박은 크고 둥글어요."] },
-        { "id": "f6", "word": "오렌지", "meaning": "orange", "emoji": "🍊", "sentences": ["오렌지가 주황색이에요.", "오렌지는 새콤해요."] },
-        { "id": "f7", "word": "복숭아", "meaning": "peach", "emoji": "🍑", "sentences": ["복숭아가 달아요.", "복숭아는 분홍색이에요."] },
-        { "id": "f8", "word": "참외", "meaning": "melon", "emoji": "🍈", "sentences": ["참외는 노란색이에요.", "참외는 시원해요."] }
+        { "id": "f1",  "word": "사과",    "meaning": "apple",       "emoji": "🍎", "sentences": ["사과가 빨개요.", "사과를 먹어요."] },
+        { "id": "f2",  "word": "바나나",  "meaning": "banana",      "emoji": "🍌", "sentences": ["바나나가 노래요.", "바나나는 달아요."] },
+        { "id": "f3",  "word": "딸기",    "meaning": "strawberry",  "emoji": "🍓", "sentences": ["딸기가 빨개요.", "딸기는 맛있어요."] },
+        { "id": "f4",  "word": "포도",    "meaning": "grape",       "emoji": "🍇", "sentences": ["포도는 보라색이에요.", "포도를 먹어요."] },
+        { "id": "f5",  "word": "수박",    "meaning": "watermelon",  "emoji": "🍉", "sentences": ["수박은 시원해요.", "수박은 크고 둥글어요."] },
+        { "id": "f6",  "word": "오렌지",  "meaning": "orange",      "emoji": "🍊", "sentences": ["오렌지가 주황색이에요.", "오렌지는 새콤해요."] },
+        { "id": "f7",  "word": "복숭아",  "meaning": "peach",       "emoji": "🍑", "sentences": ["복숭아가 달아요.", "복숭아는 분홍색이에요."] },
+        { "id": "f8",  "word": "참외",    "meaning": "melon",       "emoji": "🍈", "sentences": ["참외는 노란색이에요.", "참외는 시원해요."] },
+        { "id": "f9",  "word": "키위",    "meaning": "kiwi",        "emoji": "🥝", "sentences": ["키위는 초록색이에요.", "키위를 잘라요."] },
+        { "id": "f10", "word": "레몬",    "meaning": "lemon",       "emoji": "🍋", "sentences": ["레몬은 새콤해요.", "레몬은 노란색이에요."] },
+        { "id": "f11", "word": "망고",    "meaning": "mango",       "emoji": "🥭", "sentences": ["망고는 달콤해요.", "망고는 노란색이에요."] },
+        { "id": "f12", "word": "체리",    "meaning": "cherry",      "emoji": "🍒", "sentences": ["체리가 빨개요.", "체리는 작고 달아요."] },
+        { "id": "f13", "word": "파인애플","meaning": "pineapple",   "emoji": "🍍", "sentences": ["파인애플이 새콤달콤해요.", "파인애플은 가시가 있어요."] },
+        { "id": "f14", "word": "코코넛",  "meaning": "coconut",     "emoji": "🥥", "sentences": ["코코넛 물이 달아요.", "코코넛은 딱딱해요."] },
+        { "id": "f15", "word": "배",      "meaning": "pear",        "emoji": "🍐", "sentences": ["배가 달콤해요.", "배는 노란색이에요."] }
+      ]
+    },
+    {
+      "id": "veggies",
+      "name": "채소",
+      "icon": "🥕",
+      "color": "#388e3c",
+      "words": [
+        { "id": "v1",  "word": "당근",    "meaning": "carrot",      "emoji": "🥕", "sentences": ["당근이 주황색이에요.", "토끼가 당근을 좋아해요."] },
+        { "id": "v2",  "word": "감자",    "meaning": "potato",      "emoji": "🥔", "sentences": ["감자를 쪄 먹어요.", "감자튀김이 맛있어요."] },
+        { "id": "v3",  "word": "고추",    "meaning": "pepper",      "emoji": "🌶️", "sentences": ["고추는 매워요.", "고추가 빨개요."] },
+        { "id": "v4",  "word": "오이",    "meaning": "cucumber",    "emoji": "🥒", "sentences": ["오이는 초록색이에요.", "오이는 시원해요."] },
+        { "id": "v5",  "word": "양파",    "meaning": "onion",       "emoji": "🧅", "sentences": ["양파를 자르면 눈물이 나요.", "양파는 매워요."] },
+        { "id": "v6",  "word": "마늘",    "meaning": "garlic",      "emoji": "🧄", "sentences": ["마늘은 냄새가 강해요.", "마늘이 작고 둥글어요."] },
+        { "id": "v7",  "word": "시금치",  "meaning": "spinach",     "emoji": "🥬", "sentences": ["시금치가 초록색이에요.", "시금치는 몸에 좋아요."] },
+        { "id": "v8",  "word": "브로콜리","meaning": "broccoli",    "emoji": "🥦", "sentences": ["브로콜리가 초록색이에요.", "브로콜리는 건강에 좋아요."] },
+        { "id": "v9",  "word": "옥수수",  "meaning": "corn",        "emoji": "🌽", "sentences": ["옥수수가 노랗고 달아요.", "옥수수를 구워 먹어요."] },
+        { "id": "v10", "word": "토마토",  "meaning": "tomato",      "emoji": "🍅", "sentences": ["토마토가 빨개요.", "토마토는 새콤해요."] },
+        { "id": "v11", "word": "버섯",    "meaning": "mushroom",    "emoji": "🍄", "sentences": ["버섯이 숲에 있어요.", "버섯 요리가 맛있어요."] },
+        { "id": "v12", "word": "콩",      "meaning": "bean",        "emoji": "🫘", "sentences": ["콩은 영양이 많아요.", "콩을 삶아 먹어요."] }
       ]
     },
     {
@@ -41,14 +80,21 @@
       "icon": "🍚",
       "color": "#ff6f00",
       "words": [
-        { "id": "fd1", "word": "밥", "meaning": "rice", "emoji": "🍚", "sentences": ["밥을 먹어요.", "밥이 맛있어요."] },
-        { "id": "fd2", "word": "국", "meaning": "soup", "emoji": "🍲", "sentences": ["국이 뜨거워요.", "국을 마셔요."] },
-        { "id": "fd3", "word": "빵", "meaning": "bread", "emoji": "🍞", "sentences": ["빵이 맛있어요.", "빵을 먹어요."] },
-        { "id": "fd4", "word": "우유", "meaning": "milk", "emoji": "🥛", "sentences": ["우유를 마셔요.", "우유는 흰색이에요."] },
-        { "id": "fd5", "word": "달걀", "meaning": "egg", "emoji": "🥚", "sentences": ["달걀을 삶아요.", "달걀이 동글동글해요."] },
-        { "id": "fd6", "word": "떡볶이", "meaning": "tteokbokki", "emoji": "🌶️", "sentences": ["떡볶이가 매워요.", "떡볶이는 맛있어요."] },
-        { "id": "fd7", "word": "라면", "meaning": "ramen", "emoji": "🍜", "sentences": ["라면이 뜨거워요.", "라면을 먹어요."] },
-        { "id": "fd8", "word": "과자", "meaning": "snack", "emoji": "🍪", "sentences": ["과자가 바삭해요.", "과자를 먹어요."] }
+        { "id": "fd1",  "word": "밥",      "meaning": "rice",        "emoji": "🍚", "sentences": ["밥을 먹어요.", "밥이 맛있어요."] },
+        { "id": "fd2",  "word": "국",      "meaning": "soup",        "emoji": "🍲", "sentences": ["국이 뜨거워요.", "국을 마셔요."] },
+        { "id": "fd3",  "word": "빵",      "meaning": "bread",       "emoji": "🍞", "sentences": ["빵이 맛있어요.", "빵을 먹어요."] },
+        { "id": "fd4",  "word": "우유",    "meaning": "milk",        "emoji": "🥛", "sentences": ["우유를 마셔요.", "우유는 흰색이에요."] },
+        { "id": "fd5",  "word": "달걀",    "meaning": "egg",         "emoji": "🥚", "sentences": ["달걀을 삶아요.", "달걀이 동글동글해요."] },
+        { "id": "fd6",  "word": "떡볶이",  "meaning": "tteokbokki",  "emoji": "🌶️", "sentences": ["떡볶이가 매워요.", "떡볶이는 맛있어요."] },
+        { "id": "fd7",  "word": "라면",    "meaning": "ramen",       "emoji": "🍜", "sentences": ["라면이 뜨거워요.", "라면을 먹어요."] },
+        { "id": "fd8",  "word": "과자",    "meaning": "snack",       "emoji": "🍪", "sentences": ["과자가 바삭해요.", "과자를 먹어요."] },
+        { "id": "fd9",  "word": "피자",    "meaning": "pizza",       "emoji": "🍕", "sentences": ["피자가 맛있어요.", "피자에 치즈가 있어요."] },
+        { "id": "fd10", "word": "햄버거",  "meaning": "hamburger",   "emoji": "🍔", "sentences": ["햄버거가 커요.", "햄버거를 먹어요."] },
+        { "id": "fd11", "word": "아이스크림","meaning": "ice cream", "emoji": "🍦", "sentences": ["아이스크림이 차가워요.", "아이스크림이 달아요."] },
+        { "id": "fd12", "word": "케이크",  "meaning": "cake",        "emoji": "🎂", "sentences": ["케이크를 먹어요.", "케이크가 달아요."] },
+        { "id": "fd13", "word": "초콜릿",  "meaning": "chocolate",   "emoji": "🍫", "sentences": ["초콜릿이 달아요.", "초콜릿은 갈색이에요."] },
+        { "id": "fd14", "word": "사탕",    "meaning": "candy",       "emoji": "🍬", "sentences": ["사탕이 달아요.", "사탕을 빨아요."] },
+        { "id": "fd15", "word": "주스",    "meaning": "juice",       "emoji": "🧃", "sentences": ["주스를 마셔요.", "주스가 달아요."] }
       ]
     },
     {
@@ -57,14 +103,38 @@
       "icon": "🎨",
       "color": "#7b1fa2",
       "words": [
-        { "id": "c1", "word": "빨간색", "meaning": "red", "emoji": "🔴", "sentences": ["사과는 빨간색이에요.", "빨간색 꽃이 예뻐요."] },
-        { "id": "c2", "word": "파란색", "meaning": "blue", "emoji": "🔵", "sentences": ["하늘은 파란색이에요.", "파란색 바다가 넓어요."] },
-        { "id": "c3", "word": "노란색", "meaning": "yellow", "emoji": "🟡", "sentences": ["바나나는 노란색이에요.", "노란색 해가 떠요."] },
-        { "id": "c4", "word": "초록색", "meaning": "green", "emoji": "🟢", "sentences": ["나뭇잎은 초록색이에요.", "초록색 풀밭이 예뻐요."] },
-        { "id": "c5", "word": "흰색", "meaning": "white", "emoji": "⬜", "sentences": ["눈은 흰색이에요.", "흰색 구름이 떠요."] },
-        { "id": "c6", "word": "검은색", "meaning": "black", "emoji": "⬛", "sentences": ["밤하늘은 검은색이에요.", "검은색 고양이가 있어요."] },
-        { "id": "c7", "word": "분홍색", "meaning": "pink", "emoji": "🌸", "sentences": ["벚꽃은 분홍색이에요.", "분홍색 드레스가 예뻐요."] },
-        { "id": "c8", "word": "보라색", "meaning": "purple", "emoji": "🟣", "sentences": ["포도는 보라색이에요.", "보라색 꽃이 피었어요."] }
+        { "id": "c1",  "word": "빨간색",  "meaning": "red",         "emoji": "🔴", "sentences": ["사과는 빨간색이에요.", "빨간색 꽃이 예뻐요."] },
+        { "id": "c2",  "word": "파란색",  "meaning": "blue",        "emoji": "🔵", "sentences": ["하늘은 파란색이에요.", "파란색 바다가 넓어요."] },
+        { "id": "c3",  "word": "노란색",  "meaning": "yellow",      "emoji": "🟡", "sentences": ["바나나는 노란색이에요.", "노란색 해가 떠요."] },
+        { "id": "c4",  "word": "초록색",  "meaning": "green",       "emoji": "🟢", "sentences": ["나뭇잎은 초록색이에요.", "초록색 풀밭이 예뻐요."] },
+        { "id": "c5",  "word": "흰색",    "meaning": "white",       "emoji": "⬜", "sentences": ["눈은 흰색이에요.", "흰색 구름이 떠요."] },
+        { "id": "c6",  "word": "검은색",  "meaning": "black",       "emoji": "⬛", "sentences": ["밤하늘은 검은색이에요.", "검은색 고양이가 있어요."] },
+        { "id": "c7",  "word": "분홍색",  "meaning": "pink",        "emoji": "🌸", "sentences": ["벚꽃은 분홍색이에요.", "분홍색 드레스가 예뻐요."] },
+        { "id": "c8",  "word": "보라색",  "meaning": "purple",      "emoji": "🟣", "sentences": ["포도는 보라색이에요.", "보라색 꽃이 피었어요."] },
+        { "id": "c9",  "word": "주황색",  "meaning": "orange",      "emoji": "🟠", "sentences": ["오렌지는 주황색이에요.", "주황색 석양이 예뻐요."] },
+        { "id": "c10", "word": "갈색",    "meaning": "brown",       "emoji": "🟤", "sentences": ["흙은 갈색이에요.", "곰은 갈색이에요."] },
+        { "id": "c11", "word": "회색",    "meaning": "gray",        "emoji": "🩶", "sentences": ["코끼리는 회색이에요.", "회색 구름이 떠요."] },
+        { "id": "c12", "word": "하늘색",  "meaning": "sky blue",    "emoji": "🩵", "sentences": ["하늘은 하늘색이에요.", "하늘색 리본이 예뻐요."] }
+      ]
+    },
+    {
+      "id": "vehicles",
+      "name": "탈것",
+      "icon": "🚗",
+      "color": "#0277bd",
+      "words": [
+        { "id": "tr1",  "word": "자동차",  "meaning": "car",         "emoji": "🚗", "sentences": ["자동차가 달려요.", "자동차는 빠르고 편해요."] },
+        { "id": "tr2",  "word": "버스",    "meaning": "bus",         "emoji": "🚌", "sentences": ["버스를 타요.", "버스에 사람이 많아요."] },
+        { "id": "tr3",  "word": "기차",    "meaning": "train",       "emoji": "🚂", "sentences": ["기차가 빨리 달려요.", "기차역에 내려요."] },
+        { "id": "tr4",  "word": "비행기",  "meaning": "airplane",    "emoji": "✈️", "sentences": ["비행기가 하늘을 날아요.", "비행기를 타고 여행해요."] },
+        { "id": "tr5",  "word": "배",      "meaning": "boat",        "emoji": "🚢", "sentences": ["배가 바다를 가요.", "배를 타고 여행해요."] },
+        { "id": "tr6",  "word": "자전거",  "meaning": "bicycle",     "emoji": "🚲", "sentences": ["자전거를 타요.", "자전거가 두 바퀴예요."] },
+        { "id": "tr7",  "word": "오토바이","meaning": "motorcycle",  "emoji": "🏍️", "sentences": ["오토바이가 빠르게 달려요.", "오토바이를 탈 때 헬멧을 써요."] },
+        { "id": "tr8",  "word": "헬리콥터","meaning": "helicopter",  "emoji": "🚁", "sentences": ["헬리콥터가 하늘에 뜨고 있어요.", "헬리콥터 날개가 돌아가요."] },
+        { "id": "tr9",  "word": "소방차",  "meaning": "fire truck",  "emoji": "🚒", "sentences": ["소방차가 불을 꺼요.", "소방차 사이렌이 울려요."] },
+        { "id": "tr10", "word": "구급차",  "meaning": "ambulance",   "emoji": "🚑", "sentences": ["구급차가 달려와요.", "구급차가 아픈 사람을 도와요."] },
+        { "id": "tr11", "word": "경찰차",  "meaning": "police car",  "emoji": "🚓", "sentences": ["경찰차가 순찰해요.", "경찰차 사이렌이 빨리빨리 울려요."] },
+        { "id": "tr12", "word": "로켓",    "meaning": "rocket",      "emoji": "🚀", "sentences": ["로켓이 우주로 날아가요.", "로켓은 아주 빠르게 날아요."] }
       ]
     },
     {
@@ -73,14 +143,21 @@
       "icon": "👶",
       "color": "#0288d1",
       "words": [
-        { "id": "b1", "word": "눈", "meaning": "eye", "emoji": "👀", "sentences": ["눈으로 봐요.", "눈이 반짝여요."] },
-        { "id": "b2", "word": "코", "meaning": "nose", "emoji": "👃", "sentences": ["코로 냄새를 맡아요.", "코가 간지러워요."] },
-        { "id": "b3", "word": "귀", "meaning": "ear", "emoji": "👂", "sentences": ["귀로 들어요.", "귀가 간지러워요."] },
-        { "id": "b4", "word": "입", "meaning": "mouth", "emoji": "👄", "sentences": ["입으로 먹어요.", "입을 크게 벌려요."] },
-        { "id": "b5", "word": "손", "meaning": "hand", "emoji": "✋", "sentences": ["손으로 잡아요.", "손을 씻어요."] },
-        { "id": "b6", "word": "발", "meaning": "foot", "emoji": "🦶", "sentences": ["발로 걸어요.", "발을 씻어요."] },
-        { "id": "b7", "word": "머리", "meaning": "head", "emoji": "🧠", "sentences": ["머리를 감아요.", "머리가 아파요."] },
-        { "id": "b8", "word": "배", "meaning": "belly", "emoji": "🫃", "sentences": ["배가 고파요.", "배가 아파요."] }
+        { "id": "b1",  "word": "눈",      "meaning": "eye",         "emoji": "👀", "sentences": ["눈으로 봐요.", "눈이 반짝여요."] },
+        { "id": "b2",  "word": "코",      "meaning": "nose",        "emoji": "👃", "sentences": ["코로 냄새를 맡아요.", "코가 간지러워요."] },
+        { "id": "b3",  "word": "귀",      "meaning": "ear",         "emoji": "👂", "sentences": ["귀로 들어요.", "귀가 간지러워요."] },
+        { "id": "b4",  "word": "입",      "meaning": "mouth",       "emoji": "👄", "sentences": ["입으로 먹어요.", "입을 크게 벌려요."] },
+        { "id": "b5",  "word": "손",      "meaning": "hand",        "emoji": "✋", "sentences": ["손으로 잡아요.", "손을 씻어요."] },
+        { "id": "b6",  "word": "발",      "meaning": "foot",        "emoji": "🦶", "sentences": ["발로 걸어요.", "발을 씻어요."] },
+        { "id": "b7",  "word": "머리",    "meaning": "head",        "emoji": "🧠", "sentences": ["머리를 감아요.", "머리가 아파요."] },
+        { "id": "b8",  "word": "배",      "meaning": "belly",       "emoji": "🫃", "sentences": ["배가 고파요.", "배가 아파요."] },
+        { "id": "b9",  "word": "다리",    "meaning": "leg",         "emoji": "🦵", "sentences": ["다리로 뛰어요.", "다리가 길어요."] },
+        { "id": "b10", "word": "팔",      "meaning": "arm",         "emoji": "💪", "sentences": ["팔을 벌려요.", "팔로 안아요."] },
+        { "id": "b11", "word": "어깨",    "meaning": "shoulder",    "emoji": "🙆", "sentences": ["어깨를 으쓱해요.", "어깨가 아파요."] },
+        { "id": "b12", "word": "무릎",    "meaning": "knee",        "emoji": "🦿", "sentences": ["무릎을 굽혀요.", "무릎이 아파요."] },
+        { "id": "b13", "word": "손가락",  "meaning": "finger",      "emoji": "☝️", "sentences": ["손가락이 열 개예요.", "손가락으로 가리켜요."] },
+        { "id": "b14", "word": "이",      "meaning": "teeth",       "emoji": "🦷", "sentences": ["이를 닦아요.", "이가 하얘요."] },
+        { "id": "b15", "word": "혀",      "meaning": "tongue",      "emoji": "👅", "sentences": ["혀로 맛을 봐요.", "혀를 내밀어요."] }
       ]
     },
     {
@@ -89,14 +166,144 @@
       "icon": "👨‍👩‍👧‍👦",
       "color": "#00897b",
       "words": [
-        { "id": "fm1", "word": "아빠", "meaning": "dad", "emoji": "👨", "sentences": ["아빠가 좋아요.", "아빠와 놀아요."] },
-        { "id": "fm2", "word": "엄마", "meaning": "mom", "emoji": "👩", "sentences": ["엄마가 좋아요.", "엄마 사랑해요."] },
-        { "id": "fm3", "word": "형", "meaning": "older brother", "emoji": "👦", "sentences": ["형이 도와줘요.", "형과 놀아요."] },
-        { "id": "fm4", "word": "언니", "meaning": "older sister", "emoji": "👧", "sentences": ["언니가 예뻐요.", "언니와 같이 놀아요."] },
-        { "id": "fm5", "word": "할머니", "meaning": "grandmother", "emoji": "👵", "sentences": ["할머니가 보고 싶어요.", "할머니 댁에 가요."] },
-        { "id": "fm6", "word": "할아버지", "meaning": "grandfather", "emoji": "👴", "sentences": ["할아버지가 멋있어요.", "할아버지와 산책해요."] },
-        { "id": "fm7", "word": "동생", "meaning": "younger sibling", "emoji": "👶", "sentences": ["동생이 귀여워요.", "동생과 함께 놀아요."] },
-        { "id": "fm8", "word": "나", "meaning": "me/I", "emoji": "🙋", "sentences": ["나는 어린이예요.", "나는 공부를 해요."] }
+        { "id": "fm1", "word": "아빠",    "meaning": "dad",              "emoji": "👨", "sentences": ["아빠가 좋아요.", "아빠와 놀아요."] },
+        { "id": "fm2", "word": "엄마",    "meaning": "mom",              "emoji": "👩", "sentences": ["엄마가 좋아요.", "엄마 사랑해요."] },
+        { "id": "fm3", "word": "형",      "meaning": "older brother",    "emoji": "👦", "sentences": ["형이 도와줘요.", "형과 놀아요."] },
+        { "id": "fm4", "word": "언니",    "meaning": "older sister",     "emoji": "👧", "sentences": ["언니가 예뻐요.", "언니와 같이 놀아요."] },
+        { "id": "fm5", "word": "할머니",  "meaning": "grandmother",      "emoji": "👵", "sentences": ["할머니가 보고 싶어요.", "할머니 댁에 가요."] },
+        { "id": "fm6", "word": "할아버지","meaning": "grandfather",      "emoji": "👴", "sentences": ["할아버지가 멋있어요.", "할아버지와 산책해요."] },
+        { "id": "fm7", "word": "동생",    "meaning": "younger sibling",  "emoji": "👶", "sentences": ["동생이 귀여워요.", "동생과 함께 놀아요."] },
+        { "id": "fm8", "word": "나",      "meaning": "me / I",           "emoji": "🙋", "sentences": ["나는 어린이예요.", "나는 공부를 해요."] },
+        { "id": "fm9", "word": "오빠",    "meaning": "older brother (girl's)","emoji": "👱‍♂️", "sentences": ["오빠가 멋있어요.", "오빠와 게임해요."] },
+        { "id": "fm10","word": "이모",    "meaning": "aunt",             "emoji": "👩‍🦰", "sentences": ["이모가 예뻐요.", "이모 댁에 놀러 가요."] }
+      ]
+    },
+    {
+      "id": "nature",
+      "name": "자연",
+      "icon": "🌿",
+      "color": "#2e7d32",
+      "words": [
+        { "id": "n1",  "word": "꽃",      "meaning": "flower",      "emoji": "🌸", "sentences": ["꽃이 피었어요.", "꽃이 예뻐요."] },
+        { "id": "n2",  "word": "나무",    "meaning": "tree",        "emoji": "🌳", "sentences": ["나무가 커요.", "나무에 새가 있어요."] },
+        { "id": "n3",  "word": "산",      "meaning": "mountain",    "emoji": "⛰️", "sentences": ["산이 높아요.", "산에 올라가요."] },
+        { "id": "n4",  "word": "강",      "meaning": "river",       "emoji": "🏞️", "sentences": ["강물이 흘러요.", "강에서 낚시해요."] },
+        { "id": "n5",  "word": "바다",    "meaning": "sea",         "emoji": "🌊", "sentences": ["바다가 넓어요.", "바다에서 수영해요."] },
+        { "id": "n6",  "word": "하늘",    "meaning": "sky",         "emoji": "🌤️", "sentences": ["하늘이 파래요.", "하늘에 구름이 있어요."] },
+        { "id": "n7",  "word": "구름",    "meaning": "cloud",       "emoji": "☁️", "sentences": ["구름이 흰색이에요.", "구름이 둥둥 떠요."] },
+        { "id": "n8",  "word": "비",      "meaning": "rain",        "emoji": "🌧️", "sentences": ["비가 내려요.", "비가 오면 우산을 써요."] },
+        { "id": "n9",  "word": "눈",      "meaning": "snow",        "emoji": "❄️", "sentences": ["눈이 내려요.", "눈 위에서 놀아요."] },
+        { "id": "n10", "word": "바람",    "meaning": "wind",        "emoji": "💨", "sentences": ["바람이 불어요.", "바람이 시원해요."] },
+        { "id": "n11", "word": "해",      "meaning": "sun",         "emoji": "☀️", "sentences": ["해가 밝아요.", "해가 따뜻해요."] },
+        { "id": "n12", "word": "달",      "meaning": "moon",        "emoji": "🌙", "sentences": ["달이 밝아요.", "달이 둥글어요."] }
+      ]
+    },
+    {
+      "id": "school",
+      "name": "학교",
+      "icon": "📚",
+      "color": "#f57c00",
+      "words": [
+        { "id": "sc1",  "word": "책",      "meaning": "book",        "emoji": "📚", "sentences": ["책을 읽어요.", "책이 재미있어요."] },
+        { "id": "sc2",  "word": "연필",    "meaning": "pencil",      "emoji": "✏️", "sentences": ["연필로 써요.", "연필을 깎아요."] },
+        { "id": "sc3",  "word": "지우개",  "meaning": "eraser",      "emoji": "🧼", "sentences": ["지우개로 지워요.", "지우개가 작아요."] },
+        { "id": "sc4",  "word": "가방",    "meaning": "bag",         "emoji": "🎒", "sentences": ["가방을 메요.", "가방에 책이 있어요."] },
+        { "id": "sc5",  "word": "공책",    "meaning": "notebook",    "emoji": "📓", "sentences": ["공책에 써요.", "공책이 새 것이에요."] },
+        { "id": "sc6",  "word": "색연필",  "meaning": "color pencil","emoji": "🖍️", "sentences": ["색연필로 그림을 그려요.", "색연필이 많이 있어요."] },
+        { "id": "sc7",  "word": "자",      "meaning": "ruler",       "emoji": "📏", "sentences": ["자로 선을 그어요.", "자가 길어요."] },
+        { "id": "sc8",  "word": "풀",      "meaning": "glue",        "emoji": "🖊️", "sentences": ["풀로 붙여요.", "풀이 끈적끈적해요."] },
+        { "id": "sc9",  "word": "선생님",  "meaning": "teacher",     "emoji": "👨‍🏫", "sentences": ["선생님이 가르쳐요.", "선생님 감사해요."] },
+        { "id": "sc10", "word": "칠판",    "meaning": "blackboard",  "emoji": "🗒️", "sentences": ["칠판에 써요.", "칠판이 검은색이에요."] }
+      ]
+    },
+    {
+      "id": "clothes",
+      "name": "옷",
+      "icon": "👕",
+      "color": "#6a1b9a",
+      "words": [
+        { "id": "cl1",  "word": "티셔츠",  "meaning": "T-shirt",     "emoji": "👕", "sentences": ["티셔츠를 입어요.", "티셔츠가 시원해요."] },
+        { "id": "cl2",  "word": "바지",    "meaning": "pants",       "emoji": "👖", "sentences": ["바지를 입어요.", "바지 주머니에 있어요."] },
+        { "id": "cl3",  "word": "치마",    "meaning": "skirt",       "emoji": "👗", "sentences": ["치마가 예뻐요.", "치마를 입어요."] },
+        { "id": "cl4",  "word": "신발",    "meaning": "shoes",       "emoji": "👟", "sentences": ["신발을 신어요.", "신발 끈을 묶어요."] },
+        { "id": "cl5",  "word": "모자",    "meaning": "hat",         "emoji": "🧢", "sentences": ["모자를 써요.", "모자가 예뻐요."] },
+        { "id": "cl6",  "word": "양말",    "meaning": "socks",       "emoji": "🧦", "sentences": ["양말을 신어요.", "양말이 따뜻해요."] },
+        { "id": "cl7",  "word": "장갑",    "meaning": "gloves",      "emoji": "🧤", "sentences": ["장갑을 끼어요.", "장갑이 따뜻해요."] },
+        { "id": "cl8",  "word": "코트",    "meaning": "coat",        "emoji": "🧥", "sentences": ["코트를 입어요.", "코트가 따뜻해요."] },
+        { "id": "cl9",  "word": "목도리",  "meaning": "scarf",       "emoji": "🧣", "sentences": ["목도리를 해요.", "목도리가 따뜻해요."] },
+        { "id": "cl10", "word": "운동화",  "meaning": "sneakers",    "emoji": "👟", "sentences": ["운동화를 신어요.", "운동화로 뛰어요."] }
+      ]
+    },
+    {
+      "id": "home",
+      "name": "집",
+      "icon": "🏠",
+      "color": "#1565c0",
+      "words": [
+        { "id": "h1",  "word": "집",      "meaning": "house",       "emoji": "🏠", "sentences": ["집이 따뜻해요.", "집에 돌아가요."] },
+        { "id": "h2",  "word": "방",      "meaning": "room",        "emoji": "🛏️", "sentences": ["방이 넓어요.", "방에서 공부해요."] },
+        { "id": "h3",  "word": "침대",    "meaning": "bed",         "emoji": "🛏️", "sentences": ["침대에서 자요.", "침대가 폭신해요."] },
+        { "id": "h4",  "word": "소파",    "meaning": "sofa",        "emoji": "🛋️", "sentences": ["소파에 앉아요.", "소파가 편해요."] },
+        { "id": "h5",  "word": "책상",    "meaning": "desk",        "emoji": "🪑", "sentences": ["책상에서 공부해요.", "책상 위에 책이 있어요."] },
+        { "id": "h6",  "word": "의자",    "meaning": "chair",       "emoji": "🪑", "sentences": ["의자에 앉아요.", "의자가 편해요."] },
+        { "id": "h7",  "word": "냉장고",  "meaning": "refrigerator","emoji": "🧊", "sentences": ["냉장고에 음식이 있어요.", "냉장고가 차가워요."] },
+        { "id": "h8",  "word": "텔레비전","meaning": "television",  "emoji": "📺", "sentences": ["텔레비전을 봐요.", "텔레비전이 커요."] },
+        { "id": "h9",  "word": "창문",    "meaning": "window",      "emoji": "🪟", "sentences": ["창문으로 밖을 봐요.", "창문을 열어요."] },
+        { "id": "h10", "word": "문",      "meaning": "door",        "emoji": "🚪", "sentences": ["문을 열어요.", "문을 닫아요."] }
+      ]
+    },
+    {
+      "id": "emotions",
+      "name": "감정",
+      "icon": "😊",
+      "color": "#c62828",
+      "words": [
+        { "id": "em1",  "word": "기뻐요",  "meaning": "happy",       "emoji": "😊", "sentences": ["선물을 받아서 기뻐요.", "친구와 놀아서 기뻐요."] },
+        { "id": "em2",  "word": "슬퍼요",  "meaning": "sad",         "emoji": "😢", "sentences": ["강아지가 아파서 슬퍼요.", "친구와 헤어져서 슬퍼요."] },
+        { "id": "em3",  "word": "화나요",  "meaning": "angry",       "emoji": "😠", "sentences": ["장난감이 망가져서 화나요.", "동생이 때려서 화나요."] },
+        { "id": "em4",  "word": "무서워요","meaning": "scared",      "emoji": "😨", "sentences": ["천둥 소리가 무서워요.", "어두운 곳이 무서워요."] },
+        { "id": "em5",  "word": "배고파요","meaning": "hungry",      "emoji": "😋", "sentences": ["점심시간이 돼서 배고파요.", "밥을 먹어야 해요."] },
+        { "id": "em6",  "word": "피곤해요","meaning": "tired",       "emoji": "😴", "sentences": ["많이 뛰어서 피곤해요.", "잠을 자야 해요."] },
+        { "id": "em7",  "word": "좋아요",  "meaning": "like",        "emoji": "🥰", "sentences": ["아이스크림이 좋아요.", "친구가 좋아요."] },
+        { "id": "em8",  "word": "놀라요",  "meaning": "surprised",   "emoji": "😲", "sentences": ["깜짝 선물에 놀라요.", "갑자기 나타나서 놀라요."] },
+        { "id": "em9",  "word": "웃어요",  "meaning": "laugh",       "emoji": "😄", "sentences": ["재미있어서 웃어요.", "친구 이야기에 웃어요."] },
+        { "id": "em10", "word": "울어요",  "meaning": "cry",         "emoji": "😭", "sentences": ["아파서 울어요.", "무서워서 울어요."] }
+      ]
+    },
+    {
+      "id": "insects",
+      "name": "곤충",
+      "icon": "🐛",
+      "color": "#558b2f",
+      "words": [
+        { "id": "in1",  "word": "나비",    "meaning": "butterfly",   "emoji": "🦋", "sentences": ["나비가 날아요.", "나비가 꽃에 앉아요."] },
+        { "id": "in2",  "word": "벌",      "meaning": "bee",         "emoji": "🐝", "sentences": ["벌이 윙윙거려요.", "벌이 꿀을 모아요."] },
+        { "id": "in3",  "word": "개미",    "meaning": "ant",         "emoji": "🐜", "sentences": ["개미가 줄지어 가요.", "개미가 열심히 일해요."] },
+        { "id": "in4",  "word": "잠자리",  "meaning": "dragonfly",   "emoji": "🪲", "sentences": ["잠자리가 날아요.", "잠자리 눈이 커요."] },
+        { "id": "in5",  "word": "무당벌레","meaning": "ladybug",     "emoji": "🐞", "sentences": ["무당벌레가 빨개요.", "무당벌레에 점이 있어요."] },
+        { "id": "in6",  "word": "메뚜기",  "meaning": "grasshopper", "emoji": "🦗", "sentences": ["메뚜기가 풀밭에 있어요.", "메뚜기가 뛰어요."] },
+        { "id": "in7",  "word": "지렁이",  "meaning": "earthworm",   "emoji": "🪱", "sentences": ["지렁이가 흙에 있어요.", "비가 오면 지렁이가 나와요."] },
+        { "id": "in8",  "word": "거미",    "meaning": "spider",      "emoji": "🕷️", "sentences": ["거미가 거미줄을 쳐요.", "거미 다리가 여덟 개예요."] },
+        { "id": "in9",  "word": "반딧불이","meaning": "firefly",     "emoji": "✨", "sentences": ["반딧불이가 빛나요.", "반딧불이는 밤에 빛이 나요."] },
+        { "id": "in10", "word": "사마귀",  "meaning": "mantis",      "emoji": "🦗", "sentences": ["사마귀가 풀 위에 있어요.", "사마귀 앞다리가 커요."] }
+      ]
+    },
+    {
+      "id": "sea",
+      "name": "바다생물",
+      "icon": "🐠",
+      "color": "#00838f",
+      "words": [
+        { "id": "se1",  "word": "상어",    "meaning": "shark",       "emoji": "🦈", "sentences": ["상어가 바다에 살아요.", "상어 이빨이 날카로워요."] },
+        { "id": "se2",  "word": "문어",    "meaning": "octopus",     "emoji": "🐙", "sentences": ["문어 다리가 여덟 개예요.", "문어는 먹물을 뿜어요."] },
+        { "id": "se3",  "word": "게",      "meaning": "crab",        "emoji": "🦀", "sentences": ["게가 옆으로 걸어요.", "게 집게가 강해요."] },
+        { "id": "se4",  "word": "새우",    "meaning": "shrimp",      "emoji": "🍤", "sentences": ["새우가 바다에 살아요.", "새우를 요리해요."] },
+        { "id": "se5",  "word": "조개",    "meaning": "clam",        "emoji": "🐚", "sentences": ["조개를 바닷가에서 줍어요.", "조개 속에 진주가 있어요."] },
+        { "id": "se6",  "word": "불가사리","meaning": "starfish",    "emoji": "⭐", "sentences": ["불가사리가 별 모양이에요.", "불가사리가 바닷속에 있어요."] },
+        { "id": "se7",  "word": "해파리",  "meaning": "jellyfish",   "emoji": "🪼", "sentences": ["해파리가 물속에서 흔들려요.", "해파리는 투명해요."] },
+        { "id": "se8",  "word": "고래",    "meaning": "whale",       "emoji": "🐳", "sentences": ["고래가 커요.", "고래가 물을 뿜어요."] },
+        { "id": "se9",  "word": "펭귄",    "meaning": "penguin",     "emoji": "🐧", "sentences": ["펭귄이 수영을 잘해요.", "펭귄은 추운 곳에 살아요."] },
+        { "id": "se10", "word": "해마",    "meaning": "seahorse",    "emoji": "🐴", "sentences": ["해마는 말처럼 생겼어요.", "해마가 천천히 헤엄쳐요."] }
       ]
     }
   ]
