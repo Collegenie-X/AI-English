@@ -17,11 +17,14 @@ export function useTTS() {
     utterance.rate = rate
     utterance.pitch = 1.1
 
-    // Prefer a child/female voice for friendliness
+    // Match voice by requested lang — Korean gets Korean voice, English gets English
     const voices = window.speechSynthesis.getVoices()
-    const preferred = voices.find(v =>
-      v.lang.startsWith('en') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('karen'))
-    ) || voices.find(v => v.lang.startsWith('en'))
+    const prefix = lang.split('-')[0]
+    const preferred =
+      voices.find(v => v.lang === lang) ||
+      voices.find(v => v.lang.startsWith(prefix) &&
+        /female|samantha|karen|yuna|sora|heami|지원/i.test(v.name)) ||
+      voices.find(v => v.lang.startsWith(prefix))
     if (preferred) utterance.voice = preferred
 
     utterance.onstart = () => setSpeaking(true)

@@ -455,11 +455,17 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
           })}
         </div>
 
-        {/* ── 단어 풀 정보 ── */}
-        <div style={{padding:'8px 16px 0',textAlign:'center',fontSize:'0.8rem',color:'#888',background:'white'}}>
+        {/* ── 단어 풀 정보 + 카운터 + 새로고침 ── */}
+        <div style={{padding:'8px 16px 0',display:'flex',alignItems:'center',justifyContent:'center',gap:6,fontSize:'0.8rem',color:'#888',background:'white'}}>
           <span style={{color:'#9C27B0',fontWeight:900}}>총 {words.length}단어 풀</span>
-          {catName&&<span style={{marginLeft:6,color:'#aaa'}}>· {catName}</span>}
-          <span style={{marginLeft:8,background:'#fdf4ff',border:'1.5px solid #ce93d8',borderRadius:12,padding:'2px 8px',fontSize:'0.88rem',color:'#7E57C2',fontWeight:900}}>{rs.foundWords.size}/{cfg.targetCount}</span>
+          {catName&&<span style={{color:'#aaa'}}>· {catName}</span>}
+          <span style={{background:'#fdf4ff',border:'1.5px solid #ce93d8',borderRadius:12,padding:'2px 8px',fontSize:'0.88rem',color:'#7E57C2',fontWeight:900}}>{rs.foundWords.size}/{cfg.targetCount}</span>
+          <button
+            onClick={()=>nextRound(diff,round)}
+            title="새로고침"
+            style={{width:28,height:28,borderRadius:'50%',border:'1.5px solid #ce93d8',background:'#ede7f6',color:'#7E57C2',cursor:'pointer',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:'1rem',lineHeight:1,padding:0,flexShrink:0}}>
+            ↺
+          </button>
         </div>
 
         {/* ── 바디 ── */}
@@ -535,13 +541,7 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
           </div>
 
           {/* ── 힌트 박스 ── */}
-          <div style={{textAlign:'center',fontSize:'0.88rem',color:'#888',minHeight:22,padding:'0 8px',marginBottom:8}}>{hintMsg}</div>
-
-          {/* ── 컨트롤 ── */}
-          <div style={{display:'flex',gap:6,justifyContent:'center'}}>
-            <button onClick={onHintBtn} style={{padding:'8px 18px',borderRadius:14,border:'none',background:'linear-gradient(135deg,#7E57C2,#9C27B0)',color:'white',fontFamily:'inherit',fontWeight:700,fontSize:'0.85rem',cursor:'pointer'}}>💡 힌트</button>
-            <button onClick={()=>nextRound(diff,round)} style={{padding:'8px 18px',borderRadius:14,border:'1.5px solid #ce93d8',background:'#ede7f6',color:'#7E57C2',fontFamily:'inherit',fontWeight:700,fontSize:'0.85rem',cursor:'pointer'}}>🔀 새로고침</button>
-          </div>
+          <div style={{textAlign:'center',fontSize:'0.88rem',color:'#888',minHeight:22,padding:'0 8px'}}>{hintMsg}</div>
         </div>
       </div>
     </div>
