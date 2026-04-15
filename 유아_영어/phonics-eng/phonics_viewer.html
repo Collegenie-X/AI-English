@@ -1,0 +1,3200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌈 파닉스 영어 2310문장 | 유아용 상황별 영어 학습</title>
+  <!-- Twemoji: 고품질 SVG 이모지 일러스트 -->
+  <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --radius: 16px;
+      --shadow: 0 4px 18px rgba(0,0,0,0.10);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --transition: 0.25s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: linear-gradient(160deg, #e8f4fd 0%, #fce4ec 50%, #f3e5f5 100%);
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    /* ====== HEADER ====== */
+    .header {
+      text-align: center;
+      padding: 28px 20px 24px;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .header h1 { font-size: 2.2em; color: #2c3e50; letter-spacing: -0.5px; }
+    .header p { color: #7f8c8d; font-size: 1em; margin-top: 6px; }
+    .header-meta {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .meta-badge {
+      padding: 4px 14px; border-radius: 20px;
+      font-size: 0.82em; font-weight: 700;
+      background: #e8f5e9; color: #2e7d32;
+    }
+    .meta-badge.blue { background: #e3f2fd; color: #1565c0; }
+    .meta-badge.purple { background: #f3e5f5; color: #6a1b9a; }
+
+    /* ====== PROGRESS BAR ====== */
+    .progress-wrap {
+      margin-top: 14px;
+      background: #ecf0f1;
+      border-radius: 10px; height: 10px; overflow: hidden;
+      max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #81C784);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+    #progressText { margin-top: 6px; font-size: 0.88em; color: #95a5a6; }
+
+    /* ====== SETTINGS PANEL ====== */
+    .settings-panel {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .settings-header {
+      padding: 15px 22px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      user-select: none;
+      transition: opacity var(--transition);
+    }
+    .settings-header:hover { opacity: 0.92; }
+    .settings-header-title { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1em; }
+    .settings-body {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px 32px;
+      align-items: end;
+    }
+    .setting-item label {
+      display: block; font-size: 0.85em; font-weight: 700;
+      color: #555; margin-bottom: 8px;
+    }
+    .setting-item select {
+      width: 100%; padding: 9px 12px;
+      border: 2px solid #e0e0e0; border-radius: 10px;
+      font-size: 0.88em; background: #fafafa; cursor: pointer;
+      transition: border-color var(--transition);
+    }
+    .setting-item select:focus { outline: none; border-color: #667eea; }
+    .slider-row { display: flex; align-items: center; gap: 10px; }
+    .setting-item { display: flex; flex-direction: column; justify-content: flex-end; }
+    .slider-val {
+      min-width: 40px; text-align: right; font-size: 0.85em;
+      font-weight: 700; color: #667eea;
+    }
+    input[type="range"] {
+      flex: 1; -webkit-appearance: none;
+      height: 6px; border-radius: 3px; background: #e0e0e0; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px;
+      border-radius: 50%; background: #667eea; cursor: pointer;
+      box-shadow: 0 2px 6px rgba(102,126,234,0.4);
+    }
+
+    /* ====== GLOBAL CONTROLS ====== */
+    .global-controls {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    }
+    .ctrl-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .ctrl-label { font-size: 0.88em; font-weight: 700; color: #555; }
+
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 25px;
+      cursor: pointer; font-size: 0.92em; font-weight: 700;
+      transition: all var(--transition); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-green  { background: #4CAF50; color: white; }
+    .btn-orange { background: #FF9800; color: white; }
+    .btn-red    { background: #ef5350; color: white; }
+    .btn-purple { background: #7E57C2; color: white; }
+    .btn-gray   { background: #78909C; color: white; }
+    .btn-indigo { background: #5C6BC0; color: white; }
+    .btn-teal   { background: #26A69A; color: white; }
+    .btn-sm { padding: 7px 14px; font-size: 0.83em; }
+
+    /* Toggle Switch */
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .toggle-switch { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
+    .toggle-switch input { display: none; }
+    .toggle-slider {
+      position: absolute; cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #ccc; border-radius: 13px; transition: 0.3s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 22px; height: 22px; left: 2px; top: 2px;
+      background: white; border-radius: 50%; transition: 0.3s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .toggle-switch input:checked + .toggle-slider { background: #4CAF50; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+    .separator { width: 1px; height: 32px; background: #e0e0e0; }
+
+    /* ====== SITUATION SECTIONS ====== */
+    .situation-section {
+      background: white;
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .situation-header {
+      padding: 16px 22px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      user-select: none;
+      transition: opacity var(--transition);
+    }
+    .situation-header:hover { opacity: 0.93; }
+    .sit-title-group { display: flex; align-items: center; gap: 14px; }
+    .sit-emoji { font-size: 2em; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+    .sit-name { font-size: 1.2em; font-weight: 800; color: #2c3e50; text-shadow: none; }
+    .sit-name-en { font-size: 0.82em; color: #5d6d7e; margin-top: 2px; }
+    .sit-right { display: flex; align-items: center; gap: 12px; }
+    .sit-count {
+      background: rgba(255,255,255,0.65); color: #2c3e50;
+      padding: 3px 12px; border-radius: 20px;
+      font-size: 0.85em; font-weight: 700;
+    }
+    .chevron { color: #2c3e50; font-size: 1.1em; transition: transform 0.3s; }
+    .situation-section.open .chevron { transform: rotate(180deg); }
+
+    .situation-body {
+      display: none;
+      padding: 18px;
+      background: #f8fafc;
+    }
+    .situation-section.open .situation-body { display: block; }
+
+    .sit-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+
+    /* ====== SENTENCE CARDS GRID ====== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .sentence-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      border-left: 5px solid #ccc;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    @keyframes pulseGlow {
+      0%   { box-shadow: 0 0 0 0 rgba(76,175,80,0.45); }
+      60%  { box-shadow: 0 0 0 10px rgba(76,175,80,0); }
+      100% { box-shadow: 0 0 0 0 rgba(76,175,80,0); }
+    }
+    .sentence-card.playing {
+      transform: scale(1.015);
+      outline: 2px solid #4CAF50;
+      animation: pulseGlow 1.4s infinite;
+    }
+
+    .card-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .card-num {
+      background: #f0f2f5; color: #888;
+      padding: 2px 10px; border-radius: 20px;
+      font-size: 0.75em; font-weight: 800;
+    }
+    .card-play-btn {
+      width: 38px; height: 38px; border-radius: 50%; border: none;
+      cursor: pointer; font-size: 1em; display: flex;
+      align-items: center; justify-content: center;
+      color: white; transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .card-play-btn:hover { transform: scale(1.12); }
+
+    .card-english {
+      font-size: 1.35em; font-weight: 800; color: #2c3e50;
+      margin-bottom: 8px; line-height: 1.4;
+    }
+
+    .phonics-badge {
+      display: inline-block;
+      background: #e8f5e9; color: #2e7d32;
+      font-size: 0.72em; font-weight: 700;
+      padding: 2px 10px; border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* Chunks */
+    .chunks-box {
+      display: none;
+      flex-wrap: wrap; gap: 7px;
+      padding: 10px 12px;
+      background: #f8f9fa; border-radius: 10px;
+      margin-bottom: 12px;
+      border: 1px dashed #dee2e6;
+    }
+    .chunks-box.visible { display: flex; }
+    .chunk-pill {
+      padding: 5px 13px; border-radius: 20px;
+      font-size: 0.92em; font-weight: 700; color: white;
+      letter-spacing: 0.3px;
+    }
+
+    /* QA */
+    .card-qa { border-top: 1px solid #f0f0f0; padding-top: 10px; }
+    .card-q {
+      font-size: 0.82em; color: #1565c0; font-weight: 700;
+      margin-bottom: 8px; display: flex; gap: 6px; align-items: flex-start;
+    }
+    .card-q-icon { flex-shrink: 0; }
+    .card-a {
+      font-size: 1.1em; color: #1a1a2e; line-height: 1.6;
+      display: flex; gap: 6px; align-items: flex-start;
+      font-weight: 800;
+    }
+    .card-a-icon { flex-shrink: 0; font-size: 1em; }
+    .card-answer-text {
+      color: #ee8585;
+      font-size: 0.82em;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 4px 10px;
+      background: #fff8e1;
+      border-radius: 8px;
+      border-left: 4px solid #f1c5c5;
+      display: inline-block;
+    }
+    .card-a-icon { flex-shrink: 0; }
+    .phonics-tip {
+      margin-top: 8px;
+      font-size: 0.74em; color: #7e57c2;
+      font-style: italic; font-weight: 600;
+      display: flex; gap: 5px; align-items: flex-start;
+      background: #f3e5f5;
+      border-radius: 8px;
+      padding: 5px 10px;
+    }
+
+    /* ====== FLOATING MINI PLAYER ====== */
+    #miniPlayer {
+      position: fixed; bottom: 20px; right: 20px;
+      border-radius: 16px;
+      padding: 13px 16px 11px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      display: none; z-index: 999;
+      min-width: 230px; max-width: 300px;
+      /* 전체 border + left 강조 동시 적용 */
+      border: 2.5px solid #4CAF50;
+      border-left-width: 6px;
+      background: #fff;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+    #miniPlayer.visible { display: block; }
+
+    /* ── 재생 중 ── */
+    #miniPlayer.state-playing {
+      border-color: #4CAF50;
+      background: #fff;
+      box-shadow: 0 8px 32px rgba(76,175,80,0.18);
+    }
+    /* ── 일시정지 ── 전체 주황 점선 테두리로 강조 */
+    #miniPlayer.state-paused {
+      border-color: #FFA726;
+      border-style: dashed;
+      border-left-style: solid;
+      background: #FFF8E1;
+      box-shadow: 0 8px 32px rgba(255,167,38,0.22);
+    }
+
+    /* 상태 배지 행 */
+    .mini-status-row {
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 7px;
+    }
+    /* 상태 배지 */
+    .mini-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 2px 9px; border-radius: 20px;
+      font-size: 0.76em; font-weight: 800;
+      letter-spacing: 0.4px;
+      transition: background 0.25s, color 0.25s;
+    }
+    #miniPlayer.state-playing  .mini-badge {
+      background: #E8F5E9; color: #2E7D32;
+    }
+    #miniPlayer.state-paused   .mini-badge {
+      background: #FFF3E0; color: #E65100;
+    }
+    /* 파동 점 */
+    .mini-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0; display: inline-block;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1.1); }
+      50%      { opacity: 0.3; transform: scale(0.6); }
+    }
+    #miniPlayer.state-playing .mini-dot {
+      background: #4CAF50;
+      animation: pulse-dot 1s ease-in-out infinite;
+    }
+    #miniPlayer.state-paused  .mini-dot {
+      background: #FFA726; animation: none;
+    }
+
+    /* 재생 문장 */
+    .mini-text {
+      font-size: 1em; font-weight: 700;
+      color: #2c3e50; line-height: 1.4;
+      min-height: 1.4em;
+      transition: color 0.2s;
+    }
+    #miniPlayer.state-paused .mini-text { color: #999; }
+
+    /* 진행 카운터 배지 (N / 전체) */
+    .mini-progress-badge {
+      margin-left: auto;
+      font-size: 0.75em; font-weight: 800;
+      color: #667eea; background: #eef0fb;
+      padding: 2px 9px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    #miniPlayer.state-paused .mini-progress-badge {
+      color: #E65100; background: #FFF3E0;
+    }
+
+    /* 현재 섹션 라벨 */
+    .mini-section-label {
+      font-size: 0.75em; font-weight: 700;
+      color: #95a5a6; margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    .mini-section-label:empty { display: none; }
+
+    /* 미니 진행 바 */
+    .mini-progress-bar-wrap {
+      height: 4px; background: #eee;
+      border-radius: 2px; margin: 7px 0 4px;
+      overflow: hidden;
+    }
+    .mini-progress-bar-inner {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #4CAF50, #81C784);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    #miniPlayer.state-paused .mini-progress-bar-inner {
+      background: linear-gradient(90deg, #FFA726, #FFD54F);
+    }
+
+    /* Space 힌트 */
+    .mini-hint {
+      font-size: 0.70em; color: #ccc;
+      margin-top: 4px; text-align: right;
+    }
+    .mini-controls {
+      display: flex; gap: 8px;
+      margin-top: 10px; justify-content: flex-end;
+    }
+
+    /* ====== SITUATION FILTER BAR ====== */
+    #filterSection {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .filter-header {
+      padding: 12px 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, #5c6bc0 0%, #7e57c2 100%);
+      color: white;
+      user-select: none;
+    }
+    .filter-header-left { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.95em; }
+    .filter-header-right { display: flex; align-items: center; gap: 10px; font-size: 0.82em; }
+    .filter-count-badge {
+      background: rgba(255,255,255,0.28);
+      padding: 2px 10px; border-radius: 12px; font-weight: 700;
+    }
+    .filter-body {
+      padding: 14px 16px 12px;
+      display: none;
+    }
+    #filterSection.open .filter-body { display: block; }
+
+    /* 전체/초기화 버튼 행 */
+    .filter-top-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 10px; flex-wrap: wrap;
+    }
+    .btn-filter-all {
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 0.82em; font-weight: 700;
+      border: 2px solid #5c6bc0; background: #5c6bc0; color: white;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .btn-filter-all:hover { opacity: 0.85; }
+    .btn-filter-reset {
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 0.82em; font-weight: 600;
+      border: 2px solid #e0e0e0; background: white; color: #888;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .btn-filter-reset:hover { border-color: #bbb; color: #555; }
+    .filter-selected-info {
+      font-size: 0.80em; color: #7e57c2; font-weight: 600;
+      margin-left: auto;
+    }
+
+    /* 상황 칩 그리드 */
+    .filter-chips {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 4px 2px;
+    }
+    .filter-chips::-webkit-scrollbar { width: 4px; }
+    .filter-chips::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+    .sit-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 16px;
+      font-size: 0.78em; font-weight: 600;
+      border: 2px solid #e0e0e0;
+      background: #f9f9f9; color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .sit-chip:hover { border-color: #7e57c2; color: #5c6bc0; background: #ede7f6; }
+    .sit-chip.selected {
+      border-color: #7e57c2;
+      background: linear-gradient(135deg, #ede7f6, #d1c4e9);
+      color: #4527a0;
+      font-weight: 700;
+    }
+
+    /* 필터 적용 중 상황 섹션 숨김 */
+    .situation-section.filter-hidden { display: none !important; }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6em; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .global-controls { flex-direction: column; align-items: flex-start; }
+      .settings-body { grid-template-columns: 1fr; }
+      .filter-chips { max-height: 140px; }
+    }
+
+    /* Chunk color palette */
+    .cc-0 { background: #FF6B6B; }
+    .cc-1 { background: #4ECDC4; }
+    .cc-2 { background: #45B7D1; }
+    .cc-3 { background: #96CEB4; color: #2c3e50; }
+    .cc-4 { background: #FDCB6E; color: #2c3e50; }
+    .cc-5 { background: #A29BFE; }
+    .cc-6 { background: #FD79A8; }
+
+    .collapsing { transition: display 0.3s; }
+
+    /* ====== CARD IMAGE AREA ====== */
+    .card-image {
+      margin: -16px -16px 14px -16px;
+      height: 160px;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* 물결 무늬 배경 장식 */
+    .card-image::before {
+      content: '';
+      position: absolute;
+      width: 200%; height: 200%;
+      top: -50%; left: -50%;
+      background: radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.25) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 70%, rgba(255,255,255,0.15) 0%, transparent 50%);
+    }
+    .card-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.12);
+    }
+    .card-img-emoji {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+    /* ── Twemoji 공통 베이스 ── */
+    img.emoji {
+      display: inline-block;
+      vertical-align: middle;
+      border: none;
+      background: none;
+    }
+
+    /* ── 카드 이미지 영역 – 플로팅 대형 아이콘 ── */
+    .card-img-emoji img.emoji {
+      width: 68px !important;
+      height: 68px !important;
+      margin: 0 5px;
+      filter: drop-shadow(0 5px 14px rgba(0,0,0,0.25));
+      animation: floatEmoji 3s ease-in-out infinite;
+    }
+    .card-img-emoji img.emoji:nth-child(2) {
+      width: 46px !important; height: 46px !important;
+      animation-delay: 0.7s;
+    }
+    .card-img-emoji img.emoji:nth-child(3) {
+      width: 38px !important; height: 38px !important;
+      animation-delay: 1.4s;
+    }
+
+    /* ── 섹션 헤더 이모지 ── */
+    .sit-emoji img.emoji {
+      width: 40px !important;
+      height: 40px !important;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.20));
+    }
+
+    /* ── 필터 칩 이모지 ── */
+    .sit-chip img.emoji {
+      width: 16px !important;
+      height: 16px !important;
+      vertical-align: -2px;
+    }
+
+    /* ── 폴백: Twemoji 미로딩 시 폰트 이모지 ── */
+    .card-img-emoji span.raw-emoji {
+      font-size: 4em; line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.20));
+      animation: floatEmoji 3s ease-in-out infinite;
+      display: inline-block;
+    }
+    .card-img-emoji span.raw-emoji:nth-child(2) { font-size: 2.4em; animation-delay: 0.7s; }
+    .card-img-emoji span.raw-emoji:nth-child(3) { font-size: 1.9em; animation-delay: 1.4s; }
+    @keyframes floatEmoji {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33%       { transform: translateY(-7px) rotate(-3deg); }
+      66%       { transform: translateY(-4px) rotate(2deg); }
+    }
+    .card-img-num {
+      position: absolute;
+      top: 9px; left: 11px; z-index: 3;
+      background: rgba(255,255,255,0.72);
+      color: #444; font-size: 0.72em; font-weight: 800;
+      padding: 3px 11px; border-radius: 20px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    /* 카드 이미지 클릭 힌트 */
+    .card-dlg-hint {
+      position: absolute;
+      bottom: 8px; right: 10px; z-index: 4;
+      background: rgba(102,126,234,0.82);
+      color: white; font-size: 0.68em; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.22s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .card-image:hover .card-dlg-hint { opacity: 1; }
+    .card-image:hover { filter: brightness(0.96); }
+    .card-image { transition: filter 0.2s; }
+
+    /* ====== QUIZ MODE ====== */
+    .quiz-controls {
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    }
+    .btn-quiz { background: #FF6F61; color: white; }
+    .btn-quiz.active { background: #D84315; box-shadow: 0 0 0 3px rgba(216,67,21,0.3); }
+    .btn-lang { background: #5C6BC0; color: white; }
+    .btn-lang.active { background: #283593; box-shadow: 0 0 0 3px rgba(40,53,147,0.3); }
+
+    /* Quiz card styles */
+    .card-english.quiz-hidden {
+      filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      transition: filter 0.3s;
+      position: relative;
+    }
+    .card-english.quiz-hidden:hover { filter: blur(5px); }
+    .card-english.quiz-revealed { filter: none !important; }
+
+    .card-answer-text.quiz-hidden {
+      filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      transition: filter 0.3s;
+    }
+    .card-answer-text.quiz-hidden:hover { filter: blur(5px); }
+    .card-answer-text.quiz-revealed { filter: none !important; }
+
+    .quiz-reveal-btn {
+      display: none;
+      padding: 6px 16px;
+      border: 2px dashed #FF6F61;
+      border-radius: 20px;
+      background: #FFF3E0;
+      color: #E65100;
+      font-size: 0.82em;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 6px 0;
+      transition: all 0.2s;
+    }
+    .quiz-reveal-btn:hover {
+      background: #FFE0B2;
+      transform: scale(1.05);
+    }
+    .quiz-active .quiz-reveal-btn { display: inline-block; }
+
+    .quiz-score-bar {
+      display: none;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 14px 22px;
+      margin-bottom: 14px;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .quiz-score-bar.visible { display: flex; }
+    .quiz-score-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.95em; font-weight: 700;
+    }
+    .quiz-score-item .score-num {
+      font-size: 1.3em;
+      min-width: 32px; text-align: center;
+    }
+    .score-correct { color: #4CAF50; }
+    .score-wrong { color: #EF5350; }
+    .score-remaining { color: #78909C; }
+
+    .quiz-result-icon {
+      display: none;
+      position: absolute;
+      top: 8px; right: 8px;
+      font-size: 1.4em;
+      z-index: 2;
+    }
+    .quiz-active .quiz-result-icon { display: block; }
+
+    .sentence-card.quiz-correct { border-left-color: #4CAF50 !important; background: #F1F8E9; }
+    .sentence-card.quiz-wrong { border-left-color: #EF5350 !important; background: #FFEBEE; }
+
+    .quiz-check-btn {
+      display: none;
+      padding: 5px 14px;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 6px;
+    }
+    .quiz-check-btn.correct-btn { background: #E8F5E9; color: #2E7D32; }
+    .quiz-check-btn.wrong-btn { background: #FFEBEE; color: #C62828; }
+    .quiz-check-btn:hover { transform: scale(1.08); }
+    .quiz-active .quiz-check-btn { display: inline-block; }
+
+    .quiz-input-area {
+      display: none;
+      margin: 8px 0;
+    }
+    .quiz-active .quiz-input-area { display: block; }
+    .quiz-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      transition: border-color 0.3s;
+    }
+    .quiz-input:focus { outline: none; border-color: #5C6BC0; }
+    .quiz-input.input-correct { border-color: #4CAF50; background: #F1F8E9; }
+    .quiz-input.input-wrong { border-color: #EF5350; background: #FFEBEE; }
+
+    /* ====== 1200px PAGE CONTAINER ====== */
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ====== PASTEL OVERLAY for SITUATION HEADERS & CARD IMAGES ====== */
+    .situation-header {
+      position: relative;
+      overflow: hidden;
+    }
+    .situation-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.80);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .situation-header > * {
+      position: relative;
+      z-index: 1;
+    }
+    .card-image {
+      position: relative;
+    }
+    .card-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.78);
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 12px 12px 0 0;
+    }
+    .card-image > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ====== GAME-STYLE QUIZ CARD ====== */
+    .quiz-card-game {
+      padding: 0 !important;
+      border-left: none !important;
+      overflow: hidden;
+    }
+    .quiz-game-top {
+      display: flex; align-items: center; gap: 8px;
+      padding: 11px 14px; color: white;
+    }
+    .quiz-mode-tag {
+      font-size: 0.76em; font-weight: 800;
+      color:#888;
+      padding: 4px 11px; border-radius: 20px;
+      letter-spacing: 0.4px; white-space: nowrap;
+    }
+    .quiz-num-tag {
+      background: rgba(255,255,255,0.22); color: #888;
+      font-size: 0.73em; font-weight: 800;
+      padding: 2px 9px; border-radius: 20px; margin-left: auto;
+    }
+    .quiz-play-mini {
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.28); color: white;
+      cursor: pointer; font-size: 0.9em;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .quiz-play-mini:hover { background: rgba(255,255,255,0.48); transform: scale(1.1); }
+    .quiz-result-game { font-size: 1.5em; flex-shrink: 0; min-width: 26px; text-align: center; }
+    .quiz-emoji-row {
+      text-align: center; padding: 14px 0 8px;
+    }
+    .quiz-emoji-row .card-img-emoji {
+      display: flex; justify-content: center; align-items: center; gap: 10px;
+    }
+    .quiz-q-block, .quiz-a-block { margin: 0 13px 9px; }
+    .quiz-block-label {
+      font-size: 0.68em; font-weight: 800; color: #aaa;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 5px; display: flex; align-items: center; gap: 4px;
+    }
+    .quiz-q-inner {
+      background: #f4f6ff; border-radius: 12px;
+      padding: 12px 14px; border: 2px solid #dde1ff;
+    }
+    .quiz-q-text {
+      font-size: 1.22em; font-weight: 800;
+      color: #2c3e50; line-height: 1.45;
+    }
+    /* 정답 박스 */
+    .quiz-a-inner {
+      border-radius: 14px; padding: 16px 14px;
+      border: 2.5px dashed #b39ddb;
+      background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+      min-height: 72px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .quiz-a-clickable:hover:not(.revealed) {
+      border-color: #9575cd;
+      background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%);
+      transform: scale(1.025);
+      box-shadow: 0 5px 18px rgba(149,117,205,0.32);
+    }
+    .quiz-a-clickable:active:not(.revealed) { transform: scale(0.97); }
+    .quiz-a-inner.revealed {
+      cursor: default;
+      border: 2.5px solid #66bb6a;
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+    }
+    .quiz-mystery-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 6px; text-align: center;
+    }
+    .quiz-mystery-icon {
+      font-size: 2.2em; display: block;
+      animation: mysteryPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes mysteryPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.75; }
+      50%       { transform: scale(1.22) rotate(-6deg); opacity: 1; }
+    }
+    .quiz-mystery-text {
+      font-size: 0.78em; color: #9575cd; font-weight: 700;
+    }
+    .quiz-a-inner.revealed .quiz-mystery-wrap { display: none; }
+    .quiz-revealed-answer {
+      display: none;
+      font-size: 1.28em; font-weight: 800;
+      color: #2e7d32; line-height: 1.45; text-align: center;
+      animation: revealPop 0.48s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .quiz-a-inner.revealed .quiz-revealed-answer { display: block; }
+    @keyframes revealPop {
+      0%   { transform: scale(0.35) rotate(-10deg); opacity: 0; }
+      65%  { transform: scale(1.12) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    /* 청크 행 */
+    .quiz-chunks-row { margin: 0 13px 9px; }
+    .quiz-chunks-row .chunks-box { margin: 0; border-radius: 10px; }
+    /* 확인하기 버튼 */
+    .quiz-confirm-wrap { padding: 4px 13px 15px; }
+    .quiz-confirm-game-btn {
+      width: 100%; padding: 14px 0; border: none; border-radius: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; font-size: 1.05em; font-weight: 800;
+      cursor: pointer; letter-spacing: 0.7px;
+      transition: all 0.22s;
+      box-shadow: 0 5px 18px rgba(102,126,234,0.42);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      position: relative; overflow: hidden;
+    }
+    .quiz-confirm-game-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .quiz-confirm-game-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 26px rgba(102,126,234,0.52);
+    }
+    .quiz-confirm-game-btn:active:not(:disabled) { transform: scale(0.97); }
+    .quiz-confirm-game-btn:disabled {
+      background: linear-gradient(135deg, #a5d6a7, #66bb6a);
+      box-shadow: 0 3px 10px rgba(102,187,106,0.35); cursor: default;
+    }
+    /* 카드 결과 강조 */
+    .quiz-card-game.quiz-correct { box-shadow: 0 0 0 3px #66bb6a, 0 6px 20px rgba(102,187,106,0.25); }
+    .quiz-card-game.quiz-wrong   { box-shadow: 0 0 0 3px #ef5350, 0 6px 20px rgba(239,83,80,0.20); }
+    @keyframes cardRevealShine {
+      0%   { opacity: 0; left: -100%; }
+      50%  { opacity: 0.55; }
+      100% { opacity: 0; left: 200%; }
+    }
+    .quiz-a-inner.revealed::after {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+      animation: cardRevealShine 0.7s ease forwards;
+    }
+
+    /* ====== JSON LOADER ====== */
+    #jsonLoaderWrap {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 22px;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .loader-title { font-weight: 800; font-size: 1em; color: #2c3e50; white-space: nowrap; }
+    #jsonDropZone {
+      flex: 1; min-width: 200px;
+      border: 2px dashed #c5cae9; border-radius: 12px;
+      padding: 12px 20px; text-align: center; cursor: pointer;
+      transition: all 0.2s; color: #7986cb; font-size: 0.88em; font-weight: 600;
+      background: #f8f9ff;
+    }
+    #jsonDropZone:hover, #jsonDropZone.drag-over {
+      border-color: #5c6bc0; background: #ede7f6; color: #3949ab;
+    }
+    #jsonFileInput { display: none; }
+    #jsonLoadedBadge {
+      font-size: 0.82em; color: #5c6bc0; font-weight: 700;
+      background: #ede7f6; padding: 5px 14px; border-radius: 20px; display: none;
+    }
+    #jsonLoadedBadge.visible { display: inline-block; }
+    .loader-hint { font-size: 0.76em; color: #aaa; margin-top: 3px; }
+
+    /* ====== SECTION TOGGLE BUTTON ====== */
+    .sit-toggle-btn {
+      background: rgba(255,255,255,0.28);
+      border: none; border-radius: 10px;
+      padding: 6px 12px; cursor: pointer;
+      transition: background 0.2s; color: #2c3e50;
+      font-size: 0.82em; font-weight: 700;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .sit-toggle-btn:hover { background: rgba(255,255,255,0.5); }
+
+    /* ====== SENTENCE DIALOG MODAL ====== */
+    .dlg-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.60);
+      z-index: 2000;
+      display: none; align-items: center; justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(5px);
+    }
+    .dlg-overlay.active { display: flex; }
+
+    .dlg-container {
+      background: white;
+      border-radius: 24px;
+      width: 100%; max-width: 550px;
+      max-height: 94vh;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: 0 28px 70px rgba(0,0,0,0.38);
+      animation: dlgSlideIn 0.32s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    @keyframes dlgSlideIn {
+      from { transform: scale(0.82) translateY(24px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .dlg-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; flex-shrink: 0;
+    }
+    .dlg-sit-emoji { font-size: 1.9em; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+    .dlg-sit-name  { font-size: 1em; font-weight: 800; flex: 1; line-height: 1.3; }
+    .dlg-close-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: none; background: rgba(255,255,255,0.22);
+      color: white; font-size: 1.1em; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .dlg-close-btn:hover { background: rgba(255,255,255,0.42); }
+
+    .dlg-mode-tabs {
+      display: flex; background: #f4f6fb;
+      border-bottom: 2px solid #e8eaf6; flex-shrink: 0;
+      overflow-x: auto;
+    }
+    .dlg-mode-tab {
+      flex: 1; padding: 11px 8px;
+      border: none; background: transparent;
+      font-size: 0.76em; font-weight: 700; color: #9e9e9e;
+      cursor: pointer; transition: all 0.18s;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+    }
+    .dlg-mode-tab.active { color: #5c6bc0; border-bottom-color: #5c6bc0; background: white; }
+    .dlg-mode-tab:hover:not(.active) { background: #ede7f6; color: #7e57c2; }
+
+    .dlg-body { flex: 1; overflow-y: auto; padding: 16px 20px 8px; }
+
+    .dlg-mode-desc-wrap { text-align: center; margin-bottom: 10px; }
+    .dlg-mode-desc {
+      font-size: 0.77em; color: #999; font-weight: 600;
+      padding: 4px 14px; background: #f0f2ff;
+      border-radius: 20px; display: inline-block;
+    }
+
+    .dlg-quiz-mode-btns {
+      display: flex; gap: 8px; justify-content: center; margin-bottom: 12px;
+    }
+    .dlg-quiz-mode-btn {
+      padding: 7px 16px; border-radius: 20px;
+      border: 2px solid #e0e0e0; background: white;
+      font-size: 0.82em; font-weight: 700; cursor: pointer;
+      transition: all 0.18s; color: #888;
+    }
+    .dlg-quiz-mode-btn.active { border-color: #5c6bc0; background: #5c6bc0; color: white; }
+
+    /* ── 새 카드형 다이얼로그 레이아웃 ── */
+    .dlg-sentence-area { text-align: left; padding: 4px 2px; }
+
+    /* 상단 미니바: 모드 레이블 + 번호 + TTS */
+    .dlg-mini-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .dlg-mode-label {
+      font-size: 0.8em; font-weight: 700; color: #888;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .dlg-mini-right { display: flex; align-items: center; gap: 8px; }
+    .dlg-idx-badge  { font-size: 0.82em; font-weight: 700; color: #aaa; }
+    .dlg-tts-mini-btn {
+      width: 34px; height: 34px; border-radius: 50%; border: none;
+      background: #e3f2fd; cursor: pointer; font-size: 1.05em;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .dlg-tts-mini-btn:hover { background: #bbdefb; transform: scale(1.1); }
+    .dlg-tts-mini-btn.playing { animation: emojiListenPulse 0.85s ease-in-out infinite; }
+
+    /* 이모지 이미지 타일 */
+    .dlg-num-tile {
+      width: 110px; height: 110px; border-radius: 24px;
+      background: linear-gradient(135deg, #f0f4ff, #e8eaf6);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 22px;
+      box-shadow: 0 6px 22px rgba(92,107,192,0.18);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .dlg-num-tile img.emoji {
+      width: 72px !important; height: 72px !important;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,0.15));
+    }
+    .dlg-num-tile span.raw-emoji { font-size: 3.6em; line-height: 1; }
+    .dlg-num-tile:hover { transform: scale(1.02); box-shadow: 0 8px 10px rgba(92,107,192,0.28); transition: all 0.2s; }
+    .dlg-num-tile:active { transform: scale(0.98); }
+    .dlg-num-tile.playing {
+      animation: tilePulse 0.65s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @keyframes tilePulse {
+      0%   { transform: scale(1);    box-shadow: 0 6px 22px rgba(92,107,192,0.20); }
+      30%  { transform: scale(1.12); box-shadow: 0 14px 40px rgba(92,107,192,0.50); }
+      55%  { transform: scale(0.92); box-shadow: 0 4px 12px rgba(92,107,192,0.15); }
+      78%  { transform: scale(1.08); box-shadow: 0 10px 28px rgba(92,107,192,0.35); }
+      100% { transform: scale(1);    box-shadow: 0 6px 22px rgba(92,107,192,0.20); }
+    }
+
+    /* 섹션 레이블 (📋 문제 / 💡 정답) */
+    .dlg-section-label {
+      font-size: 0.78em; font-weight: 700; color: #999;
+      margin-bottom: 8px; padding: 0 2px;
+    }
+    .dlg-section-label.dlg-answer-label { margin-top: 18px; }
+
+    /* 문제 박스 */
+    .dlg-question-box {
+      background: #f5f6fa; border-radius: 16px;
+      padding: 18px 20px;
+      font-size: 1.55em; font-weight: 800; color: #2c3e50;
+      line-height: 1.45; word-break: keep-all;
+    }
+    .dlg-question-box.kr-text { color: #5c6bc0; }
+    @keyframes sentenceSlideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .dlg-sentence-animate { animation: sentenceSlideIn 0.28s ease forwards; }
+
+    /* 정답 박스 — 기본: 숨김(?) */
+    .dlg-answer-box {
+      border: 2px dashed #b39ddb; border-radius: 16px;
+      background: linear-gradient(135deg, #f8f4ff, #f3e5f5);
+      min-height: 74px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.22s; padding: 18px 20px;
+    }
+    .dlg-answer-box:hover { border-color: #7e57c2; }
+    .dlg-answer-box.revealed {
+      border-style: solid; border-color: #66bb6a;
+      background: #f8fff8;
+      align-items: flex-start; cursor: default;
+    }
+
+    /* ── 정답 공개 특수효과 애니메이션 ── */
+
+    /* 1) 박스 전체: 작게 → 크게 튀기며 등장 */
+    @keyframes answerBoxPop {
+      0%   { transform: scale(0.55);  opacity: 0; }
+      50%  { transform: scale(1.07);  opacity: 1; }
+      70%  { transform: scale(0.96);              }
+      85%  { transform: scale(1.03);              }
+      100% { transform: scale(1);                 }
+    }
+
+
+    /* 3) 빛 번쩍임: 초록 빛이 퍼짐 */
+    @keyframes answerGlow {
+      0%   { box-shadow: 0 0 0   0px rgba(76,175,80,0);    }
+      25%  { box-shadow: 0 0 24px 8px rgba(76,175,80,0.55); }
+      60%  { box-shadow: 0 0 40px 16px rgba(76,175,80,0.2); }
+      100% { box-shadow: 0 0 0   0px rgba(76,175,80,0);    }
+    }
+
+    /* 4) 레이블(✅ 정답): 위에서 탁 떨어지는 바운스 */
+    @keyframes labelDrop {
+      0%   { transform: translateY(-16px) scale(0.7); opacity: 0; }
+      55%  { transform: translateY(4px)   scale(1.12); opacity: 1; }
+      75%  { transform: translateY(-3px)  scale(0.96);             }
+      100% { transform: translateY(0)     scale(1);                }
+    }
+
+    /* 5) 청크/팁 영역: 아래서 올라오며 등장 */
+    @keyframes detailFadeUp {
+      0%   { transform: translateY(14px); opacity: 0; }
+      100% { transform: translateY(0);    opacity: 1; }
+    }
+
+    .dlg-answer-box.reveal-pop   { animation: answerBoxPop 0.52s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .dlg-answer-box.reveal-glow  { animation: answerGlow   0.75s ease-out forwards; }
+    .dlg-section-label.reveal-drop       { animation: labelDrop  0.42s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .dlg-reveal-detail.reveal-up         { animation: detailFadeUp 0.45s ease forwards 0.25s; opacity: 0; }
+    .dlg-answer-box.all-mode {
+      border-style: solid; border-color: #90caf9;
+      background: #f0f7ff;
+      align-items: flex-start; cursor: default;
+    }
+    .dlg-answer-hidden {
+      font-size: 2.6em; color: #ce93d8; font-weight: 900; user-select: none;
+    }
+    .dlg-answer-detail { width: 100%; }
+    .dlg-answer-main-text {
+      font-size: 1.4em; font-weight: 800; color: #1a237e;
+      line-height: 1.5; margin-bottom: 14px;
+    }
+
+    /* 정답 공개 후 상세 설명 영역 */
+    .dlg-reveal-detail {
+      border-top: 1px solid #e8f5e9; padding-top: 12px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .dlg-phonics-badge {
+      display: inline-block; background: #e8f5e9; color: #2e7d32;
+      font-size: 0.78em; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px;
+    }
+    .dlg-chunks-area {
+      display: flex; flex-wrap: wrap; gap: 7px;
+    }
+    .dlg-tips {
+      font-size: 0.8em; color: #7e57c2; font-style: italic;
+      background: #f3e5f5; border-radius: 8px; padding: 7px 12px;
+    }
+    .dlg-reveal-tts {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: 20px; border: none;
+      background: #e3f2fd; color: #1565c0;
+      font-size: 0.85em; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; align-self: flex-start;
+    }
+    .dlg-reveal-tts:hover { background: #bbdefb; transform: scale(1.04); }
+
+    /* 진행 바 */
+    .dlg-progress-bar-wrap {
+      height: 5px; background: #e8eaf6; border-radius: 3px;
+      margin: 18px 0 0; overflow: hidden;
+    }
+    .dlg-progress-bar-inner {
+      height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 3px; transition: width 0.45s ease;
+    }
+
+    /* 속도 슬라이더 */
+    .dlg-speed-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82em; color: #aaa;
+      justify-content: center; margin-top: 14px;
+    }
+    .dlg-speed-label { font-weight: 700; color: #5c6bc0; min-width: 38px; text-align: center; }
+    .dlg-speed-slider { width: 110px; }
+    @keyframes listenPulse {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.04); }
+    }
+
+    .dlg-footer {
+      padding: 12px 20px 14px; border-top: 1px solid #eef0f6;
+      background: #fafbff; flex-shrink: 0;
+    }
+    .dlg-auto-badge-wrap { text-align: center; margin-bottom: 8px; min-height: 24px; }
+    .dlg-auto-badge {
+      display: none; align-items: center; gap: 6px;
+      font-size: 0.78em; font-weight: 700;
+      color: #4CAF50; background: #E8F5E9;
+      padding: 4px 14px; border-radius: 20px;
+    }
+    .dlg-auto-badge.visible { display: inline-flex; }
+    .dlg-auto-badge.paused  { color: #FF9800; background: #FFF3E0; }
+
+    .dlg-nav-row {
+      display: flex; gap: 10px; justify-content: center;
+      align-items: center; margin-bottom: 10px;
+    }
+    .dlg-play-row {
+      display: flex; gap: 8px; justify-content: center; align-items: center;
+    }
+    .dlg-btn {
+      padding: 10px 20px; border: none; border-radius: 22px;
+      font-size: 0.88em; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 5px;
+    }
+    .dlg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(0,0,0,0.18); }
+    .dlg-btn-outline { background: white; border: 2px solid #e0e0e0; color: #555; }
+    .dlg-btn-outline:hover { border-color: #667eea; color: #5c6bc0; }
+    .dlg-btn-icon {
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.15em; transition: all 0.2s;
+    }
+    .dlg-btn-icon:hover { transform: scale(1.12); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+    .dlg-btn-icon-sm {
+      width: 38px; height: 38px; border-radius: 50%; border: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 0.9em; transition: all 0.2s;
+    }
+    .dlg-btn-icon-sm:hover { transform: scale(1.1); }
+    .dlg-btn-icon-sm:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+    .dlg-score-chip.remain  { background: #E8EAF6; color: #3949AB; }
+
+    .dlg-kb-hint {
+      text-align: center; font-size: 0.66em; color: #ccc;
+      margin-top: 8px; letter-spacing: 0.2px;
+    }
+
+    /* ====== BODY WRAPPER + SIDE ARROWS ====== */
+    .dlg-body-wrapper {
+      display: flex; flex: 1;
+      overflow: hidden; position: relative;
+      min-height: 0;
+    }
+    .dlg-side-btn {
+      width: 36px; flex-shrink: 0;
+      border: none; background: transparent;
+      font-size: 2.4em; font-weight: 300;
+      color: #d0d4e8; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s, background 0.2s;
+      user-select: none; line-height: 1;
+    }
+    .dlg-side-btn:hover { color: #667eea; background: transparent; }
+    .dlg-side-btn:active { color: #3949ab; transform: scale(0.95); }
+    @media (max-width: 600px) {
+      .dlg-side-btn { width: 28px; font-size: 1.9em; }
+    }
+
+    /* ====== TTS MINI BTN HINT (unused, kept for compatibility) ====== */
+    .dlg-emoji-clickable { cursor: pointer; }
+    .dlg-emoji-speaker-hint {
+      position: absolute;
+      bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.42em;
+      background: rgba(102,126,234,0.85);
+      color: white; padding: 3px 11px;
+      border-radius: 20px; white-space: nowrap;
+      opacity: 0; transition: opacity 0.2s;
+      pointer-events: none; font-weight: 700;
+    }
+    .dlg-emoji-clickable:hover .dlg-emoji-speaker-hint { opacity: 1; }
+    /* 재생 중 이미지 강조 */
+    .dlg-emoji-clickable.playing {
+      animation: emojiListenPulse 0.85s ease-in-out infinite;
+    }
+    @keyframes emojiListenPulse {
+      0%,100% { transform: scale(1); filter: brightness(1); }
+      50%      { transform: scale(1.1); filter: brightness(1.1) drop-shadow(0 0 12px #667eea88); }
+    }
+
+    /* ====== QUIZ MODE: 문제/정답 구분 강조 ====== */
+    .dlg-quiz-label {
+      display: inline-block;
+      font-size: 0.72em; font-weight: 800;
+      padding: 3px 12px; border-radius: 20px;
+      margin-bottom: 8px; letter-spacing: 0.5px;
+    }
+    .dlg-quiz-label.question { background: #E3F2FD; color: #1565C0; }
+    .dlg-quiz-label.answer   { background: #F3E5F5; color: #6A1B9A; }
+
+    /* dlg-question-box quiz 한→영 (한국어 큰 글씨) */
+    .dlg-question-box.kr-text { color: #5c6bc0; }
+
+    @media (max-width: 600px) {
+      .dlg-container { border-radius: 18px; max-height: 98vh; }
+      .dlg-english { font-size: 1.4em; }
+      .dlg-emoji-row { font-size: 2.5em; min-height: 54px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-container">
+
+
+<!-- ====== JSON LOADER ====== -->
+<div id="jsonLoaderWrap">
+  <span class="loader-title">📂 JSON 데이터 로드</span>
+  <div id="jsonDropZone"
+       onclick="document.getElementById('jsonFileInput').click()"
+       ondragover="event.preventDefault();this.classList.add('drag-over')"
+       ondragleave="this.classList.remove('drag-over')"
+       ondrop="handleJsonDrop(event)">
+    📄 JSON 파일을 드래그하거나 클릭하여 업로드
+    <div class="loader-hint">phonics_data.json · custom_data.json 등 어떤 파일이든 OK</div>
+  </div>
+  <input type="file" id="jsonFileInput" accept=".json" onchange="loadJsonFile(this)">
+  <span id="jsonLoadedBadge">✅ <span id="jsonFileName">—</span> 로드됨</span>
+</div>
+
+<!-- ====== HEADER ====== -->
+<div class="header">
+  <h1>🌈 파닉스 영어 2310문장</h1>
+  <p>유아 상황별 영어 학습 &nbsp;|&nbsp; Phonics Sequence English for Kids</p>
+  <div class="header-meta">
+    <span class="meta-badge">📚 파닉스 순서 CVC → 이중자음 → 장모음</span>
+    <span class="meta-badge blue">🗂️ 154개 상황 × 최대15문장</span>
+    <span class="meta-badge purple">🔊 Web Speech API</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="globalProgressBar"></div>
+  </div>
+  <div id="progressText">0 / 2310 문장</div>
+</div>
+
+<!-- ====== SETTINGS PANEL ====== -->
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header" onclick="toggleSettings()">
+    <div class="settings-header-title">⚙️ 음성 설정 (Voice Settings)</div>
+    <span id="settingsChevron">▼</span>
+  </div>
+  <div class="settings-body" id="settingsBody">
+    <div class="setting-item">
+      <label>🎤 목소리 선택</label>
+      <select id="voiceSelect"><option>음성 로딩 중…</option></select>
+    </div>
+    <div class="setting-item">
+      <label>🐢 읽기 속도 (Rate)</label>
+      <div class="slider-row">
+        <input type="range" id="rateSlider" min="0.3" max="2.0" step="0.05" value="0.85">
+        <span class="slider-val" id="rateVal">0.85×</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>🎵 음높이 (Pitch)</label>
+      <div class="slider-row">
+        <input type="range" id="pitchSlider" min="0.5" max="2.0" step="0.05" value="1.2">
+        <span class="slider-val" id="pitchVal">1.20</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>🔊 볼륨 (Volume)</label>
+      <div class="slider-row">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1.0">
+        <span class="slider-val" id="volumeVal">100%</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>⏱ 문장 간 간격 (Interval)</label>
+      <div class="slider-row">
+        <input type="range" id="intervalSlider" min="0" max="10000" step="200" value="1500">
+        <span class="slider-val" id="intervalVal">1.5초</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>&nbsp;</label>
+      <button class="btn btn-indigo" onclick="testVoice()">🎧 테스트 듣기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== GLOBAL CONTROLS ====== -->
+<!-- ====== SITUATION FILTER ====== -->
+<div id="filterSection">
+  <div class="filter-header" onclick="toggleFilterPanel()">
+    <div class="filter-header-left">🔎 상황 필터</div>
+    <div class="filter-header-right">
+      <span class="filter-count-badge" id="filterCountBadge">전체 154개</span>
+      <span id="filterChevron">▼</span>
+    </div>
+  </div>
+  <div class="filter-body">
+    <div class="filter-top-row">
+      <button class="btn-filter-all" onclick="selectAllSituations()">✅ 전체 선택</button>
+      <button class="btn-filter-reset" onclick="resetFilter()">🔄 초기화</button>
+      <span class="filter-selected-info" id="filterInfo">전체 재생 중</span>
+    </div>
+    <div class="filter-chips" id="filterChips"></div>
+  </div>
+</div>
+
+<div class="global-controls">
+  <div class="ctrl-group">
+    <button class="btn btn-purple" onclick="openGlobalDialog('study')" title="다이얼로그 학습">📖 학습 다이얼로그</button>
+    <button class="btn btn-indigo" id="btnPlayAll"   onclick="playAll()" title="전체 듣기">▶ 전체 듣기</button>
+    <button class="btn btn-orange" id="btnPause"     onclick="togglePause()" disabled>⏸ 일시정지</button>
+    <button class="btn btn-red"    id="btnStop"      onclick="stopAll()"   disabled>⏹ 정지</button>
+  </div>
+  <div class="separator"></div>
+  <div class="toggle-wrap">
+    <span class="ctrl-label">🧩 청크 표시</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="chunkToggle" onchange="toggleChunkDisplay()">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+  <div class="separator"></div>
+  <div class="ctrl-group">
+    <button class="btn btn-teal  btn-sm" onclick="expandAll()">📂 모두 열기</button>
+    <button class="btn btn-gray  btn-sm" onclick="collapseAll()">📁 모두 닫기</button>
+  </div>
+  <div class="separator"></div>
+  <div class="quiz-controls">
+    <span class="ctrl-label">🎯 학습 모드</span>
+    <button class="btn btn-lang btn-sm" id="btnKrToEn" onclick="setQuizMode('kr2en')">🇰🇷→🇺🇸 한글→영어</button>
+    <button class="btn btn-lang btn-sm" id="btnEnToKr" onclick="setQuizMode('en2kr')">🇺🇸→🇰🇷 영어→한글</button>
+    <button class="btn btn-quiz btn-sm" id="btnQuizOff" onclick="setQuizMode('off')">📖 전체보기</button>
+  </div>
+</div>
+
+<!-- ====== QUIZ SCORE BAR ====== -->
+<div class="quiz-score-bar" id="quizScoreBar">
+  <div class="quiz-score-item">
+    <span>🎯 퀴즈 모드</span>
+  </div>
+  <div class="quiz-score-item score-correct">
+    <span>✅ 정답:</span>
+    <span class="score-num" id="scoreCorrect">0</span>
+  </div>
+  <div class="quiz-score-item score-wrong">
+    <span>❌ 오답:</span>
+    <span class="score-num" id="scoreWrong">0</span>
+  </div>
+  <div class="quiz-score-item score-remaining">
+    <span>📝 남은 문제:</span>
+    <span class="score-num" id="scoreRemaining">0</span>
+  </div>
+  <button class="btn btn-orange btn-sm" onclick="resetQuizScore()">🔄 점수 초기화</button>
+</div>
+
+<!-- ====== SITUATIONS CONTAINER ====== -->
+<div id="situationsContainer"></div>
+
+<!-- ====== MINI PLAYER ====== -->
+<div id="miniPlayer" class="state-playing">
+  <div class="mini-status-row">
+    <span class="mini-badge">
+      <span class="mini-dot"></span>
+      <span id="miniStateLabel">재생중</span>
+    </span>
+    <span class="mini-progress-badge" id="miniProgress">—</span>
+  </div>
+  <div class="mini-section-label" id="miniSectionLabel"></div>
+  <div class="mini-text" id="miniText">—</div>
+  <div class="mini-progress-bar-wrap">
+    <div class="mini-progress-bar-inner" id="miniProgressBar"></div>
+  </div>
+  <div class="mini-hint">Space = 일시정지 / 재개</div>
+  <div class="mini-controls">
+    <button class="btn btn-orange btn-sm" id="miniPauseBtn" onclick="togglePause()">⏸</button>
+    <button class="btn btn-red    btn-sm" onclick="stopAll()">⏹</button>
+  </div>
+</div>
+
+</div><!-- .page-container -->
+
+<!-- ====== SENTENCE DIALOG MODAL ====== -->
+<div id="dlgOverlay" class="dlg-overlay" onclick="closeDlgOnOverlay(event)">
+  <div class="dlg-container" id="dlgContainer">
+
+    <!-- Header -->
+    <div class="dlg-header" id="dlgHeader">
+      <span class="dlg-sit-emoji" id="dlgSitEmoji">🌈</span>
+      <div class="dlg-sit-name" id="dlgSitName">파닉스 학습</div>
+      <button class="dlg-close-btn" onclick="closeDlg()" title="닫기 (Esc)">✕</button>
+    </div>
+
+    <!-- 3 Mode Tabs -->
+    <div class="dlg-mode-tabs">
+      <button class="dlg-mode-tab active" id="dlgTab-all"   onclick="dlgSetMode('all')">📖 전체 보기</button>
+      <button class="dlg-mode-tab"        id="dlgTab-en2kr" onclick="dlgSetMode('en2kr')">🇺🇸→🇰🇷 영→한</button>
+      <button class="dlg-mode-tab"        id="dlgTab-kr2en" onclick="dlgSetMode('kr2en')">🇰🇷→🇺🇸 한→영</button>
+    </div>
+
+    <!-- Body Wrapper: [◀] [scroll body] [▶] -->
+    <div class="dlg-body-wrapper">
+
+      <button class="dlg-side-btn dlg-side-left" onclick="dlgPrev()" title="이전 (←)">‹</button>
+
+      <div class="dlg-body" id="dlgBody">
+
+        <!-- Sentence display -->
+        <div class="dlg-sentence-area">
+
+          <!-- 상단 미니바: 모드 + 번호 + TTS -->
+          <div class="dlg-mini-bar">
+            <span class="dlg-mode-label" id="dlgModeLabel">📖 전체 보기</span>
+            <div class="dlg-mini-right">
+              <span class="dlg-idx-badge" id="dlgProgressInfo">#1</span>
+              <button class="dlg-tts-mini-btn" id="dlgTtsBtn"
+                      onclick="dlgPlayCurrent()" title="듣기">🔊</button>
+            </div>
+          </div>
+
+          <!-- 숫자 타일 -->
+          <div class="dlg-num-tile" id="dlgNumTile">1</div>
+
+          <!-- 📋 문제 -->
+          <div class="dlg-section-label">📋 문제</div>
+          <div class="dlg-question-box dlg-sentence-animate" id="dlgEnglish">Good morning!</div>
+
+          <!-- 💡 정답 -->
+          <div class="dlg-section-label dlg-answer-label" id="dlgAnswerLabel">
+            💡 정답 — 탭하여 확인 👆
+          </div>
+          <div class="dlg-answer-box" id="dlgAnswer" onclick="dlgRevealAnswer()">
+            <span class="dlg-answer-hidden" id="dlgAnswerHidden">?</span>
+            <div class="dlg-answer-detail" id="dlgAnswerDetail" style="display:none">
+              <div class="dlg-answer-main-text" id="dlgAnswerMainText">정답</div>
+              <div class="dlg-reveal-detail" id="dlgRevealDetail">
+                <div class="dlg-chunks-area" id="dlgChunksArea"></div>
+                <div class="dlg-tips" id="dlgTips"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 진행 바 -->
+          <div class="dlg-progress-bar-wrap">
+            <div class="dlg-progress-bar-inner" id="dlgProgressBar" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Speed control -->
+        <div class="dlg-speed-row" id="dlgSpeedRow">
+          <span>🐢</span>
+          <input type="range" class="dlg-speed-slider" id="dlgSpeedSlider"
+                 min="0.4" max="1.5" step="0.05" value="0.85"
+                 oninput="document.getElementById('dlgSpeedLabel').textContent=parseFloat(this.value).toFixed(2)+'×'">
+          <span class="dlg-speed-label" id="dlgSpeedLabel">0.85×</span>
+          <span>🐇</span>
+        </div>
+
+      </div><!-- /.dlg-body -->
+
+      <button class="dlg-side-btn dlg-side-right" onclick="dlgNext()" title="다음 (→)">›</button>
+
+    </div><!-- /.dlg-body-wrapper -->
+
+    <!-- Footer: 자동재생 컨트롤만 -->
+    <div class="dlg-footer">
+
+      <!-- Auto-play status badge -->
+      <div class="dlg-auto-badge-wrap">
+        <div class="dlg-auto-badge" id="dlgAutoBadge">
+          <span id="dlgAutoDot" style="width:8px;height:8px;border-radius:50%;background:#4CAF50;animation:pulse-dot 1s ease-in-out infinite;display:inline-block;flex-shrink:0"></span>
+          <span id="dlgAutoLabel">자동재생 중</span>
+        </div>
+      </div>
+
+      <!-- Auto-play controls -->
+      <div class="dlg-play-row">
+        <button class="dlg-btn" id="dlgAutoPlayBtn"
+                style="background:linear-gradient(135deg,#4CAF50,#66BB6A);color:white;font-size:1em;padding:10px 28px;border-radius:28px;gap:8px"
+                onclick="dlgStartAutoPlay()" title="전체 자동재생">🔊 전체 듣기</button>
+        <button class="dlg-btn-icon-sm" id="dlgPauseBtn"
+                style="background:#FF9800;color:white"
+                onclick="dlgToggleAutoPlay()" title="일시정지 / 재개">⏸</button>
+        <button class="dlg-btn-icon-sm" id="dlgStopBtn"
+                style="background:#ef5350;color:white"
+                onclick="dlgStopAutoPlay()" title="정지">⏹</button>
+        <button class="dlg-btn-icon-sm" id="dlgRepeatBtn"
+                style="background:#e0e0e0;color:#555"
+                onclick="dlgToggleRepeat()" title="반복 켜기/끄기">🔁</button>
+      </div>
+
+      <!-- Keyboard hints -->
+      <div class="dlg-kb-hint">
+        ← → 이전/다음 &nbsp;|&nbsp; 이미지 탭 = 듣기 &nbsp;|&nbsp; Esc 닫기
+      </div>
+
+    </div><!-- /.dlg-footer -->
+  </div><!-- /.dlg-container -->
+</div><!-- /.dlg-overlay -->
+
+<script>
+/* ================================================================
+   DATA: 100 Sentences — 10 Situations × 10 Sentences (Phonics Seq)
+   Phonics Level Order: CVC → Sight → Short Vowels → Blends → Digraphs → Long Vowels
+   ================================================================ */
+
+let SITUATIONS = [];   // JSON 파일 로드 후 채워짐
+
+/* ================================================================
+   JSON LOADER
+   ================================================================ */
+function loadJsonFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    let parsed;
+    try { parsed = JSON.parse(e.target.result); }
+    catch(err) { alert('JSON 형식 오류: ' + err.message); return; }
+    applyJsonData(parsed, file.name);
+  };
+  reader.readAsText(file);
+}
+
+function handleJsonDrop(event) {
+  event.preventDefault();
+  document.getElementById('jsonDropZone').classList.remove('drag-over');
+  const file = event.dataTransfer.files[0];
+  if (!file || !file.name.endsWith('.json')) { alert('JSON 파일만 업로드 가능합니다.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    let parsed;
+    try { parsed = JSON.parse(e.target.result); }
+    catch(err) { alert('JSON 형식 오류: ' + err.message); return; }
+    applyJsonData(parsed, file.name);
+  };
+  reader.readAsText(file);
+}
+
+function applyJsonData(data, fileName) {
+  const sits = Array.isArray(data) ? data : (data.situations || []);
+  if (!sits.length) { alert('situations 데이터를 찾을 수 없습니다.'); return; }
+  // chunks 정제 (혹시 오염 데이터 대비)
+  sits.forEach(sit => {
+    (sit.sentences || []).forEach(s => {
+      if (Array.isArray(s.chunks))
+        s.chunks = s.chunks.filter(c => typeof c === 'string');
+    });
+  });
+  SITUATIONS = sits;
+
+  // ★ flatSentences / filteredFlat 재구성 (JSON 로드 후 재생 목록 업데이트)
+  flatSentences.length = 0;
+  selectedSitIds.clear();
+  SITUATIONS.forEach(sit => {
+    (sit.sentences || []).forEach(s => {
+      flatSentences.push({ ...s, sitId: sit.id, sitName: sit.name, sitEmoji: sit.emoji || '' });
+    });
+  });
+  filteredFlat = [...flatSentences];
+
+  if (data.title) document.querySelector('.header h1').textContent = '\uD83C\uDF08 ' + data.title;
+  document.getElementById('jsonFileName').textContent = fileName;
+  document.getElementById('jsonLoadedBadge').classList.add('visible');
+  stopAll();
+  render();
+  initFilterChips();
+  updateProgress(0, flatSentences.length);
+}
+
+
+
+/* ================================================================
+   SPEECH SYNTHESIS
+   ================================================================ */
+let allVoices = [];
+let englishVoices = [];
+let selectedVoice = null;
+let isPlayingAll = false;
+let isPaused = false;
+let globalPlayIndex = 0;
+let flatSentences = [];
+let filteredFlat = [];        /* 필터 적용된 재생 목록 */
+let selectedSitIds = new Set(); /* 선택된 상황 ID. 빈 Set = 전체 */
+let showChunks = false;
+let settingsOpen = true;
+let situationPlayIndex = 0;
+let sitPlayQueue = [];
+let sitPlayActive = false;
+
+// Flatten all sentences for global play
+SITUATIONS.forEach(sit => {
+  sit.sentences.forEach(s => {
+    flatSentences.push({ ...s, sitId: sit.id });
+  });
+});
+filteredFlat = [...flatSentences]; /* 초기값: 전체 */
+
+/* ================================================================
+   SITUATION FILTER
+   ================================================================ */
+function initFilterChips() {
+  const container = document.getElementById('filterChips');
+  if (!container) return;
+  container.innerHTML = '';
+  SITUATIONS.forEach(sit => {
+    const chip = document.createElement('button');
+    chip.className = 'sit-chip';
+    chip.dataset.sitId = sit.id;
+    chip.innerHTML = `${emojiToImg(sit.emoji)} ${sit.name}`;
+    chip.addEventListener('click', () => toggleSitChip(sit.id, chip));
+    container.appendChild(chip);
+  });
+  updateFilterBadge();
+}
+
+function toggleSitChip(sitId, chipEl) {
+  if (selectedSitIds.has(sitId)) {
+    selectedSitIds.delete(sitId);
+    chipEl.classList.remove('selected');
+  } else {
+    selectedSitIds.add(sitId);
+    chipEl.classList.add('selected');
+  }
+  applyFilter();
+}
+
+function selectAllSituations() {
+  /* 전체 선택: 모든 칩 선택 */
+  selectedSitIds.clear();
+  SITUATIONS.forEach(s => selectedSitIds.add(s.id));
+  document.querySelectorAll('.sit-chip').forEach(c => c.classList.add('selected'));
+  applyFilter();
+}
+
+function resetFilter() {
+  /* 전체 해제 → 전체 보기 */
+  selectedSitIds.clear();
+  document.querySelectorAll('.sit-chip').forEach(c => c.classList.remove('selected'));
+  applyFilter();
+}
+
+function applyFilter() {
+  const isAll = selectedSitIds.size === 0 || selectedSitIds.size === SITUATIONS.length;
+
+  /* 1. 상황 섹션 표시/숨김 */
+  document.querySelectorAll('.situation-section').forEach(sec => {
+    const id = parseInt(sec.id.replace('sit-', ''));
+    if (isAll || selectedSitIds.has(id)) {
+      sec.classList.remove('filter-hidden');
+    } else {
+      sec.classList.add('filter-hidden');
+    }
+  });
+
+  /* 2. filteredFlat 재구성 (전체 듣기 대상) */
+  if (isAll) {
+    filteredFlat = [...flatSentences];
+  } else {
+    filteredFlat = flatSentences.filter(s => selectedSitIds.has(s.sitId));
+  }
+
+  updateFilterBadge();
+}
+
+function updateFilterBadge() {
+  const badge = document.getElementById('filterCountBadge');
+  const info  = document.getElementById('filterInfo');
+  const isAll = selectedSitIds.size === 0 || selectedSitIds.size === SITUATIONS.length;
+
+  if (badge) {
+    badge.textContent = isAll
+      ? `전체 ${SITUATIONS.length}개`
+      : `${selectedSitIds.size}개 선택`;
+  }
+  if (info) {
+    info.textContent = isAll
+      ? `전체 ${flatSentences.length}문장 재생`
+      : `${filteredFlat.length}문장 재생 예정`;
+    info.style.color = isAll ? '#7e57c2' : '#e65100';
+  }
+
+  /* 버튼 텍스트도 업데이트 */
+  const btnPlay = document.getElementById('btnPlayAll');
+  if (btnPlay) {
+    btnPlay.textContent = isAll ? '▶ 전체 듣기' : `▶ 선택 듣기 (${filteredFlat.length}문장)`;
+  }
+}
+
+function toggleFilterPanel() {
+  const sec = document.getElementById('filterSection');
+  const chv = document.getElementById('filterChevron');
+  sec.classList.toggle('open');
+  if (chv) chv.textContent = sec.classList.contains('open') ? '▲' : '▼';
+}
+
+/* Voice loading */
+function loadVoices() {
+  allVoices = window.speechSynthesis.getVoices();
+  englishVoices = allVoices.filter(v => v.lang.startsWith('en'));
+  if (englishVoices.length === 0) return;
+
+  const sel = document.getElementById('voiceSelect');
+  sel.innerHTML = '';
+  englishVoices.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${v.name} (${v.lang})`;
+    sel.appendChild(opt);
+  });
+
+  // Prefer child-friendly voices
+  const preferred = englishVoices.findIndex(v =>
+    /samantha|google us en|zira|karen|alex|en-us/i.test(v.name + v.lang)
+  );
+  sel.value = preferred >= 0 ? preferred : 0;
+  selectedVoice = englishVoices[parseInt(sel.value)];
+}
+
+window.speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+document.getElementById('voiceSelect').addEventListener('change', function() {
+  selectedVoice = englishVoices[parseInt(this.value)] || null;
+});
+
+/* Sliders */
+['rate','pitch','volume'].forEach(id => {
+  const slider = document.getElementById(id + 'Slider');
+  const valEl  = document.getElementById(id + 'Val');
+  slider.addEventListener('input', () => {
+    if (id === 'volume') valEl.textContent = Math.round(parseFloat(slider.value) * 100) + '%';
+    else valEl.textContent = parseFloat(slider.value).toFixed(2) + (id === 'rate' ? '×' : '');
+  });
+});
+
+/* Interval slider */
+const intervalSlider = document.getElementById('intervalSlider');
+const intervalVal    = document.getElementById('intervalVal');
+intervalSlider.addEventListener('input', () => {
+  const ms = parseInt(intervalSlider.value);
+  intervalVal.textContent = (ms / 1000).toFixed(1) + '초';
+});
+function getInterval() { return parseInt(intervalSlider.value); }
+
+/* Speak helper */
+function speak(text, onEnd) {
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang   = 'en-US';
+  utt.rate   = parseFloat(document.getElementById('rateSlider').value);
+  utt.pitch  = parseFloat(document.getElementById('pitchSlider').value);
+  utt.volume = parseFloat(document.getElementById('volumeSlider').value);
+  if (selectedVoice) utt.voice = selectedVoice;
+  if (onEnd) utt.onend = onEnd;
+  window.speechSynthesis.speak(utt);
+}
+
+function testVoice() { speak("Hello! Good morning! Let's learn English together! I love you!"); }
+
+/* ================================================================
+   PLAY ALL
+   ================================================================ */
+function playAll() {
+  if (isPlayingAll) return;
+  // 선택된 상황이 없거나 데이터 미로드 → 전체 재생 fallback
+  if (filteredFlat.length === 0) {
+    if (flatSentences.length === 0) {
+      alert('📂 먼저 JSON 파일을 로드해 주세요.');
+      return;
+    }
+    // 0개 선택 = 전체 재생
+    filteredFlat = [...flatSentences];
+    selectedSitIds.clear();
+    document.querySelectorAll('.sit-chip').forEach(ch => ch.classList.remove('selected'));
+    updateFilterBadge();
+  }
+  stopSitPlay();
+  globalPlayIndex = 0;
+  isPlayingAll = true;
+  isPaused = false;
+  document.getElementById('btnPlayAll').disabled = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('btnStop').disabled = false;
+  document.getElementById('miniPlayer').classList.add('visible');
+  setMiniState(true);
+  playAllNext();
+}
+
+function playAllNext() {
+  if (!isPlayingAll || globalPlayIndex >= filteredFlat.length) {
+    finishPlayAll(); return;
+  }
+  const s = filteredFlat[globalPlayIndex];
+  setHighlight(s.id, true);
+  updateProgress(globalPlayIndex + 1, filteredFlat.length);
+  document.getElementById('miniText').textContent = s.english;
+  /* 미니 플레이어 진행 상태 업데이트 */
+  const sectionLabel = (s.sitEmoji || '') + ' ' + (s.sitName || '');
+  updateMiniProgress(globalPlayIndex + 1, filteredFlat.length, sectionLabel.trim());
+
+  // Auto-open section
+  openSection(s.sitId);
+  // Scroll to card
+  setTimeout(() => {
+    const card = document.getElementById('card-' + s.id);
+    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 150);
+
+  speak(s.english, () => {
+    if (isPaused) return; /* 일시정지 중이면 진행 멈춤 */
+    setHighlight(s.id, false);
+    globalPlayIndex++;
+    if (isPlayingAll) setTimeout(playAllNext, getInterval());
+  });
+}
+
+function setMiniState(playing) {
+  const mp  = document.getElementById('miniPlayer');
+  const lbl = document.getElementById('miniStateLabel');
+  const mpb = document.getElementById('miniPauseBtn');
+  if (playing) {
+    mp.classList.remove('state-paused');
+    mp.classList.add('state-playing');
+    if (lbl) lbl.textContent = '재생중';
+    if (mpb) mpb.textContent = '⏸';
+  } else {
+    mp.classList.remove('state-playing');
+    mp.classList.add('state-paused');
+    if (lbl) lbl.textContent = '일시정지';
+    if (mpb) mpb.textContent = '▶';
+  }
+}
+
+/* 미니 플레이어 진행 상태 업데이트 */
+function updateMiniProgress(current, total, sectionName) {
+  const progBadge = document.getElementById('miniProgress');
+  const progBar   = document.getElementById('miniProgressBar');
+  const secLabel  = document.getElementById('miniSectionLabel');
+  if (progBadge) progBadge.textContent = current + ' / ' + total;
+  if (progBar)   progBar.style.width = (total > 0 ? (current / total * 100) : 0) + '%';
+  if (secLabel && sectionName) secLabel.textContent = sectionName;
+}
+
+function togglePause() {
+  const btn = document.getElementById('btnPause');
+
+  if (isPaused) {
+    /* ── 재개 ── */
+    isPaused = false;
+    btn.textContent = '⏸ 일시정지';
+    setMiniState(true);
+    if (isPlayingAll) {
+      playAllNext();
+    } else if (sitPlayActive) {
+      playFromSitQueue();
+    }
+  } else {
+    /* ── 일시정지: isPaused를 먼저 true로 설정해야
+          cancel()의 onend 콜백에서 진행이 멈춤 ── */
+    isPaused = true;
+    window.speechSynthesis.cancel();
+    btn.textContent = '▶ 계속';
+    setMiniState(false);
+  }
+}
+
+function stopAll() {
+  isPaused = false; /* 먼저 플래그 초기화 → cancel() onend 무시 */
+  window.speechSynthesis.cancel();
+  isPlayingAll = false; sitPlayActive = false;
+  document.querySelectorAll('.sentence-card.playing').forEach(c => c.classList.remove('playing'));
+  finishPlayAll();
+  document.getElementById('miniPlayer').classList.remove('visible');
+  setMiniState(true); /* 다음 재생을 위해 재생 상태로 초기화 */
+}
+
+function finishPlayAll() {
+  isPlayingAll = false; isPaused = false;
+  document.getElementById('btnPlayAll').disabled = false;
+  document.getElementById('btnPause').disabled = true;
+  document.getElementById('btnStop').disabled = true;
+  document.getElementById('btnPause').textContent = '⏸ 일시정지';
+  document.getElementById('miniPlayer').classList.remove('visible');
+  /* 미니 플레이어 초기화 */
+  const pb = document.getElementById('miniProgressBar');
+  if (pb) pb.style.width = '0%';
+  const pg = document.getElementById('miniProgress');
+  if (pg) pg.textContent = '—';
+  const sl = document.getElementById('miniSectionLabel');
+  if (sl) sl.textContent = '';
+  setMiniState(true);
+}
+
+/* Play one sentence */
+function playSentence(id) {
+  window.speechSynthesis.cancel();
+  document.querySelectorAll('.sentence-card.playing').forEach(c => c.classList.remove('playing'));
+  setHighlight(id, true);
+  const s = flatSentences.find(x => x.id === id);
+  if (!s) return;
+  speak(s.english, () => setHighlight(id, false));
+}
+
+/* ================================================================
+   PLAY SITUATION
+   ================================================================ */
+function playSituation(sitId) {
+  stopAll();
+  const sit = SITUATIONS.find(s => s.id === sitId);
+  if (!sit) return;
+  sitPlayQueue = sit.sentences;
+  sitPlayIndex = 0; sitPlayActive = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('btnStop').disabled = false;
+  document.getElementById('miniPlayer').classList.add('visible');
+  setMiniState(true);
+  /* 섹션 전체 듣기 - 미니 플레이어 섹션명 설정 */
+  document.getElementById('miniSectionLabel').textContent = (sit.emoji || '') + ' ' + (sit.name || '');
+  playFromSitQueue();
+}
+
+function playFromSitQueue() {
+  if (!sitPlayActive || sitPlayIndex >= sitPlayQueue.length) {
+    sitPlayActive = false;
+    document.getElementById('btnPause').disabled = true;
+    document.getElementById('btnStop').disabled = true;
+    document.getElementById('miniPlayer').classList.remove('visible');
+    document.querySelectorAll('.sentence-card.playing').forEach(c => c.classList.remove('playing'));
+    return;
+  }
+  const s = sitPlayQueue[sitPlayIndex];
+  setHighlight(s.id, true);
+  document.getElementById('miniText').textContent = s.english;
+  /* 미니 플레이어 진행 상태 업데이트 (섹션별 재생) */
+  updateMiniProgress(sitPlayIndex + 1, sitPlayQueue.length, '');
+  const card = document.getElementById('card-' + s.id);
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  speak(s.english, () => {
+    if (isPaused) return; /* 일시정지 중이면 진행 멈춤 */
+    setHighlight(s.id, false);
+    sitPlayIndex++;
+    if (sitPlayActive) setTimeout(playFromSitQueue, getInterval());
+  });
+}
+
+function stopSitPlay() {
+  sitPlayActive = false;
+  window.speechSynthesis.cancel();
+}
+
+/* ================================================================
+   HELPERS
+   ================================================================ */
+function setHighlight(id, on) {
+  const card = document.getElementById('card-' + id);
+  if (card) {
+    if (on) card.classList.add('playing');
+    else    card.classList.remove('playing');
+  }
+}
+
+function updateProgress(cur, total) {
+  const pct = (cur / total) * 100;
+  document.getElementById('globalProgressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${cur} / ${total} 문장 (총 2310문장)`;
+}
+
+function toggleSettings() {
+  settingsOpen = !settingsOpen;
+  document.getElementById('settingsBody').style.display = settingsOpen ? 'grid' : 'none';
+  document.getElementById('settingsChevron').textContent = settingsOpen ? '▲' : '▼';
+}
+
+function toggleChunkDisplay() {
+  showChunks = document.getElementById('chunkToggle').checked;
+  document.querySelectorAll('.chunks-box').forEach(el => {
+    el.classList.toggle('visible', showChunks);
+  });
+}
+
+function openSection(sitId) {
+  const sec = document.getElementById('sit-' + sitId);
+  if (sec) sec.classList.add('open');
+}
+
+function expandAll() {
+  document.querySelectorAll('.situation-section').forEach(s => s.classList.add('open'));
+}
+
+function collapseAll() {
+  document.querySelectorAll('.situation-section').forEach(s => s.classList.remove('open'));
+}
+
+function toggleSection(id) {
+  const sec = document.getElementById('sit-' + id);
+  if (sec) sec.classList.toggle('open');
+}
+
+/* ================================================================
+   RENDER
+   ================================================================ */
+const CHUNK_COLORS = ['cc-0','cc-1','cc-2','cc-3','cc-4','cc-5','cc-6'];
+
+function renderCard(s, sit) {
+  const chunkPills = s.chunks.map((c, i) =>
+    `<span class="chunk-pill ${CHUNK_COLORS[i % CHUNK_COLORS.length]}">${c}</span>`
+  ).join('');
+
+  const isKr2En = quizMode === 'kr2en';
+  const isEn2Kr = quizMode === 'en2kr';
+  const isQuiz = isKr2En || isEn2Kr;
+
+  // 이미지 이모지 생성 — Twemoji SVG 고품질 아이콘
+  const emojis = getCardEmojis(s.english, sit.emoji);
+  const emojiSpans = emojis.map(e => emojiToImg(e)).join('');
+
+  // kr2en: 한글 보여주고 영어 숨김 / en2kr: 영어 보여주고 한글 숨김
+  const engHidden = isKr2En ? 'quiz-hidden' : '';
+  const korHidden = isEn2Kr ? 'quiz-hidden' : '';
+
+  // ── 퀴즈 모드: 게임 스타일 카드 ──
+  if (isQuiz) {
+    const modeLabel = isKr2En ? '🇰🇷 → 🇺🇸 한글→영어' : '🇺🇸 → 🇰🇷 영어→한글';
+    const questionText = isKr2En ? s.answer : s.english;   // 보이는 쪽
+    const answerText   = isKr2En ? s.english : s.answer;   // 숨겨진 쪽
+    return `
+  <div class="sentence-card quiz-active quiz-card-game" id="card-${s.id}"
+       style="border-top:5px solid ${sit.border};">
+    <!-- 상단 헤더 -->
+    <div class="quiz-game-top" style="background:${sit.border};">
+      <span class="quiz-mode-tag">🎯 ${modeLabel}</span>
+      <span class="quiz-num-tag">#${s.id}</span>
+      <button class="quiz-play-mini" onclick="playSentence(${s.id})" title="이 문장 듣기">🔊</button>
+      <span class="quiz-result-game" id="result-${s.id}"></span>
+    </div>
+    <!-- 이모지 -->
+    <div class="quiz-emoji-row">
+      <div class="card-img-emoji">${emojiSpans}</div>
+    </div>
+    <!-- 문제 (보이는 쪽) -->
+    <div class="quiz-q-block">
+      <div class="quiz-block-label">📋 문제</div>
+      <div class="quiz-q-inner">
+        <div class="quiz-q-text">${questionText}</div>
+      </div>
+    </div>
+    <!-- 청크 -->
+    <div class="quiz-chunks-row">
+      <div class="chunks-box${showChunks ? ' visible' : ''}">${chunkPills}</div>
+    </div>
+    <!-- 정답 (클릭하면 공개) -->
+    <div class="quiz-a-block" style="padding-bottom:14px;">
+      <div class="quiz-block-label">💡 정답 <span style="font-size:0.85em;color:#b39ddb;font-weight:600;text-transform:none;letter-spacing:0;">— 탭하여 확인 👇</span></div>
+      <div class="quiz-a-inner quiz-a-clickable" id="answerBox-${s.id}"
+           onclick="confirmQuizCard(${s.id})">
+        <div class="quiz-mystery-wrap">
+          <span class="quiz-mystery-icon">❓</span>
+        </div>
+        <div class="quiz-revealed-answer" id="quizReveal-${s.id}">${answerText}</div>
+      </div>
+    </div>
+  </div>`;
+  }
+
+  // ── 일반 모드: 전체 정보 카드 ──
+  return `
+  <div class="sentence-card" id="card-${s.id}" style="border-left-color:${sit.border}">
+    <div class="card-image" style="background:${sit.color};cursor:pointer"
+         onclick="openCardDialog(${s.id})" title="클릭하여 학습 다이얼로그 열기">
+      <span class="card-img-num">#${s.id}</span>
+      <div class="card-img-emoji">${emojiSpans}</div>
+      <span class="card-dlg-hint">👆 탭하여 학습</span>
+    </div>
+    <div class="card-top">
+      <span></span>
+      <button class="card-play-btn"
+        style="background:${sit.border}"
+        onclick="playSentence(${s.id})"
+        title="이 문장 듣기">🔊</button>
+    </div>
+    <div class="card-english" id="eng-${s.id}">${s.english}</div>
+    <span class="phonics-badge">📚 ${s.phonics}</span>
+    <div class="chunks-box${showChunks ? ' visible' : ''}">${chunkPills}</div>
+    <div class="card-qa">
+      <div class="card-q"><span class="card-q-icon">❓</span><span>${s.question || ''}</span></div>
+      <div class="card-a"><span class="card-a-icon">💬</span><span class="card-answer-text" id="ans-${s.id}">${s.answer}</span></div>
+    </div>
+    ${s.tips ? `<div class="phonics-tip"><span>💡</span><span>${s.tips}</span></div>` : ''}
+  </div>`;
+}
+
+function render() {
+  const container = document.getElementById('situationsContainer');
+
+  /* ── 열린 섹션 ID 저장 (재렌더링 후 복원) ── */
+  const openIds = new Set(
+    [...document.querySelectorAll('.situation-section.open')].map(el => el.id)
+  );
+
+  container.innerHTML = '';
+
+  SITUATIONS.forEach(sit => {
+    const sec = document.createElement('div');
+    sec.className = 'situation-section';
+    sec.id = 'sit-' + sit.id;
+
+    const cardsHTML = sit.sentences.map(s => renderCard(s, sit)).join('');
+
+    sec.innerHTML = `
+      <div class="situation-header" style="background:${sit.color}" onclick="toggleSection(${sit.id})">
+        <div class="sit-title-group">
+          <span class="sit-emoji">${emojiToImg(sit.emoji)}</span>
+          <div>
+            <div class="sit-name">${sit.name}</div>
+            <div class="sit-name-en">${sit.nameEn}</div>
+          </div>
+        </div>
+        <div class="sit-right">
+          <span class="sit-count">${sit.sentences.length}문장</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="situation-body">
+        <div class="sit-actions">
+          <button class="btn btn-green btn-sm" onclick="openSectionDialog(${sit.id},'listen');event.stopPropagation()">
+            🔊 전체 듣기
+          </button>
+        </div>
+        <div class="cards-grid">${cardsHTML}</div>
+      </div>`;
+
+    /* ── 이전에 열려 있던 섹션이면 open 클래스 복원 ── */
+    if (openIds.has('sit-' + sit.id)) sec.classList.add('open');
+
+    container.appendChild(sec);
+  });
+}
+
+/* ================================================================
+   TWEMOJI HELPER — 이모지 텍스트 → 고품질 SVG 이미지
+   ================================================================ */
+/**
+ * 이모지 문자 1개를 Twemoji CDN SVG <img> 태그로 변환
+ * twemoji.parse()를 임시 DOM 노드에 적용 → 변형 선택자(fe0f), ZWJ 조합 이모지 완벽 지원
+ * @param {string} emoji  - 단일 이모지 문자 (e.g. "🌅", "🍽️", "👨‍👩‍👧")
+ * @returns {string} HTML img 태그 문자열 (실패 시 raw span 폴백)
+ */
+function emojiToImg(emoji) {
+  if (typeof twemoji === 'undefined') {
+    return `<span class="raw-emoji">${emoji}</span>`;
+  }
+  try {
+    // 임시 span에 이모지 넣고 twemoji.parse() 적용
+    // → 변형 선택자(U+FE0F), ZWJ 연결 이모지 등 모든 케이스 자동 처리
+    const tmp = document.createElement('span');
+    tmp.textContent = emoji;
+    twemoji.parse(tmp, {
+      folder: 'svg',
+      ext: '.svg',
+      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'
+    });
+    const img = tmp.querySelector('img');
+    if (img) {
+      img.className = 'emoji';
+      img.setAttribute('draggable', 'false');
+      img.alt = emoji;
+      return img.outerHTML;
+    }
+  } catch (e) { /* 폴백으로 진행 */ }
+  return `<span class="raw-emoji">${emoji}</span>`;
+}
+
+/* ================================================================
+   CARD IMAGE — keyword → emoji mapping
+   ================================================================ */
+const EMOJI_MAP = [
+  /* 아침·시간 */
+  ['morning','🌅'], ['wake','⏰'], ['rise','🌄'], ['shine','✨'], ['today','📆'],
+  ['time','⌛'], ['day','📅'], ['yesterday','⏪'], ['tomorrow','⏩'], ['night','🌙'],
+  ['monday','📅'], ['tuesday','📅'], ['wednesday','📅'], ['thursday','📅'],
+  ['friday','🎉'], ['saturday','🎊'], ['sunday','😌'], ['week','🗓️'],
+  /* 감정 */
+  ['happy','😊'], ['sad','😢'], ['scared','😨'], ['mad','😠'], ['angry','😡'],
+  ['sick','🤒'], ['okay','👍'], ['excited','🎉'], ['shy','🫣'], ['bored','😑'],
+  ['great','🌟'], ['love','❤️'], ['miss','🥺'], ['grateful','🙏'],
+  /* 음식·식사 */
+  ['hungry','🍽️'], ['eat','🍴'], ['hot','🔥'], ['milk','🥛'], ['rice','🍚'],
+  ['yummy','😋'], ['full','🤰'], ['food','🍱'], ['apple','🍎'], ['tomato','🍅'],
+  ['banana','🍌'], ['orange','🍊'], ['grape','🍇'], ['strawberr','🍓'],
+  ['cookie','🍪'], ['carrot','🥕'], ['vegetable','🥦'], ['juice','🥤'],
+  ['water','💧'], ['bread','🍞'], ['cake','🎂'], ['soup','🍲'], ['pizza','🍕'],
+  ['more','➕'], ['please','🙏'],
+  /* 목욕·위생 */
+  ['bath','🛁'], ['wash','🧼'], ['hands','🤲'], ['scrub','🧽'], ['clean','✨'],
+  ['splash','💦'], ['brush','🪥'], ['teeth','🦷'], ['dry','🏝️'], ['wet','💦'],
+  ['rub','🧴'], ['fresh','🌿'], ['soap','🧴'],
+  /* 놀이·스포츠 */
+  ['play','🎮'], ['ball','⚽'], ['catch','🫳'], ['roll','🎳'], ['block','🧱'],
+  ['run','🏃'], ['jump','🦘'], ['clap','👏'], ['spin','🌀'], ['kick','🦵'],
+  ['swim','🏊'], ['bike','🚲'], ['soccer','⚽'], ['exercise','💪'],
+  ['swing','🪂'], ['slide','🛝'], ['sandbox','🏖️'], ['park','🌳'],
+  ['dance','💃'], ['sing','🎤'], ['music','🎵'], ['drum','🥁'], ['song','🎶'],
+  /* 수면 */
+  ['bed','🛏️'], ['sleepy','😴'], ['light','💡'], ['tuck','🫂'], ['hug','🤗'],
+  ['dream','💭'], ['eye','👀'], ['sleep','💤'], ['night','🌙'],
+  /* 가족 */
+  ['mom','👩'], ['dad','👨'], ['sister','👧'], ['brother','👦'],
+  ['grandma','👵'], ['grandpa','👴'], ['family','👨‍👩‍👧'], ['baby','👶'],
+  /* 색·모양 */
+  ['red','🔴'], ['blue','🔵'], ['green','🟢'], ['pink','🩷'], ['yellow','🟡'],
+  ['circle','⭕'], ['square','⬛'], ['star','⭐'], ['triangle','🔺'], ['color','🎨'],
+  /* 동물 */
+  ['cat','🐱'], ['dog','🐶'], ['duck','🦆'], ['pig','🐷'], ['bear','🐻'],
+  ['frog','🐸'], ['fish','🐟'], ['bird','🐦'], ['pet','🐾'], ['bug','🐛'],
+  ['cow','🐄'], ['horse','🐴'], ['sheep','🐑'], ['hen','🐔'], ['rooster','🐓'],
+  ['goat','🐐'], ['lamb','🐑'], ['dinosaur','🦕'], ['whale','🐋'],
+  ['dolphin','🐬'], ['octopus','🐙'], ['shark','🦈'], ['crab','🦀'],
+  ['jellyfish','🪼'], ['seal','🦭'], ['turtle','🐢'],
+  /* 옷·패션 */
+  ['shirt','👕'], ['pants','👖'], ['socks','🧦'], ['zip','🤐'], ['button','🔘'],
+  ['shoes','👟'], ['dress','👗'], ['coat','🧥'], ['wear','👗'], ['cloth','👕'],
+  /* 신체 */
+  ['nose','👃'], ['head','🙆'], ['hair','💇'], ['ear','👂'], ['mouth','👄'],
+  ['tummy','🫃'], ['toe','🦶'], ['knee','🦵'], ['hand','✋'], ['finger','☝️'],
+  ['arm','💪'],
+  /* 계절·날씨 */
+  ['spring','🌸'], ['summer','☀️'], ['fall','🍂'], ['autumn','🍂'],
+  ['winter','❄️'], ['rain','🌧️'], ['wind','🌬️'], ['snow','❄️'],
+  ['sunny','🌞'], ['cloudy','☁️'], ['cloud','☁️'],
+  /* 숫자 */
+  ['one','1️⃣'], ['two','2️⃣'], ['three','3️⃣'], ['four','4️⃣'], ['five','5️⃣'],
+  ['six','6️⃣'], ['seven','7️⃣'], ['eight','8️⃣'], ['nine','9️⃣'], ['ten','🔟'],
+  ['count','🔢'], ['number','🔢'], ['finger','🖐️'],
+  /* 학교·책 */
+  ['school','🏫'], ['teacher','👩‍🏫'], ['backpack','🎒'], ['class','📚'],
+  ['learn','📖'], ['read','📖'], ['book','📚'], ['library','📚'], ['page','📄'],
+  ['story','📖'], ['picture','🖼️'],
+  /* 교통 */
+  ['bus','🚌'], ['car','🚗'], ['train','🚂'], ['bike','🚲'], ['airplane','✈️'],
+  ['boat','⛵'], ['truck','🚚'], ['light','🚦'], ['road','🛣️'],
+  /* 집·방 */
+  ['room','🏠'], ['bed','🛏️'], ['kitchen','🍳'], ['cook','👨‍🍳'], ['bathroom','🚿'],
+  ['sofa','🛋️'], ['door','🚪'], ['home','🏡'], ['house','🏡'],
+  /* 직업 */
+  ['doctor','👨‍⚕️'], ['nurse','👩‍⚕️'], ['teacher','👩‍🏫'], ['chef','👨‍🍳'],
+  ['pilot','✈️'], ['firefighter','🧑‍🚒'], ['singer','🎤'], ['farmer','👨‍🌾'],
+  ['artist','🎨'],
+  /* 자연 */
+  ['tree','🌳'], ['leaf','🍃'], ['flower','🌸'], ['grass','🌿'],
+  ['forest','🌲'], ['wind','🌬️'], ['mud','🟫'], ['garden','🌷'],
+  ['rose','🌹'], ['daisy','🌼'], ['sunflower','🌻'], ['seed','🌱'],
+  ['outdoors','🏕️'], ['squirrel','🐿️'],
+  /* 바다·해변 */
+  ['wave','🌊'], ['sand','🏖️'], ['shell','🐚'], ['sea','🌊'],
+  ['beach','🏖️'], ['crab','🦀'], ['sandcastle','🏰'],
+  /* 우주 */
+  ['star','⭐'], ['moon','🌙'], ['rocket','🚀'], ['earth','🌍'],
+  ['sun','☀️'], ['planet','🪐'], ['space','🌌'], ['sky','🌌'],
+  /* 공룡 */
+  ['dinosaur','🦕'], ['t-rex','🦖'], ['roar','🦖'], ['fossil','🦴'],
+  /* 인사 */
+  ['hello','👋'], ['hi','👋'], ['goodbye','👋'], ['bye','👋'],
+  ['wave','🤚'], ['meet','🤝'],
+  /* 예의 */
+  ['thank','🙏'], ['sorry','😔'], ['excuse','🫡'], ['welcome','😊'],
+  ['kind','💛'], ['help','🤝'], ['praise','🌟'],
+  /* 병원·건강 */
+  ['sick','🤒'], ['hurt','🩹'], ['medicine','💊'], ['rest','😴'],
+  ['healthy','💪'], ['better','💊'],
+  /* 쇼핑 */
+  ['shop','🛒'], ['buy','💳'], ['pay','💰'], ['money','💵'], ['cart','🛒'],
+  /* 요리도구 */
+  ['pan','🍳'], ['pot','🥘'], ['oven','🔥'], ['knife','🔪'],
+  ['spoon','🥄'], ['fork','🍴'], ['blender','🧃'],
+  /* 청소 */
+  ['broom','🧹'], ['mop','🫧'], ['vacuum','🧹'], ['trash','🗑️'],
+  ['dust','🌫️'], ['sponge','🧽'],
+];
+
+function getCardEmojis(english, sitEmoji) {
+  const words = english.toLowerCase().replace(/[^a-z0-9\s'-]/g, '').split(/\s+/);
+  const found = [];
+  for (const word of words) {
+    for (const [key, emoji] of EMOJI_MAP) {
+      if (word.startsWith(key) && !found.includes(emoji)) {
+        found.push(emoji);
+        if (found.length >= 3) return found;
+      }
+    }
+  }
+  if (found.length === 0) found.push(sitEmoji);
+  return found.slice(0, 3);
+}
+
+/* ================================================================
+   QUIZ MODE
+   ================================================================ */
+let quizMode = 'off'; // 'off', 'kr2en', 'en2kr'
+let quizCorrect = 0;
+let quizWrong = 0;
+let quizAnswered = new Set();
+
+function setQuizMode(mode) {
+  quizMode = mode;
+  // Update button states
+  document.getElementById('btnKrToEn').classList.toggle('active', mode === 'kr2en');
+  document.getElementById('btnEnToKr').classList.toggle('active', mode === 'en2kr');
+  document.getElementById('btnQuizOff').classList.toggle('active', mode === 'off');
+
+  // 퀴즈 모드: 점수 바 숨김 (확인하기 단일 버튼 방식 — 점수 미사용)
+  document.getElementById('quizScoreBar').classList.remove('visible');
+
+  render();
+}
+
+function revealQuizItem(elId) {
+  const el = document.getElementById(elId);
+  if (el) {
+    el.classList.remove('quiz-hidden');
+    el.classList.add('quiz-revealed');
+  }
+}
+
+function revealAllInCard(sentenceId) {
+  revealQuizItem('eng-' + sentenceId);
+  revealQuizItem('ans-' + sentenceId);
+}
+
+// ── 정답 박스 클릭: 직접 공개 + 청크 표시 + 자동 음성 재생 ──
+function confirmQuizCard(id) {
+  const box = document.getElementById('answerBox-' + id);
+  if (!box || box.classList.contains('revealed')) return; // 이미 공개됨이면 무시
+  box.classList.add('revealed');
+
+  // 카드 테두리 초록 강조
+  const card = document.getElementById('card-' + id);
+  if (card) card.classList.add('quiz-correct');
+
+  // 청크 박스 공개 (토글 설정과 무관하게 이 카드만 표시)
+  if (card) {
+    const chunksBox = card.querySelector('.chunks-box');
+    if (chunksBox) chunksBox.classList.add('visible');
+  }
+
+  // 전체 듣기 / 섹션 재생 중이 아닐 때만 음성 재생 (이중 재생 방지)
+  if (!isPlayingAll && !sitPlayActive) playSentence(id);
+}
+
+function checkQuizAnswerById(sentenceId) {
+  const s = flatSentences.find(x => x.id === sentenceId);
+  if (!s) return;
+  checkQuizAnswer(sentenceId, s.english);
+}
+
+function checkQuizAnswer(sentenceId, correctAnswer) {
+  if (quizAnswered.has(sentenceId)) return;
+
+  const input = document.getElementById('input-' + sentenceId);
+  if (!input) return;
+
+  const userAnswer = input.value.trim().toLowerCase().replace(/[^a-z0-9\s]/g, '');
+  const correct = correctAnswer.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+
+  // Simple similarity check
+  const isCorrect = userAnswer === correct ||
+    levenshteinDistance(userAnswer, correct) <= Math.max(2, Math.floor(correct.length * 0.2));
+
+  if (isCorrect) {
+    input.classList.add('input-correct');
+    markQuizResult(sentenceId, true);
+  } else {
+    input.classList.add('input-wrong');
+    markQuizResult(sentenceId, false);
+    // Reveal correct answer
+    revealQuizItem('eng-' + sentenceId);
+  }
+}
+
+function markQuizResult(sentenceId, correct) {
+  if (quizAnswered.has(sentenceId)) return;
+  quizAnswered.add(sentenceId);
+
+  const card = document.getElementById('card-' + sentenceId);
+  const resultIcon = document.getElementById('result-' + sentenceId);
+
+  if (correct) {
+    quizCorrect++;
+    if (card) card.classList.add('quiz-correct');
+    if (resultIcon) resultIcon.textContent = '✅';
+  } else {
+    quizWrong++;
+    if (card) card.classList.add('quiz-wrong');
+    if (resultIcon) resultIcon.textContent = '❌';
+  }
+
+  // Reveal everything after marking
+  revealAllInCard(sentenceId);
+  updateQuizScore();
+}
+
+function updateQuizScore() {
+  document.getElementById('scoreCorrect').textContent = quizCorrect;
+  document.getElementById('scoreWrong').textContent = quizWrong;
+  document.getElementById('scoreRemaining').textContent = flatSentences.length - quizAnswered.size;
+}
+
+function resetQuizScore() {
+  quizCorrect = 0;
+  quizWrong = 0;
+  quizAnswered.clear();
+  updateQuizScore();
+  render();
+}
+
+// Levenshtein distance for fuzzy matching
+function levenshteinDistance(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+// Initial state: 전체보기 active
+document.getElementById('btnQuizOff').classList.add('active');
+
+/* ================================================================
+   KEYBOARD SHORTCUTS: Space = 정지/일시정지, Enter = 전체 듣기 시작
+   ================================================================ */
+document.addEventListener('keydown', function(e) {
+  /* ── 다이얼로그 열려있으면 다이얼로그 키핸들러에 위임 ── */
+  if (document.getElementById('dlgOverlay') &&
+      document.getElementById('dlgOverlay').classList.contains('active')) return;
+
+  const tag = e.target.tagName.toLowerCase();
+
+  /* ── 퀴즈 입력창에서 Enter → 정답 확인 ── */
+  if (tag === 'input' && e.target.classList.contains('quiz-input')) {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      const sentenceId = parseInt(e.target.id.replace('input-', ''));
+      if (!isNaN(sentenceId)) checkQuizAnswerById(sentenceId);
+    }
+    return;
+  }
+
+  /* ── 일반 입력 필드에서는 단축키 무시 ── */
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+  /* ── Space: 배경재생 일시정지 / 재개 토글 ── */
+  if (e.code === 'Space') {
+    e.preventDefault();
+    if (isPlayingAll || sitPlayActive) togglePause();
+  }
+
+  /* ── Enter: 배경재생 전체 듣기 시작 ── */
+  if (e.code === 'Enter') {
+    e.preventDefault();
+    if (!isPlayingAll && !sitPlayActive) playAll();
+  }
+});
+
+/* ── emojiToImg() 로 직접 <img> 생성하므로 별도 파싱 불필요 ── */
+
+// 초기: JSON 파일 로드 대기 안내
+(function() {
+  const cont = document.getElementById('situationsContainer');
+  if (cont) cont.innerHTML =
+    '<div style="text-align:center;padding:80px 20px;color:#aaa;font-size:1.05em;line-height:2">'+
+    '📂 위의 <strong style=\"color:#5c6bc0\">JSON 데이터 로드</strong> 영역에서<br>'+
+    '<code>phonics_data.json</code> 파일을 업로드하면 학습 콘텐츠가 표시됩니다.</div>';
+  initFilterChips();
+})();
+ /* 상황 필터 칩 초기화 */
+requestAnimationFrame(() => applyTwemoji());
+
+/* ================================================================
+   SENTENCE DIALOG — 하나씩 강조 학습 다이얼로그
+   Modes: study | listen | section | quiz
+   ================================================================ */
+
+let dlgSentences    = [];      // 현재 다이얼로그에 로드된 문장 목록
+let dlgIndex        = 0;       // 현재 문장 인덱스
+let dlgMode         = 'study'; // study | listen | section | quiz
+let dlgQuizDir      = 'kr2en'; // kr2en | en2kr
+let dlgAutoPlaying  = false;
+let dlgPaused       = false;
+let dlgRepeat       = false;
+let dlgRevealedAnswer = false;
+let dlgCurrentSitId = null;
+let dlgKnownIds     = new Set();
+let dlgUnknownIds   = new Set();
+let dlgAutoTimer    = null;
+let dlgAnswered     = new Set(); // 이미 채점된 문장 IDs
+
+/* ────── 섹션 다이얼로그 열기 ────── */
+/* ────── 카드 이미지 클릭 → 해당 문장 위치에서 다이얼로그 열기 ────── */
+function openCardDialog(sentenceId) {
+  /* 해당 문장이 속한 섹션 찾기 */
+  const sit = SITUATIONS.find(s => s.sentences.some(x => x.id === sentenceId));
+  if (!sit) return;
+
+  const sitId = sit.id;
+  dlgCurrentSitId = sitId;
+  dlgSentences = sit.sentences.map(s => ({
+    ...s,
+    sitId: sit.id, sitName: sit.name, sitEmoji: sit.emoji,
+    sitColor: sit.color, sitBorder: sit.border
+  }));
+
+  /* 클릭한 문장 위치로 인덱스 설정 */
+  const idx = dlgSentences.findIndex(s => s.id === sentenceId);
+  dlgIndex = idx >= 0 ? idx : 0;
+
+  dlgKnownIds.clear(); dlgUnknownIds.clear(); dlgAnswered.clear();
+
+  /* Header */
+  document.getElementById('dlgSitEmoji').textContent = sit.emoji || '📖';
+  document.getElementById('dlgSitName').textContent  = sit.name + ' (' + (sit.nameEn || '') + ')';
+  document.getElementById('dlgHeader').style.background =
+    'linear-gradient(135deg, ' + (sit.border || '#667eea') + ' 0%, ' + (sit.color || '#f3e5f5') + ' 100%)';
+
+  dlgSetMode('all');
+  document.getElementById('dlgOverlay').classList.add('active');
+  dlgRenderSentence();
+  setTimeout(() => dlgPlayCurrent(), 400);
+}
+
+function openSectionDialog(sitId, mode) {
+  if (!SITUATIONS.length) { alert('📂 먼저 JSON 파일을 로드해 주세요.'); return; }
+  /* 구 모드명 → 새 탭 이름 매핑 */
+  const modeMap = { study:'all', listen:'all', section:'all', quiz:'en2kr' };
+  mode = modeMap[mode] || mode || 'all';
+  if (!['all','en2kr','kr2en'].includes(mode)) mode = 'all';
+  const sit = SITUATIONS.find(s => s.id === sitId);
+  if (!sit) return;
+
+  dlgCurrentSitId = sitId;
+  dlgSentences = sit.sentences.map(s => ({
+    ...s,
+    sitId: sit.id, sitName: sit.name, sitEmoji: sit.emoji,
+    sitColor: sit.color, sitBorder: sit.border
+  }));
+  dlgIndex = 0;
+  dlgKnownIds.clear(); dlgUnknownIds.clear(); dlgAnswered.clear();
+
+  /* Header */
+  document.getElementById('dlgSitEmoji').textContent = sit.emoji || '📖';
+  document.getElementById('dlgSitName').textContent  = sit.name + ' (' + (sit.nameEn || '') + ')';
+  document.getElementById('dlgHeader').style.background =
+    'linear-gradient(135deg, ' + (sit.border || '#667eea') + ' 0%, ' + (sit.color || '#f3e5f5') + ' 100%)';
+
+  dlgSetMode(mode);
+  document.getElementById('dlgOverlay').classList.add('active');
+  dlgRenderSentence();
+  setTimeout(() => dlgPlayCurrent(), 400);
+}
+
+/* ────── 전체(필터) 다이얼로그 열기 ────── */
+function openGlobalDialog(mode) {
+  if (!flatSentences.length) { alert('📂 먼저 JSON 파일을 로드해 주세요.'); return; }
+  const modeMap = { study:'all', listen:'all', section:'all', quiz:'en2kr' };
+  mode = modeMap[mode] || mode || 'all';
+  if (!['all','en2kr','kr2en'].includes(mode)) mode = 'all';
+
+  dlgCurrentSitId = null;
+  dlgSentences = filteredFlat.length ? [...filteredFlat] : [...flatSentences];
+  dlgIndex = 0;
+  dlgKnownIds.clear(); dlgUnknownIds.clear(); dlgAnswered.clear();
+
+  document.getElementById('dlgSitEmoji').textContent = '🌈';
+  document.getElementById('dlgSitName').textContent  = '전체 파닉스 학습 (' + dlgSentences.length + '문장)';
+  document.getElementById('dlgHeader').style.background =
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+
+  dlgSetMode(mode);
+  document.getElementById('dlgOverlay').classList.add('active');
+  dlgRenderSentence();
+  setTimeout(() => dlgPlayCurrent(), 400);
+}
+
+/* ────── 다이얼로그 닫기 ────── */
+function closeDlg() {
+  dlgStopAutoPlay();
+  window.speechSynthesis.cancel();
+  document.getElementById('dlgOverlay').classList.remove('active');
+  /* 카드 하이라이트 제거 */
+  document.querySelectorAll('.sentence-card.playing').forEach(c => c.classList.remove('playing'));
+}
+
+function closeDlgOnOverlay(e) {
+  if (e.target === document.getElementById('dlgOverlay')) closeDlg();
+}
+
+/* ────── 모드 전환 ────── */
+function dlgSetMode(mode) {
+  dlgMode = mode;
+
+  /* 탭 UI — 3개 탭: all | en2kr | kr2en */
+  ['all','en2kr','kr2en'].forEach(m => {
+    const t = document.getElementById('dlgTab-' + m);
+    if (t) t.classList.toggle('active', m === mode);
+  });
+
+  dlgStopAutoPlay();
+  dlgRevealedAnswer = false;
+  dlgRenderSentence();
+}
+
+/* ────── 현재 문장 렌더링 (3탭 버전) ────── */
+function dlgRenderSentence() {
+  if (!dlgSentences.length) return;
+  const s = dlgSentences[dlgIndex];
+  if (!s) return;
+
+  dlgRevealedAnswer = false;
+
+  /* ── 진행 정보 ── */
+  const total = dlgSentences.length;
+  document.getElementById('dlgProgressInfo').textContent =
+    '#' + (dlgIndex + 1);
+  document.getElementById('dlgProgressBar').style.width =
+    ((dlgIndex + 1) / total * 100).toFixed(1) + '%';
+
+  /* ── 이모지 이미지 타일 ── */
+  const numTile = document.getElementById('dlgNumTile');
+  const tileEmojis = getCardEmojis(s.english, s.sitEmoji || '📖');
+  const mainEmoji = tileEmojis[0] || s.sitEmoji || '📖';
+  numTile.innerHTML = `<span class="raw-emoji">${mainEmoji}</span>`;
+  numTile.onclick = () => dlgPlayCurrent();
+  if (typeof twemoji !== 'undefined') {
+    twemoji.parse(numTile, {
+      folder: 'svg', ext: '.svg',
+      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'
+    });
+  }
+
+  /* ── 문제 박스 슬라이드 애니메이션 ── */
+  const engEl = document.getElementById('dlgEnglish');
+  engEl.classList.remove('dlg-sentence-animate', 'kr-text');
+  void engEl.offsetWidth;
+  engEl.classList.add('dlg-sentence-animate');
+
+  /* ── 정답 박스 초기화 (숨김 상태) ── */
+  const answerBox    = document.getElementById('dlgAnswer');
+  const answerHidden = document.getElementById('dlgAnswerHidden');
+  const answerDetail = document.getElementById('dlgAnswerDetail');
+  const answerLabel  = document.getElementById('dlgAnswerLabel');
+  const modeLabel    = document.getElementById('dlgModeLabel');
+  const ttsBtn       = document.getElementById('dlgTtsBtn');
+
+  answerBox.classList.remove('revealed', 'all-mode');
+  answerHidden.style.display = 'block';
+  answerDetail.style.display = 'none';
+
+  /* ── 모드별 렌더링 ── */
+  if (dlgMode === 'all') {
+    /* 📖 전체 보기: 영어 문제 + 한국어 정답 즉시 표시 */
+    modeLabel.textContent = '📖 전체 보기';
+    engEl.textContent = s.english;
+
+    answerLabel.innerHTML = '💡 정답';
+    answerBox.classList.add('all-mode');
+    answerBox.style.cursor = 'default';
+    answerHidden.style.display = 'none';
+    answerDetail.style.display = 'block';
+
+    /* 정답 영역 채우기 */
+    _fillAnswerDetail(s, 'all');
+
+  } else if (dlgMode === 'en2kr') {
+    /* 🇺🇸→🇰🇷 영→한: 영어 문제, 한국어 숨김 */
+    modeLabel.innerHTML = '🇺🇸→🇰🇷 영어→한글';
+    engEl.textContent = s.english;
+
+    answerLabel.innerHTML = '💡 정답 — 탭하여 확인 👆';
+    answerBox.style.cursor = 'pointer';
+
+  } else if (dlgMode === 'kr2en') {
+    /* 🇰🇷→🇺🇸 한→영: 한국어 문제, 영어 숨김 */
+    modeLabel.innerHTML = '🇰🇷→🇺🇸 한글→영어';
+    engEl.textContent = s.answer || '';
+    engEl.classList.add('kr-text');
+
+    answerLabel.innerHTML = '💡 정답 — 탭하여 확인 👆';
+    answerBox.style.cursor = 'pointer';
+  }
+
+  /* ── 메인 카드 하이라이트 ── */
+  document.querySelectorAll('.sentence-card.playing').forEach(c => c.classList.remove('playing'));
+  const card = document.getElementById('card-' + s.id);
+  if (card) card.classList.add('playing');
+}
+
+/* 정답 상세 영역 채우기 (공통) */
+function _fillAnswerDetail(s, mode) {
+  const answerMainText = document.getElementById('dlgAnswerMainText');
+  const chunksArea     = document.getElementById('dlgChunksArea');
+  const tipsEl         = document.getElementById('dlgTips');
+
+  /* 정답 텍스트: en2kr/all → 한국어, kr2en → 영어 */
+  if (mode === 'kr2en') {
+    answerMainText.textContent = s.english || '';
+  } else {
+    answerMainText.textContent = s.answer || '';
+  }
+
+  /* 청크 */
+  if (s.chunks && s.chunks.length) {
+    chunksArea.innerHTML = s.chunks.map((c, i) =>
+      `<span class="chunk-pill ${CHUNK_COLORS[i % CHUNK_COLORS.length]}">${c}</span>`
+    ).join('');
+    chunksArea.style.display = 'flex';
+  } else {
+    chunksArea.style.display = 'none';
+  }
+
+  /* 팁 */
+  if (s.tips) {
+    tipsEl.textContent = '💡 ' + s.tips;
+    tipsEl.style.display = 'block';
+  } else {
+    tipsEl.style.display = 'none';
+  }
+}
+
+/* ────── 정답 공개 ────── */
+function dlgRevealAnswer() {
+  /* all 모드는 이미 공개 상태 */
+  if (dlgMode === 'all') return;
+  if (dlgRevealedAnswer) return;
+  dlgRevealedAnswer = true;
+
+  const s           = dlgSentences[dlgIndex];
+  if (!s) return;
+
+  const answerBox    = document.getElementById('dlgAnswer');
+  const answerHidden = document.getElementById('dlgAnswerHidden');
+  const answerDetail = document.getElementById('dlgAnswerDetail');
+  const answerLabel  = document.getElementById('dlgAnswerLabel');
+
+  /* 박스를 revealed 상태로 전환 */
+  answerBox.classList.add('revealed');
+  answerBox.style.cursor = 'default';
+  answerHidden.style.display = 'none';
+  answerDetail.style.display = 'block';
+
+  /* 정답 레이블 바운스 */
+  answerLabel.innerHTML = '✅ 정답';
+  answerLabel.classList.remove('reveal-drop');
+  void answerLabel.offsetWidth;
+  answerLabel.classList.add('reveal-drop');
+
+  /* 상세 내용 채우기 */
+  _fillAnswerDetail(s, dlgMode);
+
+  /* ── 게임 특수효과 ── */
+  const answerMainText = document.getElementById('dlgAnswerMainText');
+  const revealDetail   = document.getElementById('dlgRevealDetail');
+
+  /* 박스 팝 + 빛 번쩍임 */
+  answerBox.classList.remove('reveal-pop', 'reveal-glow');
+  void answerBox.offsetWidth;
+  answerBox.classList.add('reveal-pop', 'reveal-glow');
+
+  /* 청크/팁 아래서 올라오기 */
+  if (revealDetail) {
+    revealDetail.classList.remove('reveal-up');
+    void revealDetail.offsetWidth;
+    revealDetail.classList.add('reveal-up');
+  }
+
+  /* 정답 공개 후 자동 TTS */
+  setTimeout(() => dlgPlayCurrent(), 400);
+}
+
+/* ────── 학습 결과 마킹 ────── */
+function dlgMarkKnow() {
+  const s = dlgSentences[dlgIndex];
+  if (s) { dlgKnownIds.add(s.id); dlgUnknownIds.delete(s.id); }
+  dlgUpdateScore();
+  dlgNext();
+}
+
+function dlgMarkDontKnow() {
+  const s = dlgSentences[dlgIndex];
+  if (s) { dlgUnknownIds.add(s.id); dlgKnownIds.delete(s.id); }
+  dlgUpdateScore();
+  dlgNext();
+}
+
+function dlgUpdateScore() {
+  const total   = dlgSentences.length;
+  const known   = dlgKnownIds.size;
+  const unknown = dlgUnknownIds.size;
+  const remain  = total - known - unknown;
+  const k = document.getElementById('dlgScoreKnown');
+  const u = document.getElementById('dlgScoreUnknown');
+  const r = document.getElementById('dlgScoreRemain');
+  if (k) k.textContent = '✅ ' + known;
+  if (u) u.textContent = '😅 ' + unknown;
+  if (r) r.textContent = '📝 ' + remain + ' 남음';
+}
+
+/* ────── 네비게이션 ────── */
+function dlgPrev() {
+  dlgStopAutoPlay();
+  if (dlgIndex > 0) {
+    dlgIndex--;
+    dlgRenderSentence();
+    setTimeout(() => dlgPlayCurrent(), 300);
+  }
+}
+
+function dlgNext() {
+  if (dlgIndex < dlgSentences.length - 1) {
+    dlgIndex++;
+    dlgRenderSentence();
+    setTimeout(() => dlgPlayCurrent(), 300);
+  } else {
+    if (dlgRepeat) {
+      dlgIndex = 0;
+      dlgRenderSentence();
+      setTimeout(() => dlgPlayCurrent(), 300);
+    } else dlgStopAutoPlay();
+  }
+}
+
+function dlgGoFirst() {
+  dlgStopAutoPlay();
+  dlgIndex = 0;
+  dlgRenderSentence();
+}
+
+/* ────── 현재 문장 TTS 재생 ────── */
+function dlgPlayCurrent() {
+  if (!dlgSentences.length) return;
+  const s = dlgSentences[dlgIndex];
+  if (!s) return;
+
+  /* 항상 영어 TTS — 한→영 퀴즈에서 정답 공개 후 재생 */
+  const txt = s.english;
+
+  /* TTS 버튼 애니메이션 */
+  const ttsBtn  = document.getElementById('dlgTtsBtn');
+  const numTile = document.getElementById('dlgNumTile');
+  if (ttsBtn)  ttsBtn.classList.add('playing');
+  if (numTile) numTile.classList.add('playing');
+
+  window.speechSynthesis.cancel();
+  const dlgSpeedEl = document.getElementById('dlgSpeedSlider');
+  const rate = parseFloat(dlgSpeedEl ? dlgSpeedEl.value : document.getElementById('rateSlider').value);
+
+  const utt = new SpeechSynthesisUtterance(txt);
+  utt.lang   = 'en-US';
+  utt.rate   = rate;
+  utt.pitch  = parseFloat(document.getElementById('pitchSlider').value);
+  utt.volume = parseFloat(document.getElementById('volumeSlider').value);
+  if (selectedVoice) utt.voice = selectedVoice;
+  utt.onend = () => {
+    if (ttsBtn)  ttsBtn.classList.remove('playing');
+    if (numTile) numTile.classList.remove('playing');
+  };
+  window.speechSynthesis.speak(utt);
+}
+
+/* ────── 자동재생 ────── */
+function dlgToggleAutoPlay() {
+  if (dlgAutoPlaying && !dlgPaused) {
+    /* 일시정지 */
+    dlgPaused = true;
+    window.speechSynthesis.cancel();
+    clearTimeout(dlgAutoTimer);
+    const badge = document.getElementById('dlgAutoBadge');
+    badge.classList.add('paused');
+    document.getElementById('dlgAutoLabel').textContent = '일시정지';
+    document.getElementById('dlgEnglish').classList.remove('listening');
+  } else if (dlgAutoPlaying && dlgPaused) {
+    /* 재개 */
+    dlgPaused = false;
+    const badge = document.getElementById('dlgAutoBadge');
+    badge.classList.remove('paused');
+    document.getElementById('dlgAutoLabel').textContent = '자동재생 중';
+    dlgAutoPlayStep();
+  } else {
+    dlgStartAutoPlay();
+  }
+}
+
+function dlgStartAutoPlay() {
+  dlgAutoPlaying = true;
+  dlgPaused = false;
+  dlgIndex = 0;
+  const badge = document.getElementById('dlgAutoBadge');
+  badge.classList.add('visible');
+  badge.classList.remove('paused');
+  document.getElementById('dlgAutoLabel').textContent = '자동재생 중';
+  dlgRenderSentence();
+  dlgAutoPlayStep();
+}
+
+function dlgAutoPlayStep() {
+  if (!dlgAutoPlaying || dlgPaused) return;
+  if (!dlgSentences.length) return;
+
+  const s = dlgSentences[dlgIndex];
+  if (!s) { dlgStopAutoPlay(); return; }
+
+  /* 전체보기/자동재생 모드: 정답 자동 공개 */
+  if (dlgMode === 'all') {
+    /* all 모드는 이미 열려있음 (dlgRenderSentence에서 처리) */
+  }
+
+  /* 카드 하이라이트 & 스크롤 */
+  document.querySelectorAll('.sentence-card.playing').forEach(c => c.classList.remove('playing'));
+  const card = document.getElementById('card-' + s.id);
+  if (card) {
+    card.classList.add('playing');
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  /* TTS 버튼 + 이미지 타일 애니메이션 (자동재생) */
+  const emojiRowAuto = document.getElementById('dlgTtsBtn');
+  const numTileAuto  = document.getElementById('dlgNumTile');
+  if (emojiRowAuto) emojiRowAuto.classList.add('playing');
+  if (numTileAuto)  numTileAuto.classList.add('playing');
+
+  const dlgSpeedEl = document.getElementById('dlgSpeedSlider');
+  const rate = parseFloat(dlgSpeedEl ? dlgSpeedEl.value : document.getElementById('rateSlider').value);
+  window.speechSynthesis.cancel();
+
+  const utt = new SpeechSynthesisUtterance(s.english);
+  utt.lang   = 'en-US';
+  utt.rate   = rate;
+  utt.pitch  = parseFloat(document.getElementById('pitchSlider').value);
+  utt.volume = parseFloat(document.getElementById('volumeSlider').value);
+  if (selectedVoice) utt.voice = selectedVoice;
+
+  utt.onend = () => {
+    if (emojiRowAuto) emojiRowAuto.classList.remove('playing');
+    if (numTileAuto)  numTileAuto.classList.remove('playing');
+    if (!dlgAutoPlaying || dlgPaused) return;
+    const interval = getInterval();
+    dlgAutoTimer = setTimeout(() => {
+      if (!dlgAutoPlaying || dlgPaused) return;
+      if (dlgIndex < dlgSentences.length - 1) {
+        dlgIndex++;
+        dlgRenderSentence();
+        dlgAutoPlayStep();
+      } else {
+        if (dlgRepeat) { dlgIndex = 0; dlgRenderSentence(); dlgAutoPlayStep(); }
+        else dlgStopAutoPlay();
+      }
+    }, interval);
+  };
+  window.speechSynthesis.speak(utt);
+}
+
+function dlgStopAutoPlay() {
+  dlgAutoPlaying = false;
+  dlgPaused = false;
+  window.speechSynthesis.cancel();
+  clearTimeout(dlgAutoTimer);
+
+  const badge = document.getElementById('dlgAutoBadge');
+  if (badge) { badge.classList.remove('visible', 'paused'); }
+  const ttsBtnStop = document.getElementById('dlgTtsBtn');
+  if (ttsBtnStop) ttsBtnStop.classList.remove('playing');
+}
+
+function dlgToggleRepeat() {
+  dlgRepeat = !dlgRepeat;
+  const btn = document.getElementById('dlgRepeatBtn');
+  if (btn) {
+    btn.style.background = dlgRepeat ? '#667eea' : '#e0e0e0';
+    btn.style.color = dlgRepeat ? 'white' : '#555';
+    btn.title = dlgRepeat ? '🔁 반복 켜짐' : '반복 켜기/끄기';
+  }
+}
+
+/* ────── 다이얼로그 키보드 단축키 추가 ────── */
+document.addEventListener('keydown', function(dlgKeyEvt) {
+  const isOpen = document.getElementById('dlgOverlay').classList.contains('active');
+  if (!isOpen) return;
+
+  /* 입력 필드에 포커스 있으면 무시 */
+  const tag = dlgKeyEvt.target.tagName.toLowerCase();
+  if (tag === 'input' || tag === 'textarea') return;
+
+  switch (dlgKeyEvt.code) {
+    case 'Escape':
+      closeDlg();
+      break;
+    case 'ArrowRight':
+    case 'ArrowDown':
+      dlgKeyEvt.preventDefault();
+      if (dlgAutoPlaying) { /* 자동재생 중엔 건너뜀 */ break; }
+      dlgNext();
+      break;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      dlgKeyEvt.preventDefault();
+      dlgPrev();
+      break;
+    case 'Space':
+      dlgKeyEvt.preventDefault();
+      dlgToggleAutoPlay();
+      break;
+    case 'Enter':
+      dlgKeyEvt.preventDefault();
+      if (!dlgRevealedAnswer) dlgRevealAnswer();
+      else dlgPlayCurrent();
+      break;
+  }
+}, true); /* capture=true: Space 이벤트가 기존 핸들러보다 먼저 처리 */
+
+</script>
+</body>
+</html>

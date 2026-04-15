@@ -1,0 +1,466 @@
+{
+  "title": "유아 영어 회화 150패턴",
+  "description": "유아 (3-7세) 영어 회화 패턴 학습",
+  "version": "1.0",
+  "situations": [
+    {
+      "id": 1,
+      "emoji": "👋",
+      "name": "인사",
+      "nameEn": "인사 · Greetings",
+      "color": "linear-gradient(135deg,#ff9a44 0%,#fc6076 100%)",
+      "sentences": [
+        {
+          "id": 1,
+          "english": "Hi! How are you?",
+          "question": "How do you casually greet someone?",
+          "answer": "안녕! 어떻게 지내?",
+          "chunks": [
+            "Hi!",
+            "How",
+            "are you?"
+          ],
+          "phonics": "Hi! (인사) → How are you? (안부 묻기)",
+          "tips": "Hi / Hello / Hey | 상황별 인사 강도 차이"
+        },
+        {
+          "id": 2,
+          "english": "Hello, everyone!",
+          "question": "How do you casually greet someone?",
+          "answer": "안녕하세요, 여러분!",
+          "chunks": [
+            "Hello,",
+            "everyone!"
+          ],
+          "phonics": "Hello, (인사) → everyone! (대상)",
+          "tips": "Hi / Hello / Hey | 상황별 인사 강도 차이"
+        },
+        {
+          "id": 3,
+          "english": "Good morning, Mommy!",
+          "question": "What do you say when you see someone in the morning?",
+          "answer": "좋은 아침이에요, 엄마!",
+          "chunks": [
+            "Good morning,",
+            "Mommy!"
+          ],
+          "phonics": "Good morning, (아침 인사) → Mommy! (호칭)",
+          "tips": "Good + [때/상황] | 상황별 인사/격려"
+        },
+        {
+          "id": 4,
+          "english": "Good afternoon, teacher!",
+          "question": "What do you say to someone you see in the afternoon?",
+          "answer": "좋은 오후에요, 선생님!",
+          "chunks": [
+            "Good afternoon,",
+            "teacher!"
+          ],
+          "phonics": "Good afternoon, (오후 인사) → teacher! (호칭)",
+          "tips": "Good + [때/상황] | 상황별 인사/격려"
+        },
+        {
+          "id": 5,
+          "english": "Good evening, Daddy!",
+          "question": "What do you say when you meet someone in the evening?",
+          "answer": "좋은 저녁이에요, 아빠!",
+          "chunks": [
+            "Good evening,",
+            "Daddy!"
+          ],
+          "phonics": "Good evening, (저녁 인사) → Daddy! (호칭)",
+          "tips": "Good + [때/상황] | 상황별 인사/격려"
+        },
+        {
+          "id": 6,
+          "english": "Good night! Sleep well!",
+          "question": "What do you say before going to bed?",
+          "answer": "잘 자요! 푹 자요!",
+          "chunks": [
+            "Good night,",
+            "sleep well!"
+          ],
+          "phonics": "Good night, (밤 인사) → sleep well! (잘 자라는 말)",
+          "tips": "Good + [때/상황] | 상황별 인사/격려"
+        },
+        {
+          "id": 7,
+          "english": "How are you today?",
+          "question": "What do you say when asking about someone's wellbeing?",
+          "answer": "오늘 어떻게 지내?",
+          "chunks": [
+            "How are you",
+            "today?"
+          ],
+          "phonics": "How are you (안부) → today? (시간)",
+          "tips": "의문문 패턴 | 질문으로 상대방 의도/정보 확인"
+        },
+        {
+          "id": 8,
+          "english": "I'm fine, thank you!",
+          "question": "How do you politely decline?",
+          "answer": "나는 잘 지내요, 고마워요!",
+          "chunks": [
+            "I'm fine,",
+            "thank you!"
+          ],
+          "phonics": "I'm fine, (상태) → thank you! (감사)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 9,
+          "english": "Bye-bye! See you!",
+          "question": "What do you say when saying goodbye?",
+          "answer": "잘 가! 또 봐!",
+          "chunks": [
+            "Bye-bye,",
+            "see you!"
+          ],
+          "phonics": "Bye-bye, (작별) → see you! (다음 만남)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 10,
+          "english": "See you tomorrow!",
+          "question": "What do you say when saying goodbye?",
+          "answer": "내일 봐!",
+          "chunks": [
+            "See you",
+            "tomorrow!"
+          ],
+          "phonics": "See you (만남 약속) → tomorrow! (시간)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 11,
+          "english": "See you later, friend!",
+          "question": "What do you say when saying goodbye?",
+          "answer": "나중에 봐, 친구야!",
+          "chunks": [
+            "See you later,",
+            "friend!"
+          ],
+          "phonics": "See you later, (나중에) → friend! (호칭)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 12,
+          "english": "Nice to meet you!",
+          "question": "What do you say when meeting someone for the first time?",
+          "answer": "만나서 반가워!",
+          "chunks": [
+            "Nice to meet you!",
+            "I'm Tom."
+          ],
+          "phonics": "Nice to meet you! (첫 만남) → I'm [이름]. (소개)",
+          "tips": "Nice to + 동사원형 | 만남·칭찬 표현"
+        },
+        {
+          "id": 13,
+          "english": "Nice to see you again!",
+          "question": "What do you say when you meet someone again?",
+          "answer": "다시 만나서 반가워!",
+          "chunks": [
+            "Nice to see you",
+            "again!"
+          ],
+          "phonics": "Nice to see you (만남) → again! (재회)",
+          "tips": "Nice to + 동사원형 | 만남·칭찬 표현"
+        },
+        {
+          "id": 14,
+          "english": "Have a good day!",
+          "question": "What do you say when saying goodbye?",
+          "answer": "좋은 하루 보내!",
+          "chunks": [
+            "Have",
+            "a good day!"
+          ],
+          "phonics": "Have (가지다) → a good day! (좋은 하루)",
+          "tips": "Have + 과거분사? | 경험 질문 / Have a ~ | 표현"
+        },
+        {
+          "id": 15,
+          "english": "Thank you so much!",
+          "question": "How do you express gratitude?",
+          "answer": "정말 고마워요!",
+          "chunks": [
+            "Thank you",
+            "so much!"
+          ],
+          "phonics": "Thank you (감사) → so much! (강조)",
+          "tips": "Thank you (for + 명사/~ing) | 감사 표현"
+        },
+        {
+          "id": 16,
+          "english": "You're welcome! Anytime.",
+          "question": "How do you respond when someone thanks you?",
+          "answer": "천만에요! 언제든지.",
+          "chunks": [
+            "You're welcome!",
+            "Anytime."
+          ],
+          "phonics": "You're welcome! (응답) → Anytime. (항상 OK)",
+          "tips": "짧은 핵심 표현 | 자주 쓰는 일상 문구"
+        },
+        {
+          "id": 17,
+          "english": "Help me, please!",
+          "question": "How do you give an instruction or make a request?",
+          "answer": "도와주세요, 제발!",
+          "chunks": [
+            "Help me,",
+            "please!"
+          ],
+          "phonics": "Help me, (요청) → please! (예의)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 18,
+          "english": "Sorry, I'm late!",
+          "question": "How do you apologize or get someone's attention?",
+          "answer": "미안해요, 늦었어요!",
+          "chunks": [
+            "Sorry,",
+            "I'm late!"
+          ],
+          "phonics": "Sorry, (사과) → I'm late! (이유)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 19,
+          "english": "Excuse me, teacher!",
+          "question": "How do you apologize or get someone's attention?",
+          "answer": "실례합니다, 선생님!",
+          "chunks": [
+            "Excuse me,",
+            "teacher!"
+          ],
+          "phonics": "Excuse me, (실례) → teacher! (대상)",
+          "tips": "Excuse me + 요청 | 실례 표현"
+        },
+        {
+          "id": 20,
+          "english": "No problem! It's okay.",
+          "question": "How do you respond when someone thanks you?",
+          "answer": "문제없어요! 괜찮아요.",
+          "chunks": [
+            "No problem!",
+            "It's okay."
+          ],
+          "phonics": "No problem! (괜찮다) → It's okay. (확인)",
+          "tips": "Yes/No + 부가 설명 | 긍정/부정 강조"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "emoji": "🙋",
+      "name": "자기소개",
+      "nameEn": "자기소개 · Introduction",
+      "color": "linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)",
+      "sentences": [
+        {
+          "id": 21,
+          "english": "I'm Jenny.",
+          "question": "How do you introduce yourself by name?",
+          "answer": "나는 제니야.",
+          "chunks": [
+            "I'm",
+            "Jenny."
+          ],
+          "phonics": "I'm (나는) → [이름]. (소개)",
+          "tips": "짧은 핵심 표현 | 자주 쓰는 일상 문구"
+        },
+        {
+          "id": 22,
+          "english": "My name is Tom.",
+          "question": "How do you introduce yourself?",
+          "answer": "내 이름은 톰이야.",
+          "chunks": [
+            "My name",
+            "is Tom."
+          ],
+          "phonics": "My name (내 이름) → is [이름]. (확인)",
+          "tips": "My name is + 이름 | 자기소개 기본 패턴"
+        },
+        {
+          "id": 23,
+          "english": "I'm five years old.",
+          "question": "How do you say your age in English?",
+          "answer": "나는 다섯 살이야.",
+          "chunks": [
+            "I'm",
+            "five",
+            "years old."
+          ],
+          "phonics": "I'm (나는) → [숫자] (나이) → years old. (살)",
+          "tips": "기본 문장 패턴 | 핵심 실용 표현"
+        },
+        {
+          "id": 24,
+          "english": "I live in Korea.",
+          "question": "How do you say where you live?",
+          "answer": "나는 한국에 살아.",
+          "chunks": [
+            "I live",
+            "in Korea."
+          ],
+          "phonics": "I live (나는 살아) → in [장소]. (위치)",
+          "tips": "기본 문장 패턴 | 핵심 실용 표현"
+        },
+        {
+          "id": 25,
+          "english": "I like ice cream!",
+          "question": "How do you talk about what you like?",
+          "answer": "나는 아이스크림을 좋아해!",
+          "chunks": [
+            "I like",
+            "ice cream!"
+          ],
+          "phonics": "I like (좋아해) → [명사]. (대상)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "emoji": "😊",
+      "name": "감정",
+      "nameEn": "감정 · Feelings",
+      "color": "linear-gradient(135deg,#43e97b 0%,#38f9d7 100%)",
+      "sentences": [
+        {
+          "id": 26,
+          "english": "I'm so happy!",
+          "question": "How do you express your feelings in English?",
+          "answer": "나는 정말 행복해!",
+          "chunks": [
+            "I'm",
+            "so happy!"
+          ],
+          "phonics": "I'm (나는) → so happy! (매우 행복한)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 27,
+          "english": "I'm sad.",
+          "question": "How do you express your feelings in English?",
+          "answer": "나 슬퍼.",
+          "chunks": [
+            "I'm",
+            "sad."
+          ],
+          "phonics": "I'm (나는) → sad. (슬픈 상태)",
+          "tips": "짧은 핵심 표현 | 자주 쓰는 일상 문구"
+        },
+        {
+          "id": 28,
+          "english": "I'm angry!",
+          "question": "How do you express your feelings in English?",
+          "answer": "나 화났어!",
+          "chunks": [
+            "I'm",
+            "angry!"
+          ],
+          "phonics": "I'm (나는) → angry! (화난 상태)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 29,
+          "english": "I'm scared.",
+          "question": "How do you express your feelings in English?",
+          "answer": "나 무서워.",
+          "chunks": [
+            "I'm",
+            "scared."
+          ],
+          "phonics": "I'm (나는) → scared. (무서운 상태)",
+          "tips": "짧은 핵심 표현 | 자주 쓰는 일상 문구"
+        },
+        {
+          "id": 30,
+          "english": "I'm tired.",
+          "question": "How do you describe what you are doing right now?",
+          "answer": "나 피곤해.",
+          "chunks": [
+            "I'm",
+            "tired."
+          ],
+          "phonics": "I'm (나는) → tired. (피곤한 상태)",
+          "tips": "짧은 핵심 표현 | 자주 쓰는 일상 문구"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "emoji": "🙏",
+      "name": "요청",
+      "nameEn": "요청 · Requests",
+      "color": "linear-gradient(135deg,#667eea 0%,#764ba2 100%)",
+      "sentences": [
+        {
+          "id": 31,
+          "english": "Can I have some water?",
+          "question": "How do you make a polite request?",
+          "answer": "물을 좀 마실 수 있나요?",
+          "chunks": [
+            "Can I have",
+            "some water?"
+          ],
+          "phonics": "Can I have (줄 수 있어요?) → some water? (무엇을)",
+          "tips": "Can I + 동사? | 정중한 요청 표현"
+        },
+        {
+          "id": 32,
+          "english": "I want a cookie.",
+          "question": "How do you say what you want?",
+          "answer": "나는 쿠키를 원해요.",
+          "chunks": [
+            "I want",
+            "a cookie."
+          ],
+          "phonics": "I want (원해요) → [명사]. (무엇을)",
+          "tips": "I + want/need/have + 명사 | 기본 욕구/소유 표현"
+        },
+        {
+          "id": 33,
+          "english": "Give me the ball, please.",
+          "question": "How do you give an instruction or make a request?",
+          "answer": "나에게 공을 주세요.",
+          "chunks": [
+            "Give me",
+            "the ball,",
+            "please."
+          ],
+          "phonics": "Give me (주세요) → the [명사], (무엇을) → please. (예의)",
+          "tips": "동사원형으로 시작 | 명령문 또는 지시"
+        },
+        {
+          "id": 34,
+          "english": "Wait for me!",
+          "question": "How do you ask someone to wait?",
+          "answer": "나를 기다려!",
+          "chunks": [
+            "Wait",
+            "for me!"
+          ],
+          "phonics": "Wait (기다려) → for me! (나를)",
+          "tips": "감탄문/명령문 패턴 | 감정 표현 또는 강한 지시"
+        },
+        {
+          "id": 35,
+          "english": "Can I go outside?",
+          "question": "How do you make a polite request?",
+          "answer": "제가 밖으로 가도 되나요?",
+          "chunks": [
+            "Can I",
+            "go outside?"
+          ],
+          "phonics": "Can I (해도 돼요?) → go outside? (어디로)",
+          "tips": "의문문 패턴 | 질문으로 상대방 의도/정보 확인"
+        }
+      ]
+    }
+  ]
+}

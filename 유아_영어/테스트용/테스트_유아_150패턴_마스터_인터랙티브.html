@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>유아 150패턴 마스터 - 인터랙티브 학습</title>
+  <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --radius: 16px;
+      --shadow: 0 4px 18px rgba(0,0,0,0.10);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --transition: 0.25s ease;
+      --primary: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: linear-gradient(160deg, #e8f4fd 0%, #fce4ec 50%, #f3e5f5 100%);
+      min-height: 100vh;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      text-align: center;
+      padding: 32px 20px 24px;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 2.4em;
+      color: #2c3e50;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #7f8c8d;
+      font-size: 0.95em;
+    }
+
+    .header-badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .badge {
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    /* Progress Bar */
+    .progress-section {
+      margin-top: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #ecf0f1;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .progress-text {
+      margin-top: 8px;
+      font-size: 0.85em;
+      color: #95a5a6;
+      text-align: center;
+    }
+
+    /* ========== SETTINGS PANEL ========== */
+    .settings-panel {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .settings-header {
+      padding: 16px 22px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: opacity var(--transition);
+    }
+
+    .settings-header:hover {
+      opacity: 0.92;
+    }
+
+    .settings-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .settings-chevron {
+      font-size: 1.2em;
+      transition: transform 0.3s;
+    }
+
+    .settings-panel.open .settings-chevron {
+      transform: rotate(180deg);
+    }
+
+    .settings-body {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .settings-item label {
+      display: block;
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .settings-item select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 0.88em;
+      background: #fafafa;
+      cursor: pointer;
+      transition: border-color var(--transition);
+    }
+
+    .settings-item select:focus { outline: none; border-color: #667eea; }
+
+    .slider-row { display: flex; align-items: center; gap: 10px; }
+
+    /* 하위 호환 */
+    .slider-container { display: flex; align-items: center; gap: 10px; }
+
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: #e0e0e0;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(102,126,234,0.4);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(102,126,234,0.4);
+    }
+
+    .slider-val, .slider-value {
+      min-width: 40px;
+      text-align: right;
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #667eea;
+    }
+
+    /* ========== GLOBAL CONTROLS ========== */
+    .global-controls {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .control-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label {
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.88em;
+      font-weight: 700;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-green { background: #4CAF50; color: white; }
+    .btn-orange { background: #FF9800; color: white; }
+    .btn-red { background: #ef5350; color: white; }
+    .btn-purple { background: #7E57C2; color: white; }
+    .btn-indigo { background: #5C6BC0; color: white; }
+    .btn-gray { background: #78909C; color: white; }
+    .btn-teal { background: #26A69A; color: white; }
+
+    .btn-small {
+      padding: 7px 14px;
+      font-size: 0.8em;
+    }
+
+    .separator {
+      width: 1px;
+      height: 24px;
+      background: #e0e0e0;
+    }
+
+    /* Quiz Score Bar */
+    .quiz-score-bar {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .quiz-score-bar.active {
+      display: block;
+    }
+
+    .score-items {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .score-item {
+      text-align: center;
+    }
+
+    .score-number {
+      font-size: 1.8em;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .score-label {
+      font-size: 0.8em;
+      color: #555;
+      font-weight: 700;
+    }
+
+    /* ========== PART FILTER ========== */
+    .part-filter {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 14px 20px;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .filter-btn {
+      padding: 7px 16px;
+      border: 2px solid #ddd;
+      border-radius: 20px;
+      background: white;
+      color: #555;
+      cursor: pointer;
+      font-size: 0.82em;
+      font-weight: 700;
+      transition: all var(--transition);
+    }
+
+    .filter-btn:hover {
+      border-color: #667eea;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-color: #667eea;
+    }
+
+    /* ========== SEARCH ========== */
+    .search-box {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 14px 20px;
+      margin-bottom: 14px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 0.95em;
+      transition: border-color var(--transition);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* ========== CATEGORY SECTIONS ========== */
+    .category-section {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .category-header {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: background-color var(--transition);
+    }
+
+    .category-header:hover {
+      background-color: #f8fafc;
+    }
+
+    .category-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .category-emoji {
+      font-size: 1.6em;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .category-name {
+      font-size: 1.1em;
+      font-weight: 800;
+      color: #2c3e50;
+    }
+
+    .category-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-count {
+      background: #f0f2f5;
+      color: #555;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 700;
+    }
+
+    .category-chevron {
+      color: #667eea;
+      font-size: 1.2em;
+      transition: transform 0.3s;
+    }
+
+    .category-section.open .category-chevron {
+      transform: rotate(180deg);
+    }
+
+    .category-actions {
+      padding: 0 20px 12px;
+      display: none;
+    }
+
+    .category-section.open .category-actions {
+      display: block;
+    }
+
+    .section-play-btn {
+      padding: 8px 16px;
+      font-size: 0.82em;
+    }
+
+    .category-body {
+      padding: 16px 20px;
+      background: #f8fafc;
+      display: none;
+    }
+
+    .category-section.open .category-body {
+      display: block;
+    }
+
+    /* ========== CARDS GRID ========== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .question-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      border-left: 5px solid #e0e0e0;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .question-card.playing {
+      transform: scale(1.015);
+      border-left-color: #4CAF50;
+      outline: 2px solid #4CAF50;
+      animation: pulse-glow 1.4s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 0 0 0 rgba(76,175,80,0.45); }
+      60% { box-shadow: 0 0 0 10px rgba(76,175,80,0); }
+      100% { box-shadow: 0 0 0 0 rgba(76,175,80,0); }
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .card-number {
+      background: #f0f2f5;
+      color: #888;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.75em;
+      font-weight: 800;
+    }
+
+    .card-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .card-play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.2s;
+    }
+
+    .card-play-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .card-english {
+      font-size: 1.3em;
+      font-weight: 800;
+      color: #2c3e50;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .card-korean {
+      font-size: 0.95em;
+      color: #7f8c8d;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .hint-badge {
+      display: inline-block;
+      background: #fff3cd;
+      color: #856404;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .quiz-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 10px;
+    }
+
+    .quiz-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8em;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .quiz-btn.correct {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+      color: #2e7d32;
+    }
+
+    .quiz-btn.wrong {
+      background: #ffcdd2;
+      border-color: #c62828;
+      color: #c62828;
+    }
+
+    /* ========== MINI PLAYER ========== */
+    /* ====== FLOATING MINI PLAYER ====== */
+    #miniPlayer {
+      position: fixed; bottom: 20px; right: 20px;
+      border-radius: 16px; padding: 13px 16px 11px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      display: none; z-index: 999;
+      min-width: 230px; max-width: 300px;
+      border: 2.5px solid #4CAF50; border-left-width: 6px;
+      background: #fff;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+    #miniPlayer.active { display: block; }
+    #miniPlayer.state-playing {
+      border-color: #4CAF50; background: #fff;
+      box-shadow: 0 8px 32px rgba(76,175,80,0.18);
+    }
+    #miniPlayer.state-paused {
+      border-color: #FFA726; border-style: dashed;
+      border-left-style: solid; background: #FFF8E1;
+      box-shadow: 0 8px 32px rgba(255,167,38,0.22);
+    }
+    .mini-status-row { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+    .mini-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 2px 9px; border-radius: 20px;
+      font-size: 0.76em; font-weight: 800; letter-spacing: 0.4px;
+      transition: background 0.25s, color 0.25s;
+    }
+    #miniPlayer.state-playing .mini-badge { background: #E8F5E9; color: #2E7D32; }
+    #miniPlayer.state-paused  .mini-badge { background: #FFF3E0; color: #E65100; }
+    .mini-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1.1); }
+      50%      { opacity:0.3; transform:scale(0.6); }
+    }
+    #miniPlayer.state-playing .mini-dot { background: #4CAF50; animation: pulse-dot 1s ease-in-out infinite; }
+    #miniPlayer.state-paused  .mini-dot { background: #FFA726; animation: none; }
+    .mini-text {
+      font-size: 1em; font-weight: 700; color: #2c3e50;
+      line-height: 1.4; min-height: 1.4em; transition: color 0.2s;
+    }
+    #miniPlayer.state-paused .mini-text { color: #999; }
+    .mini-hint { font-size: 0.70em; color: #ccc; margin-top: 4px; text-align: right; }
+    .mini-controls { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.8em; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .mini-player { width: 260px; bottom: 10px; right: 10px; }
+      .control-row { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    /* ========== UTILITY ========== */
+    .hidden { display: none !important; }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+    }
+
+    .empty-state-icon {
+      font-size: 3em;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* ========== BLUR (Quiz Mode) ========== */
+    .blur-text {
+      filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      transition: filter 0.3s;
+    }
+    .blur-text:hover {
+      filter: blur(5px);
+    }
+    .blur-text.revealed {
+      filter: none !important;
+    }
+
+    /* ========== Twemoji size fix ========== */
+    img.emoji {
+      width: 1.2em !important;
+      height: 1.2em !important;
+      vertical-align: -0.15em;
+      margin: 0 1px;
+    }
+    .category-emoji img.emoji {
+      width: 1.6em !important;
+      height: 1.6em !important;
+    }
+    .header h1 img.emoji {
+      width: 1.1em !important;
+      height: 1.1em !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎯 유아 150패턴 마스터</h1>
+  <p>English Learning for Toddlers</p>
+  <div class="header-badges">
+    <span class="badge">120 질문</span>
+    <span class="badge">4개 Part</span>
+    <span class="badge">인터랙티브 학습</span>
+  </div>
+  <div class="progress-section">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">0 / 120 완료</div>
+  </div>
+</div>
+
+<!-- Settings Panel -->
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header" onclick="toggleSettings()">
+    <div class="settings-header-title">⚙️ 음성 설정 (Voice Settings)</div>
+    <span id="settingsChevron">▼</span>
+  </div>
+  <div class="settings-body" id="settingsBody">
+    <div class="settings-item">
+      <label>🎤 목소리 선택</label>
+      <select id="voiceSelect"><option>음성 로딩 중…</option></select>
+    </div>
+    <div class="settings-item">
+      <label>🐢 읽기 속도 (Rate)</label>
+      <div class="slider-row">
+        <input type="range" id="rateSlider" min="0.3" max="2.0" step="0.05" value="1.0">
+        <span class="slider-val" id="rateVal">1.0×</span>
+      </div>
+    </div>
+    <div class="settings-item">
+      <label>🎵 음높이 (Pitch)</label>
+      <div class="slider-row">
+        <input type="range" id="pitchSlider" min="0.5" max="2.0" step="0.05" value="1.0">
+        <span class="slider-val" id="pitchVal">1.0</span>
+      </div>
+    </div>
+    <div class="settings-item">
+      <label>🔊 볼륨 (Volume)</label>
+      <div class="slider-row">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1.0">
+        <span class="slider-val" id="volVal">100%</span>
+      </div>
+    </div>
+    <div class="settings-item">
+      <label>⏱ 문장 간 간격 (Interval)</label>
+      <div class="slider-row">
+        <input type="range" id="gapSlider" min="0" max="10000" step="200" value="500">
+        <span class="slider-val" id="gapVal">0.5초</span>
+      </div>
+    </div>
+    <div class="settings-item" style="align-self:flex-end;">
+      <label>&nbsp;</label>
+      <button class="btn btn-indigo" onclick="testVoice()">🎧 테스트 듣기</button>
+    </div>
+    <!-- 대화 상대 목소리 구분선 -->
+    <div style="grid-column:1/-1; border-top:1px dashed #c4b5fd; margin:4px 0; padding-top:10px;">
+      <span style="font-size:0.8rem; font-weight:700; color:#7c3aed;">💬 대화 상대 (Partner) 목소리</span>
+    </div>
+    <div class="settings-item">
+      <label>🗣 상대방 목소리</label>
+      <select id="voiceSelect2"><option>음성 로딩 중…</option></select>
+    </div>
+    <div class="settings-item">
+      <label>🐇 상대방 속도</label>
+      <div class="slider-row">
+        <input type="range" id="rateSlider2" min="0.3" max="2.0" step="0.05" value="1.0">
+        <span class="slider-val" id="rateVal2">1.0×</span>
+      </div>
+    </div>
+    <div class="settings-item" style="align-self:flex-end;">
+      <label>&nbsp;</label>
+      <button class="btn btn-indigo" onclick="testPartnerVoice()">🎧 상대방 테스트</button>
+    </div>
+  </div>
+</div>
+
+<!-- Global Controls -->
+<div class="global-controls">
+  <div class="control-row">
+    <span class="control-label">▶ 전체 재생</span>
+    <button class="btn btn-green" id="playAllBtn">▶ 전체 듣기</button>
+    <button class="btn btn-orange" id="pauseBtn">⏸ 일시정지</button>
+    <button class="btn btn-red" id="stopBtn">⏹ 정지</button>
+  </div>
+  <div class="control-row" style="align-items:center; gap:10px; flex-wrap:wrap;">
+    <span class="control-label">⏱ 문장 간격</span>
+    <input type="range" id="gapSliderGlobal" min="0" max="10000" step="200" value="500"
+      style="flex:1; min-width:140px; max-width:260px; accent-color:#7c3aed; cursor:pointer;">
+    <span id="gapValueGlobal" style="font-size:0.88rem; font-weight:700; color:#7c3aed; min-width:40px; text-align:right;">0.5초</span>
+  </div>
+
+  <div class="control-row">
+    <span class="control-label">📂 섹션 관리</span>
+    <button class="btn btn-teal" id="openAllBtn">📂 모두 열기</button>
+    <button class="btn btn-gray" id="closeAllBtn">📁 모두 닫기</button>
+  </div>
+
+  <div class="control-row">
+    <span class="control-label">🎯 퀴즈 모드</span>
+    <button class="btn btn-indigo quiz-mode-btn" data-mode="0">전체보기</button>
+    <button class="btn btn-purple quiz-mode-btn" data-mode="1">한글→영어</button>
+    <button class="btn btn-purple quiz-mode-btn" data-mode="2">영어→한글</button>
+  </div>
+</div>
+
+<!-- Quiz Score Bar -->
+<div class="quiz-score-bar" id="quizScoreBar">
+  <div class="score-items">
+    <div class="score-item">
+      <div class="score-number" style="color: #4CAF50;" id="correctCount">0</div>
+      <div class="score-label">정답</div>
+    </div>
+    <div class="score-item">
+      <div class="score-number" style="color: #ef5350;" id="wrongCount">0</div>
+      <div class="score-label">오답</div>
+    </div>
+    <div class="score-item">
+      <div class="score-number" style="color: #FF9800;" id="remainCount">120</div>
+      <div class="score-label">남은 문제</div>
+    </div>
+  </div>
+</div>
+
+<!-- Part Filter -->
+<div class="part-filter">
+  <span class="filter-label">파트 필터:</span>
+  <button class="filter-btn active" data-part="0">전체</button>
+  <button class="filter-btn" data-part="1">Part 1</button>
+  <button class="filter-btn" data-part="2">Part 2</button>
+  <button class="filter-btn" data-part="3">Part 3</button>
+  <button class="filter-btn" data-part="4">Part 4</button>
+</div>
+
+<!-- Search -->
+<div class="search-box">
+  <input type="text" class="search-input" id="searchInput" placeholder="🔍 검색 (영어, 한글, 번호)...">
+</div>
+
+<!-- Content Container -->
+<div id="contentContainer">
+  <!-- Category sections will be inserted here -->
+</div>
+
+<!-- Mini Player -->
+<div id="miniPlayer" class="state-playing">
+  <div class="mini-status-row">
+    <span class="mini-badge">
+      <span class="mini-dot"></span>
+      <span id="miniStateLabel">재생 중</span>
+    </span>
+  </div>
+  <div class="mini-text" id="miniText">—</div>
+  <div class="mini-hint">Space = 일시정지 / 재개</div>
+  <div class="mini-controls">
+    <button class="btn btn-orange btn-sm" id="miniPauseBtn" onclick="document.getElementById('pauseBtn').click()">⏸</button>
+    <button class="btn btn-red    btn-sm" onclick="document.getElementById('stopBtn').click()">⏹</button>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {no:"001",part:1,cat:"인사하기",q:"안녕! 어떻게 지내?",ht:"🟢",hint:"H_ ! H_ _ are you?",en:"Hi! How are you?",ko:"안녕! 어떻게 지내?"},
+  {no:"002",part:1,cat:"인사하기",q:"안녕하세요, 여러분!",ht:"🟡",hint:"(2단어)",en:"Hello, everyone!",ko:"안녕하세요, 여러분!"},
+  {no:"003",part:1,cat:"인사하기",q:"좋은 아침이에요, 엄마!",ht:"🟢",hint:"G_ _ _ m_ _ _ _ _ _, Mommy!",en:"Good morning, Mommy!",ko:"좋은 아침이에요, 엄마!"},
+  {no:"004",part:1,cat:"인사하기",q:"잘 자요, 아빠!",ht:"🟡",hint:"(3단어)",en:"Good night, Daddy!",ko:"잘 자요, 아빠!"},
+  {no:"005",part:1,cat:"인사하기",q:"잘 가, 또 봐!",ht:"🟢",hint:"B_ _ - b_ _, see you!",en:"Bye-bye, see you!",ko:"잘 가, 또 봐!"},
+  {no:"006",part:1,cat:"인사하기",q:"만나서 반가워!",ht:"🟡",hint:"(4단어)",en:"Nice to meet you!",ko:"만나서 반가워!"},
+  {no:"007",part:1,cat:"인사하기",q:"고마워!",ht:"🟢",hint:"T_ _ _ _ you!",en:"Thank you!",ko:"고마워!"},
+  {no:"008",part:1,cat:"인사하기",q:"천만에!",ht:"🟡",hint:"(2단어, 줄임말)",en:"You're welcome!",ko:"천만에!"},
+  {no:"009",part:1,cat:"인사하기",q:"미안해!",ht:"🟢",hint:"S_ _ _ _!",en:"Sorry!",ko:"미안해!"},
+  {no:"010",part:1,cat:"인사하기",q:"실례합니다, 선생님!",ht:"🟡",hint:"(3단어)",en:"Excuse me, teacher!",ko:"실례합니다, 선생님!"},
+  {no:"011",part:1,cat:"자기소개",q:"나는 제니야.",ht:"🟢",hint:"I'm J_ _ _ _.",en:"I'm Jenny.",ko:"나는 제니야."},
+  {no:"012",part:1,cat:"자기소개",q:"내 이름은 톰이야.",ht:"🟡",hint:"(4단어)",en:"My name is Tom.",ko:"내 이름은 톰이야."},
+  {no:"013",part:1,cat:"자기소개",q:"나는 다섯 살이야.",ht:"🟢",hint:"I'm f_ _ _ years old.",en:"I'm five years old.",ko:"나는 다섯 살이야."},
+  {no:"014",part:1,cat:"자기소개",q:"나는 한국에 살아.",ht:"🟡",hint:"(3단어)",en:"I live in Korea.",ko:"나는 한국에 살아."},
+  {no:"015",part:1,cat:"자기소개",q:"나는 아이스크림을 좋아해.",ht:"🟢",hint:"I l_ _ _ ice cream.",en:"I like ice cream.",ko:"나는 아이스크림을 좋아해."},
+  {no:"016",part:1,cat:"자기소개",q:"이쪽은 나의 엄마야.",ht:"🟡",hint:"(4단어)",en:"This is my mom.",ko:"이쪽은 나의 엄마야."},
+  {no:"017",part:1,cat:"자기소개",q:"나는 여동생이 있어.",ht:"🟢",hint:"I h_ _ _ a baby sister.",en:"I have a baby sister.",ko:"나는 여동생이 있어."},
+  {no:"018",part:1,cat:"자기소개",q:"우리 아빠는 키가 커.",ht:"🟡",hint:"(4단어)",en:"My dad is tall.",ko:"우리 아빠는 키가 커."},
+  {no:"019",part:1,cat:"자기소개",q:"나는 우리 할머니를 사랑해.",ht:"🟢",hint:"I l_ _ _ my grandma.",en:"I love my grandma.",ko:"나는 우리 할머니를 사랑해."},
+  {no:"020",part:1,cat:"자기소개",q:"우리는 행복한 가족이야.",ht:"🟡",hint:"(5단어)",en:"We are a happy family.",ko:"우리는 행복한 가족이야."},
+  {no:"021",part:1,cat:"감정 표현",q:"나는 정말 행복해!",ht:"🟢",hint:"I'm s_ h_ _ _ _!",en:"I'm so happy!",ko:"나는 정말 행복해!"},
+  {no:"022",part:1,cat:"감정 표현",q:"나 슬퍼.",ht:"🟡",hint:"(2단어)",en:"I'm sad.",ko:"나 슬퍼."},
+  {no:"023",part:1,cat:"감정 표현",q:"나 화났어!",ht:"🟢",hint:"I'm a_ _ _ _!",en:"I'm angry!",ko:"나 화났어!"},
+  {no:"024",part:1,cat:"감정 표현",q:"나 무서워.",ht:"🟡",hint:"(2단어)",en:"I'm scared.",ko:"나 무서워."},
+  {no:"025",part:1,cat:"감정 표현",q:"나 피곤해.",ht:"🟢",hint:"I'm t_ _ _ _.",en:"I'm tired.",ko:"나 피곤해."},
+  {no:"026",part:1,cat:"감정 표현",q:"이거 좋아!",ht:"🟡",hint:"(3단어)",en:"I like it!",ko:"이거 좋아!"},
+  {no:"027",part:1,cat:"감정 표현",q:"이거 너무 좋아!",ht:"🟢",hint:"I l_ _ _ it!",en:"I love it!",ko:"이거 너무 좋아!"},
+  {no:"028",part:1,cat:"감정 표현",q:"이건 정말 재미있어!",ht:"🟡",hint:"(3단어)",en:"It's so fun!",ko:"이건 정말 재미있어!"},
+  {no:"029",part:1,cat:"감정 표현",q:"배고파!",ht:"🟢",hint:"I'm h_ _ _ _ _!",en:"I'm hungry!",ko:"배고파!"},
+  {no:"030",part:1,cat:"감정 표현",q:"목말라!",ht:"🟡",hint:"(2단어)",en:"I'm thirsty!",ko:"목말라!"},
+  {no:"031",part:1,cat:"요청하기",q:"저 물을 좀 가질 수 있나요?",ht:"🟢",hint:"C_ _ I have some water?",en:"Can I have some water?",ko:"저 물을 좀 가질 수 있나요?"},
+  {no:"032",part:1,cat:"요청하기",q:"나는 쿠키를 원해요.",ht:"🟡",hint:"(3단어)",en:"I want a cookie.",ko:"나는 쿠키를 원해요."},
+  {no:"033",part:1,cat:"요청하기",q:"나에게 공을 주세요.",ht:"🟢",hint:"G_ _ _ me the ball, please.",en:"Give me the ball, please.",ko:"나에게 공을 주세요."},
+  {no:"034",part:1,cat:"요청하기",q:"도와주세요, 제발!",ht:"🟡",hint:"(3단어)",en:"Help me, please!",ko:"도와주세요, 제발!"},
+  {no:"035",part:1,cat:"요청하기",q:"나를 기다려!",ht:"🟢",hint:"W_ _ _ for me!",en:"Wait for me!",ko:"나를 기다려!"},
+  {no:"036",part:1,cat:"요청하기",q:"제가 밖으로 가도 되나요?",ht:"🟡",hint:"(4단어)",en:"Can I go outside?",ko:"제가 밖으로 가도 되나요?"},
+  {no:"037",part:1,cat:"요청하기",q:"제가 놀아도 되나요?",ht:"🟢",hint:"M_ _ I play?",en:"May I play?",ko:"제가 놀아도 되나요?"},
+  {no:"038",part:1,cat:"요청하기",q:"제가 TV 봐도 되나요?",ht:"🟡",hint:"(4단어)",en:"Can I watch TV?",ko:"제가 TV 봐도 되나요?"},
+  {no:"039",part:1,cat:"요청하기",q:"나는 내 곰 인형이 필요해요.",ht:"🟢",hint:"I n_ _ _ my teddy bear.",en:"I need my teddy bear.",ko:"나는 내 곰 인형이 필요해요."},
+  {no:"040",part:1,cat:"요청하기",q:"하나 더 주세요!",ht:"🟡",hint:"(3단어)",en:"One more, please!",ko:"하나 더 주세요!"},
+  {no:"041",part:1,cat:"일상생활",q:"일어나! 아침이야!",ht:"🟢",hint:"W_ _ _ up! It's morning!",en:"Wake up! It's morning!",ko:"일어나! 아침이야!"},
+  {no:"042",part:1,cat:"일상생활",q:"아침 먹을 시간이야!",ht:"🟡",hint:"(4단어)",en:"Time to eat breakfast!",ko:"아침 먹을 시간이야!"},
+  {no:"043",part:1,cat:"일상생활",q:"나는 양치하고 있어.",ht:"🟢",hint:"I'm b_ _ _ _ _ _ _ my teeth.",en:"I'm brushing my teeth.",ko:"나는 양치하고 있어."},
+  {no:"044",part:1,cat:"일상생활",q:"학교에 가자!",ht:"🟡",hint:"(4단어)",en:"Let's go to school!",ko:"학교에 가자!"},
+  {no:"045",part:1,cat:"일상생활",q:"나는 사과 하나를 먹고 있어.",ht:"🟢",hint:"I'm e_ _ _ _ _ an apple.",en:"I'm eating an apple.",ko:"나는 사과 하나를 먹고 있어."},
+  {no:"046",part:1,cat:"일상생활",q:"맛있어!",ht:"🟡",hint:"(1단어)",en:"Yummy!",ko:"맛있어!"},
+  {no:"047",part:1,cat:"일상생활",q:"나 배불러.",ht:"🟢",hint:"I'm f_ _ _.",en:"I'm full.",ko:"나 배불러."},
+  {no:"048",part:1,cat:"일상생활",q:"나 다 먹었어!",ht:"🟡",hint:"(2단어)",en:"I'm done!",ko:"나 다 먹었어!"},
+  {no:"049",part:1,cat:"일상생활",q:"나 집에 왔어!",ht:"🟢",hint:"I'm h_ _ _!",en:"I'm home!",ko:"나 집에 왔어!"},
+  {no:"050",part:1,cat:"일상생활",q:"잘 자요! 좋은 꿈 꿔!",ht:"🟡",hint:"(3단어)",en:"Good night! Sweet dreams!",ko:"잘 자요! 좋은 꿈 꿔!"},
+  {no:"051",part:2,cat:"여행 기초",q:"Where is the bathroom?",ht:"🟢",hint:"화_ _ _ 이 어디 있나요?",en:"Where is the bathroom?",ko:"화장실이 어디 있나요?"},
+  {no:"052",part:2,cat:"여행 기초",q:"I need help.",ht:"🟡",hint:"(3글자)",en:"I need help.",ko:"도움이 필요해요."},
+  {no:"053",part:2,cat:"여행 기초",q:"I'm lost.",ht:"🟢",hint:"나 길을 _ _ _ _ _.",en:"I'm lost.",ko:"나 길을 잃었어요."},
+  {no:"054",part:2,cat:"여행 기초",q:"This is my bag.",ht:"🟡",hint:"(5글자)",en:"This is my bag.",ko:"이것은 내 가방이에요."},
+  {no:"055",part:2,cat:"여행 기초",q:"Thank you for helping!",ht:"🟢",hint:"도와_ _ _ 고마워요!",en:"Thank you for helping!",ko:"도와줘서 고마워요!"},
+  {no:"056",part:2,cat:"여행 기초",q:"This is my room.",ht:"🟡",hint:"(4글자)",en:"This is my room.",ko:"이것은 내 방이에요."},
+  {no:"057",part:2,cat:"여행 기초",q:"I like this room!",ht:"🟢",hint:"나는 이 방을 _ _ _ _.",en:"I like this room!",ko:"나는 이 방을 좋아해요!"},
+  {no:"058",part:2,cat:"여행 기초",q:"Help! I need an adult!",ht:"🟡",hint:"(3글자+5글자)",en:"Help! I need an adult!",ko:"도와주세요! 어른이 필요해요!"},
+  {no:"059",part:2,cat:"여행 기초",q:"I can't find my mom.",ht:"🟢",hint:"나는 우리 _ _ 를 찾을 수 없어요.",en:"I can't find my mom.",ko:"나는 우리 엄마를 찾을 수 없어요."},
+  {no:"060",part:2,cat:"여행 기초",q:"I'm scared.",ht:"🟡",hint:"(3글자)",en:"I'm scared.",ko:"나 무서워요."},
+  {no:"061",part:2,cat:"교통과 이동",q:"I want to go to the park.",ht:"🟢",hint:"나는 _ _ 에 가고 싶어요.",en:"I want to go to the park.",ko:"나는 공원에 가고 싶어요."},
+  {no:"062",part:2,cat:"교통과 이동",q:"Are we there yet?",ht:"🟡",hint:"(5글자)",en:"Are we there yet?",ko:"우리 도착했나요?"},
+  {no:"063",part:2,cat:"교통과 이동",q:"I feel sick.",ht:"🟢",hint:"나 _ _ 요.",en:"I feel sick.",ko:"나 아파요."},
+  {no:"064",part:2,cat:"교통과 이동",q:"This bus is big!",ht:"🟡",hint:"(4글자)",en:"This bus is big!",ko:"이 버스는 커요!"},
+  {no:"065",part:2,cat:"교통과 이동",q:"I like the train!",ht:"🟢",hint:"나는 기_ _ 이 좋아요!",en:"I like the train!",ko:"나는 기차가 좋아요!"},
+  {no:"066",part:2,cat:"교통과 이동",q:"Let's take a taxi!",ht:"🟡",hint:"(4글자)",en:"Let's take a taxi!",ko:"택시 타자!"},
+  {no:"067",part:2,cat:"교통과 이동",q:"Where is the bus stop?",ht:"🟢",hint:"버스 _ _ _ 이 어디예요?",en:"Where is the bus stop?",ko:"버스 정류장이 어디예요?"},
+  {no:"068",part:2,cat:"교통과 이동",q:"How far is it?",ht:"🟡",hint:"(4글자)",en:"How far is it?",ko:"얼마나 멀어요?"},
+  {no:"069",part:2,cat:"교통과 이동",q:"Turn left here!",ht:"🟢",hint:"여기서 _ _ 으로 도세요!",en:"Turn left here!",ko:"여기서 왼쪽으로 도세요!"},
+  {no:"070",part:2,cat:"교통과 이동",q:"We're almost there!",ht:"🟡",hint:"(6글자)",en:"We're almost there!",ko:"거의 다 왔어요!"},
+  {no:"071",part:3,cat:"청크 채우기 - 인사",q:"Hi! ___ are you?",ht:"🟢",hint:"How (어떻게)",en:"Hi! How are you?",ko:"안녕! 어떻게 지내?"},
+  {no:"072",part:3,cat:"청크 채우기 - 인사",q:"Good ___, Mommy!",ht:"🟡",hint:"아침 인사 (morning)",en:"Good morning, Mommy!",ko:"좋은 아침이에요, 엄마!"},
+  {no:"073",part:3,cat:"청크 채우기 - 인사",q:"Nice to ___ you!",ht:"🟢",hint:"meet (처음 만날 때)",en:"Nice to meet you!",ko:"만나서 반가워!"},
+  {no:"074",part:3,cat:"청크 채우기 - 감정",q:"I'm so ___!",ht:"🟡",hint:"기쁜 감정",en:"I'm so happy!",ko:"나는 정말 행복해!"},
+  {no:"075",part:3,cat:"청크 채우기 - 감정",q:"I'm ___! (무서울 때)",ht:"🟢",hint:"scared",en:"I'm scared!",ko:"나 무서워!"},
+  {no:"076",part:3,cat:"청크 채우기 - 요청",q:"Can I ___ some water?",ht:"🟡",hint:"have (가질 수 있어요?)",en:"Can I have some water?",ko:"물 좀 마실 수 있나요?"},
+  {no:"077",part:3,cat:"청크 채우기 - 요청",q:"___ for me!",ht:"🟢",hint:"Wait (기다려)",en:"Wait for me!",ko:"나를 기다려!"},
+  {no:"078",part:3,cat:"청크 채우기 - 일상",q:"I'm ___ my teeth.",ht:"🟡",hint:"양치질",en:"I'm brushing my teeth.",ko:"나는 양치하고 있어."},
+  {no:"079",part:3,cat:"청크 채우기 - 일상",q:"Let's go to ___!",ht:"🟢",hint:"school (학교)",en:"Let's go to school!",ko:"학교에 가자!"},
+  {no:"080",part:3,cat:"청크 채우기 - 일상",q:"Good ___! Sweet dreams!",ht:"🟡",hint:"밤 인사",en:"Good night! Sweet dreams!",ko:"잘 자요! 좋은 꿈 꿔!"},
+  {no:"081",part:3,cat:"청크 채우기 - 감정",q:"I'm ___! (배고플 때)",ht:"🟢",hint:"hungry",en:"I'm hungry!",ko:"배고파!"},
+  {no:"082",part:3,cat:"청크 채우기 - 자기소개",q:"I ___ five years old.",ht:"🟡",hint:"am → 줄임말",en:"I'm five years old.",ko:"나는 다섯 살이야."},
+  {no:"083",part:3,cat:"청크 채우기 - 자기소개",q:"I live ___ Korea.",ht:"🟢",hint:"in (전치사)",en:"I live in Korea.",ko:"나는 한국에 살아."},
+  {no:"084",part:3,cat:"청크 채우기 - 자기소개",q:"I have a baby ___.",ht:"🟡",hint:"여동생 (sister)",en:"I have a baby sister.",ko:"나는 여동생이 있어."},
+  {no:"085",part:3,cat:"청크 채우기 - 인사",q:"You're ___! (고마워에 대한 답)",ht:"🟢",hint:"welcome",en:"You're welcome!",ko:"천만에요!"},
+  {no:"086",part:3,cat:"청크 채우기 - 요청",q:"Give ___ the ball, please.",ht:"🟡",hint:"me (나에게)",en:"Give me the ball, please.",ko:"나에게 공을 주세요."},
+  {no:"087",part:3,cat:"청크 채우기 - 일상",q:"___ up! It's morning!",ht:"🟢",hint:"Wake (일어나)",en:"Wake up! It's morning!",ko:"일어나! 아침이야!"},
+  {no:"088",part:3,cat:"청크 채우기 - 감정",q:"It's so ___! (재미있을 때)",ht:"🟡",hint:"fun",en:"It's so fun!",ko:"이건 정말 재미있어!"},
+  {no:"089",part:3,cat:"청크 채우기 - 자기소개",q:"My name ___ Tom.",ht:"🟢",hint:"is",en:"My name is Tom.",ko:"내 이름은 톰이야."},
+  {no:"090",part:3,cat:"청크 채우기 - 요청",q:"___ I play?",ht:"🟡",hint:"정중한 허가 요청",en:"May I play?",ko:"제가 놀아도 되나요?"},
+  {no:"091",part:3,cat:"청크 채우기 - 인사",q:"Excuse ___, teacher!",ht:"🟢",hint:"me (실례)",en:"Excuse me, teacher!",ko:"실례합니다, 선생님!"},
+  {no:"092",part:3,cat:"청크 채우기 - 감정",q:"I'm a little ___. (피곤할 때)",ht:"🟡",hint:"tired",en:"I'm a little tired.",ko:"나 조금 피곤해."},
+  {no:"093",part:3,cat:"청크 채우기 - 일상",q:"I'm ___ an apple.",ht:"🟢",hint:"eating (먹고 있어)",en:"I'm eating an apple.",ko:"나는 사과 하나를 먹고 있어."},
+  {no:"094",part:3,cat:"청크 채우기 - 자기소개",q:"I ___ ice cream.",ht:"🟡",hint:"like (좋아해)",en:"I like ice cream.",ko:"나는 아이스크림을 좋아해."},
+  {no:"095",part:3,cat:"청크 채우기 - 인사",q:"Have a good ___!",ht:"🟢",hint:"day",en:"Have a good day!",ko:"좋은 하루 보내!"},
+  {no:"096",part:3,cat:"청크 채우기 - 요청",q:"I ___ my teddy bear.",ht:"🟡",hint:"need (필요해)",en:"I need my teddy bear.",ko:"나는 내 곰 인형이 필요해요."},
+  {no:"097",part:3,cat:"청크 채우기 - 일상",q:"I'm ___! (집에 왔어!)",ht:"🟢",hint:"home",en:"I'm home!",ko:"나 집에 왔어!"},
+  {no:"098",part:3,cat:"청크 채우기 - 감정",q:"I ___ it! (너무 좋아할 때)",ht:"🟡",hint:"love",en:"I love it!",ko:"이거 너무 좋아!"},
+  {no:"099",part:3,cat:"청크 채우기 - 인사",q:"See you ___!",ht:"🟢",hint:"tomorrow (내일)",en:"See you tomorrow!",ko:"내일 봐!"},
+  {no:"100",part:3,cat:"청크 채우기 - 자기소개",q:"This ___ my mom.",ht:"🟡",hint:"is",en:"This is my mom.",ko:"이쪽은 나의 엄마야."},
+  {no:"101",part:4,cat:"상황 - 음식점",q:"음식점에서 음식을 주문하고 싶을 때",ht:"🔴",hint:"",en:"Can I have this, please?",ko:"이거 주세요!"},
+  {no:"102",part:4,cat:"상황 - 음식점",q:"음식이 맛있다고 말하고 싶을 때",ht:"🟡",hint:"Y_ _ _ _!",en:"Yummy! It's delicious!",ko:"맛있어요!"},
+  {no:"103",part:4,cat:"상황 - 화장실",q:"화장실이 어디 있는지 물어볼 때",ht:"🟢",hint:"Where is the b_ _ _ _ _ _ _?",en:"Where is the bathroom?",ko:"화장실이 어디 있나요?"},
+  {no:"104",part:4,cat:"상황 - 도움 요청",q:"길을 잃었을 때",ht:"🔴",hint:"",en:"I'm lost. Help me, please!",ko:"길을 잃었어요. 도와주세요!"},
+  {no:"105",part:4,cat:"상황 - 학교",q:"수업 시작할 때 선생님께 인사",ht:"🟡",hint:"G_ _ _ morning!",en:"Good morning, teacher!",ko:"좋은 아침이에요, 선생님!"},
+  {no:"106",part:4,cat:"상황 - 친구",q:"새 친구를 만났을 때",ht:"🟢",hint:"Nice to m_ _ _ you!",en:"Nice to meet you! I'm [name].",ko:"만나서 반가워요! 저는 [이름]이에요."},
+  {no:"107",part:4,cat:"상황 - 가족",q:"아침에 일어나서 가족에게",ht:"🟡",hint:"G_ _ _ morning!",en:"Good morning, Mommy!",ko:"좋은 아침이에요, 엄마!"},
+  {no:"108",part:4,cat:"상황 - 음식",q:"배가 고프다고 말할 때",ht:"🟢",hint:"I'm h_ _ _ _ _!",en:"I'm hungry! Can I eat?",ko:"배고파요! 먹어도 돼요?"},
+  {no:"109",part:4,cat:"상황 - 놀이",q:"친구에게 같이 놀자고 할 때",ht:"🔴",hint:"",en:"Let's play together!",ko:"같이 놀자!"},
+  {no:"110",part:4,cat:"상황 - 감사",q:"도움을 받았을 때",ht:"🟡",hint:"Thank you _ _ _ helping!",en:"Thank you for helping!",ko:"도와줘서 고마워요!"},
+  {no:"111",part:4,cat:"상황 - 여행",q:"공항에서 화장실 찾을 때",ht:"🟢",hint:"W_ _ _ _ is the bathroom?",en:"Where is the bathroom?",ko:"화장실이 어디 있나요?"},
+  {no:"112",part:4,cat:"상황 - 여행",q:"차 안에서 빨리 도착하고 싶을 때",ht:"🟡",hint:"A_ _ we there yet?",en:"Are we there yet?",ko:"우리 도착했나요?"},
+  {no:"113",part:4,cat:"상황 - 잠자리",q:"잠자리에서 부모님께",ht:"🟢",hint:"Good n_ _ _ _!",en:"Good night! Sweet dreams!",ko:"잘 자요! 좋은 꿈 꿔요!"},
+  {no:"114",part:4,cat:"상황 - 학교",q:"수업 중 질문할 때",ht:"🔴",hint:"",en:"Excuse me, teacher! I have a question.",ko:"실례합니다, 선생님! 질문이 있어요."},
+  {no:"115",part:4,cat:"상황 - 친구",q:"방학 후 친구를 다시 만났을 때",ht:"🟡",hint:"Nice to s_ _ you again!",en:"Nice to see you again!",ko:"다시 만나서 반가워!"},
+  {no:"116",part:4,cat:"상황 - 가족",q:"아빠가 퇴근하고 왔을 때",ht:"🟢",hint:"Good e_ _ _ _ _ _!",en:"Good evening, Daddy!",ko:"좋은 저녁이에요, 아빠!"},
+  {no:"117",part:4,cat:"상황 - 도움",q:"무거운 것 들고 있을 때",ht:"🔴",hint:"",en:"Help me, please! It's heavy!",ko:"도와주세요! 무거워요!"},
+  {no:"118",part:4,cat:"상황 - 음식",q:"다 먹었다고 말할 때",ht:"🟡",hint:"I'm d_ _ _!",en:"I'm done! It was yummy!",ko:"다 먹었어요! 맛있었어요!"},
+  {no:"119",part:4,cat:"상황 - 헤어짐",q:"유치원 끝나고 친구에게",ht:"🟢",hint:"Bye-bye! S_ _ you!",en:"Bye-bye! See you tomorrow!",ko:"잘 가! 내일 봐!"},
+  {no:"120",part:4,cat:"상황 - 자기소개",q:"외국인에게 나이 말할 때",ht:"🟡",hint:"I'm _ years old.",en:"I'm five years old.",ko:"나는 다섯 살이에요."},
+{no:"121",part:1,cat:"cat_1",q:"한글 문장 1",ht:"🟢",hint:"h___ 1",en:"English sentence 1",ko:"한글 문장 1"},
+{no:"122",part:1,cat:"cat_1",q:"한글 문장 2",ht:"🟢",hint:"h___ 2",en:"English sentence 2",ko:"한글 문장 2"},
+{no:"123",part:1,cat:"cat_1",q:"한글 문장 3",ht:"🟢",hint:"h___ 3",en:"English sentence 3",ko:"한글 문장 3"},
+{no:"124",part:1,cat:"cat_1",q:"한글 문장 4",ht:"🟢",hint:"h___ 4",en:"English sentence 4",ko:"한글 문장 4"},
+{no:"125",part:1,cat:"cat_1",q:"한글 문장 5",ht:"🟢",hint:"h___ 5",en:"English sentence 5",ko:"한글 문장 5"},
+{no:"126",part:1,cat:"cat_1",q:"한글 문장 6",ht:"🟢",hint:"h___ 6",en:"English sentence 6",ko:"한글 문장 6"},
+{no:"127",part:1,cat:"cat_1",q:"한글 문장 7",ht:"🟢",hint:"h___ 7",en:"English sentence 7",ko:"한글 문장 7"},
+{no:"128",part:1,cat:"cat_1",q:"한글 문장 8",ht:"🟢",hint:"h___ 8",en:"English sentence 8",ko:"한글 문장 8"},
+{no:"129",part:1,cat:"cat_1",q:"한글 문장 9",ht:"🟢",hint:"h___ 9",en:"English sentence 9",ko:"한글 문장 9"},
+{no:"130",part:1,cat:"cat_1",q:"한글 문장 10",ht:"🟢",hint:"h___ 10",en:"English sentence 10",ko:"한글 문장 10"},
+{no:"131",part:1,cat:"cat_1",q:"한글 문장 11",ht:"🟢",hint:"h___ 11",en:"English sentence 11",ko:"한글 문장 11"},
+{no:"132",part:1,cat:"cat_1",q:"한글 문장 12",ht:"🟢",hint:"h___ 12",en:"English sentence 12",ko:"한글 문장 12"},
+{no:"133",part:1,cat:"cat_1",q:"한글 문장 13",ht:"🟢",hint:"h___ 13",en:"English sentence 13",ko:"한글 문장 13"},
+{no:"134",part:1,cat:"cat_1",q:"한글 문장 14",ht:"🟢",hint:"h___ 14",en:"English sentence 14",ko:"한글 문장 14"},
+{no:"135",part:1,cat:"cat_1",q:"한글 문장 15",ht:"🟢",hint:"h___ 15",en:"English sentence 15",ko:"한글 문장 15"},
+{no:"136",part:1,cat:"cat_1",q:"한글 문장 16",ht:"🟢",hint:"h___ 16",en:"English sentence 16",ko:"한글 문장 16"},
+{no:"137",part:1,cat:"cat_1",q:"한글 문장 17",ht:"🟢",hint:"h___ 17",en:"English sentence 17",ko:"한글 문장 17"},
+{no:"138",part:1,cat:"cat_1",q:"한글 문장 18",ht:"🟢",hint:"h___ 18",en:"English sentence 18",ko:"한글 문장 18"},
+{no:"139",part:1,cat:"cat_1",q:"한글 문장 19",ht:"🟢",hint:"h___ 19",en:"English sentence 19",ko:"한글 문장 19"},
+{no:"140",part:1,cat:"cat_1",q:"한글 문장 20",ht:"🟢",hint:"h___ 20",en:"English sentence 20",ko:"한글 문장 20"},
+{no:"141",part:1,cat:"cat_1",q:"한글 문장 21",ht:"🟢",hint:"h___ 21",en:"English sentence 21",ko:"한글 문장 21"},
+{no:"142",part:1,cat:"cat_1",q:"한글 문장 22",ht:"🟢",hint:"h___ 22",en:"English sentence 22",ko:"한글 문장 22"},
+{no:"143",part:1,cat:"cat_1",q:"한글 문장 23",ht:"🟢",hint:"h___ 23",en:"English sentence 23",ko:"한글 문장 23"},
+{no:"144",part:1,cat:"cat_1",q:"한글 문장 24",ht:"🟢",hint:"h___ 24",en:"English sentence 24",ko:"한글 문장 24"},
+{no:"145",part:1,cat:"cat_1",q:"한글 문장 25",ht:"🟢",hint:"h___ 25",en:"English sentence 25",ko:"한글 문장 25"},
+{no:"146",part:1,cat:"cat_1",q:"한글 문장 26",ht:"🟢",hint:"h___ 26",en:"English sentence 26",ko:"한글 문장 26"},
+{no:"147",part:1,cat:"cat_1",q:"한글 문장 27",ht:"🟢",hint:"h___ 27",en:"English sentence 27",ko:"한글 문장 27"},
+{no:"148",part:1,cat:"cat_1",q:"한글 문장 28",ht:"🟢",hint:"h___ 28",en:"English sentence 28",ko:"한글 문장 28"},
+{no:"149",part:1,cat:"cat_1",q:"한글 문장 29",ht:"🟢",hint:"h___ 29",en:"English sentence 29",ko:"한글 문장 29"},
+{no:"150",part:1,cat:"cat_1",q:"한글 문장 30",ht:"🟢",hint:"h___ 30",en:"English sentence 30",ko:"한글 문장 30"},
+{no:"151",part:1,cat:"cat_1",q:"한글 문장 31",ht:"🟢",hint:"h___ 31",en:"English sentence 31",ko:"한글 문장 31"},
+{no:"152",part:1,cat:"cat_1",q:"한글 문장 32",ht:"🟢",hint:"h___ 32",en:"English sentence 32",ko:"한글 문장 32"},
+{no:"153",part:1,cat:"cat_1",q:"한글 문장 33",ht:"🟢",hint:"h___ 33",en:"English sentence 33",ko:"한글 문장 33"},
+{no:"154",part:1,cat:"cat_1",q:"한글 문장 34",ht:"🟢",hint:"h___ 34",en:"English sentence 34",ko:"한글 문장 34"},
+{no:"155",part:1,cat:"cat_1",q:"한글 문장 35",ht:"🟢",hint:"h___ 35",en:"English sentence 35",ko:"한글 문장 35"},
+{no:"156",part:1,cat:"cat_1",q:"한글 문장 36",ht:"🟢",hint:"h___ 36",en:"English sentence 36",ko:"한글 문장 36"},
+{no:"157",part:1,cat:"cat_1",q:"한글 문장 37",ht:"🟢",hint:"h___ 37",en:"English sentence 37",ko:"한글 문장 37"},
+{no:"158",part:1,cat:"cat_1",q:"한글 문장 38",ht:"🟢",hint:"h___ 38",en:"English sentence 38",ko:"한글 문장 38"},
+{no:"159",part:1,cat:"cat_1",q:"한글 문장 39",ht:"🟢",hint:"h___ 39",en:"English sentence 39",ko:"한글 문장 39"},
+{no:"160",part:1,cat:"cat_1",q:"한글 문장 40",ht:"🟢",hint:"h___ 40",en:"English sentence 40",ko:"한글 문장 40"},
+{no:"161",part:1,cat:"cat_1",q:"한글 문장 41",ht:"🟢",hint:"h___ 41",en:"English sentence 41",ko:"한글 문장 41"},
+{no:"162",part:1,cat:"cat_1",q:"한글 문장 42",ht:"🟢",hint:"h___ 42",en:"English sentence 42",ko:"한글 문장 42"},
+{no:"163",part:1,cat:"cat_1",q:"한글 문장 43",ht:"🟢",hint:"h___ 43",en:"English sentence 43",ko:"한글 문장 43"},
+{no:"164",part:1,cat:"cat_1",q:"한글 문장 44",ht:"🟢",hint:"h___ 44",en:"English sentence 44",ko:"한글 문장 44"},
+{no:"165",part:1,cat:"cat_1",q:"한글 문장 45",ht:"🟢",hint:"h___ 45",en:"English sentence 45",ko:"한글 문장 45"},
+{no:"166",part:1,cat:"cat_1",q:"한글 문장 46",ht:"🟢",hint:"h___ 46",en:"English sentence 46",ko:"한글 문장 46"},
+{no:"167",part:1,cat:"cat_1",q:"한글 문장 47",ht:"🟢",hint:"h___ 47",en:"English sentence 47",ko:"한글 문장 47"},
+{no:"168",part:1,cat:"cat_1",q:"한글 문장 48",ht:"🟢",hint:"h___ 48",en:"English sentence 48",ko:"한글 문장 48"},
+{no:"169",part:1,cat:"cat_1",q:"한글 문장 49",ht:"🟢",hint:"h___ 49",en:"English sentence 49",ko:"한글 문장 49"},
+{no:"170",part:1,cat:"cat_1",q:"한글 문장 50",ht:"🟢",hint:"h___ 50",en:"English sentence 50",ko:"한글 문장 50"},
+{no:"171",part:1,cat:"cat_1",q:"한글 문장 51",ht:"🟢",hint:"h___ 51",en:"English sentence 51",ko:"한글 문장 51"},
+{no:"172",part:1,cat:"cat_1",q:"한글 문장 52",ht:"🟢",hint:"h___ 52",en:"English sentence 52",ko:"한글 문장 52"},
+{no:"173",part:1,cat:"cat_1",q:"한글 문장 53",ht:"🟢",hint:"h___ 53",en:"English sentence 53",ko:"한글 문장 53"},
+{no:"174",part:1,cat:"cat_1",q:"한글 문장 54",ht:"🟢",hint:"h___ 54",en:"English sentence 54",ko:"한글 문장 54"},
+{no:"175",part:1,cat:"cat_1",q:"한글 문장 55",ht:"🟢",hint:"h___ 55",en:"English sentence 55",ko:"한글 문장 55"},
+{no:"176",part:1,cat:"cat_1",q:"한글 문장 56",ht:"🟢",hint:"h___ 56",en:"English sentence 56",ko:"한글 문장 56"},
+{no:"177",part:1,cat:"cat_1",q:"한글 문장 57",ht:"🟢",hint:"h___ 57",en:"English sentence 57",ko:"한글 문장 57"},
+{no:"178",part:1,cat:"cat_1",q:"한글 문장 58",ht:"🟢",hint:"h___ 58",en:"English sentence 58",ko:"한글 문장 58"},
+{no:"179",part:1,cat:"cat_1",q:"한글 문장 59",ht:"🟢",hint:"h___ 59",en:"English sentence 59",ko:"한글 문장 59"},
+{no:"180",part:1,cat:"cat_1",q:"한글 문장 60",ht:"🟢",hint:"h___ 60",en:"English sentence 60",ko:"한글 문장 60"},
+{no:"181",part:1,cat:"cat_1",q:"한글 문장 61",ht:"🟢",hint:"h___ 61",en:"English sentence 61",ko:"한글 문장 61"},
+{no:"182",part:1,cat:"cat_1",q:"한글 문장 62",ht:"🟢",hint:"h___ 62",en:"English sentence 62",ko:"한글 문장 62"},
+{no:"183",part:1,cat:"cat_1",q:"한글 문장 63",ht:"🟢",hint:"h___ 63",en:"English sentence 63",ko:"한글 문장 63"},
+{no:"184",part:1,cat:"cat_1",q:"한글 문장 64",ht:"🟢",hint:"h___ 64",en:"English sentence 64",ko:"한글 문장 64"},
+{no:"185",part:1,cat:"cat_1",q:"한글 문장 65",ht:"🟢",hint:"h___ 65",en:"English sentence 65",ko:"한글 문장 65"},
+{no:"186",part:1,cat:"cat_1",q:"한글 문장 66",ht:"🟢",hint:"h___ 66",en:"English sentence 66",ko:"한글 문장 66"},
+{no:"187",part:1,cat:"cat_1",q:"한글 문장 67",ht:"🟢",hint:"h___ 67",en:"English sentence 67",ko:"한글 문장 67"},
+{no:"188",part:1,cat:"cat_1",q:"한글 문장 68",ht:"🟢",hint:"h___ 68",en:"English sentence 68",ko:"한글 문장 68"},
+{no:"189",part:1,cat:"cat_1",q:"한글 문장 69",ht:"🟢",hint:"h___ 69",en:"English sentence 69",ko:"한글 문장 69"},
+{no:"190",part:1,cat:"cat_1",q:"한글 문장 70",ht:"🟢",hint:"h___ 70",en:"English sentence 70",ko:"한글 문장 70"},
+{no:"191",part:1,cat:"cat_1",q:"한글 문장 71",ht:"🟢",hint:"h___ 71",en:"English sentence 71",ko:"한글 문장 71"},
+{no:"192",part:1,cat:"cat_1",q:"한글 문장 72",ht:"🟢",hint:"h___ 72",en:"English sentence 72",ko:"한글 문장 72"},
+{no:"193",part:1,cat:"cat_1",q:"한글 문장 73",ht:"🟢",hint:"h___ 73",en:"English sentence 73",ko:"한글 문장 73"},
+{no:"194",part:1,cat:"cat_1",q:"한글 문장 74",ht:"🟢",hint:"h___ 74",en:"English sentence 74",ko:"한글 문장 74"},
+{no:"195",part:1,cat:"cat_1",q:"한글 문장 75",ht:"🟢",hint:"h___ 75",en:"English sentence 75",ko:"한글 문장 75"},
+{no:"196",part:1,cat:"cat_1",q:"한글 문장 76",ht:"🟢",hint:"h___ 76",en:"English sentence 76",ko:"한글 문장 76"},
+{no:"197",part:1,cat:"cat_1",q:"한글 문장 77",ht:"🟢",hint:"h___ 77",en:"English sentence 77",ko:"한글 문장 77"},
+{no:"198",part:1,cat:"cat_1",q:"한글 문장 78",ht:"🟢",hint:"h___ 78",en:"English sentence 78",ko:"한글 문장 78"},
+{no:"199",part:1,cat:"cat_1",q:"한글 문장 79",ht:"🟢",hint:"h___ 79",en:"English sentence 79",ko:"한글 문장 79"},
+{no:"200",part:1,cat:"cat_1",q:"한글 문장 80",ht:"🟢",hint:"h___ 80",en:"English sentence 80",ko:"한글 문장 80"},
+{no:"201",part:1,cat:"cat_1",q:"한글 문장 81",ht:"🟢",hint:"h___ 81",en:"English sentence 81",ko:"한글 문장 81"},
+{no:"202",part:1,cat:"cat_1",q:"한글 문장 82",ht:"🟢",hint:"h___ 82",en:"English sentence 82",ko:"한글 문장 82"},
+{no:"203",part:1,cat:"cat_1",q:"한글 문장 83",ht:"🟢",hint:"h___ 83",en:"English sentence 83",ko:"한글 문장 83"},
+{no:"204",part:1,cat:"cat_1",q:"한글 문장 84",ht:"🟢",hint:"h___ 84",en:"English sentence 84",ko:"한글 문장 84"},
+{no:"205",part:1,cat:"cat_1",q:"한글 문장 85",ht:"🟢",hint:"h___ 85",en:"English sentence 85",ko:"한글 문장 85"},
+{no:"206",part:1,cat:"cat_1",q:"한글 문장 86",ht:"🟢",hint:"h___ 86",en:"English sentence 86",ko:"한글 문장 86"},
+{no:"207",part:1,cat:"cat_1",q:"한글 문장 87",ht:"🟢",hint:"h___ 87",en:"English sentence 87",ko:"한글 문장 87"},
+{no:"208",part:1,cat:"cat_1",q:"한글 문장 88",ht:"🟢",hint:"h___ 88",en:"English sentence 88",ko:"한글 문장 88"},
+{no:"209",part:1,cat:"cat_1",q:"한글 문장 89",ht:"🟢",hint:"h___ 89",en:"English sentence 89",ko:"한글 문장 89"},
+{no:"210",part:1,cat:"cat_1",q:"한글 문장 90",ht:"🟢",hint:"h___ 90",en:"English sentence 90",ko:"한글 문장 90"},
+{no:"211",part:1,cat:"cat_1",q:"한글 문장 91",ht:"🟢",hint:"h___ 91",en:"English sentence 91",ko:"한글 문장 91"},
+{no:"212",part:1,cat:"cat_1",q:"한글 문장 92",ht:"🟢",hint:"h___ 92",en:"English sentence 92",ko:"한글 문장 92"},
+{no:"213",part:1,cat:"cat_1",q:"한글 문장 93",ht:"🟢",hint:"h___ 93",en:"English sentence 93",ko:"한글 문장 93"},
+{no:"214",part:1,cat:"cat_1",q:"한글 문장 94",ht:"🟢",hint:"h___ 94",en:"English sentence 94",ko:"한글 문장 94"},
+{no:"215",part:1,cat:"cat_1",q:"한글 문장 95",ht:"🟢",hint:"h___ 95",en:"English sentence 95",ko:"한글 문장 95"},
+{no:"216",part:1,cat:"cat_1",q:"한글 문장 96",ht:"🟢",hint:"h___ 96",en:"English sentence 96",ko:"한글 문장 96"},
+{no:"217",part:1,cat:"cat_1",q:"한글 문장 97",ht:"🟢",hint:"h___ 97",en:"English sentence 97",ko:"한글 문장 97"},
+{no:"218",part:1,cat:"cat_1",q:"한글 문장 98",ht:"🟢",hint:"h___ 98",en:"English sentence 98",ko:"한글 문장 98"},
+{no:"219",part:1,cat:"cat_1",q:"한글 문장 99",ht:"🟢",hint:"h___ 99",en:"English sentence 99",ko:"한글 문장 99"},
+{no:"220",part:1,cat:"cat_1",q:"한글 문장 100",ht:"🟢",hint:"h___ 100",en:"English sentence 100",ko:"한글 문장 100"},
+{no:"221",part:1,cat:"cat_1",q:"한글 문장 101",ht:"🟢",hint:"h___ 101",en:"English sentence 101",ko:"한글 문장 101"},
+{no:"222",part:1,cat:"cat_1",q:"한글 문장 102",ht:"🟢",hint:"h___ 102",en:"English sentence 102",ko:"한글 문장 102"},
+{no:"223",part:1,cat:"cat_1",q:"한글 문장 103",ht:"🟢",hint:"h___ 103",en:"English sentence 103",ko:"한글 문장 103"},
+{no:"224",part:1,cat:"cat_1",q:"한글 문장 104",ht:"🟢",hint:"h___ 104",en:"English sentence 104",ko:"한글 문장 104"},
+{no:"225",part:1,cat:"cat_1",q:"한글 문장 105",ht:"🟢",hint:"h___ 105",en:"English sentence 105",ko:"한글 문장 105"},
+{no:"226",part:1,cat:"cat_1",q:"한글 문장 106",ht:"🟢",hint:"h___ 106",en:"English sentence 106",ko:"한글 문장 106"},
+{no:"227",part:1,cat:"cat_1",q:"한글 문장 107",ht:"🟢",hint:"h___ 107",en:"English sentence 107",ko:"한글 문장 107"},
+{no:"228",part:1,cat:"cat_1",q:"한글 문장 108",ht:"🟢",hint:"h___ 108",en:"English sentence 108",ko:"한글 문장 108"},
+{no:"229",part:1,cat:"cat_1",q:"한글 문장 109",ht:"🟢",hint:"h___ 109",en:"English sentence 109",ko:"한글 문장 109"},
+{no:"230",part:1,cat:"cat_1",q:"한글 문장 110",ht:"🟢",hint:"h___ 110",en:"English sentence 110",ko:"한글 문장 110"},
+{no:"231",part:1,cat:"cat_1",q:"한글 문장 111",ht:"🟢",hint:"h___ 111",en:"English sentence 111",ko:"한글 문장 111"},
+{no:"232",part:1,cat:"cat_1",q:"한글 문장 112",ht:"🟢",hint:"h___ 112",en:"English sentence 112",ko:"한글 문장 112"},
+{no:"233",part:1,cat:"cat_1",q:"한글 문장 113",ht:"🟢",hint:"h___ 113",en:"English sentence 113",ko:"한글 문장 113"},
+{no:"234",part:1,cat:"cat_1",q:"한글 문장 114",ht:"🟢",hint:"h___ 114",en:"English sentence 114",ko:"한글 문장 114"},
+{no:"235",part:1,cat:"cat_1",q:"한글 문장 115",ht:"🟢",hint:"h___ 115",en:"English sentence 115",ko:"한글 문장 115"},
+{no:"236",part:1,cat:"cat_1",q:"한글 문장 116",ht:"🟢",hint:"h___ 116",en:"English sentence 116",ko:"한글 문장 116"},
+{no:"237",part:1,cat:"cat_1",q:"한글 문장 117",ht:"🟢",hint:"h___ 117",en:"English sentence 117",ko:"한글 문장 117"},
+{no:"238",part:1,cat:"cat_1",q:"한글 문장 118",ht:"🟢",hint:"h___ 118",en:"English sentence 118",ko:"한글 문장 118"},
+{no:"239",part:1,cat:"cat_1",q:"한글 문장 119",ht:"🟢",hint:"h___ 119",en:"English sentence 119",ko:"한글 문장 119"},
+{no:"240",part:1,cat:"cat_1",q:"한글 문장 120",ht:"🟢",hint:"h___ 120",en:"English sentence 120",ko:"한글 문장 120"},
+{no:"241",part:1,cat:"cat_1",q:"한글 문장 121",ht:"🟢",hint:"h___ 121",en:"English sentence 121",ko:"한글 문장 121"},
+{no:"242",part:1,cat:"cat_1",q:"한글 문장 122",ht:"🟢",hint:"h___ 122",en:"English sentence 122",ko:"한글 문장 122"},
+{no:"243",part:1,cat:"cat_1",q:"한글 문장 123",ht:"🟢",hint:"h___ 123",en:"English sentence 123",ko:"한글 문장 123"},
+{no:"244",part:1,cat:"cat_1",q:"한글 문장 124",ht:"🟢",hint:"h___ 124",en:"English sentence 124",ko:"한글 문장 124"},
+{no:"245",part:1,cat:"cat_1",q:"한글 문장 125",ht:"🟢",hint:"h___ 125",en:"English sentence 125",ko:"한글 문장 125"},
+{no:"246",part:2,cat:"cat_2",q:"English question 1",ht:"🟢",hint:"h___ 126",en:"English question 1",ko:"English question 1"},
+{no:"247",part:2,cat:"cat_2",q:"English question 2",ht:"🟢",hint:"h___ 127",en:"English question 2",ko:"English question 2"},
+{no:"248",part:2,cat:"cat_2",q:"English question 3",ht:"🟢",hint:"h___ 128",en:"English question 3",ko:"English question 3"},
+{no:"249",part:2,cat:"cat_2",q:"English question 4",ht:"🟢",hint:"h___ 129",en:"English question 4",ko:"English question 4"},
+{no:"250",part:2,cat:"cat_2",q:"English question 5",ht:"🟢",hint:"h___ 130",en:"English question 5",ko:"English question 5"},
+{no:"251",part:2,cat:"cat_2",q:"English question 6",ht:"🟢",hint:"h___ 131",en:"English question 6",ko:"English question 6"},
+{no:"252",part:2,cat:"cat_2",q:"English question 7",ht:"🟢",hint:"h___ 132",en:"English question 7",ko:"English question 7"},
+{no:"253",part:2,cat:"cat_2",q:"English question 8",ht:"🟢",hint:"h___ 133",en:"English question 8",ko:"English question 8"},
+{no:"254",part:2,cat:"cat_2",q:"English question 9",ht:"🟢",hint:"h___ 134",en:"English question 9",ko:"English question 9"},
+{no:"255",part:2,cat:"cat_2",q:"English question 10",ht:"🟢",hint:"h___ 135",en:"English question 10",ko:"English question 10"},
+{no:"256",part:2,cat:"cat_2",q:"English question 11",ht:"🟢",hint:"h___ 136",en:"English question 11",ko:"English question 11"},
+{no:"257",part:2,cat:"cat_2",q:"English question 12",ht:"🟢",hint:"h___ 137",en:"English question 12",ko:"English question 12"},
+{no:"258",part:2,cat:"cat_2",q:"English question 13",ht:"🟢",hint:"h___ 138",en:"English question 13",ko:"English question 13"},
+{no:"259",part:2,cat:"cat_2",q:"English question 14",ht:"🟢",hint:"h___ 139",en:"English question 14",ko:"English question 14"},
+{no:"260",part:2,cat:"cat_2",q:"English question 15",ht:"🟢",hint:"h___ 140",en:"English question 15",ko:"English question 15"},
+{no:"261",part:2,cat:"cat_2",q:"English question 16",ht:"🟢",hint:"h___ 141",en:"English question 16",ko:"English question 16"},
+{no:"262",part:2,cat:"cat_2",q:"English question 17",ht:"🟢",hint:"h___ 142",en:"English question 17",ko:"English question 17"},
+{no:"263",part:2,cat:"cat_2",q:"English question 18",ht:"🟢",hint:"h___ 143",en:"English question 18",ko:"English question 18"},
+{no:"264",part:2,cat:"cat_2",q:"English question 19",ht:"🟢",hint:"h___ 144",en:"English question 19",ko:"English question 19"},
+{no:"265",part:2,cat:"cat_2",q:"English question 20",ht:"🟢",hint:"h___ 145",en:"English question 20",ko:"English question 20"},
+{no:"266",part:2,cat:"cat_2",q:"English question 21",ht:"🟢",hint:"h___ 146",en:"English question 21",ko:"English question 21"},
+{no:"267",part:2,cat:"cat_2",q:"English question 22",ht:"🟢",hint:"h___ 147",en:"English question 22",ko:"English question 22"},
+{no:"268",part:2,cat:"cat_2",q:"English question 23",ht:"🟢",hint:"h___ 148",en:"English question 23",ko:"English question 23"},
+{no:"269",part:2,cat:"cat_2",q:"English question 24",ht:"🟢",hint:"h___ 149",en:"English question 24",ko:"English question 24"},
+{no:"270",part:2,cat:"cat_2",q:"English question 25",ht:"🟢",hint:"h___ 150",en:"English question 25",ko:"English question 25"},
+{no:"271",part:2,cat:"cat_2",q:"English question 26",ht:"🟢",hint:"h___ 151",en:"English question 26",ko:"English question 26"},
+{no:"272",part:2,cat:"cat_2",q:"English question 27",ht:"🟢",hint:"h___ 152",en:"English question 27",ko:"English question 27"},
+{no:"273",part:2,cat:"cat_2",q:"English question 28",ht:"🟢",hint:"h___ 153",en:"English question 28",ko:"English question 28"},
+{no:"274",part:2,cat:"cat_2",q:"English question 29",ht:"🟢",hint:"h___ 154",en:"English question 29",ko:"English question 29"},
+{no:"275",part:2,cat:"cat_2",q:"English question 30",ht:"🟢",hint:"h___ 155",en:"English question 30",ko:"English question 30"},
+{no:"276",part:2,cat:"cat_2",q:"English question 31",ht:"🟢",hint:"h___ 156",en:"English question 31",ko:"English question 31"},
+{no:"277",part:2,cat:"cat_2",q:"English question 32",ht:"🟢",hint:"h___ 157",en:"English question 32",ko:"English question 32"},
+{no:"278",part:2,cat:"cat_2",q:"English question 33",ht:"🟢",hint:"h___ 158",en:"English question 33",ko:"English question 33"},
+{no:"279",part:2,cat:"cat_2",q:"English question 34",ht:"🟢",hint:"h___ 159",en:"English question 34",ko:"English question 34"},
+{no:"280",part:2,cat:"cat_2",q:"English question 35",ht:"🟢",hint:"h___ 160",en:"English question 35",ko:"English question 35"},
+{no:"281",part:2,cat:"cat_2",q:"English question 36",ht:"🟢",hint:"h___ 161",en:"English question 36",ko:"English question 36"},
+{no:"282",part:2,cat:"cat_2",q:"English question 37",ht:"🟢",hint:"h___ 162",en:"English question 37",ko:"English question 37"},
+{no:"283",part:2,cat:"cat_2",q:"English question 38",ht:"🟢",hint:"h___ 163",en:"English question 38",ko:"English question 38"},
+{no:"284",part:2,cat:"cat_2",q:"English question 39",ht:"🟢",hint:"h___ 164",en:"English question 39",ko:"English question 39"},
+{no:"285",part:2,cat:"cat_2",q:"English question 40",ht:"🟢",hint:"h___ 165",en:"English question 40",ko:"English question 40"},
+{no:"286",part:2,cat:"cat_2",q:"English question 41",ht:"🟢",hint:"h___ 166",en:"English question 41",ko:"English question 41"},
+{no:"287",part:2,cat:"cat_2",q:"English question 42",ht:"🟢",hint:"h___ 167",en:"English question 42",ko:"English question 42"},
+{no:"288",part:2,cat:"cat_2",q:"English question 43",ht:"🟢",hint:"h___ 168",en:"English question 43",ko:"English question 43"},
+{no:"289",part:2,cat:"cat_2",q:"English question 44",ht:"🟢",hint:"h___ 169",en:"English question 44",ko:"English question 44"},
+{no:"290",part:2,cat:"cat_2",q:"English question 45",ht:"🟢",hint:"h___ 170",en:"English question 45",ko:"English question 45"},
+{no:"291",part:2,cat:"cat_2",q:"English question 46",ht:"🟢",hint:"h___ 171",en:"English question 46",ko:"English question 46"},
+{no:"292",part:2,cat:"cat_2",q:"English question 47",ht:"🟢",hint:"h___ 172",en:"English question 47",ko:"English question 47"},
+{no:"293",part:2,cat:"cat_2",q:"English question 48",ht:"🟢",hint:"h___ 173",en:"English question 48",ko:"English question 48"},
+{no:"294",part:2,cat:"cat_2",q:"English question 49",ht:"🟢",hint:"h___ 174",en:"English question 49",ko:"English question 49"},
+{no:"295",part:2,cat:"cat_2",q:"English question 50",ht:"🟢",hint:"h___ 175",en:"English question 50",ko:"English question 50"},
+{no:"296",part:2,cat:"cat_2",q:"English question 51",ht:"🟢",hint:"h___ 176",en:"English question 51",ko:"English question 51"},
+{no:"297",part:2,cat:"cat_2",q:"English question 52",ht:"🟢",hint:"h___ 177",en:"English question 52",ko:"English question 52"},
+{no:"298",part:2,cat:"cat_2",q:"English question 53",ht:"🟢",hint:"h___ 178",en:"English question 53",ko:"English question 53"},
+{no:"299",part:2,cat:"cat_2",q:"English question 54",ht:"🟢",hint:"h___ 179",en:"English question 54",ko:"English question 54"},
+{no:"300",part:2,cat:"cat_2",q:"English question 55",ht:"🟢",hint:"h___ 180",en:"English question 55",ko:"English question 55"},
+{no:"301",part:2,cat:"cat_2",q:"English question 56",ht:"🟢",hint:"h___ 181",en:"English question 56",ko:"English question 56"},
+{no:"302",part:2,cat:"cat_2",q:"English question 57",ht:"🟢",hint:"h___ 182",en:"English question 57",ko:"English question 57"},
+{no:"303",part:2,cat:"cat_2",q:"English question 58",ht:"🟢",hint:"h___ 183",en:"English question 58",ko:"English question 58"},
+{no:"304",part:2,cat:"cat_2",q:"English question 59",ht:"🟢",hint:"h___ 184",en:"English question 59",ko:"English question 59"},
+{no:"305",part:2,cat:"cat_2",q:"English question 60",ht:"🟢",hint:"h___ 185",en:"English question 60",ko:"English question 60"},
+{no:"306",part:2,cat:"cat_2",q:"English question 61",ht:"🟢",hint:"h___ 186",en:"English question 61",ko:"English question 61"},
+{no:"307",part:2,cat:"cat_2",q:"English question 62",ht:"🟢",hint:"h___ 187",en:"English question 62",ko:"English question 62"},
+{no:"308",part:2,cat:"cat_2",q:"English question 63",ht:"🟢",hint:"h___ 188",en:"English question 63",ko:"English question 63"},
+{no:"309",part:2,cat:"cat_2",q:"English question 64",ht:"🟢",hint:"h___ 189",en:"English question 64",ko:"English question 64"},
+{no:"310",part:2,cat:"cat_2",q:"English question 65",ht:"🟢",hint:"h___ 190",en:"English question 65",ko:"English question 65"},
+{no:"311",part:2,cat:"cat_2",q:"English question 66",ht:"🟢",hint:"h___ 191",en:"English question 66",ko:"English question 66"},
+{no:"312",part:2,cat:"cat_2",q:"English question 67",ht:"🟢",hint:"h___ 192",en:"English question 67",ko:"English question 67"},
+{no:"313",part:2,cat:"cat_2",q:"English question 68",ht:"🟢",hint:"h___ 193",en:"English question 68",ko:"English question 68"},
+{no:"314",part:2,cat:"cat_2",q:"English question 69",ht:"🟢",hint:"h___ 194",en:"English question 69",ko:"English question 69"},
+{no:"315",part:2,cat:"cat_2",q:"English question 70",ht:"🟢",hint:"h___ 195",en:"English question 70",ko:"English question 70"},
+{no:"316",part:2,cat:"cat_2",q:"English question 71",ht:"🟢",hint:"h___ 196",en:"English question 71",ko:"English question 71"},
+{no:"317",part:2,cat:"cat_2",q:"English question 72",ht:"🟢",hint:"h___ 197",en:"English question 72",ko:"English question 72"},
+{no:"318",part:2,cat:"cat_2",q:"English question 73",ht:"🟢",hint:"h___ 198",en:"English question 73",ko:"English question 73"},
+{no:"319",part:2,cat:"cat_2",q:"English question 74",ht:"🟢",hint:"h___ 199",en:"English question 74",ko:"English question 74"},
+{no:"320",part:2,cat:"cat_2",q:"English question 75",ht:"🟢",hint:"h___ 200",en:"English question 75",ko:"English question 75"},
+{no:"321",part:2,cat:"cat_2",q:"English question 76",ht:"🟢",hint:"h___ 201",en:"English question 76",ko:"English question 76"},
+{no:"322",part:2,cat:"cat_2",q:"English question 77",ht:"🟢",hint:"h___ 202",en:"English question 77",ko:"English question 77"},
+{no:"323",part:2,cat:"cat_2",q:"English question 78",ht:"🟢",hint:"h___ 203",en:"English question 78",ko:"English question 78"},
+{no:"324",part:2,cat:"cat_2",q:"English question 79",ht:"🟢",hint:"h___ 204",en:"English question 79",ko:"English question 79"},
+{no:"325",part:2,cat:"cat_2",q:"English question 80",ht:"🟢",hint:"h___ 205",en:"English question 80",ko:"English question 80"},
+{no:"326",part:2,cat:"cat_2",q:"English question 81",ht:"🟢",hint:"h___ 206",en:"English question 81",ko:"English question 81"},
+{no:"327",part:2,cat:"cat_2",q:"English question 82",ht:"🟢",hint:"h___ 207",en:"English question 82",ko:"English question 82"},
+{no:"328",part:2,cat:"cat_2",q:"English question 83",ht:"🟢",hint:"h___ 208",en:"English question 83",ko:"English question 83"},
+{no:"329",part:2,cat:"cat_2",q:"English question 84",ht:"🟢",hint:"h___ 209",en:"English question 84",ko:"English question 84"},
+{no:"330",part:2,cat:"cat_2",q:"English question 85",ht:"🟢",hint:"h___ 210",en:"English question 85",ko:"English question 85"},
+{no:"331",part:2,cat:"cat_2",q:"English question 86",ht:"🟢",hint:"h___ 211",en:"English question 86",ko:"English question 86"},
+{no:"332",part:2,cat:"cat_2",q:"English question 87",ht:"🟢",hint:"h___ 212",en:"English question 87",ko:"English question 87"},
+{no:"333",part:2,cat:"cat_2",q:"English question 88",ht:"🟢",hint:"h___ 213",en:"English question 88",ko:"English question 88"},
+{no:"334",part:2,cat:"cat_2",q:"English question 89",ht:"🟢",hint:"h___ 214",en:"English question 89",ko:"English question 89"},
+{no:"335",part:2,cat:"cat_2",q:"English question 90",ht:"🟢",hint:"h___ 215",en:"English question 90",ko:"English question 90"},
+{no:"336",part:2,cat:"cat_2",q:"English question 91",ht:"🟢",hint:"h___ 216",en:"English question 91",ko:"English question 91"},
+{no:"337",part:2,cat:"cat_2",q:"English question 92",ht:"🟢",hint:"h___ 217",en:"English question 92",ko:"English question 92"},
+{no:"338",part:2,cat:"cat_2",q:"English question 93",ht:"🟢",hint:"h___ 218",en:"English question 93",ko:"English question 93"},
+{no:"339",part:2,cat:"cat_2",q:"English question 94",ht:"🟢",hint:"h___ 219",en:"English question 94",ko:"English question 94"},
+{no:"340",part:2,cat:"cat_2",q:"English question 95",ht:"🟢",hint:"h___ 220",en:"English question 95",ko:"English question 95"},
+{no:"341",part:2,cat:"cat_2",q:"English question 96",ht:"🟢",hint:"h___ 221",en:"English question 96",ko:"English question 96"},
+{no:"342",part:2,cat:"cat_2",q:"English question 97",ht:"🟢",hint:"h___ 222",en:"English question 97",ko:"English question 97"},
+{no:"343",part:2,cat:"cat_2",q:"English question 98",ht:"🟢",hint:"h___ 223",en:"English question 98",ko:"English question 98"},
+{no:"344",part:2,cat:"cat_2",q:"English question 99",ht:"🟢",hint:"h___ 224",en:"English question 99",ko:"English question 99"},
+{no:"345",part:2,cat:"cat_2",q:"English question 100",ht:"🟢",hint:"h___ 225",en:"English question 100",ko:"English question 100"},
+{no:"346",part:2,cat:"cat_2",q:"English question 101",ht:"🟢",hint:"h___ 226",en:"English question 101",ko:"English question 101"},
+{no:"347",part:2,cat:"cat_2",q:"English question 102",ht:"🟢",hint:"h___ 227",en:"English question 102",ko:"English question 102"},
+{no:"348",part:2,cat:"cat_2",q:"English question 103",ht:"🟢",hint:"h___ 228",en:"English question 103",ko:"English question 103"},
+{no:"349",part:2,cat:"cat_2",q:"English question 104",ht:"🟢",hint:"h___ 229",en:"English question 104",ko:"English question 104"},
+{no:"350",part:2,cat:"cat_2",q:"English question 105",ht:"🟢",hint:"h___ 230",en:"English question 105",ko:"English question 105"},
+{no:"351",part:2,cat:"cat_2",q:"English question 106",ht:"🟢",hint:"h___ 231",en:"English question 106",ko:"English question 106"},
+{no:"352",part:2,cat:"cat_2",q:"English question 107",ht:"🟢",hint:"h___ 232",en:"English question 107",ko:"English question 107"},
+{no:"353",part:2,cat:"cat_2",q:"English question 108",ht:"🟢",hint:"h___ 233",en:"English question 108",ko:"English question 108"},
+{no:"354",part:2,cat:"cat_2",q:"English question 109",ht:"🟢",hint:"h___ 234",en:"English question 109",ko:"English question 109"},
+{no:"355",part:2,cat:"cat_2",q:"English question 110",ht:"🟢",hint:"h___ 235",en:"English question 110",ko:"English question 110"},
+{no:"356",part:2,cat:"cat_2",q:"English question 111",ht:"🟢",hint:"h___ 236",en:"English question 111",ko:"English question 111"},
+{no:"357",part:2,cat:"cat_2",q:"English question 112",ht:"🟢",hint:"h___ 237",en:"English question 112",ko:"English question 112"},
+{no:"358",part:2,cat:"cat_2",q:"English question 113",ht:"🟢",hint:"h___ 238",en:"English question 113",ko:"English question 113"},
+{no:"359",part:2,cat:"cat_2",q:"English question 114",ht:"🟢",hint:"h___ 239",en:"English question 114",ko:"English question 114"},
+{no:"360",part:2,cat:"cat_2",q:"English question 115",ht:"🟢",hint:"h___ 240",en:"English question 115",ko:"English question 115"},
+{no:"361",part:2,cat:"cat_2",q:"English question 116",ht:"🟢",hint:"h___ 241",en:"English question 116",ko:"English question 116"},
+{no:"362",part:2,cat:"cat_2",q:"English question 117",ht:"🟢",hint:"h___ 242",en:"English question 117",ko:"English question 117"},
+{no:"363",part:2,cat:"cat_2",q:"English question 118",ht:"🟢",hint:"h___ 243",en:"English question 118",ko:"English question 118"},
+{no:"364",part:2,cat:"cat_2",q:"English question 119",ht:"🟢",hint:"h___ 244",en:"English question 119",ko:"English question 119"},
+{no:"365",part:2,cat:"cat_2",q:"English question 120",ht:"🟢",hint:"h___ 245",en:"English question 120",ko:"English question 120"},
+{no:"366",part:2,cat:"cat_2",q:"English question 121",ht:"🟢",hint:"h___ 246",en:"English question 121",ko:"English question 121"},
+{no:"367",part:2,cat:"cat_2",q:"English question 122",ht:"🟢",hint:"h___ 247",en:"English question 122",ko:"English question 122"},
+{no:"368",part:2,cat:"cat_2",q:"English question 123",ht:"🟢",hint:"h___ 248",en:"English question 123",ko:"English question 123"},
+{no:"369",part:2,cat:"cat_2",q:"English question 124",ht:"🟢",hint:"h___ 249",en:"English question 124",ko:"English question 124"},
+{no:"370",part:2,cat:"cat_2",q:"English question 125",ht:"🟢",hint:"h___ 250",en:"English question 125",ko:"English question 125"},
+{no:"371",part:3,cat:"cat_3",q:"The ___ is 1",ht:"🟢",hint:"h___ 251",en:"The ___ is 1",ko:"The ___ is 1"},
+{no:"372",part:3,cat:"cat_3",q:"The ___ is 2",ht:"🟢",hint:"h___ 252",en:"The ___ is 2",ko:"The ___ is 2"},
+{no:"373",part:3,cat:"cat_3",q:"The ___ is 3",ht:"🟢",hint:"h___ 253",en:"The ___ is 3",ko:"The ___ is 3"},
+{no:"374",part:3,cat:"cat_3",q:"The ___ is 4",ht:"🟢",hint:"h___ 254",en:"The ___ is 4",ko:"The ___ is 4"},
+{no:"375",part:3,cat:"cat_3",q:"The ___ is 5",ht:"🟢",hint:"h___ 255",en:"The ___ is 5",ko:"The ___ is 5"},
+{no:"376",part:3,cat:"cat_3",q:"The ___ is 6",ht:"🟢",hint:"h___ 256",en:"The ___ is 6",ko:"The ___ is 6"},
+{no:"377",part:3,cat:"cat_3",q:"The ___ is 7",ht:"🟢",hint:"h___ 257",en:"The ___ is 7",ko:"The ___ is 7"},
+{no:"378",part:3,cat:"cat_3",q:"The ___ is 8",ht:"🟢",hint:"h___ 258",en:"The ___ is 8",ko:"The ___ is 8"},
+{no:"379",part:3,cat:"cat_3",q:"The ___ is 9",ht:"🟢",hint:"h___ 259",en:"The ___ is 9",ko:"The ___ is 9"},
+{no:"380",part:3,cat:"cat_3",q:"The ___ is 10",ht:"🟢",hint:"h___ 260",en:"The ___ is 10",ko:"The ___ is 10"},
+{no:"381",part:3,cat:"cat_3",q:"The ___ is 11",ht:"🟢",hint:"h___ 261",en:"The ___ is 11",ko:"The ___ is 11"},
+{no:"382",part:3,cat:"cat_3",q:"The ___ is 12",ht:"🟢",hint:"h___ 262",en:"The ___ is 12",ko:"The ___ is 12"},
+{no:"383",part:3,cat:"cat_3",q:"The ___ is 13",ht:"🟢",hint:"h___ 263",en:"The ___ is 13",ko:"The ___ is 13"},
+{no:"384",part:3,cat:"cat_3",q:"The ___ is 14",ht:"🟢",hint:"h___ 264",en:"The ___ is 14",ko:"The ___ is 14"},
+{no:"385",part:3,cat:"cat_3",q:"The ___ is 15",ht:"🟢",hint:"h___ 265",en:"The ___ is 15",ko:"The ___ is 15"},
+{no:"386",part:3,cat:"cat_3",q:"The ___ is 16",ht:"🟢",hint:"h___ 266",en:"The ___ is 16",ko:"The ___ is 16"},
+{no:"387",part:3,cat:"cat_3",q:"The ___ is 17",ht:"🟢",hint:"h___ 267",en:"The ___ is 17",ko:"The ___ is 17"},
+{no:"388",part:3,cat:"cat_3",q:"The ___ is 18",ht:"🟢",hint:"h___ 268",en:"The ___ is 18",ko:"The ___ is 18"},
+{no:"389",part:3,cat:"cat_3",q:"The ___ is 19",ht:"🟢",hint:"h___ 269",en:"The ___ is 19",ko:"The ___ is 19"},
+{no:"390",part:3,cat:"cat_3",q:"The ___ is 20",ht:"🟢",hint:"h___ 270",en:"The ___ is 20",ko:"The ___ is 20"},
+{no:"391",part:3,cat:"cat_3",q:"The ___ is 21",ht:"🟢",hint:"h___ 271",en:"The ___ is 21",ko:"The ___ is 21"},
+{no:"392",part:3,cat:"cat_3",q:"The ___ is 22",ht:"🟢",hint:"h___ 272",en:"The ___ is 22",ko:"The ___ is 22"},
+{no:"393",part:3,cat:"cat_3",q:"The ___ is 23",ht:"🟢",hint:"h___ 273",en:"The ___ is 23",ko:"The ___ is 23"},
+{no:"394",part:3,cat:"cat_3",q:"The ___ is 24",ht:"🟢",hint:"h___ 274",en:"The ___ is 24",ko:"The ___ is 24"},
+{no:"395",part:3,cat:"cat_3",q:"The ___ is 25",ht:"🟢",hint:"h___ 275",en:"The ___ is 25",ko:"The ___ is 25"},
+{no:"396",part:3,cat:"cat_3",q:"The ___ is 26",ht:"🟢",hint:"h___ 276",en:"The ___ is 26",ko:"The ___ is 26"},
+{no:"397",part:3,cat:"cat_3",q:"The ___ is 27",ht:"🟢",hint:"h___ 277",en:"The ___ is 27",ko:"The ___ is 27"},
+{no:"398",part:3,cat:"cat_3",q:"The ___ is 28",ht:"🟢",hint:"h___ 278",en:"The ___ is 28",ko:"The ___ is 28"},
+{no:"399",part:3,cat:"cat_3",q:"The ___ is 29",ht:"🟢",hint:"h___ 279",en:"The ___ is 29",ko:"The ___ is 29"},
+{no:"400",part:3,cat:"cat_3",q:"The ___ is 30",ht:"🟢",hint:"h___ 280",en:"The ___ is 30",ko:"The ___ is 30"},
+{no:"401",part:3,cat:"cat_3",q:"The ___ is 31",ht:"🟢",hint:"h___ 281",en:"The ___ is 31",ko:"The ___ is 31"},
+{no:"402",part:3,cat:"cat_3",q:"The ___ is 32",ht:"🟢",hint:"h___ 282",en:"The ___ is 32",ko:"The ___ is 32"},
+{no:"403",part:3,cat:"cat_3",q:"The ___ is 33",ht:"🟢",hint:"h___ 283",en:"The ___ is 33",ko:"The ___ is 33"},
+{no:"404",part:3,cat:"cat_3",q:"The ___ is 34",ht:"🟢",hint:"h___ 284",en:"The ___ is 34",ko:"The ___ is 34"},
+{no:"405",part:3,cat:"cat_3",q:"The ___ is 35",ht:"🟢",hint:"h___ 285",en:"The ___ is 35",ko:"The ___ is 35"},
+{no:"406",part:3,cat:"cat_3",q:"The ___ is 36",ht:"🟢",hint:"h___ 286",en:"The ___ is 36",ko:"The ___ is 36"},
+{no:"407",part:3,cat:"cat_3",q:"The ___ is 37",ht:"🟢",hint:"h___ 287",en:"The ___ is 37",ko:"The ___ is 37"},
+{no:"408",part:3,cat:"cat_3",q:"The ___ is 38",ht:"🟢",hint:"h___ 288",en:"The ___ is 38",ko:"The ___ is 38"},
+{no:"409",part:3,cat:"cat_3",q:"The ___ is 39",ht:"🟢",hint:"h___ 289",en:"The ___ is 39",ko:"The ___ is 39"},
+{no:"410",part:3,cat:"cat_3",q:"The ___ is 40",ht:"🟢",hint:"h___ 290",en:"The ___ is 40",ko:"The ___ is 40"},
+{no:"411",part:3,cat:"cat_3",q:"The ___ is 41",ht:"🟢",hint:"h___ 291",en:"The ___ is 41",ko:"The ___ is 41"},
+{no:"412",part:3,cat:"cat_3",q:"The ___ is 42",ht:"🟢",hint:"h___ 292",en:"The ___ is 42",ko:"The ___ is 42"},
+{no:"413",part:3,cat:"cat_3",q:"The ___ is 43",ht:"🟢",hint:"h___ 293",en:"The ___ is 43",ko:"The ___ is 43"},
+{no:"414",part:3,cat:"cat_3",q:"The ___ is 44",ht:"🟢",hint:"h___ 294",en:"The ___ is 44",ko:"The ___ is 44"},
+{no:"415",part:3,cat:"cat_3",q:"The ___ is 45",ht:"🟢",hint:"h___ 295",en:"The ___ is 45",ko:"The ___ is 45"},
+{no:"416",part:3,cat:"cat_3",q:"The ___ is 46",ht:"🟢",hint:"h___ 296",en:"The ___ is 46",ko:"The ___ is 46"},
+{no:"417",part:3,cat:"cat_3",q:"The ___ is 47",ht:"🟢",hint:"h___ 297",en:"The ___ is 47",ko:"The ___ is 47"},
+{no:"418",part:3,cat:"cat_3",q:"The ___ is 48",ht:"🟢",hint:"h___ 298",en:"The ___ is 48",ko:"The ___ is 48"},
+{no:"419",part:3,cat:"cat_3",q:"The ___ is 49",ht:"🟢",hint:"h___ 299",en:"The ___ is 49",ko:"The ___ is 49"},
+{no:"420",part:3,cat:"cat_3",q:"The ___ is 50",ht:"🟢",hint:"h___ 300",en:"The ___ is 50",ko:"The ___ is 50"},
+{no:"421",part:3,cat:"cat_3",q:"The ___ is 51",ht:"🟢",hint:"h___ 301",en:"The ___ is 51",ko:"The ___ is 51"},
+{no:"422",part:3,cat:"cat_3",q:"The ___ is 52",ht:"🟢",hint:"h___ 302",en:"The ___ is 52",ko:"The ___ is 52"},
+{no:"423",part:3,cat:"cat_3",q:"The ___ is 53",ht:"🟢",hint:"h___ 303",en:"The ___ is 53",ko:"The ___ is 53"},
+{no:"424",part:3,cat:"cat_3",q:"The ___ is 54",ht:"🟢",hint:"h___ 304",en:"The ___ is 54",ko:"The ___ is 54"},
+{no:"425",part:3,cat:"cat_3",q:"The ___ is 55",ht:"🟢",hint:"h___ 305",en:"The ___ is 55",ko:"The ___ is 55"},
+{no:"426",part:3,cat:"cat_3",q:"The ___ is 56",ht:"🟢",hint:"h___ 306",en:"The ___ is 56",ko:"The ___ is 56"},
+{no:"427",part:3,cat:"cat_3",q:"The ___ is 57",ht:"🟢",hint:"h___ 307",en:"The ___ is 57",ko:"The ___ is 57"},
+{no:"428",part:3,cat:"cat_3",q:"The ___ is 58",ht:"🟢",hint:"h___ 308",en:"The ___ is 58",ko:"The ___ is 58"},
+{no:"429",part:3,cat:"cat_3",q:"The ___ is 59",ht:"🟢",hint:"h___ 309",en:"The ___ is 59",ko:"The ___ is 59"},
+{no:"430",part:3,cat:"cat_3",q:"The ___ is 60",ht:"🟢",hint:"h___ 310",en:"The ___ is 60",ko:"The ___ is 60"},
+{no:"431",part:3,cat:"cat_3",q:"The ___ is 61",ht:"🟢",hint:"h___ 311",en:"The ___ is 61",ko:"The ___ is 61"},
+{no:"432",part:3,cat:"cat_3",q:"The ___ is 62",ht:"🟢",hint:"h___ 312",en:"The ___ is 62",ko:"The ___ is 62"},
+{no:"433",part:3,cat:"cat_3",q:"The ___ is 63",ht:"🟢",hint:"h___ 313",en:"The ___ is 63",ko:"The ___ is 63"},
+{no:"434",part:3,cat:"cat_3",q:"The ___ is 64",ht:"🟢",hint:"h___ 314",en:"The ___ is 64",ko:"The ___ is 64"},
+{no:"435",part:3,cat:"cat_3",q:"The ___ is 65",ht:"🟢",hint:"h___ 315",en:"The ___ is 65",ko:"The ___ is 65"},
+{no:"436",part:3,cat:"cat_3",q:"The ___ is 66",ht:"🟢",hint:"h___ 316",en:"The ___ is 66",ko:"The ___ is 66"},
+{no:"437",part:3,cat:"cat_3",q:"The ___ is 67",ht:"🟢",hint:"h___ 317",en:"The ___ is 67",ko:"The ___ is 67"},
+{no:"438",part:3,cat:"cat_3",q:"The ___ is 68",ht:"🟢",hint:"h___ 318",en:"The ___ is 68",ko:"The ___ is 68"},
+{no:"439",part:3,cat:"cat_3",q:"The ___ is 69",ht:"🟢",hint:"h___ 319",en:"The ___ is 69",ko:"The ___ is 69"},
+{no:"440",part:3,cat:"cat_3",q:"The ___ is 70",ht:"🟢",hint:"h___ 320",en:"The ___ is 70",ko:"The ___ is 70"},
+{no:"441",part:3,cat:"cat_3",q:"The ___ is 71",ht:"🟢",hint:"h___ 321",en:"The ___ is 71",ko:"The ___ is 71"},
+{no:"442",part:3,cat:"cat_3",q:"The ___ is 72",ht:"🟢",hint:"h___ 322",en:"The ___ is 72",ko:"The ___ is 72"},
+{no:"443",part:3,cat:"cat_3",q:"The ___ is 73",ht:"🟢",hint:"h___ 323",en:"The ___ is 73",ko:"The ___ is 73"},
+{no:"444",part:3,cat:"cat_3",q:"The ___ is 74",ht:"🟢",hint:"h___ 324",en:"The ___ is 74",ko:"The ___ is 74"},
+{no:"445",part:3,cat:"cat_3",q:"The ___ is 75",ht:"🟢",hint:"h___ 325",en:"The ___ is 75",ko:"The ___ is 75"},
+{no:"446",part:3,cat:"cat_3",q:"The ___ is 76",ht:"🟢",hint:"h___ 326",en:"The ___ is 76",ko:"The ___ is 76"},
+{no:"447",part:3,cat:"cat_3",q:"The ___ is 77",ht:"🟢",hint:"h___ 327",en:"The ___ is 77",ko:"The ___ is 77"},
+{no:"448",part:3,cat:"cat_3",q:"The ___ is 78",ht:"🟢",hint:"h___ 328",en:"The ___ is 78",ko:"The ___ is 78"},
+{no:"449",part:3,cat:"cat_3",q:"The ___ is 79",ht:"🟢",hint:"h___ 329",en:"The ___ is 79",ko:"The ___ is 79"},
+{no:"450",part:3,cat:"cat_3",q:"The ___ is 80",ht:"🟢",hint:"h___ 330",en:"The ___ is 80",ko:"The ___ is 80"},
+{no:"451",part:3,cat:"cat_3",q:"The ___ is 81",ht:"🟢",hint:"h___ 331",en:"The ___ is 81",ko:"The ___ is 81"},
+{no:"452",part:3,cat:"cat_3",q:"The ___ is 82",ht:"🟢",hint:"h___ 332",en:"The ___ is 82",ko:"The ___ is 82"},
+{no:"453",part:3,cat:"cat_3",q:"The ___ is 83",ht:"🟢",hint:"h___ 333",en:"The ___ is 83",ko:"The ___ is 83"},
+{no:"454",part:3,cat:"cat_3",q:"The ___ is 84",ht:"🟢",hint:"h___ 334",en:"The ___ is 84",ko:"The ___ is 84"},
+{no:"455",part:3,cat:"cat_3",q:"The ___ is 85",ht:"🟢",hint:"h___ 335",en:"The ___ is 85",ko:"The ___ is 85"},
+{no:"456",part:3,cat:"cat_3",q:"The ___ is 86",ht:"🟢",hint:"h___ 336",en:"The ___ is 86",ko:"The ___ is 86"},
+{no:"457",part:3,cat:"cat_3",q:"The ___ is 87",ht:"🟢",hint:"h___ 337",en:"The ___ is 87",ko:"The ___ is 87"},
+{no:"458",part:3,cat:"cat_3",q:"The ___ is 88",ht:"🟢",hint:"h___ 338",en:"The ___ is 88",ko:"The ___ is 88"},
+{no:"459",part:3,cat:"cat_3",q:"The ___ is 89",ht:"🟢",hint:"h___ 339",en:"The ___ is 89",ko:"The ___ is 89"},
+{no:"460",part:3,cat:"cat_3",q:"The ___ is 90",ht:"🟢",hint:"h___ 340",en:"The ___ is 90",ko:"The ___ is 90"},
+{no:"461",part:3,cat:"cat_3",q:"The ___ is 91",ht:"🟢",hint:"h___ 341",en:"The ___ is 91",ko:"The ___ is 91"},
+{no:"462",part:3,cat:"cat_3",q:"The ___ is 92",ht:"🟢",hint:"h___ 342",en:"The ___ is 92",ko:"The ___ is 92"},
+{no:"463",part:3,cat:"cat_3",q:"The ___ is 93",ht:"🟢",hint:"h___ 343",en:"The ___ is 93",ko:"The ___ is 93"},
+{no:"464",part:3,cat:"cat_3",q:"The ___ is 94",ht:"🟢",hint:"h___ 344",en:"The ___ is 94",ko:"The ___ is 94"},
+{no:"465",part:3,cat:"cat_3",q:"The ___ is 95",ht:"🟢",hint:"h___ 345",en:"The ___ is 95",ko:"The ___ is 95"},
+{no:"466",part:3,cat:"cat_3",q:"The ___ is 96",ht:"🟢",hint:"h___ 346",en:"The ___ is 96",ko:"The ___ is 96"},
+{no:"467",part:3,cat:"cat_3",q:"The ___ is 97",ht:"🟢",hint:"h___ 347",en:"The ___ is 97",ko:"The ___ is 97"},
+{no:"468",part:3,cat:"cat_3",q:"The ___ is 98",ht:"🟢",hint:"h___ 348",en:"The ___ is 98",ko:"The ___ is 98"},
+{no:"469",part:3,cat:"cat_3",q:"The ___ is 99",ht:"🟢",hint:"h___ 349",en:"The ___ is 99",ko:"The ___ is 99"},
+{no:"470",part:3,cat:"cat_3",q:"The ___ is 100",ht:"🟢",hint:"h___ 350",en:"The ___ is 100",ko:"The ___ is 100"},
+{no:"471",part:3,cat:"cat_3",q:"The ___ is 101",ht:"🟢",hint:"h___ 351",en:"The ___ is 101",ko:"The ___ is 101"},
+{no:"472",part:3,cat:"cat_3",q:"The ___ is 102",ht:"🟢",hint:"h___ 352",en:"The ___ is 102",ko:"The ___ is 102"},
+{no:"473",part:3,cat:"cat_3",q:"The ___ is 103",ht:"🟢",hint:"h___ 353",en:"The ___ is 103",ko:"The ___ is 103"},
+{no:"474",part:3,cat:"cat_3",q:"The ___ is 104",ht:"🟢",hint:"h___ 354",en:"The ___ is 104",ko:"The ___ is 104"},
+{no:"475",part:3,cat:"cat_3",q:"The ___ is 105",ht:"🟢",hint:"h___ 355",en:"The ___ is 105",ko:"The ___ is 105"},
+{no:"476",part:3,cat:"cat_3",q:"The ___ is 106",ht:"🟢",hint:"h___ 356",en:"The ___ is 106",ko:"The ___ is 106"},
+{no:"477",part:3,cat:"cat_3",q:"The ___ is 107",ht:"🟢",hint:"h___ 357",en:"The ___ is 107",ko:"The ___ is 107"},
+{no:"478",part:3,cat:"cat_3",q:"The ___ is 108",ht:"🟢",hint:"h___ 358",en:"The ___ is 108",ko:"The ___ is 108"},
+{no:"479",part:3,cat:"cat_3",q:"The ___ is 109",ht:"🟢",hint:"h___ 359",en:"The ___ is 109",ko:"The ___ is 109"},
+{no:"480",part:3,cat:"cat_3",q:"The ___ is 110",ht:"🟢",hint:"h___ 360",en:"The ___ is 110",ko:"The ___ is 110"},
+{no:"481",part:3,cat:"cat_3",q:"The ___ is 111",ht:"🟢",hint:"h___ 361",en:"The ___ is 111",ko:"The ___ is 111"},
+{no:"482",part:3,cat:"cat_3",q:"The ___ is 112",ht:"🟢",hint:"h___ 362",en:"The ___ is 112",ko:"The ___ is 112"},
+{no:"483",part:3,cat:"cat_3",q:"The ___ is 113",ht:"🟢",hint:"h___ 363",en:"The ___ is 113",ko:"The ___ is 113"},
+{no:"484",part:3,cat:"cat_3",q:"The ___ is 114",ht:"🟢",hint:"h___ 364",en:"The ___ is 114",ko:"The ___ is 114"},
+{no:"485",part:3,cat:"cat_3",q:"The ___ is 115",ht:"🟢",hint:"h___ 365",en:"The ___ is 115",ko:"The ___ is 115"},
+{no:"486",part:3,cat:"cat_3",q:"The ___ is 116",ht:"🟢",hint:"h___ 366",en:"The ___ is 116",ko:"The ___ is 116"},
+{no:"487",part:3,cat:"cat_3",q:"The ___ is 117",ht:"🟢",hint:"h___ 367",en:"The ___ is 117",ko:"The ___ is 117"},
+{no:"488",part:3,cat:"cat_3",q:"The ___ is 118",ht:"🟢",hint:"h___ 368",en:"The ___ is 118",ko:"The ___ is 118"},
+{no:"489",part:3,cat:"cat_3",q:"The ___ is 119",ht:"🟢",hint:"h___ 369",en:"The ___ is 119",ko:"The ___ is 119"},
+{no:"490",part:3,cat:"cat_3",q:"The ___ is 120",ht:"🟢",hint:"h___ 370",en:"The ___ is 120",ko:"The ___ is 120"},
+{no:"491",part:3,cat:"cat_3",q:"The ___ is 121",ht:"🟢",hint:"h___ 371",en:"The ___ is 121",ko:"The ___ is 121"},
+{no:"492",part:3,cat:"cat_3",q:"The ___ is 122",ht:"🟢",hint:"h___ 372",en:"The ___ is 122",ko:"The ___ is 122"},
+{no:"493",part:3,cat:"cat_3",q:"The ___ is 123",ht:"🟢",hint:"h___ 373",en:"The ___ is 123",ko:"The ___ is 123"},
+{no:"494",part:3,cat:"cat_3",q:"The ___ is 124",ht:"🟢",hint:"h___ 374",en:"The ___ is 124",ko:"The ___ is 124"},
+{no:"495",part:3,cat:"cat_3",q:"The ___ is 125",ht:"🟢",hint:"h___ 375",en:"The ___ is 125",ko:"The ___ is 125"},
+{no:"496",part:4,cat:"cat_4",q:"상황 설명 1",ht:"🟢",hint:"h___ 376",en:"Situation response 1",ko:"상황 설명 1"},
+{no:"497",part:4,cat:"cat_4",q:"상황 설명 2",ht:"🟢",hint:"h___ 377",en:"Situation response 2",ko:"상황 설명 2"},
+{no:"498",part:4,cat:"cat_4",q:"상황 설명 3",ht:"🟢",hint:"h___ 378",en:"Situation response 3",ko:"상황 설명 3"},
+{no:"499",part:4,cat:"cat_4",q:"상황 설명 4",ht:"🟢",hint:"h___ 379",en:"Situation response 4",ko:"상황 설명 4"},
+{no:"500",part:4,cat:"cat_4",q:"상황 설명 5",ht:"🟢",hint:"h___ 380",en:"Situation response 5",ko:"상황 설명 5"},
+{no:"501",part:4,cat:"cat_4",q:"상황 설명 6",ht:"🟢",hint:"h___ 381",en:"Situation response 6",ko:"상황 설명 6"},
+{no:"502",part:4,cat:"cat_4",q:"상황 설명 7",ht:"🟢",hint:"h___ 382",en:"Situation response 7",ko:"상황 설명 7"},
+{no:"503",part:4,cat:"cat_4",q:"상황 설명 8",ht:"🟢",hint:"h___ 383",en:"Situation response 8",ko:"상황 설명 8"},
+{no:"504",part:4,cat:"cat_4",q:"상황 설명 9",ht:"🟢",hint:"h___ 384",en:"Situation response 9",ko:"상황 설명 9"},
+{no:"505",part:4,cat:"cat_4",q:"상황 설명 10",ht:"🟢",hint:"h___ 385",en:"Situation response 10",ko:"상황 설명 10"},
+{no:"506",part:4,cat:"cat_4",q:"상황 설명 11",ht:"🟢",hint:"h___ 386",en:"Situation response 11",ko:"상황 설명 11"},
+{no:"507",part:4,cat:"cat_4",q:"상황 설명 12",ht:"🟢",hint:"h___ 387",en:"Situation response 12",ko:"상황 설명 12"},
+{no:"508",part:4,cat:"cat_4",q:"상황 설명 13",ht:"🟢",hint:"h___ 388",en:"Situation response 13",ko:"상황 설명 13"},
+{no:"509",part:4,cat:"cat_4",q:"상황 설명 14",ht:"🟢",hint:"h___ 389",en:"Situation response 14",ko:"상황 설명 14"},
+{no:"510",part:4,cat:"cat_4",q:"상황 설명 15",ht:"🟢",hint:"h___ 390",en:"Situation response 15",ko:"상황 설명 15"},
+{no:"511",part:4,cat:"cat_4",q:"상황 설명 16",ht:"🟢",hint:"h___ 391",en:"Situation response 16",ko:"상황 설명 16"},
+{no:"512",part:4,cat:"cat_4",q:"상황 설명 17",ht:"🟢",hint:"h___ 392",en:"Situation response 17",ko:"상황 설명 17"},
+{no:"513",part:4,cat:"cat_4",q:"상황 설명 18",ht:"🟢",hint:"h___ 393",en:"Situation response 18",ko:"상황 설명 18"},
+{no:"514",part:4,cat:"cat_4",q:"상황 설명 19",ht:"🟢",hint:"h___ 394",en:"Situation response 19",ko:"상황 설명 19"},
+{no:"515",part:4,cat:"cat_4",q:"상황 설명 20",ht:"🟢",hint:"h___ 395",en:"Situation response 20",ko:"상황 설명 20"},
+{no:"516",part:4,cat:"cat_4",q:"상황 설명 21",ht:"🟢",hint:"h___ 396",en:"Situation response 21",ko:"상황 설명 21"},
+{no:"517",part:4,cat:"cat_4",q:"상황 설명 22",ht:"🟢",hint:"h___ 397",en:"Situation response 22",ko:"상황 설명 22"},
+{no:"518",part:4,cat:"cat_4",q:"상황 설명 23",ht:"🟢",hint:"h___ 398",en:"Situation response 23",ko:"상황 설명 23"},
+{no:"519",part:4,cat:"cat_4",q:"상황 설명 24",ht:"🟢",hint:"h___ 399",en:"Situation response 24",ko:"상황 설명 24"},
+{no:"520",part:4,cat:"cat_4",q:"상황 설명 25",ht:"🟢",hint:"h___ 400",en:"Situation response 25",ko:"상황 설명 25"},
+{no:"521",part:4,cat:"cat_4",q:"상황 설명 26",ht:"🟢",hint:"h___ 401",en:"Situation response 26",ko:"상황 설명 26"},
+{no:"522",part:4,cat:"cat_4",q:"상황 설명 27",ht:"🟢",hint:"h___ 402",en:"Situation response 27",ko:"상황 설명 27"},
+{no:"523",part:4,cat:"cat_4",q:"상황 설명 28",ht:"🟢",hint:"h___ 403",en:"Situation response 28",ko:"상황 설명 28"},
+{no:"524",part:4,cat:"cat_4",q:"상황 설명 29",ht:"🟢",hint:"h___ 404",en:"Situation response 29",ko:"상황 설명 29"},
+{no:"525",part:4,cat:"cat_4",q:"상황 설명 30",ht:"🟢",hint:"h___ 405",en:"Situation response 30",ko:"상황 설명 30"},
+{no:"526",part:4,cat:"cat_4",q:"상황 설명 31",ht:"🟢",hint:"h___ 406",en:"Situation response 31",ko:"상황 설명 31"},
+{no:"527",part:4,cat:"cat_4",q:"상황 설명 32",ht:"🟢",hint:"h___ 407",en:"Situation response 32",ko:"상황 설명 32"},
+{no:"528",part:4,cat:"cat_4",q:"상황 설명 33",ht:"🟢",hint:"h___ 408",en:"Situation response 33",ko:"상황 설명 33"},
+{no:"529",part:4,cat:"cat_4",q:"상황 설명 34",ht:"🟢",hint:"h___ 409",en:"Situation response 34",ko:"상황 설명 34"},
+{no:"530",part:4,cat:"cat_4",q:"상황 설명 35",ht:"🟢",hint:"h___ 410",en:"Situation response 35",ko:"상황 설명 35"},
+{no:"531",part:4,cat:"cat_4",q:"상황 설명 36",ht:"🟢",hint:"h___ 411",en:"Situation response 36",ko:"상황 설명 36"},
+{no:"532",part:4,cat:"cat_4",q:"상황 설명 37",ht:"🟢",hint:"h___ 412",en:"Situation response 37",ko:"상황 설명 37"},
+{no:"533",part:4,cat:"cat_4",q:"상황 설명 38",ht:"🟢",hint:"h___ 413",en:"Situation response 38",ko:"상황 설명 38"},
+{no:"534",part:4,cat:"cat_4",q:"상황 설명 39",ht:"🟢",hint:"h___ 414",en:"Situation response 39",ko:"상황 설명 39"},
+{no:"535",part:4,cat:"cat_4",q:"상황 설명 40",ht:"🟢",hint:"h___ 415",en:"Situation response 40",ko:"상황 설명 40"},
+{no:"536",part:4,cat:"cat_4",q:"상황 설명 41",ht:"🟢",hint:"h___ 416",en:"Situation response 41",ko:"상황 설명 41"},
+{no:"537",part:4,cat:"cat_4",q:"상황 설명 42",ht:"🟢",hint:"h___ 417",en:"Situation response 42",ko:"상황 설명 42"},
+{no:"538",part:4,cat:"cat_4",q:"상황 설명 43",ht:"🟢",hint:"h___ 418",en:"Situation response 43",ko:"상황 설명 43"},
+{no:"539",part:4,cat:"cat_4",q:"상황 설명 44",ht:"🟢",hint:"h___ 419",en:"Situation response 44",ko:"상황 설명 44"},
+{no:"540",part:4,cat:"cat_4",q:"상황 설명 45",ht:"🟢",hint:"h___ 420",en:"Situation response 45",ko:"상황 설명 45"},
+{no:"541",part:4,cat:"cat_4",q:"상황 설명 46",ht:"🟢",hint:"h___ 421",en:"Situation response 46",ko:"상황 설명 46"},
+{no:"542",part:4,cat:"cat_4",q:"상황 설명 47",ht:"🟢",hint:"h___ 422",en:"Situation response 47",ko:"상황 설명 47"},
+{no:"543",part:4,cat:"cat_4",q:"상황 설명 48",ht:"🟢",hint:"h___ 423",en:"Situation response 48",ko:"상황 설명 48"},
+{no:"544",part:4,cat:"cat_4",q:"상황 설명 49",ht:"🟢",hint:"h___ 424",en:"Situation response 49",ko:"상황 설명 49"},
+{no:"545",part:4,cat:"cat_4",q:"상황 설명 50",ht:"🟢",hint:"h___ 425",en:"Situation response 50",ko:"상황 설명 50"},
+{no:"546",part:4,cat:"cat_4",q:"상황 설명 51",ht:"🟢",hint:"h___ 426",en:"Situation response 51",ko:"상황 설명 51"},
+{no:"547",part:4,cat:"cat_4",q:"상황 설명 52",ht:"🟢",hint:"h___ 427",en:"Situation response 52",ko:"상황 설명 52"},
+{no:"548",part:4,cat:"cat_4",q:"상황 설명 53",ht:"🟢",hint:"h___ 428",en:"Situation response 53",ko:"상황 설명 53"},
+{no:"549",part:4,cat:"cat_4",q:"상황 설명 54",ht:"🟢",hint:"h___ 429",en:"Situation response 54",ko:"상황 설명 54"},
+{no:"550",part:4,cat:"cat_4",q:"상황 설명 55",ht:"🟢",hint:"h___ 430",en:"Situation response 55",ko:"상황 설명 55"},
+{no:"551",part:4,cat:"cat_4",q:"상황 설명 56",ht:"🟢",hint:"h___ 431",en:"Situation response 56",ko:"상황 설명 56"},
+{no:"552",part:4,cat:"cat_4",q:"상황 설명 57",ht:"🟢",hint:"h___ 432",en:"Situation response 57",ko:"상황 설명 57"},
+{no:"553",part:4,cat:"cat_4",q:"상황 설명 58",ht:"🟢",hint:"h___ 433",en:"Situation response 58",ko:"상황 설명 58"},
+{no:"554",part:4,cat:"cat_4",q:"상황 설명 59",ht:"🟢",hint:"h___ 434",en:"Situation response 59",ko:"상황 설명 59"},
+{no:"555",part:4,cat:"cat_4",q:"상황 설명 60",ht:"🟢",hint:"h___ 435",en:"Situation response 60",ko:"상황 설명 60"},
+{no:"556",part:4,cat:"cat_4",q:"상황 설명 61",ht:"🟢",hint:"h___ 436",en:"Situation response 61",ko:"상황 설명 61"},
+{no:"557",part:4,cat:"cat_4",q:"상황 설명 62",ht:"🟢",hint:"h___ 437",en:"Situation response 62",ko:"상황 설명 62"},
+{no:"558",part:4,cat:"cat_4",q:"상황 설명 63",ht:"🟢",hint:"h___ 438",en:"Situation response 63",ko:"상황 설명 63"},
+{no:"559",part:4,cat:"cat_4",q:"상황 설명 64",ht:"🟢",hint:"h___ 439",en:"Situation response 64",ko:"상황 설명 64"},
+{no:"560",part:4,cat:"cat_4",q:"상황 설명 65",ht:"🟢",hint:"h___ 440",en:"Situation response 65",ko:"상황 설명 65"},
+{no:"561",part:4,cat:"cat_4",q:"상황 설명 66",ht:"🟢",hint:"h___ 441",en:"Situation response 66",ko:"상황 설명 66"},
+{no:"562",part:4,cat:"cat_4",q:"상황 설명 67",ht:"🟢",hint:"h___ 442",en:"Situation response 67",ko:"상황 설명 67"},
+{no:"563",part:4,cat:"cat_4",q:"상황 설명 68",ht:"🟢",hint:"h___ 443",en:"Situation response 68",ko:"상황 설명 68"},
+{no:"564",part:4,cat:"cat_4",q:"상황 설명 69",ht:"🟢",hint:"h___ 444",en:"Situation response 69",ko:"상황 설명 69"},
+{no:"565",part:4,cat:"cat_4",q:"상황 설명 70",ht:"🟢",hint:"h___ 445",en:"Situation response 70",ko:"상황 설명 70"},
+{no:"566",part:4,cat:"cat_4",q:"상황 설명 71",ht:"🟢",hint:"h___ 446",en:"Situation response 71",ko:"상황 설명 71"},
+{no:"567",part:4,cat:"cat_4",q:"상황 설명 72",ht:"🟢",hint:"h___ 447",en:"Situation response 72",ko:"상황 설명 72"},
+{no:"568",part:4,cat:"cat_4",q:"상황 설명 73",ht:"🟢",hint:"h___ 448",en:"Situation response 73",ko:"상황 설명 73"},
+{no:"569",part:4,cat:"cat_4",q:"상황 설명 74",ht:"🟢",hint:"h___ 449",en:"Situation response 74",ko:"상황 설명 74"},
+{no:"570",part:4,cat:"cat_4",q:"상황 설명 75",ht:"🟢",hint:"h___ 450",en:"Situation response 75",ko:"상황 설명 75"},
+{no:"571",part:4,cat:"cat_4",q:"상황 설명 76",ht:"🟢",hint:"h___ 451",en:"Situation response 76",ko:"상황 설명 76"},
+{no:"572",part:4,cat:"cat_4",q:"상황 설명 77",ht:"🟢",hint:"h___ 452",en:"Situation response 77",ko:"상황 설명 77"},
+{no:"573",part:4,cat:"cat_4",q:"상황 설명 78",ht:"🟢",hint:"h___ 453",en:"Situation response 78",ko:"상황 설명 78"},
+{no:"574",part:4,cat:"cat_4",q:"상황 설명 79",ht:"🟢",hint:"h___ 454",en:"Situation response 79",ko:"상황 설명 79"},
+{no:"575",part:4,cat:"cat_4",q:"상황 설명 80",ht:"🟢",hint:"h___ 455",en:"Situation response 80",ko:"상황 설명 80"},
+{no:"576",part:4,cat:"cat_4",q:"상황 설명 81",ht:"🟢",hint:"h___ 456",en:"Situation response 81",ko:"상황 설명 81"},
+{no:"577",part:4,cat:"cat_4",q:"상황 설명 82",ht:"🟢",hint:"h___ 457",en:"Situation response 82",ko:"상황 설명 82"},
+{no:"578",part:4,cat:"cat_4",q:"상황 설명 83",ht:"🟢",hint:"h___ 458",en:"Situation response 83",ko:"상황 설명 83"},
+{no:"579",part:4,cat:"cat_4",q:"상황 설명 84",ht:"🟢",hint:"h___ 459",en:"Situation response 84",ko:"상황 설명 84"},
+{no:"580",part:4,cat:"cat_4",q:"상황 설명 85",ht:"🟢",hint:"h___ 460",en:"Situation response 85",ko:"상황 설명 85"},
+{no:"581",part:4,cat:"cat_4",q:"상황 설명 86",ht:"🟢",hint:"h___ 461",en:"Situation response 86",ko:"상황 설명 86"},
+{no:"582",part:4,cat:"cat_4",q:"상황 설명 87",ht:"🟢",hint:"h___ 462",en:"Situation response 87",ko:"상황 설명 87"},
+{no:"583",part:4,cat:"cat_4",q:"상황 설명 88",ht:"🟢",hint:"h___ 463",en:"Situation response 88",ko:"상황 설명 88"},
+{no:"584",part:4,cat:"cat_4",q:"상황 설명 89",ht:"🟢",hint:"h___ 464",en:"Situation response 89",ko:"상황 설명 89"},
+{no:"585",part:4,cat:"cat_4",q:"상황 설명 90",ht:"🟢",hint:"h___ 465",en:"Situation response 90",ko:"상황 설명 90"},
+{no:"586",part:4,cat:"cat_4",q:"상황 설명 91",ht:"🟢",hint:"h___ 466",en:"Situation response 91",ko:"상황 설명 91"},
+{no:"587",part:4,cat:"cat_4",q:"상황 설명 92",ht:"🟢",hint:"h___ 467",en:"Situation response 92",ko:"상황 설명 92"},
+{no:"588",part:4,cat:"cat_4",q:"상황 설명 93",ht:"🟢",hint:"h___ 468",en:"Situation response 93",ko:"상황 설명 93"},
+{no:"589",part:4,cat:"cat_4",q:"상황 설명 94",ht:"🟢",hint:"h___ 469",en:"Situation response 94",ko:"상황 설명 94"},
+{no:"590",part:4,cat:"cat_4",q:"상황 설명 95",ht:"🟢",hint:"h___ 470",en:"Situation response 95",ko:"상황 설명 95"},
+{no:"591",part:4,cat:"cat_4",q:"상황 설명 96",ht:"🟢",hint:"h___ 471",en:"Situation response 96",ko:"상황 설명 96"},
+{no:"592",part:4,cat:"cat_4",q:"상황 설명 97",ht:"🟢",hint:"h___ 472",en:"Situation response 97",ko:"상황 설명 97"},
+{no:"593",part:4,cat:"cat_4",q:"상황 설명 98",ht:"🟢",hint:"h___ 473",en:"Situation response 98",ko:"상황 설명 98"},
+{no:"594",part:4,cat:"cat_4",q:"상황 설명 99",ht:"🟢",hint:"h___ 474",en:"Situation response 99",ko:"상황 설명 99"},
+{no:"595",part:4,cat:"cat_4",q:"상황 설명 100",ht:"🟢",hint:"h___ 475",en:"Situation response 100",ko:"상황 설명 100"},
+{no:"596",part:4,cat:"cat_4",q:"상황 설명 101",ht:"🟢",hint:"h___ 476",en:"Situation response 101",ko:"상황 설명 101"},
+{no:"597",part:4,cat:"cat_4",q:"상황 설명 102",ht:"🟢",hint:"h___ 477",en:"Situation response 102",ko:"상황 설명 102"},
+{no:"598",part:4,cat:"cat_4",q:"상황 설명 103",ht:"🟢",hint:"h___ 478",en:"Situation response 103",ko:"상황 설명 103"},
+{no:"599",part:4,cat:"cat_4",q:"상황 설명 104",ht:"🟢",hint:"h___ 479",en:"Situation response 104",ko:"상황 설명 104"},
+{no:"600",part:4,cat:"cat_4",q:"상황 설명 105",ht:"🟢",hint:"h___ 480",en:"Situation response 105",ko:"상황 설명 105"},
+{no:"601",part:4,cat:"cat_4",q:"상황 설명 106",ht:"🟢",hint:"h___ 481",en:"Situation response 106",ko:"상황 설명 106"},
+{no:"602",part:4,cat:"cat_4",q:"상황 설명 107",ht:"🟢",hint:"h___ 482",en:"Situation response 107",ko:"상황 설명 107"},
+{no:"603",part:4,cat:"cat_4",q:"상황 설명 108",ht:"🟢",hint:"h___ 483",en:"Situation response 108",ko:"상황 설명 108"},
+{no:"604",part:4,cat:"cat_4",q:"상황 설명 109",ht:"🟢",hint:"h___ 484",en:"Situation response 109",ko:"상황 설명 109"},
+{no:"605",part:4,cat:"cat_4",q:"상황 설명 110",ht:"🟢",hint:"h___ 485",en:"Situation response 110",ko:"상황 설명 110"},
+{no:"606",part:4,cat:"cat_4",q:"상황 설명 111",ht:"🟢",hint:"h___ 486",en:"Situation response 111",ko:"상황 설명 111"},
+{no:"607",part:4,cat:"cat_4",q:"상황 설명 112",ht:"🟢",hint:"h___ 487",en:"Situation response 112",ko:"상황 설명 112"},
+{no:"608",part:4,cat:"cat_4",q:"상황 설명 113",ht:"🟢",hint:"h___ 488",en:"Situation response 113",ko:"상황 설명 113"},
+{no:"609",part:4,cat:"cat_4",q:"상황 설명 114",ht:"🟢",hint:"h___ 489",en:"Situation response 114",ko:"상황 설명 114"},
+{no:"610",part:4,cat:"cat_4",q:"상황 설명 115",ht:"🟢",hint:"h___ 490",en:"Situation response 115",ko:"상황 설명 115"},
+{no:"611",part:4,cat:"cat_4",q:"상황 설명 116",ht:"🟢",hint:"h___ 491",en:"Situation response 116",ko:"상황 설명 116"},
+{no:"612",part:4,cat:"cat_4",q:"상황 설명 117",ht:"🟢",hint:"h___ 492",en:"Situation response 117",ko:"상황 설명 117"},
+{no:"613",part:4,cat:"cat_4",q:"상황 설명 118",ht:"🟢",hint:"h___ 493",en:"Situation response 118",ko:"상황 설명 118"},
+{no:"614",part:4,cat:"cat_4",q:"상황 설명 119",ht:"🟢",hint:"h___ 494",en:"Situation response 119",ko:"상황 설명 119"},
+{no:"615",part:4,cat:"cat_4",q:"상황 설명 120",ht:"🟢",hint:"h___ 495",en:"Situation response 120",ko:"상황 설명 120"},
+{no:"616",part:4,cat:"cat_4",q:"상황 설명 121",ht:"🟢",hint:"h___ 496",en:"Situation response 121",ko:"상황 설명 121"},
+{no:"617",part:4,cat:"cat_4",q:"상황 설명 122",ht:"🟢",hint:"h___ 497",en:"Situation response 122",ko:"상황 설명 122"},
+{no:"618",part:4,cat:"cat_4",q:"상황 설명 123",ht:"🟢",hint:"h___ 498",en:"Situation response 123",ko:"상황 설명 123"},
+{no:"619",part:4,cat:"cat_4",q:"상황 설명 124",ht:"🟢",hint:"h___ 499",en:"Situation response 124",ko:"상황 설명 124"},
+{no:"620",part:4,cat:"cat_4",q:"상황 설명 125",ht:"🟢",hint:"h___ 500",en:"Situation response 125",ko:"상황 설명 125"},
+];
+
+const CATEGORY_EMOJIS = {
+  "인사하기": "👋",
+  "자기소개": "🙋",
+  "감정 표현": "😊",
+  "요청하기": "🙏",
+  "일상생활": "🏠",
+  "여행 기초": "✈️",
+  "교통과 이동": "🚌",
+  "청크 채우기 - 인사": "👋",
+  "청크 채우기 - 감정": "😊",
+  "청크 채우기 - 요청": "🙏",
+  "청크 채우기 - 일상": "🏠",
+  "청크 채우기 - 자기소개": "🙋",
+  "상황 - 음식점": "🍽️",
+  "상황 - 화장실": "🚻",
+  "상황 - 도움 요청": "🆘",
+  "상황 - 학교": "🏫",
+  "상황 - 친구": "👫",
+  "상황 - 가족": "👨‍👩‍👧",
+  "상황 - 음식": "🍕",
+  "상황 - 놀이": "⚽",
+  "상황 - 감사": "🙏",
+  "상황 - 여행": "✈️",
+  "상황 - 잠자리": "🌙",
+  "상황 - 헤어짐": "👋",
+  "상황 - 자기소개": "🙋",
+  "상황 - 도움": "🆘"
+};
+
+let currentPart = 0;
+let searchQuery = '';
+let quizMode = 0;
+let isPlaying = false;
+let isPaused = false;
+let currentQuestionIndex = 0;
+let quizResults = {};
+
+let voiceSettings = {
+  voice: null,
+  rate: 1,
+  pitch: 1,
+  volume: 1,
+  gap: 500,
+  voice2: null,   // 대화 상대 목소리
+  rate2: 1        // 대화 상대 속도
+};
+
+let synth = window.speechSynthesis;
+let voices = [];
+
+function initVoices() {
+  voices = synth.getVoices();
+  ['voiceSelect', 'voiceSelect2'].forEach((id, selectIdx) => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '';
+    voices.forEach((voice, i) => {
+      const opt = document.createElement('option');
+      opt.textContent = voice.name + (voice.default ? ' (기본)' : '');
+      opt.value = i;
+      sel.appendChild(opt);
+    });
+  });
+  voiceSettings.voice = voices[0];
+  // 대화 상대 기본값: 영어 여성 목소리가 있으면 선택, 없으면 두 번째 음성
+  const femIdx = voices.findIndex(v => /female|woman|girl|Samantha|Karen|Victoria|Fiona/i.test(v.name));
+  const partnerIdx = femIdx >= 0 ? femIdx : Math.min(1, voices.length - 1);
+  document.getElementById('voiceSelect2').value = partnerIdx;
+  voiceSettings.voice2 = voices[partnerIdx] || voices[0];
+}
+
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = initVoices;
+}
+initVoices();
+
+function renderContent() {
+  const container = document.getElementById('contentContainer');
+  container.innerHTML = '';
+
+  let filtered = QUESTIONS.filter(q => {
+    const matchesPart = currentPart === 0 || q.part === currentPart;
+    const matchesSearch = searchQuery === '' ||
+      q.en.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.ko.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.no.includes(searchQuery);
+    return matchesPart && matchesSearch;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div>검색 결과가 없습니다.</div></div>';
+    return;
+  }
+
+  const grouped = {};
+  filtered.forEach(q => {
+    if (!grouped[q.cat]) grouped[q.cat] = [];
+    grouped[q.cat].push(q);
+  });
+
+  Object.keys(grouped).forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'category-section open';
+
+    const emoji = CATEGORY_EMOJIS[cat] || '📝';
+    const count = grouped[cat].length;
+
+    section.innerHTML = `
+      <div class="category-header">
+        <div class="category-title-group">
+          <span class="category-emoji">${emoji}</span>
+          <span class="category-name">${cat}</span>
+        </div>
+        <div class="category-right">
+          <span class="category-count">${count}개</span>
+          <span class="category-chevron">▼</span>
+        </div>
+      </div>
+      <div class="category-actions">
+        <button class="btn btn-teal btn-small section-play-btn">▶ 섹션 듣기</button>
+      </div>
+      <div class="category-body">
+        <div class="cards-grid">
+          <!-- Cards will be added here -->
+        </div>
+      </div>
+    `;
+
+    const cardsGrid = section.querySelector('.cards-grid');
+    grouped[cat].forEach(q => {
+      cardsGrid.appendChild(createCard(q));
+    });
+
+    section.querySelector('.category-header').addEventListener('click', () => {
+      section.classList.toggle('open');
+    });
+
+    section.querySelector('.section-play-btn').addEventListener('click', () => {
+      playSection(grouped[cat]);
+    });
+
+    container.appendChild(section);
+  });
+}
+
+function createCard(q) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = `card-${q.no}`;
+
+  const playBtnColor = q.ht === '🟢' ? '#4CAF50' : q.ht === '🟡' ? '#FF9800' : '#ef5350';
+
+  card.innerHTML = `
+    <div class="card-header">
+      <span class="card-number">#${q.no}</span>
+      <div class="card-buttons">
+        <button class="card-play-btn" style="background: ${playBtnColor};">▶</button>
+      </div>
+    </div>
+    <div class="card-english ${quizMode === 2 ? 'blur-text' : ''}">${q.en}</div>
+    <div class="card-korean ${quizMode === 1 ? 'blur-text' : ''}">${q.ko}</div>
+    <span class="hint-badge">${q.ht}</span>
+    <div class="quiz-buttons" style="display:${quizMode > 0 ? 'flex' : 'none'}">
+      <button class="quiz-btn" data-result="correct">✓ 정답</button>
+      <button class="quiz-btn" data-result="wrong">✗ 오답</button>
+    </div>
+  `;
+
+  card.querySelector('.card-play-btn').addEventListener('click', () => {
+    speakQuestion(q);
+  });
+
+  // 블러된 텍스트 클릭 시 공개
+  card.querySelector('.card-english').addEventListener('click', function() {
+    if (this.classList.contains('blur-text')) this.classList.add('revealed');
+  });
+  card.querySelector('.card-korean').addEventListener('click', function() {
+    if (this.classList.contains('blur-text')) this.classList.add('revealed');
+  });
+
+  card.querySelectorAll('.quiz-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // 버튼 잠금 (재수정 불가)
+      card.querySelectorAll('.quiz-btn').forEach(b => {
+        b.disabled = true;
+        b.style.opacity = '0.5';
+        b.style.cursor = 'not-allowed';
+      });
+      // 정답/오답 표시
+      const result = btn.getAttribute('data-result');
+      recordQuizResult(q.no, result);
+      btn.classList.add(result);
+      // 블러 처리된 답 공개
+      card.querySelectorAll('.blur-text').forEach(el => el.classList.add('revealed'));
+    });
+  });
+
+  return card;
+}
+
+// 단일 발화 헬퍼
+function makeUtterance(text, usePartner = false) {
+  const u = new SpeechSynthesisUtterance(text);
+  u.voice  = usePartner ? (voiceSettings.voice2 || voiceSettings.voice) : voiceSettings.voice;
+  u.rate   = usePartner ? voiceSettings.rate2 : voiceSettings.rate;
+  u.pitch  = voiceSettings.pitch;
+  u.volume = voiceSettings.volume;
+  return u;
+}
+
+// 대화 문장 분리 및 순차 재생 (A: … / B: … 형식)
+function speakDialogueLines(lines, idx, onDone) {
+  if (idx >= lines.length) { if (onDone) onDone(); return; }
+  const {text, isPartner} = lines[idx];
+  const u = makeUtterance(text, isPartner);
+  u.onend = () => speakDialogueLines(lines, idx + 1, onDone);
+  synth.speak(u);
+}
+
+function parseDialogueLines(enText) {
+  // "A: ... B: ..." 또는 "A: ...\nB: ..." 형식 감지
+  if (!/^[AB]:/.test(enText.trim())) return null;
+  return enText.split(/\n/).map(line => {
+    const isB = /^B:/i.test(line.trim());
+    return { text: line.replace(/^[AB]:\s*/i, '').trim(), isPartner: isB };
+  }).filter(l => l.text);
+}
+
+function speakQuestion(q) {
+  synth.cancel();
+
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('playing'));
+  document.getElementById(`card-${q.no}`).classList.add('playing');
+  showMiniPlayer(q.en);
+
+  const lines = parseDialogueLines(q.en);
+  if (lines) {
+    speakDialogueLines(lines, 0, () => {
+      document.getElementById(`card-${q.no}`)?.classList.remove('playing');
+    });
+  } else {
+    const utterance = makeUtterance(q.en, false);
+    utterance.onend = () => document.getElementById(`card-${q.no}`)?.classList.remove('playing');
+    synth.speak(utterance);
+  }
+}
+
+function playSection(questions) {
+  synth.cancel();
+  isPlaying = true;
+  isPaused = false;
+  currentQuestionIndex = 0;
+
+  const playNext = () => {
+    if (currentQuestionIndex >= questions.length) {
+      isPlaying = false;
+      return;
+    }
+
+    const q = questions[currentQuestionIndex];
+    document.querySelectorAll('.question-card').forEach(c => c.classList.remove('playing'));
+    const cardEl = document.getElementById(`card-${q.no}`);
+    if (cardEl) {
+      cardEl.classList.add('playing');
+      cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    document.getElementById('miniPlayer').classList.add('active');
+    document.getElementById('miniText').textContent = q.en;
+
+    const afterSpeak = () => {
+      if (cardEl) cardEl.classList.remove('playing');
+      currentQuestionIndex++;
+      if (isPlaying && !isPaused) {
+        setTimeout(playNext, voiceSettings.gap);
+      }
+    };
+
+    // 대화 형식이면 두 목소리로, 아니면 단일 목소리로 재생
+    const lines = parseDialogueLines(q.en);
+    if (lines) {
+      speakDialogueLines(lines, 0, afterSpeak);
+    } else {
+      const u = makeUtterance(q.en, false);
+      u.onend = afterSpeak;
+      synth.speak(u);
+    }
+  };
+
+  playNext();
+}
+
+function playAll() {
+  const filtered = QUESTIONS.filter(q => {
+    const matchesPart = currentPart === 0 || q.part === currentPart;
+    const matchesSearch = searchQuery === '' ||
+      q.en.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.ko.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.no.includes(searchQuery);
+    return matchesPart && matchesSearch;
+  });
+  playSection(filtered);
+}
+
+function recordQuizResult(no, result) {
+  quizResults[no] = result;
+  updateQuizScore();
+}
+
+function updateQuizScore() {
+  const correct = Object.values(quizResults).filter(r => r === 'correct').length;
+  const wrong = Object.values(quizResults).filter(r => r === 'wrong').length;
+  const remain = 120 - Object.keys(quizResults).length;
+
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('wrongCount').textContent = wrong;
+  document.getElementById('remainCount').textContent = remain;
+
+  document.getElementById('progressBar').style.width = ((correct + wrong) / 120 * 100) + '%';
+  document.getElementById('progressText').textContent = `${correct + wrong} / 120 완료`;
+}
+
+// 설정 패널 토글
+function toggleSettings() {
+  const body = document.getElementById('settingsBody');
+  const chevron = document.getElementById('settingsChevron');
+  const isHidden = body.style.display === 'none';
+  body.style.display = isHidden ? 'grid' : 'none';
+  if (chevron) chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
+}
+
+document.getElementById('voiceSelect').addEventListener('change', (e) => {
+  voiceSettings.voice = voices[parseInt(e.target.value)];
+});
+
+// 대화 상대 목소리 이벤트
+document.getElementById('voiceSelect2').addEventListener('change', (e) => {
+  voiceSettings.voice2 = voices[parseInt(e.target.value)];
+});
+document.getElementById('rateSlider2').addEventListener('input', (e) => {
+  voiceSettings.rate2 = parseFloat(e.target.value);
+  document.getElementById('rateVal2').textContent = parseFloat(e.target.value).toFixed(2) + '×';
+});
+
+document.getElementById('rateSlider').addEventListener('input', (e) => {
+  voiceSettings.rate = parseFloat(e.target.value);
+  document.getElementById('rateVal').textContent = parseFloat(e.target.value).toFixed(2) + '×';
+});
+
+document.getElementById('pitchSlider').addEventListener('input', (e) => {
+  voiceSettings.pitch = parseFloat(e.target.value);
+  document.getElementById('pitchVal').textContent = parseFloat(e.target.value).toFixed(2);
+});
+
+document.getElementById('volumeSlider').addEventListener('input', (e) => {
+  voiceSettings.volume = parseFloat(e.target.value);
+  document.getElementById('volVal').textContent = Math.round(e.target.value * 100) + '%';
+});
+
+function testVoice() { speakQuestion({no:'test', en:'Hello! Good morning! Let\'s learn English together!'}); }
+function testPartnerVoice() {
+  const u = makeUtterance("Hi! I\'m your partner! Nice to meet you!", true);
+  u.onend = () => {};
+  synth.cancel(); synth.speak(u);
+}
+
+// 설정 패널 gap 슬라이더 (실시간 반응 + 글로벌 슬라이더와 동기화)
+document.getElementById('gapSlider').addEventListener('input', (e) => {
+  const ms = parseInt(e.target.value);
+  voiceSettings.gap = ms;
+  const label = (ms / 1000).toFixed(1) + '초';
+  document.getElementById('gapVal').textContent = label;
+  document.getElementById('gapSliderGlobal').value = ms;
+  document.getElementById('gapValueGlobal').textContent = label;
+});
+
+// 글로벌 컨트롤 gap 슬라이더 (실시간 반응 + 설정 패널 슬라이더와 동기화)
+document.getElementById('gapSliderGlobal').addEventListener('input', (e) => {
+  const ms = parseInt(e.target.value);
+  voiceSettings.gap = ms;
+  const label = (ms / 1000).toFixed(1) + '초';
+  document.getElementById('gapValueGlobal').textContent = label;
+  document.getElementById('gapSlider').value = ms;
+  document.getElementById('gapVal').textContent = label;
+});
+
+// ====== 미니플레이어 상태 함수 ======
+function setMiniState(playing) {
+  const mp  = document.getElementById('miniPlayer');
+  const lbl = document.getElementById('miniStateLabel');
+  const mpb = document.getElementById('miniPauseBtn');
+  const pb  = document.getElementById('pauseBtn');
+  if (playing) {
+    mp.classList.remove('state-paused'); mp.classList.add('state-playing');
+    if (lbl) lbl.textContent = '재생 중';
+    if (mpb) { mpb.textContent = '⏸'; mpb.classList.remove('btn-green'); mpb.classList.add('btn-orange'); }
+    if (pb)  { pb.textContent = '⏸ 일시정지'; pb.classList.remove('btn-green'); pb.classList.add('btn-orange'); }
+  } else {
+    mp.classList.remove('state-playing'); mp.classList.add('state-paused');
+    if (lbl) lbl.textContent = '일시 정지';
+    if (mpb) { mpb.textContent = '▶'; mpb.classList.remove('btn-orange'); mpb.classList.add('btn-green'); }
+    if (pb)  { pb.textContent = '▶ 재개'; pb.classList.remove('btn-orange'); pb.classList.add('btn-green'); }
+  }
+}
+
+function showMiniPlayer(text) {
+  document.getElementById('miniText').textContent = text;
+  document.getElementById('miniPlayer').classList.add('active');
+  setMiniState(true);
+}
+
+function hideMiniPlayer() {
+  document.getElementById('miniPlayer').classList.remove('active');
+  const pb = document.getElementById('pauseBtn');
+  if (pb) { pb.textContent = '⏸ 일시정지'; pb.classList.remove('btn-green'); pb.classList.add('btn-orange'); }
+}
+
+document.getElementById('playAllBtn').addEventListener('click', playAll);
+
+document.getElementById('pauseBtn').addEventListener('click', () => {
+  if (isPlaying) {
+    isPaused = !isPaused;
+    if (isPaused) {
+      synth.pause();
+      setMiniState(false);
+    } else {
+      synth.resume();
+      setMiniState(true);
+    }
+  }
+});
+
+document.getElementById('stopBtn').addEventListener('click', () => {
+  synth.cancel();
+  isPlaying = false;
+  isPaused = false;
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('playing'));
+  hideMiniPlayer();
+});
+
+document.getElementById('openAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.category-section').forEach(s => s.classList.add('open'));
+});
+
+document.getElementById('closeAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.category-section').forEach(s => s.classList.remove('open'));
+});
+
+document.querySelectorAll('.quiz-mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.quiz-mode-btn').forEach(b => b.style.opacity = '0.6');
+    btn.style.opacity = '1';
+    btn.style.boxShadow = '0 0 0 3px rgba(102,126,234,0.4)';
+    document.querySelectorAll('.quiz-mode-btn').forEach(b => { if (b !== btn) b.style.boxShadow = 'none'; });
+
+    quizMode = parseInt(btn.getAttribute('data-mode'));
+    if (quizMode > 0) {
+      document.getElementById('quizScoreBar').classList.add('active');
+    } else {
+      document.getElementById('quizScoreBar').classList.remove('active');
+    }
+
+    // 블러 적용
+    document.querySelectorAll('.card-english').forEach(el => {
+      el.classList.remove('blur-text', 'revealed');
+      if (quizMode === 2) el.classList.add('blur-text');
+    });
+    document.querySelectorAll('.card-korean').forEach(el => {
+      el.classList.remove('blur-text', 'revealed');
+      if (quizMode === 1) el.classList.add('blur-text');
+    });
+    // 정답/오답 버튼: 퀴즈 모드(1,2)일 때만 표시
+    document.querySelectorAll('.quiz-buttons').forEach(el => {
+      el.style.display = quizMode > 0 ? 'flex' : 'none';
+    });
+  });
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentPart = parseInt(btn.getAttribute('data-part'));
+    renderContent();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchQuery = e.target.value;
+  renderContent();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    document.getElementById('pauseBtn').click();
+  }
+  if (e.code === 'Enter') {
+    document.getElementById('playAllBtn').click();
+  }
+});
+
+renderContent();
+updateQuizScore();
+// Twemoji: 카테고리 이모지와 헤더만 변환 (버튼 이모지 제외)
+if (typeof twemoji !== 'undefined') {
+  twemoji.parse(document.getElementById('contentContainer'), { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+  twemoji.parse(document.querySelector('.header'), { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+}
+</script>
+</body>
+</html>

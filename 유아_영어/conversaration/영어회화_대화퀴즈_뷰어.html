@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗣️ 영어회화 대화퀴즈 뷰어</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #667eea;
+      --primary-dark: #553c9a;
+      --accent: #764ba2;
+      --role-c: #4A90D9;
+      --role-b: #E8763A;
+      --radius: 14px;
+      --shadow: 0 4px 18px rgba(0,0,0,0.10);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: linear-gradient(160deg, #eef2ff 0%, #f5f0ff 50%, #fff0f6 100%);
+      min-height: 100vh; padding: 14px;
+    }
+    .page-container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── JSON LOADER ── */
+    #jsonLoaderWrap {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 16px 22px;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .loader-title { font-weight: 800; font-size: 1em; color: #2c3e50; white-space: nowrap; }
+    #jsonDropZone {
+      flex: 1; min-width: 200px;
+      border: 2px dashed #c5cae9; border-radius: 12px;
+      padding: 12px 20px; text-align: center; cursor: pointer;
+      transition: all 0.2s; color: #7986cb; font-size: 0.88em; font-weight: 600;
+      background: #f8f9ff;
+    }
+    #jsonDropZone:hover, #jsonDropZone.drag-over {
+      border-color: #5c6bc0; background: #ede7f6; color: #3949ab;
+    }
+    #jsonFileInput { display: none; }
+    #jsonLoadedBadge {
+      font-size: 0.82em; color: #5c6bc0; font-weight: 700;
+      background: #ede7f6; padding: 5px 14px; border-radius: 20px; display: none;
+    }
+    #jsonLoadedBadge.visible { display: inline-block; }
+    .loader-hint { font-size: 0.76em; color: #aaa; margin-top: 3px; }
+
+    /* ── HEADER ── */
+    .header {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 24px 22px 20px;
+      margin-bottom: 14px; text-align: center;
+    }
+    .header h1 { font-size: 1.9em; color: #2c3e50; letter-spacing: -0.5px; }
+    .header p  { color: #7f8c8d; font-size: 0.92em; margin-top: 6px; }
+    .header-meta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+    .meta-badge {
+      padding: 4px 14px; border-radius: 20px;
+      font-size: 0.8em; font-weight: 700;
+      background: #e8f5e9; color: #2e7d32;
+    }
+    .meta-badge.blue   { background: #e3f2fd; color: #1565c0; }
+    .meta-badge.purple { background: #f3e5f5; color: #6a1b9a; }
+
+    /* ── CONTROLS BAR ── */
+    .controls-bar {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); padding: 10px 18px 12px;
+      margin-bottom: 14px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    /* 행 */
+    .ctrl-row {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      padding: 8px 0;
+    }
+    .ctrl-row + .ctrl-row {
+      border-top: 1px solid #f0f2f8;
+    }
+    /* 그룹 박스 */
+    .ctrl-group {
+      display: flex; align-items: center; gap: 6px;
+      background: #f7f9ff; border: 1px solid #e8eaf6;
+      border-radius: 10px; padding: 5px 10px;
+    }
+    .ctrl-label {
+      font-size: 0.75em; font-weight: 800; color: #764ba2;
+      white-space: nowrap; letter-spacing: 0.03em;
+    }
+    .ctrl-divider { width: 1px; height: 20px; background: #e0e6f0; margin: 0 4px; }
+    .btn {
+      padding: 7px 16px; border: none; border-radius: 20px;
+      cursor: pointer; font-size: 0.85em; font-weight: 700;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.16); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-green  { background: #4CAF50; color: white; }
+    .btn-orange { background: #FF9800; color: white; }
+    .btn-red    { background: #ef5350; color: white; }
+    .btn-purple { background: #7E57C2; color: white; }
+    .btn-gray   { background: #78909C; color: white; }
+    .btn-teal   { background: #26A69A; color: white; }
+    .btn-indigo { background: #5C6BC0; color: white; }
+    .btn-sm { padding: 5px 12px; font-size: 0.8em; }
+
+    /* 속도 버튼 */
+    .speed-btn {
+      padding: 4px 11px; border-radius: 14px;
+      border: 1.5px solid #c5cae9; background: white;
+      color: #5c6bc0; font-size: 0.78em; font-weight: 700;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .speed-btn:hover, .speed-btn.active {
+      background: var(--primary); color: white; border-color: var(--primary);
+    }
+
+    /* Voice select */
+    .voice-select {
+      padding: 4px 9px; border-radius: 9px;
+      border: 1.5px solid #c5cae9; background: white;
+      font-size: 0.79em; color: #4a5568; cursor: pointer; max-width: 170px;
+    }
+
+    /* 퀴즈 모드 버튼 */
+    .quiz-mode-btn {
+      padding: 4px 11px; border-radius: 14px; border: 1.5px solid #c5cae9;
+      background: white; color: #555; font-size: 0.78em; font-weight: 700;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .quiz-mode-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* 청크 토글 */
+    .chunk-toggle-wrap {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+    }
+    .chunk-toggle-wrap input { width: 15px; height: 15px; accent-color: var(--primary); cursor: pointer; }
+    .chunk-toggle-wrap span { font-size: 0.78em; color: #4a5568; font-weight: 600; }
+
+    /* ── GLOBAL PLAY BAR ── */
+    .global-play-bar {
+      background: linear-gradient(90deg, #1a202c 0%, #2d3748 100%);
+      border-radius: var(--radius); padding: 10px 20px;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .gp-btn {
+      padding: 7px 18px; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white; font-size: 0.87em; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(102,126,234,0.4);
+    }
+    .gp-btn:hover { opacity: 0.9; transform: scale(1.03); }
+    .gp-btn.playing { background: linear-gradient(135deg, #dd6b20 0%, #c05621 100%); }
+    .gp-btn.paused  { background: linear-gradient(135deg, #38a169 0%, #276749 100%); }
+    .gp-stop-btn {
+      padding: 7px 14px; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 10px;
+      background: transparent; color: #e2e8f0; font-size: 0.83em; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; display: none;
+    }
+    .gp-stop-btn:hover { background: rgba(229,62,62,0.25); border-color: #fc8181; color: #fc8181; }
+    .gp-prog { font-size: 0.78em; color: #e2e8f0; flex: 1; min-width: 160px; }
+    .gp-prog.active { color: #90cdf4; }
+    .gp-interval-label { font-size: 0.75em; color: #a0aec0; }
+    .gp-interval-slider { width: 80px; accent-color: var(--primary); }
+    .gp-interval-val    { font-size: 0.75em; color: #e2e8f0; min-width: 30px; }
+
+    /* ── SITUATION FILTER ── */
+    #filterSection {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); margin-bottom: 12px; overflow: hidden;
+    }
+    .filter-header {
+      padding: 12px 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, #553c9a 0%, #764ba2 100%);
+      color: white; user-select: none;
+    }
+    .filter-header-left { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.95em; }
+    .filter-header-right { display: flex; align-items: center; gap: 10px; font-size: 0.82em; }
+    .filter-count-badge { background: rgba(255,255,255,0.25); padding: 2px 10px; border-radius: 12px; font-weight: 700; }
+    .filter-body { padding: 12px 16px 14px; display: none; }
+    #filterSection.open .filter-body { display: block; }
+    .filter-top-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+    .btn-filter-all   { padding: 5px 14px; border-radius: 20px; font-size: 0.8em; font-weight: 700; border: 2px solid #553c9a; background: #553c9a; color: white; cursor: pointer; transition: all 0.15s; }
+    .btn-filter-all:hover { opacity: 0.85; }
+    .btn-filter-reset { padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; border: 2px solid #e0e0e0; background: white; color: #888; cursor: pointer; transition: all 0.15s; }
+    .btn-filter-reset:hover { border-color: #bbb; color: #555; }
+    .filter-selected-info { font-size: 0.78em; color: #764ba2; font-weight: 600; margin-left: auto; }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0; }
+    .sit-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 11px; border-radius: 16px; font-size: 0.77em; font-weight: 600;
+      border: 1.5px solid #e0e0e0; background: #f9f9f9; color: #555;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap; user-select: none;
+    }
+    .sit-chip:hover { border-color: #764ba2; color: #553c9a; background: #ede7f6; }
+    .sit-chip.selected { border-color: #764ba2; background: linear-gradient(135deg, #ede7f6, #d1c4e9); color: #4527a0; font-weight: 700; }
+    .situation-section.filter-hidden { display: none !important; }
+
+    /* ── SITUATION SECTION ── */
+    .situation-section {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); margin-bottom: 12px; overflow: hidden;
+    }
+    .situation-header {
+      padding: 14px 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: opacity 0.2s; user-select: none;
+    }
+    .situation-header:hover { opacity: 0.92; }
+    .sit-title-group { display: flex; align-items: center; gap: 12px; }
+    .sit-emoji { font-size: 1.7em; }
+    .sit-name    { font-size: 1.05em; font-weight: 800; color: #2c3e50; }
+    .sit-name-en { font-size: 0.78em; color: #5d6d7e; margin-top: 2px; }
+    .sit-right   { display: flex; align-items: center; gap: 10px; }
+    .sit-count   { background: rgba(0,0,0,0.06); color: #2c3e50; padding: 2px 10px; border-radius: 16px; font-size: 0.82em; font-weight: 700; }
+    .chevron { color: #2c3e50; font-size: 1em; transition: transform 0.3s; }
+    .situation-section.open .chevron { transform: rotate(180deg); }
+    .situation-body { display: none; background: #f8fafc; padding: 16px 20px; }
+    .situation-section.open .situation-body { display: block; }
+
+    /* 상황 설명 & 패턴 */
+    .sit-desc { font-size: 0.82em; color: #5d6d7e; margin-bottom: 8px; }
+    .sit-patterns {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px;
+    }
+    .pattern-tag {
+      padding: 2px 9px; border-radius: 10px;
+      font-size: 0.72em; font-weight: 700;
+      background: #e8f5e9; color: #2e7d32;
+    }
+
+    /* 섹션별 재생 행 */
+    .sit-play-row {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .sit-play-btn {
+      padding: 6px 14px; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white; font-size: 0.82em; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    }
+    .sit-play-btn:hover { opacity: 0.9; transform: scale(1.02); }
+    .sit-play-btn.playing { background: linear-gradient(135deg, #dd6b20 0%, #c05621 100%); }
+    .sit-play-progress { font-size: 0.78em; color: #667eea; font-weight: 600; }
+    .sit-play-interval-label { font-size: 0.75em; color: #a0aec0; margin-left: auto; }
+    .sit-interval-slider { width: 70px; accent-color: var(--primary); }
+    .sit-interval-val    { font-size: 0.75em; color: #555; min-width: 28px; }
+    .sit-expand-btn, .sit-collapse-btn {
+      padding: 4px 10px; border-radius: 8px; border: 1px solid #e0e0e0;
+      background: white; color: #555; font-size: 0.75em; cursor: pointer; transition: all 0.15s;
+    }
+    .sit-expand-btn:hover, .sit-collapse-btn:hover { background: #f0f4ff; }
+
+    /* ── TURN ITEM ── */
+    .turn-item {
+      border-radius: 10px; margin-bottom: 8px;
+      border: 1.5px solid #e8ecf4; background: white;
+      transition: box-shadow 0.2s;
+      overflow: hidden;
+    }
+    /* 전체 듣기 포커스 — 강한 강조 */
+    @keyframes speakingPulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(246,173,85,0.45), 0 8px 28px rgba(246,173,85,0.30); }
+      50%       { box-shadow: 0 0 0 9px rgba(246,173,85,0.20), 0 12px 36px rgba(246,173,85,0.45); }
+    }
+    .turn-item.speaking-global {
+      border-color: #f6ad55;
+      border-width: 2.5px;
+      background: linear-gradient(135deg, #fffbf0 0%, #fff3d6 100%);
+      transform: scale(1.018);
+      transform-origin: center;
+      animation: speakingPulse 1.4s ease-in-out infinite;
+      z-index: 2;
+      position: relative;
+    }
+    .turn-item details { }
+    .turn-item details > summary {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px; cursor: pointer; list-style: none;
+      user-select: none;
+    }
+    .turn-item details > summary::-webkit-details-marker { display: none; }
+    .turn-num {
+      font-size: 0.72em; font-weight: 800; color: #fff;
+      background: #8898aa; border-radius: 10px;
+      padding: 2px 8px; flex-shrink: 0;
+    }
+    .speaker-badge {
+      font-size: 0.8em; font-weight: 700; border-radius: 12px;
+      padding: 2px 9px; flex-shrink: 0; color: white;
+    }
+    .speaker-badge.role-c { background: var(--role-c); }
+    .speaker-badge.role-b { background: var(--role-b); }
+    .korean-text { font-size: 0.88em; color: #2d3748; flex: 1; }
+    .summary-tts-btn {
+      width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #a0aec0;
+      background: none; color: #718096; font-size: 0.78em;
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s; padding: 0; margin-left: auto;
+    }
+    .summary-tts-btn:hover { background: #ebf8ff; border-color: var(--primary); color: var(--primary); transform: scale(1.1); }
+    .summary-tts-btn.playing { background: var(--primary); border-color: var(--primary); color: white; }
+    .quiz-hint {
+      font-size: 0.72em; color: #764ba2; font-weight: 700; flex-shrink: 0;
+      border: 1px solid #c4b5fd; border-radius: 8px; padding: 1px 7px;
+    }
+    /* 정답 영역 */
+    .turn-detail { padding: 10px 14px 12px; border-top: 1px solid #f0f4f8; }
+    .eng-answer-row {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .eng-text {
+      font-size: 1.05em; font-weight: 700; color: #1a365d;
+      flex: 1; line-height: 1.5;
+    }
+
+    /* 청크 */
+    .chunks-box {
+      display: none; flex-wrap: wrap; gap: 6px;
+      padding: 8px 10px; margin-top: 8px;
+      background: #f8f9fa; border-radius: 8px; border: 1px dashed #dee2e6;
+    }
+    .chunks-box.visible { display: flex; }
+    .chunk-pill {
+      padding: 4px 12px; border-radius: 16px;
+      font-size: 0.88em; font-weight: 700; color: white; letter-spacing: 0.3px;
+    }
+    .cc-0 { background: #FF6B6B; } .cc-1 { background: #4ECDC4; }
+    .cc-2 { background: #45B7D1; } .cc-3 { background: #96CEB4; color: #2c3e50; }
+    .cc-4 { background: #FDCB6E; color: #2c3e50; } .cc-5 { background: #A29BFE; }
+    .cc-6 { background: #FD79A8; }
+
+    /* 회화 팁 */
+    .conv-tip {
+      margin: 10px 0 4px 0; padding: 12px 16px 12px 16px;
+      border-left: 3px solid var(--primary); border-radius: 0 8px 8px 0;
+      background: linear-gradient(90deg, #f0f4ff 0%, #fafbff 100%);
+      font-size: 0.77rem; color: #2d3748; line-height: 1.7;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .conv-tip-icon { font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
+    .conv-tip-body { flex: 1; font-size: 1.12em; }
+    .conv-tip-pattern {
+      display: inline-block; background: var(--primary); color: #fff;
+      border-radius: 4px; padding: 1px 7px; font-size: 0.7rem; font-weight: 700;
+      margin-right: 5px;
+    }
+    .conv-tip-text { color: #4a5568; }
+
+    /* 퀴즈 모드 */
+    .hidden-answer { filter: blur(7px); cursor: pointer; user-select: none; transition: filter 0.3s; }
+    .hidden-answer:hover { filter: blur(4px); }
+    .hidden-answer.revealed { filter: none !important; }
+
+    /* ── FLOATING MINI PLAYER ── */
+    #miniPlayer {
+      position: fixed; bottom: 22px; right: 22px;
+      border-radius: 16px; padding: 13px 16px 11px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      display: none; z-index: 9999;
+      min-width: 230px; max-width: 290px;
+      border: 2.5px solid #4CAF50; border-left-width: 6px;
+      background: #fff; transition: border-color 0.25s, background 0.25s;
+    }
+    #miniPlayer.visible { display: block; }
+    #miniPlayer.state-playing { border-color: #4CAF50; box-shadow: 0 8px 32px rgba(76,175,80,0.18); }
+    #miniPlayer.state-paused  { border-color: #FFA726; border-style: dashed; border-left-style: solid; background: #FFF8E1; }
+    .mini-status-row { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+    .mini-badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 20px; font-size: 0.76em; font-weight: 800; }
+    #miniPlayer.state-playing .mini-badge { background: #E8F5E9; color: #2E7D32; }
+    #miniPlayer.state-paused  .mini-badge { background: #FFF3E0; color: #E65100; }
+    .mini-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+    @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1.1); } 50% { opacity:0.3; transform:scale(0.6); } }
+    #miniPlayer.state-playing .mini-dot { background: #4CAF50; animation: pulse-dot 1s ease-in-out infinite; }
+    #miniPlayer.state-paused  .mini-dot { background: #FFA726; animation: none; }
+    .mini-text { font-size: 0.97em; font-weight: 700; color: #2c3e50; line-height: 1.4; min-height: 1.4em; }
+    #miniPlayer.state-paused .mini-text { color: #999; }
+    .mini-hint { font-size: 0.68em; color: #ccc; margin-top: 4px; text-align: right; }
+    .mini-controls { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+    .mini-btn {
+      width: 34px; height: 34px; border: none; border-radius: 50%;
+      cursor: pointer; font-size: 0.95em;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: transform 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+    }
+    .mini-btn:hover { transform: scale(1.08); }
+    .mini-btn-pause { background: #FF9800; color: white; }
+    .mini-btn-stop  { background: #ef5350; color: white; }
+
+    /* 검색 */
+    .search-bar {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); padding: 10px 18px;
+      margin-bottom: 12px; display: flex; gap: 10px; align-items: center;
+    }
+    .search-input {
+      flex: 1; padding: 8px 14px; border: 1.5px solid #e0e0e0; border-radius: 10px;
+      font-size: 0.88em; outline: none; transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--primary); }
+
+    /* EMPTY STATE */
+    #emptyState {
+      text-align: center; padding: 60px 20px; color: #a0aec0; display: none;
+    }
+    #emptyState.visible { display: block; }
+    #emptyState .empty-icon { font-size: 3em; margin-bottom: 12px; }
+    #emptyState p { font-size: 1em; font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.4em; }
+      .filter-chips { max-height: 150px; overflow-y: auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-container">
+
+<!-- JSON LOADER -->
+<div id="jsonLoaderWrap">
+  <span class="loader-title">📂 데이터 로드</span>
+  <div id="jsonDropZone"
+       onclick="document.getElementById('jsonFileInput').click()"
+       ondragover="event.preventDefault();this.classList.add('drag-over')"
+       ondragleave="this.classList.remove('drag-over')"
+       ondrop="handleJsonDrop(event)">
+    📄 JSON 파일을 드래그하거나 클릭하여 업로드
+    <div class="loader-hint">영어회화_대화퀴즈_데이터.json 등 어떤 퀴즈 JSON이든 OK</div>
+  </div>
+  <input type="file" id="jsonFileInput" accept=".json" onchange="loadJsonFile(this)">
+  <span id="jsonLoadedBadge">✅ <span id="jsonFileName">—</span> 로드됨</span>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1 id="pageTitle">🗣️ 영어회화 대화퀴즈 뷰어</h1>
+  <p id="pageDesc">JSON 파일을 업로드하면 대화퀴즈가 렌더링됩니다</p>
+  <div class="header-meta">
+    <span class="meta-badge" id="metaTarget">—</span>
+    <span class="meta-badge blue" id="metaSits">—</span>
+    <span class="meta-badge purple" id="metaTurns">—</span>
+  </div>
+</div>
+
+<!-- CONTROLS BAR -->
+<div class="controls-bar">
+
+  <!-- 1행: 음성 설정 -->
+  <div class="ctrl-row">
+    <!-- 재생 속도 -->
+    <div class="ctrl-group">
+      <span class="ctrl-label">🔊 속도</span>
+      <div class="ctrl-divider"></div>
+      <button class="speed-btn" onclick="setRate(0.7,this)">🐢 느리게</button>
+      <button class="speed-btn active" id="rateNormal" onclick="setRate(1.0,this)">▶ 보통</button>
+      <button class="speed-btn" onclick="setRate(1.3,this)">🐇 빠르게</button>
+    </div>
+    <!-- 음성 선택 A (학생 / 파랑) -->
+    <div class="ctrl-group">
+      <span class="ctrl-label" style="color:#4A90D9">🎤 화자A</span>
+      <div class="ctrl-divider"></div>
+      <select class="voice-select" id="voiceSelectA" onchange="setVoiceA(this.value)">
+        <option value="">기본 영어 음성</option>
+      </select>
+      <button class="speed-btn" onclick="testVoiceA()" title="화자A 음성 테스트">▶ 테스트</button>
+    </div>
+    <!-- 음성 선택 B (친구 / 주황) -->
+    <div class="ctrl-group">
+      <span class="ctrl-label" style="color:#E8763A">🎤 화자B</span>
+      <div class="ctrl-divider"></div>
+      <select class="voice-select" id="voiceSelectB" onchange="setVoiceB(this.value)">
+        <option value="">기본 영어 음성</option>
+      </select>
+      <button class="speed-btn" onclick="testVoiceB()" title="화자B 음성 테스트">▶ 테스트</button>
+    </div>
+    <!-- 청크 -->
+    <div class="ctrl-group">
+      <span class="ctrl-label">🧩 청크</span>
+      <div class="ctrl-divider"></div>
+      <label class="chunk-toggle-wrap">
+        <input type="checkbox" id="chunkToggle" onchange="toggleChunk(this.checked)">
+        <span>끊어읽기 표시</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- 2행: 학습 모드 + 화면 조작 -->
+  <div class="ctrl-row">
+    <!-- 학습 모드 -->
+    <div class="ctrl-group">
+      <span class="ctrl-label">🎯 학습 모드</span>
+      <div class="ctrl-divider"></div>
+      <button class="quiz-mode-btn" id="modeOff"  onclick="setMode('off')" >📖 전체보기</button>
+      <button class="quiz-mode-btn" id="modeKoEn" onclick="setMode('ko-en')">🇰🇷→🇺🇸 한→영</button>
+      <button class="quiz-mode-btn" id="modeEnKo" onclick="setMode('en-ko')">🇺🇸→🇰🇷 영→한</button>
+    </div>
+    <!-- 화면 조작 -->
+    <div class="ctrl-group">
+      <span class="ctrl-label">📋 화면</span>
+      <div class="ctrl-divider"></div>
+      <button class="btn btn-teal btn-sm" onclick="expandAll()">📂 모두 열기</button>
+      <button class="btn btn-gray btn-sm" onclick="collapseAll()">📁 모두 닫기</button>
+    </div>
+    <!-- 재생 중지 -->
+    <div class="ctrl-group" style="margin-left:auto;">
+      <button class="btn btn-red btn-sm" onclick="stopTTS()">⏹ 재생 중지</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOBAL PLAY BAR -->
+<div class="global-play-bar" id="globalPlayBar">
+  <button class="gp-btn" id="gpBtn" onclick="gpToggle()">▶ 전체 듣기</button>
+  <button class="gp-stop-btn" id="gpStopBtn" onclick="gpStop()">⏹ 정지</button>
+  <span class="gp-prog" id="gpProg">← JSON 로드 후 전체 재생 가능</span>
+  <span class="gp-interval-label">간격:</span>
+  <input type="range" class="gp-interval-slider" id="gpInterval" min="0.5" max="5" step="0.5" value="1.5"
+         oninput="document.getElementById('gpIntervalVal').textContent=this.value+'s'">
+  <span class="gp-interval-val" id="gpIntervalVal">1.5s</span>
+</div>
+
+<!-- SITUATION FILTER -->
+<div id="filterSection">
+  <div class="filter-header" onclick="toggleFilter()">
+    <div class="filter-header-left">🔎 상황 필터</div>
+    <div class="filter-header-right">
+      <span class="filter-count-badge" id="filterBadge">전체</span>
+      <span id="filterChevron">▼</span>
+    </div>
+  </div>
+  <div class="filter-body">
+    <div class="filter-top-row">
+      <button class="btn-filter-all"   onclick="filterSelectAll()">✅ 전체 선택</button>
+      <button class="btn-filter-reset" onclick="filterReset()">🔄 초기화</button>
+      <span class="filter-selected-info" id="filterInfo">전체 재생</span>
+    </div>
+    <div class="filter-chips" id="filterChips"></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <input class="search-input" type="text" id="searchBox"
+         placeholder="🔍 상황명 / 한국어 / 영어 문장 검색..."
+         oninput="searchContent(this.value)">
+</div>
+
+<!-- SITUATIONS CONTAINER -->
+<div id="situationsContainer"></div>
+<div id="emptyState">
+  <div class="empty-icon">📄</div>
+  <p>JSON 파일을 업로드하면 대화퀴즈가 표시됩니다</p>
+</div>
+
+<!-- MINI PLAYER -->
+<div id="miniPlayer" class="state-playing">
+  <div class="mini-status-row">
+    <span class="mini-badge"><span class="mini-dot"></span><span id="miniStateLabel">재생중</span></span>
+  </div>
+  <div class="mini-text" id="miniText">—</div>
+  <div class="mini-hint">Space = 일시정지/재개 · Enter = 재시작 · Esc = 정지</div>
+  <div class="mini-controls">
+    <button class="mini-btn mini-btn-pause" id="miniPauseBtn" onclick="_miniTogglePause()">⏸</button>
+    <button class="mini-btn mini-btn-stop"  onclick="gpStop(); _stopSectionPlay()">⏹</button>
+  </div>
+</div>
+
+</div><!-- .page-container -->
+
+<script>
+'use strict';
+/* ================================================================
+   STATE
+================================================================ */
+var SITUATIONS = [];
+var _ttsRate = 1.0;
+var _ttsVoiceA = null;   // 화자A (role-c, 학생, 파랑)
+var _ttsVoiceB = null;   // 화자B (role-b, 친구, 주황)
+var _allVoices = [];
+var _showChunks = false;
+var _currentMode = 'off';   // off | ko-en | en-ko
+var _selectedSits = new Set();
+
+// 섹션별 재생
+var _secPlaying = false;
+var _secQueue   = [];
+var _secIndex   = 0;
+var _secBtn     = null;
+var _secProgEl  = null;
+var _secIsPaused  = false;
+var _secResume    = null;
+
+// 글로벌 재생
+var _gp = { playing: false, paused: false, pauseFlag: false, index: 0, items: [], total: 0 };
+var _gpIsPaused  = false;
+var _gpResume    = null;
+
+/* ================================================================
+   JSON LOADER
+================================================================ */
+function loadJsonFile(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var parsed;
+    try { parsed = JSON.parse(e.target.result); }
+    catch(err) { alert('JSON 형식 오류: ' + err.message); return; }
+    applyJsonData(parsed, file.name);
+  };
+  reader.readAsText(file);
+}
+
+function handleJsonDrop(event) {
+  event.preventDefault();
+  document.getElementById('jsonDropZone').classList.remove('drag-over');
+  var file = event.dataTransfer.files[0];
+  if (!file || !file.name.endsWith('.json')) { alert('JSON 파일만 업로드 가능합니다.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var parsed;
+    try { parsed = JSON.parse(e.target.result); }
+    catch(err) { alert('JSON 형식 오류: ' + err.message); return; }
+    applyJsonData(parsed, file.name);
+  };
+  reader.readAsText(file);
+}
+
+function applyJsonData(data, fileName) {
+  var sits = Array.isArray(data) ? data : (data.situations || []);
+  if (!sits.length) { alert('situations 데이터를 찾을 수 없습니다.'); return; }
+
+  // ★ sentences[] → turns[] 자동 변환 (phonics_viewer 포맷 호환)
+  sits.forEach(function(sit) {
+    if (!sit.turns && sit.sentences && sit.sentences.length) {
+      var turnCounter = 1; // 연속 턴 번호
+      var allTurns = [];
+      sit.sentences.forEach(function(s) {
+        // dialogue 배열에서 A/B 파싱 시도
+        var dialogueParsed = [];
+        if (Array.isArray(s.dialogue) && s.dialogue.length) {
+          s.dialogue.forEach(function(line, di) {
+            var roleMatch = line.match(/^([A-Z]):\s*(.+?)\s*\/\s*(.+)$/);
+            if (roleMatch) {
+              var isA = roleMatch[1] === 'A';
+              dialogueParsed.push({
+                turn: turnCounter++,
+                speaker: isA ? '학생' : '친구',   // A=학생(파랑), B=친구(주황)
+                role:    isA ? 'c'    : 'b',      // c=파랑, b=주황
+                english: roleMatch[2].trim(),
+                korean:  roleMatch[3].trim(),
+                chunks:  di === 0 ? (s.chunks || []) : [],
+                tip:    (di === 0 && s.phonics) ? { tag: '📚 팁', text: s.phonics } : null
+              });
+            }
+          });
+        }
+        if (dialogueParsed.length) {
+          allTurns = allTurns.concat(dialogueParsed);
+        } else {
+          // dialogue 없으면 단일 문장으로
+          allTurns.push({
+            turn:    turnCounter++,
+            speaker: '학생',
+            role:    'c',
+            english: s.english || '',
+            korean:  s.question || s.answer || '',
+            chunks:  s.chunks || [],
+            tip:     s.phonics ? { tag: '📚 팁', text: s.phonics } : null
+          });
+        }
+      });
+      sit.turns = allTurns;
+    }
+  });
+
+  SITUATIONS = sits;
+  _selectedSits.clear();
+
+  // 헤더 업데이트
+  if (data.title) document.getElementById('pageTitle').textContent = data.title;
+  var meta = data.meta || {};
+  document.getElementById('metaTarget').textContent = '🎯 ' + (meta.target || '전 연령');
+  document.getElementById('metaSits').textContent   = '🗂️ ' + SITUATIONS.length + '개 상황';
+  document.getElementById('metaTurns').textContent  = '💬 ' + (meta.totalTurns || sits.reduce(function(a,s){return a+(s.turns||[]).length;},0)) + '턴';
+  document.getElementById('jsonFileName').textContent = fileName;
+  document.getElementById('jsonLoadedBadge').classList.add('visible');
+  document.getElementById('pageDesc').textContent = 'JSON 로드 완료 · 총 ' + SITUATIONS.length + '개 상황';
+
+  gpStop();
+  _stopSectionPlay();
+  render();
+  initFilterChips();
+  updateFilterBadge();
+  document.getElementById('emptyState').classList.remove('visible');
+  document.getElementById('gpProg').textContent = '← ' + SITUATIONS.length + '개 상황 순서 재생 | ▶ 재생  ⏸ 일시정지  ⏹ 정지';
+}
+
+/* ================================================================
+   RENDER
+================================================================ */
+function render() {
+  var container = document.getElementById('situationsContainer');
+  container.innerHTML = '';
+  if (!SITUATIONS.length) {
+    document.getElementById('emptyState').classList.add('visible');
+    return;
+  }
+  SITUATIONS.forEach(function(sit) { container.appendChild(buildSitSection(sit)); });
+  applyMode(_currentMode);
+}
+
+function buildSitSection(sit) {
+  var sec = document.createElement('div');
+  sec.className = 'situation-section';
+  sec.id = 'sit-' + sit.id;
+
+  // 색상 (상황 ID 기반 순환)
+  var palette = [
+    'linear-gradient(135deg,#667eea,#764ba2)',
+    'linear-gradient(135deg,#f093fb,#f5576c)',
+    'linear-gradient(135deg,#4facfe,#00f2fe)',
+    'linear-gradient(135deg,#43e97b,#38f9d7)',
+    'linear-gradient(135deg,#fa709a,#fee140)',
+    'linear-gradient(135deg,#a18cd1,#fbc2eb)',
+    'linear-gradient(135deg,#ffecd2,#fcb69f)',
+    'linear-gradient(135deg,#a1c4fd,#c2e9fb)',
+  ];
+  var bg = palette[(sit.id - 1) % palette.length];
+
+  // Header
+  var header = document.createElement('div');
+  header.className = 'situation-header';
+  header.style.background = bg;
+  header.innerHTML =
+    '<div class="sit-title-group">' +
+      '<span class="sit-emoji">' + (sit.emoji||'📖') + '</span>' +
+      '<div>' +
+        '<div class="sit-name" style="color:#fff">' + escHtml(sit.name) + '</div>' +
+        (sit.nameEn ? '<div class="sit-name-en" style="color:rgba(255,255,255,0.75)">' + escHtml(sit.nameEn) + '</div>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="sit-right">' +
+      '<span class="sit-count" style="background:rgba(255,255,255,0.2);color:#fff">' + (sit.turns||[]).length + '턴</span>' +
+      '<span class="chevron" style="color:#fff">▼</span>' +
+    '</div>';
+  header.addEventListener('click', function() { sec.classList.toggle('open'); });
+  sec.appendChild(header);
+
+  // Body
+  var body = document.createElement('div');
+  body.className = 'situation-body';
+
+  // 설명
+  if (sit.description) {
+    var desc = document.createElement('div');
+    desc.className = 'sit-desc';
+    desc.textContent = sit.description;
+    body.appendChild(desc);
+  }
+  // 패턴
+  if (sit.patterns && sit.patterns.length) {
+    var pts = document.createElement('div');
+    pts.className = 'sit-patterns';
+    sit.patterns.forEach(function(p) {
+      var t = document.createElement('span');
+      t.className = 'pattern-tag';
+      t.textContent = p;
+      pts.appendChild(t);
+    });
+    body.appendChild(pts);
+  }
+
+  // 섹션 재생 행
+  var playRow = document.createElement('div');
+  playRow.className = 'sit-play-row';
+  var playBtn = document.createElement('button');
+  playBtn.className = 'sit-play-btn';
+  playBtn.textContent = '🔊 전체 듣기';
+  var progEl  = document.createElement('span');
+  progEl.className = 'sit-play-progress';
+  var itvLabel = document.createElement('span');
+  itvLabel.className = 'sit-play-interval-label';
+  itvLabel.textContent = '⏱ 간격:';
+  var itvSlider = document.createElement('input');
+  itvSlider.type = 'range'; itvSlider.className = 'sit-interval-slider';
+  itvSlider.min = 0.5; itvSlider.max = 5; itvSlider.step = 0.5; itvSlider.value = 2;
+  var itvVal = document.createElement('span');
+  itvVal.className = 'sit-interval-val'; itvVal.textContent = '2초';
+  itvSlider.oninput = function() { itvVal.textContent = this.value + '초'; };
+  var expBtn  = document.createElement('button');
+  expBtn.className = 'sit-expand-btn'; expBtn.textContent = '📂 열기';
+  var colBtn  = document.createElement('button');
+  colBtn.className = 'sit-collapse-btn'; colBtn.textContent = '📁 닫기';
+
+  playRow.appendChild(playBtn); playRow.appendChild(progEl);
+  playRow.appendChild(itvLabel); playRow.appendChild(itvSlider); playRow.appendChild(itvVal);
+  playRow.appendChild(expBtn); playRow.appendChild(colBtn);
+  body.appendChild(playRow);
+
+  // 섹션 펼치기/닫기
+  expBtn.onclick = function() { body.querySelectorAll('details').forEach(function(d){d.open=true;}); };
+  colBtn.onclick = function() { body.querySelectorAll('details').forEach(function(d){d.open=false;}); };
+
+  // Turn list
+  var turnList = document.createElement('div');
+  turnList.className = 'turns-list';
+  (sit.turns||[]).forEach(function(t) { turnList.appendChild(buildTurnItem(t)); });
+  body.appendChild(turnList);
+  sec.appendChild(body);
+
+  // 섹션 재생 버튼 핸들러
+  playBtn.onclick = function() { _sectionPlayToggle(playBtn, progEl, itvSlider, body); };
+
+  return sec;
+}
+
+function buildTurnItem(t) {
+  var div = document.createElement('div');
+  div.className = 'turn-item';
+  div.dataset.eng = t.english || '';
+  div.dataset.kor = t.korean  || '';
+  div.dataset.role = t.role || 'c';
+
+  var details = document.createElement('details');
+  var summary = document.createElement('summary');
+  summary.innerHTML =
+    '<span class="turn-num">턴 ' + t.turn + '</span>' +
+    '<span class="speaker-badge role-' + (t.role||'c') + '">' + escHtml(t.speaker||'') + '</span>' +
+    '<span class="korean-text">🇰🇷 ' + escHtml(t.korean) + '</span>' +
+    '<button class="summary-tts-btn" title="영어 듣기" onclick="event.stopPropagation();_speakSingle(this)">🔊</button>' +
+    '<span class="quiz-hint">🇺🇸 정답 ▼</span>';
+
+  var detail = document.createElement('div');
+  detail.className = 'turn-detail';
+
+  var engRow = document.createElement('div');
+  engRow.className = 'eng-answer-row';
+  var engText = document.createElement('span');
+  engText.className = 'eng-text';
+  engText.textContent = '🇺🇸 ' + (t.english||'');
+  engRow.appendChild(engText);
+
+  // 청크
+  var chunksBox = document.createElement('div');
+  chunksBox.className = 'chunks-box' + (_showChunks ? ' visible' : '');
+  if (t.english) {
+    // ★ JSON에 chunks 배열이 있으면 그것을 사용, 없으면 자동 분할
+    var chunks = (Array.isArray(t.chunks) && t.chunks.length)
+      ? t.chunks
+      : (function() {
+          var words = t.english.split(/\s+/);
+          var arr = [], curr = [];
+          words.forEach(function(w) {
+            curr.push(w);
+            if (curr.length >= 3 || w.endsWith(',') || w.endsWith(';')) {
+              arr.push(curr.join(' ')); curr = [];
+            }
+          });
+          if (curr.length) arr.push(curr.join(' '));
+          return arr;
+        })();
+    chunks.forEach(function(c, i) {
+      var pill = document.createElement('span');
+      pill.className = 'chunk-pill cc-' + (i % 7);
+      pill.textContent = c;
+      chunksBox.appendChild(pill);
+    });
+  }
+
+  detail.appendChild(engRow);
+  detail.appendChild(chunksBox);
+
+  // 회화 팁 — JSON의 t.tip 우선, 없으면 내장 패턴 _getTip() 사용
+  var tipData = null;
+  if (t.tip && t.tip.tag) {
+    // JSON 데이터에 팁이 있는 경우 (tag + text 구조)
+    tipData = { tag: t.tip.tag, tipText: t.tip.text || '' };
+  } else {
+    // 내장 패턴으로 생성 (tag + tip 구조)
+    var _gt = _getTip(t.english || '');
+    if (_gt) tipData = { tag: _gt.tag, tipText: _gt.tip || '' };
+  }
+  if (tipData) {
+    var tipEl = document.createElement('div');
+    tipEl.className = 'conv-tip';
+    tipEl.innerHTML = '<span class="conv-tip-icon">💡</span>' +
+      '<div class="conv-tip-body">' +
+        '<span class="conv-tip-pattern">' + escHtml(tipData.tag) + '</span>' +
+        '<span class="conv-tip-text">' + escHtml(tipData.tipText) + '</span>' +
+      '</div>';
+    detail.appendChild(tipEl);
+  }
+
+  details.appendChild(summary);
+  details.appendChild(detail);
+  div.appendChild(details);
+  return div;
+}
+
+/* ================================================================
+   TTS
+================================================================ */
+function _loadVoices() {
+  _allVoices = speechSynthesis.getVoices();
+  var enVoices = _allVoices.filter(function(v){ return v.lang.startsWith('en'); });
+
+  // 화자A 셀렉트
+  var selA = document.getElementById('voiceSelectA');
+  if (selA) {
+    var prevA = selA.value;
+    selA.innerHTML = '<option value="">기본 영어 음성</option>';
+    enVoices.forEach(function(v) {
+      var opt = document.createElement('option');
+      opt.value = v.name; opt.textContent = v.name + ' (' + v.lang + ')';
+      selA.appendChild(opt);
+    });
+    if (prevA) selA.value = prevA;
+  }
+
+  // 화자B 셀렉트
+  var selB = document.getElementById('voiceSelectB');
+  if (selB) {
+    var prevB = selB.value;
+    selB.innerHTML = '<option value="">기본 영어 음성</option>';
+    enVoices.forEach(function(v) {
+      var opt = document.createElement('option');
+      opt.value = v.name; opt.textContent = v.name + ' (' + v.lang + ')';
+      selB.appendChild(opt);
+    });
+    if (prevB) selB.value = prevB;
+  }
+}
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.addEventListener('voiceschanged', _loadVoices);
+  setTimeout(_loadVoices, 500);
+}
+
+function setRate(r, btn) {
+  _ttsRate = r;
+  document.querySelectorAll('.speed-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+}
+function setVoiceA(name) {
+  _ttsVoiceA = _allVoices.find(function(v){ return v.name === name; }) || null;
+}
+function setVoiceB(name) {
+  _ttsVoiceB = _allVoices.find(function(v){ return v.name === name; }) || null;
+}
+function testVoiceA() {
+  speechSynthesis.cancel();
+  var utt = new SpeechSynthesisUtterance('Hello! I am speaker A. How are you?');
+  utt.lang = 'en-US'; utt.rate = _ttsRate;
+  if (_ttsVoiceA) utt.voice = _ttsVoiceA;
+  speechSynthesis.speak(utt);
+}
+function testVoiceB() {
+  speechSynthesis.cancel();
+  var utt = new SpeechSynthesisUtterance('Hi there! I am speaker B. Nice to meet you!');
+  utt.lang = 'en-US'; utt.rate = _ttsRate;
+  if (_ttsVoiceB) utt.voice = _ttsVoiceB;
+  speechSynthesis.speak(utt);
+}
+function stopTTS() {
+  if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+}
+/* role: 'c' = 화자A(학생/파랑), 'b' = 화자B(친구/주황) */
+function _speak(text, onEnd, role) {
+  if (!text || typeof speechSynthesis === 'undefined') { if(onEnd) onEnd(); return; }
+  speechSynthesis.cancel();
+  var utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-US'; utt.rate = _ttsRate;
+  var voice = (role === 'b') ? _ttsVoiceB : _ttsVoiceA;
+  if (voice) utt.voice = voice;
+  utt.onend = utt.onerror = function() { if(onEnd) onEnd(); };
+  speechSynthesis.speak(utt);
+}
+function _speakSingle(btn) {
+  var item = btn.closest('.turn-item');
+  if (!item) return;
+  var eng  = item.dataset.eng  || '';
+  var role = item.dataset.role || 'c';
+  if (!eng) return;
+  stopTTS();
+  document.querySelectorAll('.summary-tts-btn.playing').forEach(function(b){ b.classList.remove('playing'); b.textContent='🔊'; });
+  btn.classList.add('playing'); btn.textContent = '⏸';
+  _speak(eng, function() { btn.classList.remove('playing'); btn.textContent = '🔊'; }, role);
+}
+
+/* ================================================================
+   SECTION PLAY
+================================================================ */
+var _activeSitBtn = null;
+
+// 재생 중인 턴이 화면에 보이도록: 상황 섹션 열기 + details 열기 + 스크롤
+function _ensureTurnVisible(item) {
+  // 1) 부모 situation-section이 닫혀 있으면 자동으로 열기
+  var sec = item.closest ? item.closest('.situation-section')
+            : (function(el){ while(el){ if(el.classList&&el.classList.contains('situation-section')) return el; el=el.parentElement; } return null; })(item);
+  if (sec && !sec.classList.contains('open')) sec.classList.add('open');
+  // 2) 해당 turn의 details 열기
+  var det = item.querySelector('details');
+  if (det) det.open = true;
+  // 3) 스크롤 포커스 (약간 딜레이로 DOM 렌더 후 적용)
+  setTimeout(function(){ item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
+}
+
+function _sectionPlayToggle(playBtn, progEl, itvSlider, body) {
+  if (_activeSitBtn === playBtn && _secPlaying) {
+    _stopSectionPlay(); return;
+  }
+  _stopSectionPlay();
+  gpStop();
+
+  var items = Array.from(body.querySelectorAll('.turn-item')).filter(function(el){ return (el.dataset.eng||'').trim(); });
+  if (!items.length) return;
+  _activeSitBtn = playBtn;
+  _secQueue = items; _secIndex = 0; _secPlaying = true; _secBtn = playBtn; _secProgEl = progEl;
+  playBtn.textContent = '⏹ 중지'; playBtn.classList.add('playing');
+  _miniShow(); _miniUpdateText('재생 준비 중...');
+  _secNext(itvSlider);
+}
+
+function _secNext(itvSlider) {
+  if (!_secPlaying || _secIndex >= _secQueue.length) {
+    _stopSectionPlay(); return;
+  }
+  var item = _secQueue[_secIndex];
+  var eng  = item.dataset.eng  || '';
+  var role = item.dataset.role || 'c';
+  item.classList.add('speaking-global');
+  _ensureTurnVisible(item);
+  _miniUpdateText(eng);
+  if (_secProgEl) _secProgEl.textContent = (_secIndex+1) + ' / ' + _secQueue.length;
+  _speak(eng, function() {
+    item.classList.remove('speaking-global');
+    if (!_secPlaying) return;
+    _secIndex++;
+    var gap = itvSlider ? parseFloat(itvSlider.value)*1000 : 2000;
+    setTimeout(function(){ _secNext(itvSlider); }, gap);
+  }, role);
+}
+
+function _stopSectionPlay() {
+  _secPlaying = false; _secIndex = 0;
+  stopTTS();
+  if (_secBtn) { _secBtn.textContent = '🔊 전체 듣기'; _secBtn.classList.remove('playing'); }
+  if (_secProgEl) _secProgEl.textContent = '';
+  _activeSitBtn = null; _secBtn = null; _secProgEl = null;
+  document.querySelectorAll('.turn-item.speaking-global').forEach(function(el){ el.classList.remove('speaking-global'); });
+  _miniHide();
+}
+
+/* ================================================================
+   GLOBAL PLAY
+================================================================ */
+function gpToggle() {
+  if (!SITUATIONS.length) return;
+  if (!_gp.playing && !_gp.paused) {
+    _stopSectionPlay(); stopTTS();
+    // 필터 적용
+    var selIds = Array.from(_selectedSits);
+    _gp.items = [];
+    SITUATIONS.forEach(function(sit) {
+      if (selIds.length > 0 && selIds.indexOf(sit.id) === -1) return;
+      (sit.turns||[]).forEach(function(t) {
+        if ((t.english||'').trim()) _gp.items.push({ eng: t.english, sitId: sit.id, role: t.role || 'c' });
+      });
+    });
+    _gp.total = _gp.items.length;
+    if (!_gp.total) { alert('재생할 문장이 없습니다.'); return; }
+    _gp.playing = true; _gp.paused = false; _gp.pauseFlag = false; _gp.index = 0;
+    _gpSetUI('playing');
+    _miniShow();
+    _miniUpdateText((selIds.length?selIds.length+'개 상황':'전체') + ' · ' + _gp.total + '문장 재생 준비 중...');
+    var voices = speechSynthesis.getVoices();
+    if (!voices.length) { setTimeout(function(){ if(_gp.playing) _gpNext(); }, 400); }
+    else { _gpNext(); }
+  } else if (_gp.playing) {
+    _gp.playing = false; _gp.paused = true; _gp.pauseFlag = true;
+    stopTTS(); _gpSetUI('paused'); _miniSetState(false);
+  } else {
+    _gp.playing = true; _gp.paused = false; _gp.pauseFlag = false;
+    _gpSetUI('playing'); _miniSetState(true); _gpNext();
+  }
+}
+
+function gpStop() {
+  _gp.pauseFlag = true; _gp.playing = false; _gp.paused = false;
+  stopTTS(); _gp.index = 0;
+  _gpSetUI('stopped'); _miniHide();
+}
+
+function _gpNext() {
+  if (_gp.pauseFlag || _gp.index >= _gp.total) {
+    if (!_gp.pauseFlag) { _gp.playing = false; _gpSetUI('stopped'); _miniHide(); }
+    return;
+  }
+  var item = _gp.items[_gp.index];
+  var prog = document.getElementById('gpProg');
+  if (prog) { prog.textContent = (_gp.index+1) + ' / ' + _gp.total; prog.classList.add('active'); }
+  _miniUpdateText(item.eng);
+  // DOM 강조 (해당 turn-item 찾기)
+  var allItems = document.querySelectorAll('.turn-item');
+  allItems.forEach(function(el){ el.classList.remove('speaking-global'); });
+  for (var i = 0; i < allItems.length; i++) {
+    if ((allItems[i].dataset.eng||'') === item.eng) {
+      allItems[i].classList.add('speaking-global');
+      _ensureTurnVisible(allItems[i]);
+      break;
+    }
+  }
+  _speak(item.eng, function() {
+    document.querySelectorAll('.turn-item.speaking-global').forEach(function(el){ el.classList.remove('speaking-global'); });
+    if (_gp.pauseFlag) return;
+    _gp.index++;
+    if (_gp.index >= _gp.total) { _gp.playing = false; _gpSetUI('stopped'); _miniHide(); return; }
+    var gap = parseFloat(document.getElementById('gpInterval').value) * 1000;
+    setTimeout(_gpNext, gap);
+  }, item.role || 'c');
+}
+
+function _gpSetUI(state) {
+  var btn  = document.getElementById('gpBtn');
+  var stop = document.getElementById('gpStopBtn');
+  if (!btn) return;
+  btn.className = 'gp-btn';
+  if (state === 'playing') { btn.textContent = '⏸ 일시정지'; btn.classList.add('playing'); stop.style.display=''; }
+  else if (state === 'paused') { btn.textContent = '▶ 계속 재생'; btn.classList.add('paused'); stop.style.display=''; }
+  else { btn.textContent = '▶ 전체 듣기'; stop.style.display='none'; }
+}
+
+/* ================================================================
+   MINI PLAYER
+================================================================ */
+function _miniShow() { document.getElementById('miniPlayer').classList.add('visible'); _miniSetState(true); }
+function _miniHide() { document.getElementById('miniPlayer').classList.remove('visible'); }
+function _miniSetState(playing) {
+  var mp = document.getElementById('miniPlayer');
+  mp.classList.toggle('state-playing', playing);
+  mp.classList.toggle('state-paused',  !playing);
+  document.getElementById('miniStateLabel').textContent = playing ? '재생중' : '일시정지';
+  document.getElementById('miniPauseBtn').textContent   = playing ? '⏸' : '▶';
+}
+function _miniUpdateText(txt) { document.getElementById('miniText').textContent = txt || '—'; }
+function _miniTogglePause() {
+  if (_activeSitBtn) {
+    if (_secPlaying) { _secPlaying = false; stopTTS(); _miniSetState(false); }
+    else             { _secPlaying = true;  _miniSetState(true); _secNext(null); }
+  } else if (_gp.playing || _gp.paused) {
+    gpToggle();
+  }
+}
+
+/* ================================================================
+   FILTER
+================================================================ */
+function initFilterChips() {
+  var container = document.getElementById('filterChips');
+  container.innerHTML = '';
+  SITUATIONS.forEach(function(sit) {
+    var chip = document.createElement('button');
+    chip.className = 'sit-chip';
+    chip.dataset.sitId = sit.id;
+    chip.textContent = (sit.emoji||'') + ' ' + sit.name;
+    chip.addEventListener('click', function() {
+      if (_selectedSits.has(sit.id)) { _selectedSits.delete(sit.id); chip.classList.remove('selected'); }
+      else                           { _selectedSits.add(sit.id);   chip.classList.add('selected'); }
+      _applyFilter();
+    });
+    container.appendChild(chip);
+  });
+}
+
+function _applyFilter() {
+  var isAll = _selectedSits.size === 0;
+  document.querySelectorAll('.situation-section[id]').forEach(function(sec) {
+    var id = parseInt(sec.id.replace('sit-',''));
+    sec.classList.toggle('filter-hidden', !isAll && !_selectedSits.has(id));
+  });
+  updateFilterBadge();
+}
+
+function updateFilterBadge() {
+  var badge = document.getElementById('filterBadge');
+  var info  = document.getElementById('filterInfo');
+  var isAll = _selectedSits.size === 0;
+  if (badge) badge.textContent = isAll ? '전체 ' + SITUATIONS.length + '개' : _selectedSits.size + '개 선택';
+  if (info)  {
+    var cnt = 0;
+    SITUATIONS.forEach(function(s){
+      if (isAll || _selectedSits.has(s.id)) cnt += (s.turns||[]).filter(function(t){return (t.english||'').trim();}).length;
+    });
+    info.textContent = (isAll ? '전체 ' : _selectedSits.size + '개 상황 · ') + cnt + '문장 재생';
+    info.style.color = isAll ? '#764ba2' : '#e65100';
+  }
+}
+
+function filterSelectAll() {
+  SITUATIONS.forEach(function(s){ _selectedSits.add(s.id); });
+  document.querySelectorAll('.sit-chip').forEach(function(c){ c.classList.add('selected'); });
+  _applyFilter();
+}
+function filterReset() {
+  _selectedSits.clear();
+  document.querySelectorAll('.sit-chip').forEach(function(c){ c.classList.remove('selected'); });
+  _applyFilter();
+}
+function toggleFilter() {
+  var sec = document.getElementById('filterSection');
+  var chv = document.getElementById('filterChevron');
+  sec.classList.toggle('open');
+  if (chv) chv.textContent = sec.classList.contains('open') ? '▲' : '▼';
+}
+
+/* ================================================================
+   QUIZ MODE
+================================================================ */
+function setMode(mode) {
+  _currentMode = mode;
+  document.querySelectorAll('.quiz-mode-btn').forEach(function(b){ b.classList.remove('active'); });
+  var map = { 'off':'modeOff', 'ko-en':'modeKoEn', 'en-ko':'modeEnKo' };
+  var el = document.getElementById(map[mode]);
+  if (el) el.classList.add('active');
+  applyMode(mode);
+}
+
+function applyMode(mode) {
+  document.querySelectorAll('.turn-item').forEach(function(item) {
+    var engEl = item.querySelector('.eng-text');
+    var korEl = item.querySelector('.korean-text');
+    var detEl = item.querySelector('.turn-detail');
+    if (!engEl || !korEl) return;
+
+    // ── 초기화 ──────────────────────────────────────────────
+    engEl.classList.remove('hidden-answer','revealed');
+    korEl.classList.remove('hidden-answer','revealed');
+    engEl.onclick = null;
+    korEl.onclick = null;
+    if (detEl) detEl.style.display = '';
+    var sum = item.querySelector('details > summary');
+    if (sum) sum.onclick = null;
+
+    // ── 모드 적용 ────────────────────────────────────────────
+    if (mode === 'ko-en') {
+      // details 자동 펼치기 → 영어 텍스트 블러 처리 (클릭 시 공개)
+      var det = item.querySelector('details');
+      if (det) det.open = true;
+      engEl.classList.add('hidden-answer');
+      (function(capturedItem, capturedEngEl) {
+        capturedEngEl.onclick = function() {
+          if (capturedEngEl.classList.contains('revealed')) return;
+          capturedEngEl.classList.add('revealed');
+          capturedEngEl.onclick = null;
+          // 청크 표시
+          var chunksBox = capturedItem.querySelector('.chunks-box');
+          if (chunksBox) chunksBox.classList.add('visible');
+          // 전체/섹션 재생 중이 아닐 때만 TTS
+          if (!_gp.playing && !_secPlaying) {
+            var eng  = capturedItem.dataset.eng  || '';
+            var role = capturedItem.dataset.role || 'c';
+            if (eng) _speak(eng, null, role);
+          }
+        };
+      })(item, engEl);
+
+    } else if (mode === 'en-ko') {
+      // 한국어 텍스트 블러 처리 (클릭 시 공개)
+      korEl.classList.add('hidden-answer');
+      (function(capturedItem, capturedKorEl) {
+        capturedKorEl.onclick = function() {
+          if (capturedKorEl.classList.contains('revealed')) return;
+          capturedKorEl.classList.add('revealed');
+          capturedKorEl.onclick = null;
+          // 청크 표시
+          var chunksBox = capturedItem.querySelector('.chunks-box');
+          if (chunksBox) chunksBox.classList.add('visible');
+          // 전체/섹션 재생 중이 아닐 때만 TTS
+          if (!_gp.playing && !_secPlaying) {
+            var eng  = capturedItem.dataset.eng  || '';
+            var role = capturedItem.dataset.role || 'c';
+            if (eng) _speak(eng, null, role);
+          }
+        };
+      })(item, korEl);
+    }
+    // off: 초기화만으로 완료
+  });
+}
+
+/* ================================================================
+   CHUNK
+================================================================ */
+function toggleChunk(on) {
+  _showChunks = on;
+  document.querySelectorAll('.chunks-box').forEach(function(el){
+    el.classList.toggle('visible', on);
+  });
+}
+
+/* ================================================================
+   SEARCH
+================================================================ */
+function searchContent(q) {
+  q = (q||'').trim().toLowerCase();
+  document.querySelectorAll('.situation-section').forEach(function(sec) {
+    if (!q) { sec.classList.remove('filter-hidden'); return; }
+    var text = sec.textContent.toLowerCase();
+    sec.classList.toggle('filter-hidden', text.indexOf(q) === -1);
+  });
+}
+
+/* ================================================================
+   EXPAND / COLLAPSE
+================================================================ */
+function expandAll()  { document.querySelectorAll('.situation-section').forEach(function(s){ s.classList.add('open'); }); }
+function collapseAll(){ document.querySelectorAll('.situation-section').forEach(function(s){ s.classList.remove('open'); }); }
+
+/* ================================================================
+   CONVERSATION TIP
+================================================================ */
+var _tipPatterns = [
+  { re: /^do you have /i,        tag: '소유 확인',    tip: '"Do you have ~?" — ~이/가 있나요? 소유·존재를 확인하는 기본 표현' },
+  { re: /^is there /i,           tag: '존재 확인',    tip: '"Is there ~?" — ~이 있나요? 단수 명사의 존재 여부' },
+  { re: /^are there /i,          tag: '복수 확인',    tip: '"Are there ~?" — ~들이 있나요? 복수 명사의 존재 여부' },
+  { re: /^can i /i,              tag: '허락 요청',    tip: '"Can I ~?" — 제가 ~해도 될까요? 가장 일상적인 허락 요청' },
+  { re: /^can you /i,            tag: '능력·요청',    tip: '"Can you ~?" — ~해 줄 수 있어요? 캐주얼한 부탁' },
+  { re: /^could you /i,          tag: '정중 요청',    tip: '"Could you ~?" — ~해 주시겠어요? Can보다 더 정중한 요청' },
+  { re: /^could i /i,            tag: '정중 허락',    tip: '"Could I ~?" — 제가 ~해도 될까요? 격식 있는 표현' },
+  { re: /^would you like/i,      tag: '정중 제안',    tip: '"Would you like ~?" — ~을 원하세요? 서비스업 핵심 제안 표현' },
+  { re: /^would you mind/i,      tag: '배려 요청',    tip: '"Would you mind ~?" — ~해 주시면 안 될까요? 가장 정중한 요청' },
+  { re: /^how much/i,            tag: '가격 문의',    tip: '"How much ~?" — 얼마예요? 가격·수량 문의' },
+  { re: /^how many/i,            tag: '수량 문의',    tip: '"How many ~?" — 몇 개/명이에요?' },
+  { re: /^how long/i,            tag: '기간 문의',    tip: '"How long ~?" — 얼마나 걸려요?' },
+  { re: /^how do i/i,            tag: '방법 문의',    tip: '"How do I ~?" — 어떻게 ~하나요?' },
+  { re: /^where (is|are|can)/i,  tag: '위치 문의',    tip: '"Where is/are ~?" — ~은 어디에 있나요?' },
+  { re: /^what time/i,           tag: '시간 문의',    tip: '"What time ~?" — 몇 시에 ~해요?' },
+  { re: /^what kind of/i,        tag: '종류 문의',    tip: '"What kind of ~?" — 어떤 종류의 ~이에요?' },
+  { re: /^which/i,               tag: '선택 질문',    tip: '"Which ~?" — 어느 것이에요? 정해진 선택지 중 하나' },
+  { re: /^i('d like| would like)/i, tag: '정중 의향', tip: '"I\'d like to ~" — ~하고 싶어요. "I want"보다 정중한 표현' },
+  { re: /^i'd love to/i,         tag: '강한 긍정',    tip: '"I\'d love to ~" — 정말 그러고 싶어요!' },
+  { re: /^i'll /i,               tag: '즉각 의지',    tip: '"I\'ll ~" — 제가 ~할게요. 즉시 하겠다는 의지' },
+  { re: /^i'?m going to/i,       tag: '계획·의도',    tip: '"I\'m going to ~" — ~할 거예요. 결정된 계획' },
+  { re: /^i need /i,             tag: '필요 표현',    tip: '"I need ~" — ~이 필요해요.' },
+  { re: /^let me /i,             tag: '자발적 행동',  tip: '"Let me ~" — 제가 ~할게요. 상대방을 위해 행동하는 표현' },
+  { re: /^let('s| us) /i,        tag: '함께 제안',    tip: '"Let\'s ~" — 같이 ~해요! 공동 행동 제안' },
+  { re: /^please /i,             tag: '직접 요청',    tip: '"Please ~" — ~해 주세요. 더 정중하게는 "Could you please"' },
+  { re: /^i('d like| would like)/i, tag: '정중 의향', tip: '"I\'d like to ~" — 주문·요청 시 필수 표현' },
+  { re: /^i'?m sorry/i,          tag: '사과',         tip: '"I\'m sorry ~" — 죄송해요.' },
+  { re: /^excuse me/i,           tag: '실례·주의',    tip: '"Excuse me" — 실례합니다. 주의를 끌 때, 지나갈 때' },
+  { re: /^thank(s| you)/i,       tag: '감사',         tip: '"Thank you ~" — 감사합니다.' },
+  { re: /^you're welcome/i,      tag: '천만에요',     tip: '"You\'re welcome" — 천만에요.' },
+  { re: /^of course/i,           tag: '당연히·물론',  tip: '"Of course" — 물론이죠!' },
+  { re: /^right away/i,          tag: '즉시 응대',    tip: '"Right away!" — 바로 해드리겠습니다!' },
+  { re: /^don't worry/i,         tag: '안심',         tip: '"Don\'t worry" — 걱정 마세요.' },
+  { re: /^i'?m afraid/i,         tag: '유감 부정',    tip: '"I\'m afraid ~" — 유감스럽게도 ~해요. 정중한 거절 표현' },
+  { re: /^unfortunately/i,       tag: '유감',         tip: '"Unfortunately ~" — 안타깝게도 ~.' },
+  { re: /^i'?m looking for/i,    tag: '탐색 중',      tip: '"I\'m looking for ~" — ~을 찾고 있어요.' },
+  { re: /^i'?m allergic to/i,    tag: '알레르기',     tip: '"I\'m allergic to ~" — ~에 알레르기가 있어요.' },
+  { re: /^follow me/i,           tag: '안내',         tip: '"Follow me" — 저를 따라오세요. 안내 필수 표현' },
+  { re: /^(hello|hi)[!,\. ]/i,   tag: '인사',         tip: '"Hello/Hi" — 안녕하세요. Hi는 캐주얼, Hello는 격식' },
+  { re: /^welcome (to|back)/i,   tag: '환영',         tip: '"Welcome to ~" — ~에 오신 것을 환영해요.' },
+  { re: /^have a (nice|great|good|safe)/i, tag: '작별', tip: '"Have a great day/trip!" — 즐거운 시간 되세요!' },
+];
+
+function _getTip(eng) {
+  var s = (eng||'').trim();
+  for (var i = 0; i < _tipPatterns.length; i++) {
+    if (_tipPatterns[i].re.test(s)) return _tipPatterns[i];
+  }
+  var lower = s.toLowerCase();
+  if (/\b(check in|check out)\b/.test(lower)) return { tag:'체크인/아웃', tip:'"Check in/out" — 호텔 필수 표현. "I have a reservation"과 함께 사용' };
+  if (/\breservation\b/.test(lower))           return { tag:'예약',       tip:'"I have a reservation under [이름]" — 예약 확인 시 활용' };
+  if (/\b(cash|card|credit|pay)\b/.test(lower))return { tag:'결제',       tip:'"Can I pay by card?" / "Do you take cash?" — 결제 수단 확인' };
+  if (/\btake out\b|to go\b/.test(lower))      return { tag:'테이크아웃', tip:'"To go" = 포장, "For here"/"Dine in" = 매장 섭취' };
+  if (/\b(gate|board|boarding|flight)\b/.test(lower)) return { tag:'항공', tip:'gate(탑승구), boarding(탑승) — 공항 필수 어휘' };
+  if (/\b(emergency|help|urgent|ambulance)\b/.test(lower)) return { tag:'긴급', tip:'"Help!" / "Call an ambulance!" — 긴급 상황 필수 표현' };
+  return null;
+}
+
+/* ================================================================
+   UTILS
+================================================================ */
+function escHtml(str) {
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ================================================================
+   KEYBOARD
+================================================================ */
+document.addEventListener('keydown', function(e) {
+  var tag = (document.activeElement && document.activeElement.tagName) || '';
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if (e.code === 'Space') {
+    e.preventDefault(); _miniTogglePause();
+  } else if (e.code === 'Enter') {
+    e.preventDefault();
+    if (_activeSitBtn) { _stopSectionPlay(); }
+    else if (_gp.playing || _gp.paused) { gpStop(); setTimeout(gpToggle, 150); }
+  } else if (e.key === 'Escape') {
+    gpStop(); _stopSectionPlay();
+  }
+});
+
+/* INIT */
+document.getElementById('emptyState').classList.add('visible');
+document.getElementById('modeOff').classList.add('active');
+</script>
+</body>
+</html>

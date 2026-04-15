@@ -1,0 +1,2641 @@
+{
+  "title": "Kids English Phonics Learning",
+  "version": "1.0",
+  "categories": [
+    {
+      "id": "short_a",
+      "name": "Short A",
+      "icon": "🅰️",
+      "level": 1,
+      "color": "#E53935",
+      "gradient": "linear-gradient(135deg,#E53935,#EF9A9A)",
+      "words": [
+        {
+          "id": 1,
+          "word": "cat",
+          "emoji": "🐱",
+          "hint": "c-a-t / 야옹!",
+          "syllables": [
+            "c",
+            "a",
+            "t"
+          ],
+          "imgQuery": "cute+cat",
+          "sentences": [
+            "The cat sat.",
+            "I see a cat!"
+          ]
+        },
+        {
+          "id": 2,
+          "word": "bat",
+          "emoji": "🦇",
+          "hint": "b-a-t / 날아요!",
+          "syllables": [
+            "b",
+            "a",
+            "t"
+          ],
+          "imgQuery": "baseball+bat",
+          "sentences": [
+            "Hit with a bat!",
+            "A bat can fly."
+          ]
+        },
+        {
+          "id": 3,
+          "word": "hat",
+          "emoji": "🎩",
+          "hint": "h-a-t / 모자!",
+          "syllables": [
+            "h",
+            "a",
+            "t"
+          ],
+          "imgQuery": "hat+colorful",
+          "sentences": [
+            "I wear a hat.",
+            "The hat is red!"
+          ]
+        },
+        {
+          "id": 4,
+          "word": "mat",
+          "emoji": "🧸",
+          "hint": "m-a-t / 매트!",
+          "syllables": [
+            "m",
+            "a",
+            "t"
+          ],
+          "imgQuery": "yoga+mat",
+          "sentences": [
+            "Sit on the mat.",
+            "The mat is flat."
+          ]
+        },
+        {
+          "id": 5,
+          "word": "rat",
+          "emoji": "🐭",
+          "hint": "r-a-t / 쥐!",
+          "syllables": [
+            "r",
+            "a",
+            "t"
+          ],
+          "imgQuery": "cute+rat+mouse",
+          "sentences": [
+            "A rat is small.",
+            "The rat ran fast!"
+          ]
+        },
+        {
+          "id": 6,
+          "word": "fan",
+          "emoji": "🌀",
+          "hint": "f-a-n / 선풍기!",
+          "syllables": [
+            "f",
+            "a",
+            "n"
+          ],
+          "imgQuery": "electric+fan",
+          "sentences": [
+            "The fan is on.",
+            "I feel the fan!"
+          ]
+        },
+        {
+          "id": 7,
+          "word": "can",
+          "emoji": "🥫",
+          "hint": "c-a-n / 캔!",
+          "syllables": [
+            "c",
+            "a",
+            "n"
+          ],
+          "imgQuery": "tin+can",
+          "sentences": [
+            "Open the can.",
+            "A can of food!"
+          ]
+        },
+        {
+          "id": 8,
+          "word": "man",
+          "emoji": "👨",
+          "hint": "m-a-n / 남자!",
+          "syllables": [
+            "m",
+            "a",
+            "n"
+          ],
+          "imgQuery": "man+smiling",
+          "sentences": [
+            "The man is tall.",
+            "A man can run."
+          ]
+        },
+        {
+          "id": 9,
+          "word": "van",
+          "emoji": "🚐",
+          "hint": "v-a-n / 밴!",
+          "syllables": [
+            "v",
+            "a",
+            "n"
+          ],
+          "imgQuery": "van+vehicle",
+          "sentences": [
+            "We ride the van.",
+            "The van is big!"
+          ]
+        },
+        {
+          "id": 10,
+          "word": "bag",
+          "emoji": "👜",
+          "hint": "b-a-g / 가방!",
+          "syllables": [
+            "b",
+            "a",
+            "g"
+          ],
+          "imgQuery": "bag+colorful",
+          "sentences": [
+            "Put it in the bag.",
+            "My bag is blue."
+          ]
+        },
+        {
+          "id": 11,
+          "word": "tag",
+          "emoji": "🏷️",
+          "hint": "t-a-g / 태그!",
+          "syllables": [
+            "t",
+            "a",
+            "g"
+          ],
+          "imgQuery": "price+tag",
+          "sentences": [
+            "Read the tag.",
+            "A name tag!"
+          ]
+        },
+        {
+          "id": 12,
+          "word": "sad",
+          "emoji": "😢",
+          "hint": "s-a-d / 슬퍼요!",
+          "syllables": [
+            "s",
+            "a",
+            "d"
+          ],
+          "imgQuery": "sad+face",
+          "sentences": [
+            "Don't be sad.",
+            "She looks sad."
+          ]
+        },
+        {
+          "id": 13,
+          "word": "mad",
+          "emoji": "😠",
+          "hint": "m-a-d / 화났어요!",
+          "syllables": [
+            "m",
+            "a",
+            "d"
+          ],
+          "imgQuery": "angry+face",
+          "sentences": [
+            "Don't be mad!",
+            "He got mad."
+          ]
+        },
+        {
+          "id": 14,
+          "word": "map",
+          "emoji": "🗺️",
+          "hint": "m-a-p / 지도!",
+          "syllables": [
+            "m",
+            "a",
+            "p"
+          ],
+          "imgQuery": "treasure+map",
+          "sentences": [
+            "Look at the map.",
+            "Find it on the map!"
+          ]
+        },
+        {
+          "id": 15,
+          "word": "nap",
+          "emoji": "😴",
+          "hint": "n-a-p / 낮잠!",
+          "syllables": [
+            "n",
+            "a",
+            "p"
+          ],
+          "imgQuery": "baby+sleeping",
+          "sentences": [
+            "Take a nap.",
+            "I need a nap!"
+          ]
+        },
+        {
+          "id": 16,
+          "word": "tap",
+          "emoji": "🚰",
+          "hint": "t-a-p / 수도꼭지!",
+          "syllables": [
+            "t",
+            "a",
+            "p"
+          ],
+          "imgQuery": "water+tap+faucet",
+          "sentences": [
+            "Turn the tap.",
+            "Tap tap tap!"
+          ]
+        },
+        {
+          "id": 17,
+          "word": "ham",
+          "emoji": "🍖",
+          "hint": "h-a-m / 햄!",
+          "syllables": [
+            "h",
+            "a",
+            "m"
+          ],
+          "imgQuery": "ham+meat",
+          "sentences": [
+            "I eat ham.",
+            "Ham is yummy!"
+          ]
+        },
+        {
+          "id": 18,
+          "word": "jam",
+          "emoji": "🍓",
+          "hint": "j-a-m / 잼!",
+          "syllables": [
+            "j",
+            "a",
+            "m"
+          ],
+          "imgQuery": "strawberry+jam",
+          "sentences": [
+            "I love jam!",
+            "Put jam on bread."
+          ]
+        },
+        {
+          "id": 19,
+          "word": "ram",
+          "emoji": "🐏",
+          "hint": "r-a-m / 숫양!",
+          "syllables": [
+            "r",
+            "a",
+            "m"
+          ],
+          "imgQuery": "ram+sheep",
+          "sentences": [
+            "A ram has horns.",
+            "Look at the ram!"
+          ]
+        },
+        {
+          "id": 20,
+          "word": "cap",
+          "emoji": "🧢",
+          "hint": "c-a-p / 캡모자!",
+          "syllables": [
+            "c",
+            "a",
+            "p"
+          ],
+          "imgQuery": "cap+baseball+hat",
+          "sentences": [
+            "Wear your cap.",
+            "The cap is red!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "short_e",
+      "name": "Short E",
+      "icon": "🔤",
+      "level": 1,
+      "color": "#F9A825",
+      "gradient": "linear-gradient(135deg,#F9A825,#FFF176)",
+      "words": [
+        {
+          "id": 21,
+          "word": "bed",
+          "emoji": "🛏️",
+          "hint": "b-e-d / 침대!",
+          "syllables": [
+            "b",
+            "e",
+            "d"
+          ],
+          "imgQuery": "kids+bed",
+          "sentences": [
+            "Time for bed!",
+            "My bed is soft."
+          ]
+        },
+        {
+          "id": 22,
+          "word": "red",
+          "emoji": "🔴",
+          "hint": "r-e-d / 빨간색!",
+          "syllables": [
+            "r",
+            "e",
+            "d"
+          ],
+          "imgQuery": "red+color",
+          "sentences": [
+            "Red is bright!",
+            "I see red."
+          ]
+        },
+        {
+          "id": 23,
+          "word": "ten",
+          "emoji": "🔟",
+          "hint": "t-e-n / 10!",
+          "syllables": [
+            "t",
+            "e",
+            "n"
+          ],
+          "imgQuery": "number+ten",
+          "sentences": [
+            "I have ten!",
+            "Count to ten."
+          ]
+        },
+        {
+          "id": 24,
+          "word": "hen",
+          "emoji": "🐔",
+          "hint": "h-e-n / 암탉!",
+          "syllables": [
+            "h",
+            "e",
+            "n"
+          ],
+          "imgQuery": "hen+chicken",
+          "sentences": [
+            "A hen lays eggs.",
+            "The hen is fat!"
+          ]
+        },
+        {
+          "id": 25,
+          "word": "pen",
+          "emoji": "✏️",
+          "hint": "p-e-n / 펜!",
+          "syllables": [
+            "p",
+            "e",
+            "n"
+          ],
+          "imgQuery": "colorful+pen",
+          "sentences": [
+            "I write with a pen.",
+            "My pen is blue."
+          ]
+        },
+        {
+          "id": 26,
+          "word": "net",
+          "emoji": "🥅",
+          "hint": "n-e-t / 그물!",
+          "syllables": [
+            "n",
+            "e",
+            "t"
+          ],
+          "imgQuery": "fishing+net",
+          "sentences": [
+            "Catch with a net.",
+            "A big fishing net!"
+          ]
+        },
+        {
+          "id": 27,
+          "word": "pet",
+          "emoji": "🐾",
+          "hint": "p-e-t / 반려동물!",
+          "syllables": [
+            "p",
+            "e",
+            "t"
+          ],
+          "imgQuery": "cute+pet+animal",
+          "sentences": [
+            "I have a pet.",
+            "Pet the dog!"
+          ]
+        },
+        {
+          "id": 28,
+          "word": "set",
+          "emoji": "🧩",
+          "hint": "s-e-t / 세트!",
+          "syllables": [
+            "s",
+            "e",
+            "t"
+          ],
+          "imgQuery": "toy+set",
+          "sentences": [
+            "A set of toys!",
+            "Set it down."
+          ]
+        },
+        {
+          "id": 29,
+          "word": "wet",
+          "emoji": "💧",
+          "hint": "w-e-t / 젖었어요!",
+          "syllables": [
+            "w",
+            "e",
+            "t"
+          ],
+          "imgQuery": "wet+rain+water",
+          "sentences": [
+            "Don't get wet!",
+            "My hair is wet."
+          ]
+        },
+        {
+          "id": 30,
+          "word": "leg",
+          "emoji": "🦵",
+          "hint": "l-e-g / 다리!",
+          "syllables": [
+            "l",
+            "e",
+            "g"
+          ],
+          "imgQuery": "leg+body+part",
+          "sentences": [
+            "My leg is long.",
+            "I run on my legs."
+          ]
+        },
+        {
+          "id": 31,
+          "word": "jet",
+          "emoji": "✈️",
+          "hint": "j-e-t / 제트기!",
+          "syllables": [
+            "j",
+            "e",
+            "t"
+          ],
+          "imgQuery": "jet+plane+sky",
+          "sentences": [
+            "The jet is fast!",
+            "I see the jet."
+          ]
+        },
+        {
+          "id": 32,
+          "word": "web",
+          "emoji": "🕸️",
+          "hint": "w-e-b / 거미줄!",
+          "syllables": [
+            "w",
+            "e",
+            "b"
+          ],
+          "imgQuery": "spider+web",
+          "sentences": [
+            "A spider web!",
+            "The web is sticky."
+          ]
+        },
+        {
+          "id": 33,
+          "word": "den",
+          "emoji": "🦁",
+          "hint": "d-e-n / 굴!",
+          "syllables": [
+            "d",
+            "e",
+            "n"
+          ],
+          "imgQuery": "animal+den+cave",
+          "sentences": [
+            "The lion's den.",
+            "A safe den!"
+          ]
+        },
+        {
+          "id": 34,
+          "word": "fed",
+          "emoji": "🍼",
+          "hint": "f-e-d / 먹였어요!",
+          "syllables": [
+            "f",
+            "e",
+            "d"
+          ],
+          "imgQuery": "feeding+baby",
+          "sentences": [
+            "I fed the cat.",
+            "She fed the baby."
+          ]
+        },
+        {
+          "id": 35,
+          "word": "gem",
+          "emoji": "💎",
+          "hint": "g-e-m / 보석!",
+          "syllables": [
+            "g",
+            "e",
+            "m"
+          ],
+          "imgQuery": "gem+jewel",
+          "sentences": [
+            "A shiny gem!",
+            "Find the gem."
+          ]
+        },
+        {
+          "id": 36,
+          "word": "beg",
+          "emoji": "🙏",
+          "hint": "b-e-g / 빌어요!",
+          "syllables": [
+            "b",
+            "e",
+            "g"
+          ],
+          "imgQuery": "puppy+begging",
+          "sentences": [
+            "Don't beg!",
+            "The dog begs."
+          ]
+        },
+        {
+          "id": 37,
+          "word": "peg",
+          "emoji": "📌",
+          "hint": "p-e-g / 못!",
+          "syllables": [
+            "p",
+            "e",
+            "g"
+          ],
+          "imgQuery": "clothespin+peg",
+          "sentences": [
+            "Hang on the peg.",
+            "Use a peg!"
+          ]
+        },
+        {
+          "id": 38,
+          "word": "egg",
+          "emoji": "🥚",
+          "hint": "e-g-g / 달걀!",
+          "syllables": [
+            "e",
+            "gg"
+          ],
+          "imgQuery": "egg+chicken",
+          "sentences": [
+            "Crack an egg!",
+            "One big egg."
+          ]
+        },
+        {
+          "id": 39,
+          "word": "elf",
+          "emoji": "🧝",
+          "hint": "e-l-f / 엘프!",
+          "syllables": [
+            "e",
+            "lf"
+          ],
+          "imgQuery": "elf+character",
+          "sentences": [
+            "A tiny elf!",
+            "The elf is cute."
+          ]
+        },
+        {
+          "id": 40,
+          "word": "end",
+          "emoji": "🏁",
+          "hint": "e-n-d / 끝!",
+          "syllables": [
+            "e",
+            "nd"
+          ],
+          "imgQuery": "finish+line",
+          "sentences": [
+            "The end!",
+            "We reach the end."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "short_i",
+      "name": "Short I",
+      "icon": "ℹ️",
+      "level": 1,
+      "color": "#43A047",
+      "gradient": "linear-gradient(135deg,#43A047,#A5D6A7)",
+      "words": [
+        {
+          "id": 41,
+          "word": "pig",
+          "emoji": "🐷",
+          "hint": "p-i-g / 돼지!",
+          "syllables": [
+            "p",
+            "i",
+            "g"
+          ],
+          "imgQuery": "cute+pig",
+          "sentences": [
+            "The pig is pink.",
+            "Oink oink pig!"
+          ]
+        },
+        {
+          "id": 42,
+          "word": "big",
+          "emoji": "🐘",
+          "hint": "b-i-g / 커요!",
+          "syllables": [
+            "b",
+            "i",
+            "g"
+          ],
+          "imgQuery": "big+large+elephant",
+          "sentences": [
+            "It is so big!",
+            "A big elephant."
+          ]
+        },
+        {
+          "id": 43,
+          "word": "dig",
+          "emoji": "🪣",
+          "hint": "d-i-g / 파요!",
+          "syllables": [
+            "d",
+            "i",
+            "g"
+          ],
+          "imgQuery": "digging+garden",
+          "sentences": [
+            "Dig in the dirt!",
+            "I can dig fast."
+          ]
+        },
+        {
+          "id": 44,
+          "word": "wig",
+          "emoji": "💇",
+          "hint": "w-i-g / 가발!",
+          "syllables": [
+            "w",
+            "i",
+            "g"
+          ],
+          "imgQuery": "colorful+wig",
+          "sentences": [
+            "A funny wig!",
+            "I wear a wig."
+          ]
+        },
+        {
+          "id": 45,
+          "word": "bit",
+          "emoji": "🧀",
+          "hint": "b-i-t / 조금!",
+          "syllables": [
+            "b",
+            "i",
+            "t"
+          ],
+          "imgQuery": "small+piece+food",
+          "sentences": [
+            "A little bit!",
+            "Bit by bit."
+          ]
+        },
+        {
+          "id": 46,
+          "word": "fit",
+          "emoji": "💪",
+          "hint": "f-i-t / 딱 맞아!",
+          "syllables": [
+            "f",
+            "i",
+            "t"
+          ],
+          "imgQuery": "fit+exercise",
+          "sentences": [
+            "Does it fit?",
+            "Stay fit!"
+          ]
+        },
+        {
+          "id": 47,
+          "word": "hit",
+          "emoji": "🥊",
+          "hint": "h-i-t / 쳐요!",
+          "syllables": [
+            "h",
+            "i",
+            "t"
+          ],
+          "imgQuery": "boxing+hit",
+          "sentences": [
+            "Hit the ball!",
+            "A big hit!"
+          ]
+        },
+        {
+          "id": 48,
+          "word": "sit",
+          "emoji": "🪑",
+          "hint": "s-i-t / 앉아요!",
+          "syllables": [
+            "s",
+            "i",
+            "t"
+          ],
+          "imgQuery": "sit+chair",
+          "sentences": [
+            "Sit down please.",
+            "I sit and rest."
+          ]
+        },
+        {
+          "id": 49,
+          "word": "lip",
+          "emoji": "👄",
+          "hint": "l-i-p / 입술!",
+          "syllables": [
+            "l",
+            "i",
+            "p"
+          ],
+          "imgQuery": "lips+mouth",
+          "sentences": [
+            "Red lips!",
+            "I have two lips."
+          ]
+        },
+        {
+          "id": 50,
+          "word": "dip",
+          "emoji": "🫙",
+          "hint": "d-i-p / 찍어요!",
+          "syllables": [
+            "d",
+            "i",
+            "p"
+          ],
+          "imgQuery": "dipping+sauce",
+          "sentences": [
+            "Dip in the sauce.",
+            "I love to dip!"
+          ]
+        },
+        {
+          "id": 51,
+          "word": "tip",
+          "emoji": "👆",
+          "hint": "t-i-p / 끝!",
+          "syllables": [
+            "t",
+            "i",
+            "p"
+          ],
+          "imgQuery": "finger+tip",
+          "sentences": [
+            "The tip is sharp.",
+            "Tip of the pen."
+          ]
+        },
+        {
+          "id": 52,
+          "word": "zip",
+          "emoji": "🤐",
+          "hint": "z-i-p / 지퍼!",
+          "syllables": [
+            "z",
+            "i",
+            "p"
+          ],
+          "imgQuery": "zipper+bag",
+          "sentences": [
+            "Zip the bag!",
+            "Zip it up!"
+          ]
+        },
+        {
+          "id": 53,
+          "word": "fin",
+          "emoji": "🐟",
+          "hint": "f-i-n / 지느러미!",
+          "syllables": [
+            "f",
+            "i",
+            "n"
+          ],
+          "imgQuery": "fish+fin",
+          "sentences": [
+            "Fish have fins.",
+            "Swim with fins!"
+          ]
+        },
+        {
+          "id": 54,
+          "word": "pin",
+          "emoji": "📍",
+          "hint": "p-i-n / 핀!",
+          "syllables": [
+            "p",
+            "i",
+            "n"
+          ],
+          "imgQuery": "pin+thumbtack",
+          "sentences": [
+            "Push the pin.",
+            "Use a pin!"
+          ]
+        },
+        {
+          "id": 55,
+          "word": "win",
+          "emoji": "🏆",
+          "hint": "w-i-n / 이겨요!",
+          "syllables": [
+            "w",
+            "i",
+            "n"
+          ],
+          "imgQuery": "win+trophy",
+          "sentences": [
+            "I want to win!",
+            "We win today!"
+          ]
+        },
+        {
+          "id": 56,
+          "word": "bin",
+          "emoji": "🗑️",
+          "hint": "b-i-n / 쓰레기통!",
+          "syllables": [
+            "b",
+            "i",
+            "n"
+          ],
+          "imgQuery": "trash+bin",
+          "sentences": [
+            "Throw in the bin.",
+            "A blue bin."
+          ]
+        },
+        {
+          "id": 57,
+          "word": "six",
+          "emoji": "6️⃣",
+          "hint": "s-i-x / 6!",
+          "syllables": [
+            "s",
+            "i",
+            "x"
+          ],
+          "imgQuery": "number+six",
+          "sentences": [
+            "I see six!",
+            "Six little ducks."
+          ]
+        },
+        {
+          "id": 58,
+          "word": "mix",
+          "emoji": "🥣",
+          "hint": "m-i-x / 섞어요!",
+          "syllables": [
+            "m",
+            "i",
+            "x"
+          ],
+          "imgQuery": "mixing+bowl",
+          "sentences": [
+            "Mix it up!",
+            "Mix the colors."
+          ]
+        },
+        {
+          "id": 59,
+          "word": "lid",
+          "emoji": "🫙",
+          "hint": "l-i-d / 뚜껑!",
+          "syllables": [
+            "l",
+            "i",
+            "d"
+          ],
+          "imgQuery": "jar+lid",
+          "sentences": [
+            "Put the lid on.",
+            "The lid fits!"
+          ]
+        },
+        {
+          "id": 60,
+          "word": "kid",
+          "emoji": "👦",
+          "hint": "k-i-d / 어린이!",
+          "syllables": [
+            "k",
+            "i",
+            "d"
+          ],
+          "imgQuery": "happy+kid+child",
+          "sentences": [
+            "I'm a kid!",
+            "Every kid is special."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "short_o",
+      "name": "Short O",
+      "icon": "🅾️",
+      "level": 1,
+      "color": "#1E88E5",
+      "gradient": "linear-gradient(135deg,#1E88E5,#90CAF9)",
+      "words": [
+        {
+          "id": 61,
+          "word": "dog",
+          "emoji": "🐶",
+          "hint": "d-o-g / 강아지!",
+          "syllables": [
+            "d",
+            "o",
+            "g"
+          ],
+          "imgQuery": "cute+dog+puppy",
+          "sentences": [
+            "I love my dog!",
+            "The dog runs fast."
+          ]
+        },
+        {
+          "id": 62,
+          "word": "log",
+          "emoji": "🪵",
+          "hint": "l-o-g / 통나무!",
+          "syllables": [
+            "l",
+            "o",
+            "g"
+          ],
+          "imgQuery": "wooden+log",
+          "sentences": [
+            "Sit on a log.",
+            "A big brown log!"
+          ]
+        },
+        {
+          "id": 63,
+          "word": "hot",
+          "emoji": "🔥",
+          "hint": "h-o-t / 뜨거워!",
+          "syllables": [
+            "h",
+            "o",
+            "t"
+          ],
+          "imgQuery": "hot+fire+flame",
+          "sentences": [
+            "It is very hot!",
+            "The soup is hot."
+          ]
+        },
+        {
+          "id": 64,
+          "word": "pot",
+          "emoji": "🍲",
+          "hint": "p-o-t / 냄비!",
+          "syllables": [
+            "p",
+            "o",
+            "t"
+          ],
+          "imgQuery": "cooking+pot",
+          "sentences": [
+            "Cook in a pot.",
+            "A big cooking pot!"
+          ]
+        },
+        {
+          "id": 65,
+          "word": "dot",
+          "emoji": "⚫",
+          "hint": "d-o-t / 점!",
+          "syllables": [
+            "d",
+            "o",
+            "t"
+          ],
+          "imgQuery": "polka+dot",
+          "sentences": [
+            "A little dot!",
+            "Red dot sticker."
+          ]
+        },
+        {
+          "id": 66,
+          "word": "hop",
+          "emoji": "🐸",
+          "hint": "h-o-p / 폴짝!",
+          "syllables": [
+            "h",
+            "o",
+            "p"
+          ],
+          "imgQuery": "frog+hopping",
+          "sentences": [
+            "Hop like a frog!",
+            "Hop hop hop!"
+          ]
+        },
+        {
+          "id": 67,
+          "word": "mop",
+          "emoji": "🧹",
+          "hint": "m-o-p / 대걸레!",
+          "syllables": [
+            "m",
+            "o",
+            "p"
+          ],
+          "imgQuery": "mop+cleaning",
+          "sentences": [
+            "Mop the floor.",
+            "Use the mop!"
+          ]
+        },
+        {
+          "id": 68,
+          "word": "pop",
+          "emoji": "🫧",
+          "hint": "p-o-p / 뻥!",
+          "syllables": [
+            "p",
+            "o",
+            "p"
+          ],
+          "imgQuery": "balloon+popping",
+          "sentences": [
+            "Pop the balloon!",
+            "It goes pop!"
+          ]
+        },
+        {
+          "id": 69,
+          "word": "top",
+          "emoji": "🎡",
+          "hint": "t-o-p / 꼭대기!",
+          "syllables": [
+            "t",
+            "o",
+            "p"
+          ],
+          "imgQuery": "spinning+top+toy",
+          "sentences": [
+            "Spin the top!",
+            "Top of the hill!"
+          ]
+        },
+        {
+          "id": 70,
+          "word": "box",
+          "emoji": "📦",
+          "hint": "b-o-x / 상자!",
+          "syllables": [
+            "b",
+            "o",
+            "x"
+          ],
+          "imgQuery": "cardboard+box",
+          "sentences": [
+            "Open the box!",
+            "A big brown box."
+          ]
+        },
+        {
+          "id": 71,
+          "word": "fox",
+          "emoji": "🦊",
+          "hint": "f-o-x / 여우!",
+          "syllables": [
+            "f",
+            "o",
+            "x"
+          ],
+          "imgQuery": "cute+fox",
+          "sentences": [
+            "A red fox!",
+            "The fox is sly."
+          ]
+        },
+        {
+          "id": 72,
+          "word": "sob",
+          "emoji": "😭",
+          "hint": "s-o-b / 흐느껴요!",
+          "syllables": [
+            "s",
+            "o",
+            "b"
+          ],
+          "imgQuery": "crying+sad+child",
+          "sentences": [
+            "Don't sob!",
+            "She started to sob."
+          ]
+        },
+        {
+          "id": 73,
+          "word": "rob",
+          "emoji": "🦹",
+          "hint": "r-o-b / 빼앗아요!",
+          "syllables": [
+            "r",
+            "o",
+            "b"
+          ],
+          "imgQuery": "thief+cartoon",
+          "sentences": [
+            "Don't rob!",
+            "He tried to rob."
+          ]
+        },
+        {
+          "id": 74,
+          "word": "cob",
+          "emoji": "🌽",
+          "hint": "c-o-b / 옥수수!",
+          "syllables": [
+            "c",
+            "o",
+            "b"
+          ],
+          "imgQuery": "corn+cob",
+          "sentences": [
+            "Corn on the cob!",
+            "Eat the cob."
+          ]
+        },
+        {
+          "id": 75,
+          "word": "fog",
+          "emoji": "🌫️",
+          "hint": "f-o-g / 안개!",
+          "syllables": [
+            "f",
+            "o",
+            "g"
+          ],
+          "imgQuery": "foggy+morning",
+          "sentences": [
+            "Foggy day!",
+            "I see fog outside."
+          ]
+        },
+        {
+          "id": 76,
+          "word": "hog",
+          "emoji": "🐗",
+          "hint": "h-o-g / 멧돼지!",
+          "syllables": [
+            "h",
+            "o",
+            "g"
+          ],
+          "imgQuery": "hog+pig",
+          "sentences": [
+            "A big hog!",
+            "The hog eats a lot."
+          ]
+        },
+        {
+          "id": 77,
+          "word": "nod",
+          "emoji": "😊",
+          "hint": "n-o-d / 끄덕!",
+          "syllables": [
+            "n",
+            "o",
+            "d"
+          ],
+          "imgQuery": "nodding+yes",
+          "sentences": [
+            "Nod your head.",
+            "She gave a nod."
+          ]
+        },
+        {
+          "id": 78,
+          "word": "rod",
+          "emoji": "🎣",
+          "hint": "r-o-d / 낚싯대!",
+          "syllables": [
+            "r",
+            "o",
+            "d"
+          ],
+          "imgQuery": "fishing+rod",
+          "sentences": [
+            "Cast the rod!",
+            "A fishing rod."
+          ]
+        },
+        {
+          "id": 79,
+          "word": "cod",
+          "emoji": "🐟",
+          "hint": "c-o-d / 대구!",
+          "syllables": [
+            "c",
+            "o",
+            "d"
+          ],
+          "imgQuery": "cod+fish",
+          "sentences": [
+            "Cod is a fish.",
+            "Baked cod!"
+          ]
+        },
+        {
+          "id": 80,
+          "word": "lot",
+          "emoji": "🎲",
+          "hint": "l-o-t / 많아요!",
+          "syllables": [
+            "l",
+            "o",
+            "t"
+          ],
+          "imgQuery": "lots+many+things",
+          "sentences": [
+            "A lot of toys!",
+            "I have a lot."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "short_u",
+      "name": "Short U",
+      "icon": "🔡",
+      "level": 1,
+      "color": "#8E24AA",
+      "gradient": "linear-gradient(135deg,#8E24AA,#CE93D8)",
+      "words": [
+        {
+          "id": 81,
+          "word": "bug",
+          "emoji": "🐛",
+          "hint": "b-u-g / 벌레!",
+          "syllables": [
+            "b",
+            "u",
+            "g"
+          ],
+          "imgQuery": "cute+bug+insect",
+          "sentences": [
+            "A tiny bug!",
+            "I see the bug."
+          ]
+        },
+        {
+          "id": 82,
+          "word": "hug",
+          "emoji": "🤗",
+          "hint": "h-u-g / 안아줘!",
+          "syllables": [
+            "h",
+            "u",
+            "g"
+          ],
+          "imgQuery": "hugging+kids",
+          "sentences": [
+            "Give me a hug!",
+            "I love hugs."
+          ]
+        },
+        {
+          "id": 83,
+          "word": "mug",
+          "emoji": "☕",
+          "hint": "m-u-g / 머그잔!",
+          "syllables": [
+            "m",
+            "u",
+            "g"
+          ],
+          "imgQuery": "colorful+mug+cup",
+          "sentences": [
+            "My favorite mug!",
+            "Fill the mug."
+          ]
+        },
+        {
+          "id": 84,
+          "word": "rug",
+          "emoji": "🪞",
+          "hint": "r-u-g / 양탄자!",
+          "syllables": [
+            "r",
+            "u",
+            "g"
+          ],
+          "imgQuery": "colorful+rug",
+          "sentences": [
+            "Sit on the rug.",
+            "A soft rug!"
+          ]
+        },
+        {
+          "id": 85,
+          "word": "tug",
+          "emoji": "⚓",
+          "hint": "t-u-g / 당겨요!",
+          "syllables": [
+            "t",
+            "u",
+            "g"
+          ],
+          "imgQuery": "tug+pull+rope",
+          "sentences": [
+            "Tug the rope!",
+            "A big tug!"
+          ]
+        },
+        {
+          "id": 86,
+          "word": "bun",
+          "emoji": "🍞",
+          "hint": "b-u-n / 번!",
+          "syllables": [
+            "b",
+            "u",
+            "n"
+          ],
+          "imgQuery": "bread+bun",
+          "sentences": [
+            "Eat the bun!",
+            "A warm bun."
+          ]
+        },
+        {
+          "id": 87,
+          "word": "fun",
+          "emoji": "🎉",
+          "hint": "f-u-n / 재미있어!",
+          "syllables": [
+            "f",
+            "u",
+            "n"
+          ],
+          "imgQuery": "kids+fun+playing",
+          "sentences": [
+            "So much fun!",
+            "Let's have fun!"
+          ]
+        },
+        {
+          "id": 88,
+          "word": "run",
+          "emoji": "🏃",
+          "hint": "r-u-n / 달려요!",
+          "syllables": [
+            "r",
+            "u",
+            "n"
+          ],
+          "imgQuery": "child+running",
+          "sentences": [
+            "Run fast!",
+            "I can run far."
+          ]
+        },
+        {
+          "id": 89,
+          "word": "sun",
+          "emoji": "☀️",
+          "hint": "s-u-n / 태양!",
+          "syllables": [
+            "s",
+            "u",
+            "n"
+          ],
+          "imgQuery": "bright+sun+sky",
+          "sentences": [
+            "Shine bright sun!",
+            "I love the sun."
+          ]
+        },
+        {
+          "id": 90,
+          "word": "cup",
+          "emoji": "🥤",
+          "hint": "c-u-p / 컵!",
+          "syllables": [
+            "c",
+            "u",
+            "p"
+          ],
+          "imgQuery": "cup+drink",
+          "sentences": [
+            "Fill the cup.",
+            "My cup is full!"
+          ]
+        },
+        {
+          "id": 91,
+          "word": "pup",
+          "emoji": "🐶",
+          "hint": "p-u-p / 강아지!",
+          "syllables": [
+            "p",
+            "u",
+            "p"
+          ],
+          "imgQuery": "puppy+small+dog",
+          "sentences": [
+            "What a cute pup!",
+            "The pup plays."
+          ]
+        },
+        {
+          "id": 92,
+          "word": "bus",
+          "emoji": "🚌",
+          "hint": "b-u-s / 버스!",
+          "syllables": [
+            "b",
+            "u",
+            "s"
+          ],
+          "imgQuery": "school+bus+yellow",
+          "sentences": [
+            "Ride the bus!",
+            "The bus is yellow."
+          ]
+        },
+        {
+          "id": 93,
+          "word": "mud",
+          "emoji": "🟫",
+          "hint": "m-u-d / 진흙!",
+          "syllables": [
+            "m",
+            "u",
+            "d"
+          ],
+          "imgQuery": "mud+puddle",
+          "sentences": [
+            "Don't step in mud!",
+            "Mud is messy."
+          ]
+        },
+        {
+          "id": 94,
+          "word": "cut",
+          "emoji": "✂️",
+          "hint": "c-u-t / 잘라요!",
+          "syllables": [
+            "c",
+            "u",
+            "t"
+          ],
+          "imgQuery": "scissors+cutting",
+          "sentences": [
+            "Cut the paper.",
+            "I can cut!"
+          ]
+        },
+        {
+          "id": 95,
+          "word": "but",
+          "emoji": "🤔",
+          "hint": "b-u-t / 그런데!",
+          "syllables": [
+            "b",
+            "u",
+            "t"
+          ],
+          "imgQuery": "thinking+child",
+          "sentences": [
+            "I want to but...",
+            "But why?"
+          ]
+        },
+        {
+          "id": 96,
+          "word": "nut",
+          "emoji": "🥜",
+          "hint": "n-u-t / 견과류!",
+          "syllables": [
+            "n",
+            "u",
+            "t"
+          ],
+          "imgQuery": "nuts+peanut",
+          "sentences": [
+            "Crack the nut!",
+            "I eat a nut."
+          ]
+        },
+        {
+          "id": 97,
+          "word": "tub",
+          "emoji": "🛁",
+          "hint": "t-u-b / 욕조!",
+          "syllables": [
+            "t",
+            "u",
+            "b"
+          ],
+          "imgQuery": "bathtub+bath",
+          "sentences": [
+            "Splash in the tub!",
+            "Rubber duck in tub."
+          ]
+        },
+        {
+          "id": 98,
+          "word": "sub",
+          "emoji": "🥖",
+          "hint": "s-u-b / 잠수함!",
+          "syllables": [
+            "s",
+            "u",
+            "b"
+          ],
+          "imgQuery": "submarine+sandwich",
+          "sentences": [
+            "A yummy sub!",
+            "The sub dives deep."
+          ]
+        },
+        {
+          "id": 99,
+          "word": "hub",
+          "emoji": "🔧",
+          "hint": "h-u-b / 중심!",
+          "syllables": [
+            "h",
+            "u",
+            "b"
+          ],
+          "imgQuery": "wheel+hub",
+          "sentences": [
+            "A busy hub!",
+            "The wheel hub."
+          ]
+        },
+        {
+          "id": 100,
+          "word": "gum",
+          "emoji": "🍬",
+          "hint": "g-u-m / 껌!",
+          "syllables": [
+            "g",
+            "u",
+            "m"
+          ],
+          "imgQuery": "chewing+gum+bubble",
+          "sentences": [
+            "Chew the gum!",
+            "Bubble gum pop!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blends",
+      "name": "Blends",
+      "icon": "🔀",
+      "level": 2,
+      "color": "#00ACC1",
+      "gradient": "linear-gradient(135deg,#00ACC1,#80DEEA)",
+      "words": [
+        {
+          "id": 101,
+          "word": "frog",
+          "emoji": "🐸",
+          "hint": "fr+og / 개구리!",
+          "syllables": [
+            "fr",
+            "o",
+            "g"
+          ],
+          "imgQuery": "cute+frog+green",
+          "sentences": [
+            "Leap little frog!",
+            "The frog is green."
+          ]
+        },
+        {
+          "id": 102,
+          "word": "flag",
+          "emoji": "🏳️",
+          "hint": "fl+ag / 깃발!",
+          "syllables": [
+            "fl",
+            "a",
+            "g"
+          ],
+          "imgQuery": "colorful+flag",
+          "sentences": [
+            "Wave the flag!",
+            "A big flag!"
+          ]
+        },
+        {
+          "id": 103,
+          "word": "blue",
+          "emoji": "🔵",
+          "hint": "bl+ue / 파랑!",
+          "syllables": [
+            "bl",
+            "ue"
+          ],
+          "imgQuery": "blue+color+sky",
+          "sentences": [
+            "The sky is blue!",
+            "I love blue."
+          ]
+        },
+        {
+          "id": 104,
+          "word": "clap",
+          "emoji": "👏",
+          "hint": "cl+ap / 박수!",
+          "syllables": [
+            "cl",
+            "a",
+            "p"
+          ],
+          "imgQuery": "clapping+hands",
+          "sentences": [
+            "Clap your hands!",
+            "Clap clap clap!"
+          ]
+        },
+        {
+          "id": 105,
+          "word": "drum",
+          "emoji": "🥁",
+          "hint": "dr+um / 드럼!",
+          "syllables": [
+            "dr",
+            "u",
+            "m"
+          ],
+          "imgQuery": "drum+musical",
+          "sentences": [
+            "Beat the drum!",
+            "I play the drum."
+          ]
+        },
+        {
+          "id": 106,
+          "word": "grab",
+          "emoji": "✋",
+          "hint": "gr+ab / 잡아요!",
+          "syllables": [
+            "gr",
+            "a",
+            "b"
+          ],
+          "imgQuery": "grab+hand+take",
+          "sentences": [
+            "Grab the toy!",
+            "Don't grab!"
+          ]
+        },
+        {
+          "id": 107,
+          "word": "slim",
+          "emoji": "📏",
+          "hint": "sl+im / 날씬!",
+          "syllables": [
+            "sl",
+            "i",
+            "m"
+          ],
+          "imgQuery": "slim+thin",
+          "sentences": [
+            "Nice and slim.",
+            "A slim pencil."
+          ]
+        },
+        {
+          "id": 108,
+          "word": "spin",
+          "emoji": "🌀",
+          "hint": "sp+in / 돌려요!",
+          "syllables": [
+            "sp",
+            "i",
+            "n"
+          ],
+          "imgQuery": "spinning+top",
+          "sentences": [
+            "Spin around!",
+            "I spin fast!"
+          ]
+        },
+        {
+          "id": 109,
+          "word": "snap",
+          "emoji": "👌",
+          "hint": "sn+ap / 딱!",
+          "syllables": [
+            "sn",
+            "a",
+            "p"
+          ],
+          "imgQuery": "snapping+fingers",
+          "sentences": [
+            "Snap your fingers!",
+            "Snap!"
+          ]
+        },
+        {
+          "id": 110,
+          "word": "stop",
+          "emoji": "🛑",
+          "hint": "st+op / 멈춰!",
+          "syllables": [
+            "st",
+            "o",
+            "p"
+          ],
+          "imgQuery": "stop+sign+red",
+          "sentences": [
+            "Stop right there!",
+            "Red means stop."
+          ]
+        },
+        {
+          "id": 111,
+          "word": "trip",
+          "emoji": "✈️",
+          "hint": "tr+ip / 여행!",
+          "syllables": [
+            "tr",
+            "i",
+            "p"
+          ],
+          "imgQuery": "travel+trip+family",
+          "sentences": [
+            "Let's go on a trip!",
+            "Fun trip!"
+          ]
+        },
+        {
+          "id": 112,
+          "word": "swim",
+          "emoji": "🏊",
+          "hint": "sw+im / 수영!",
+          "syllables": [
+            "sw",
+            "i",
+            "m"
+          ],
+          "imgQuery": "swimming+child",
+          "sentences": [
+            "I can swim!",
+            "Swim swim swim!"
+          ]
+        },
+        {
+          "id": 113,
+          "word": "flat",
+          "emoji": "🏞️",
+          "hint": "fl+at / 납작!",
+          "syllables": [
+            "fl",
+            "a",
+            "t"
+          ],
+          "imgQuery": "flat+surface",
+          "sentences": [
+            "Nice and flat.",
+            "A flat road."
+          ]
+        },
+        {
+          "id": 114,
+          "word": "glad",
+          "emoji": "😁",
+          "hint": "gl+ad / 기뻐요!",
+          "syllables": [
+            "gl",
+            "a",
+            "d"
+          ],
+          "imgQuery": "glad+happy+face",
+          "sentences": [
+            "I am so glad!",
+            "Glad to see you!"
+          ]
+        },
+        {
+          "id": 115,
+          "word": "skip",
+          "emoji": "⛷️",
+          "hint": "sk+ip / 건너뛰!",
+          "syllables": [
+            "sk",
+            "i",
+            "p"
+          ],
+          "imgQuery": "skipping+child",
+          "sentences": [
+            "Skip along!",
+            "I love to skip!"
+          ]
+        },
+        {
+          "id": 116,
+          "word": "drip",
+          "emoji": "💧",
+          "hint": "dr+ip / 뚝뚝!",
+          "syllables": [
+            "dr",
+            "i",
+            "p"
+          ],
+          "imgQuery": "water+dripping",
+          "sentences": [
+            "Drip drip drip!",
+            "The tap drips."
+          ]
+        },
+        {
+          "id": 117,
+          "word": "trap",
+          "emoji": "🪤",
+          "hint": "tr+ap / 함정!",
+          "syllables": [
+            "tr",
+            "a",
+            "p"
+          ],
+          "imgQuery": "mouse+trap",
+          "sentences": [
+            "It's a trap!",
+            "A mouse trap!"
+          ]
+        },
+        {
+          "id": 118,
+          "word": "crop",
+          "emoji": "🌾",
+          "hint": "cr+op / 농작물!",
+          "syllables": [
+            "cr",
+            "o",
+            "p"
+          ],
+          "imgQuery": "farm+crop+wheat",
+          "sentences": [
+            "Grow a crop!",
+            "Fresh crops!"
+          ]
+        },
+        {
+          "id": 119,
+          "word": "grin",
+          "emoji": "😁",
+          "hint": "gr+in / 씩 웃어!",
+          "syllables": [
+            "gr",
+            "i",
+            "n"
+          ],
+          "imgQuery": "grinning+smile",
+          "sentences": [
+            "Give a big grin!",
+            "I grin and wave."
+          ]
+        },
+        {
+          "id": 120,
+          "word": "plan",
+          "emoji": "📋",
+          "hint": "pl+an / 계획!",
+          "syllables": [
+            "pl",
+            "a",
+            "n"
+          ],
+          "imgQuery": "planning+map",
+          "sentences": [
+            "Make a plan!",
+            "What's the plan?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "digraphs",
+      "name": "Digraphs",
+      "icon": "🔡",
+      "level": 2,
+      "color": "#E91E63",
+      "gradient": "linear-gradient(135deg,#E91E63,#F48FB1)",
+      "words": [
+        {
+          "id": 121,
+          "word": "ship",
+          "emoji": "🚢",
+          "hint": "sh+ip / 배!",
+          "syllables": [
+            "sh",
+            "i",
+            "p"
+          ],
+          "imgQuery": "big+ship+ocean",
+          "sentences": [
+            "A big ship!",
+            "The ship sails far."
+          ]
+        },
+        {
+          "id": 122,
+          "word": "fish",
+          "emoji": "🐟",
+          "hint": "fi+sh / 물고기!",
+          "syllables": [
+            "f",
+            "i",
+            "sh"
+          ],
+          "imgQuery": "colorful+fish",
+          "sentences": [
+            "I see a fish!",
+            "The fish swims."
+          ]
+        },
+        {
+          "id": 123,
+          "word": "shop",
+          "emoji": "🏪",
+          "hint": "sh+op / 가게!",
+          "syllables": [
+            "sh",
+            "o",
+            "p"
+          ],
+          "imgQuery": "toy+shop+store",
+          "sentences": [
+            "I go to the shop.",
+            "A candy shop!"
+          ]
+        },
+        {
+          "id": 124,
+          "word": "dish",
+          "emoji": "🍽️",
+          "hint": "di+sh / 접시!",
+          "syllables": [
+            "d",
+            "i",
+            "sh"
+          ],
+          "imgQuery": "dish+plate",
+          "sentences": [
+            "Wash the dish.",
+            "A clean dish!"
+          ]
+        },
+        {
+          "id": 125,
+          "word": "chat",
+          "emoji": "💬",
+          "hint": "ch+at / 이야기!",
+          "syllables": [
+            "ch",
+            "a",
+            "t"
+          ],
+          "imgQuery": "friends+chatting",
+          "sentences": [
+            "Let's chat!",
+            "I like to chat."
+          ]
+        },
+        {
+          "id": 126,
+          "word": "chin",
+          "emoji": "😊",
+          "hint": "ch+in / 턱!",
+          "syllables": [
+            "ch",
+            "i",
+            "n"
+          ],
+          "imgQuery": "chin+face",
+          "sentences": [
+            "Touch your chin.",
+            "My chin is here!"
+          ]
+        },
+        {
+          "id": 127,
+          "word": "chip",
+          "emoji": "🍟",
+          "hint": "ch+ip / 칩!",
+          "syllables": [
+            "ch",
+            "i",
+            "p"
+          ],
+          "imgQuery": "potato+chips",
+          "sentences": [
+            "Crunch the chip!",
+            "I love chips!"
+          ]
+        },
+        {
+          "id": 128,
+          "word": "chop",
+          "emoji": "🔪",
+          "hint": "ch+op / 잘라요!",
+          "syllables": [
+            "ch",
+            "o",
+            "p"
+          ],
+          "imgQuery": "chopping+vegetable",
+          "sentences": [
+            "Chop the carrot!",
+            "Chop chop!"
+          ]
+        },
+        {
+          "id": 129,
+          "word": "thin",
+          "emoji": "📏",
+          "hint": "th+in / 얇아요!",
+          "syllables": [
+            "th",
+            "i",
+            "n"
+          ],
+          "imgQuery": "thin+slim",
+          "sentences": [
+            "Very thin!",
+            "A thin line."
+          ]
+        },
+        {
+          "id": 130,
+          "word": "this",
+          "emoji": "👉",
+          "hint": "th+is / 이것!",
+          "syllables": [
+            "th",
+            "i",
+            "s"
+          ],
+          "imgQuery": "pointing+finger",
+          "sentences": [
+            "This is mine!",
+            "Look at this!"
+          ]
+        },
+        {
+          "id": 131,
+          "word": "then",
+          "emoji": "⏭️",
+          "hint": "th+en / 그 다음!",
+          "syllables": [
+            "th",
+            "e",
+            "n"
+          ],
+          "imgQuery": "then+next+arrow",
+          "sentences": [
+            "And then what?",
+            "First, then next."
+          ]
+        },
+        {
+          "id": 132,
+          "word": "when",
+          "emoji": "⏰",
+          "hint": "wh+en / 언제?",
+          "syllables": [
+            "wh",
+            "e",
+            "n"
+          ],
+          "imgQuery": "clock+time",
+          "sentences": [
+            "When is lunch?",
+            "Tell me when!"
+          ]
+        },
+        {
+          "id": 133,
+          "word": "what",
+          "emoji": "❓",
+          "hint": "wh+at / 뭐야?",
+          "syllables": [
+            "wh",
+            "a",
+            "t"
+          ],
+          "imgQuery": "question+mark",
+          "sentences": [
+            "What is that?",
+            "What do you see?"
+          ]
+        },
+        {
+          "id": 134,
+          "word": "whip",
+          "emoji": "🍦",
+          "hint": "wh+ip / 휘핑!",
+          "syllables": [
+            "wh",
+            "i",
+            "p"
+          ],
+          "imgQuery": "whipped+cream",
+          "sentences": [
+            "Whipped cream!",
+            "Whip it up!"
+          ]
+        },
+        {
+          "id": 135,
+          "word": "shed",
+          "emoji": "🏚️",
+          "hint": "sh+ed / 창고!",
+          "syllables": [
+            "sh",
+            "e",
+            "d"
+          ],
+          "imgQuery": "small+shed+garden",
+          "sentences": [
+            "Tools in the shed.",
+            "A red shed!"
+          ]
+        },
+        {
+          "id": 136,
+          "word": "shell",
+          "emoji": "🐚",
+          "hint": "sh+ell / 조개!",
+          "syllables": [
+            "sh",
+            "e",
+            "ll"
+          ],
+          "imgQuery": "seashell+beach",
+          "sentences": [
+            "Find a shell!",
+            "Pretty shell."
+          ]
+        },
+        {
+          "id": 137,
+          "word": "sheep",
+          "emoji": "🐑",
+          "hint": "sh+eep / 양!",
+          "syllables": [
+            "sh",
+            "ee",
+            "p"
+          ],
+          "imgQuery": "white+sheep",
+          "sentences": [
+            "Fluffy sheep!",
+            "The sheep says baa."
+          ]
+        },
+        {
+          "id": 138,
+          "word": "three",
+          "emoji": "3️⃣",
+          "hint": "thr+ee / 셋!",
+          "syllables": [
+            "thr",
+            "ee"
+          ],
+          "imgQuery": "number+three",
+          "sentences": [
+            "I count three!",
+            "One two three!"
+          ]
+        },
+        {
+          "id": 139,
+          "word": "teeth",
+          "emoji": "🦷",
+          "hint": "t+eeth / 이빨!",
+          "syllables": [
+            "t",
+            "ee",
+            "th"
+          ],
+          "imgQuery": "brushing+teeth",
+          "sentences": [
+            "Brush your teeth!",
+            "White teeth!"
+          ]
+        },
+        {
+          "id": 140,
+          "word": "thumb",
+          "emoji": "👍",
+          "hint": "th+umb / 엄지!",
+          "syllables": [
+            "th",
+            "u",
+            "mb"
+          ],
+          "imgQuery": "thumbs+up",
+          "sentences": [
+            "Thumbs up!",
+            "My thumb is up!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magic_e",
+      "name": "Magic E",
+      "icon": "✨",
+      "level": 2,
+      "color": "#FF6F00",
+      "gradient": "linear-gradient(135deg,#FF6F00,#FFD54F)",
+      "words": [
+        {
+          "id": 141,
+          "word": "cake",
+          "emoji": "🎂",
+          "hint": "ca+ke / 케이크!",
+          "syllables": [
+            "c",
+            "a",
+            "ke"
+          ],
+          "imgQuery": "birthday+cake",
+          "sentences": [
+            "I love cake!",
+            "Blow out candles!"
+          ]
+        },
+        {
+          "id": 142,
+          "word": "lake",
+          "emoji": "🏞️",
+          "hint": "la+ke / 호수!",
+          "syllables": [
+            "l",
+            "a",
+            "ke"
+          ],
+          "imgQuery": "beautiful+lake",
+          "sentences": [
+            "The lake is blue.",
+            "We swim in the lake."
+          ]
+        },
+        {
+          "id": 143,
+          "word": "make",
+          "emoji": "🔨",
+          "hint": "ma+ke / 만들어!",
+          "syllables": [
+            "m",
+            "a",
+            "ke"
+          ],
+          "imgQuery": "making+crafts",
+          "sentences": [
+            "Let's make art!",
+            "I make things."
+          ]
+        },
+        {
+          "id": 144,
+          "word": "name",
+          "emoji": "🏷️",
+          "hint": "na+me / 이름!",
+          "syllables": [
+            "n",
+            "a",
+            "me"
+          ],
+          "imgQuery": "name+tag+hello",
+          "sentences": [
+            "What is your name?",
+            "My name is..."
+          ]
+        },
+        {
+          "id": 145,
+          "word": "game",
+          "emoji": "🎮",
+          "hint": "ga+me / 게임!",
+          "syllables": [
+            "g",
+            "a",
+            "me"
+          ],
+          "imgQuery": "kids+playing+game",
+          "sentences": [
+            "Let's play a game!",
+            "I win the game!"
+          ]
+        },
+        {
+          "id": 146,
+          "word": "time",
+          "emoji": "⏰",
+          "hint": "ti+me / 시간!",
+          "syllables": [
+            "t",
+            "i",
+            "me"
+          ],
+          "imgQuery": "clock+time",
+          "sentences": [
+            "What time is it?",
+            "Time to play!"
+          ]
+        },
+        {
+          "id": 147,
+          "word": "bike",
+          "emoji": "🚲",
+          "hint": "bi+ke / 자전거!",
+          "syllables": [
+            "b",
+            "i",
+            "ke"
+          ],
+          "imgQuery": "kids+bike+ride",
+          "sentences": [
+            "Ride my bike!",
+            "I love my bike."
+          ]
+        },
+        {
+          "id": 148,
+          "word": "kite",
+          "emoji": "🪁",
+          "hint": "ki+te / 연!",
+          "syllables": [
+            "k",
+            "i",
+            "te"
+          ],
+          "imgQuery": "colorful+kite+sky",
+          "sentences": [
+            "Fly the kite!",
+            "A kite in the sky."
+          ]
+        },
+        {
+          "id": 149,
+          "word": "like",
+          "emoji": "❤️",
+          "hint": "li+ke / 좋아요!",
+          "syllables": [
+            "l",
+            "i",
+            "ke"
+          ],
+          "imgQuery": "like+heart+love",
+          "sentences": [
+            "I like you!",
+            "Do you like it?"
+          ]
+        },
+        {
+          "id": 150,
+          "word": "pine",
+          "emoji": "🌲",
+          "hint": "pi+ne / 소나무!",
+          "syllables": [
+            "p",
+            "i",
+            "ne"
+          ],
+          "imgQuery": "pine+tree",
+          "sentences": [
+            "A tall pine tree.",
+            "I see the pine!"
+          ]
+        },
+        {
+          "id": 151,
+          "word": "home",
+          "emoji": "🏠",
+          "hint": "ho+me / 집!",
+          "syllables": [
+            "h",
+            "o",
+            "me"
+          ],
+          "imgQuery": "cozy+home+house",
+          "sentences": [
+            "Home sweet home!",
+            "I go home."
+          ]
+        },
+        {
+          "id": 152,
+          "word": "bone",
+          "emoji": "🦴",
+          "hint": "bo+ne / 뼈!",
+          "syllables": [
+            "b",
+            "o",
+            "ne"
+          ],
+          "imgQuery": "dog+bone",
+          "sentences": [
+            "Dog loves bone!",
+            "A big bone!"
+          ]
+        },
+        {
+          "id": 153,
+          "word": "nose",
+          "emoji": "👃",
+          "hint": "no+se / 코!",
+          "syllables": [
+            "n",
+            "o",
+            "se"
+          ],
+          "imgQuery": "nose+face",
+          "sentences": [
+            "Touch your nose.",
+            "My nose is cold."
+          ]
+        },
+        {
+          "id": 154,
+          "word": "rose",
+          "emoji": "🌹",
+          "hint": "ro+se / 장미!",
+          "syllables": [
+            "r",
+            "o",
+            "se"
+          ],
+          "imgQuery": "red+rose+flower",
+          "sentences": [
+            "A pretty rose!",
+            "Red rose for you."
+          ]
+        },
+        {
+          "id": 155,
+          "word": "cute",
+          "emoji": "🥰",
+          "hint": "cu+te / 귀여워!",
+          "syllables": [
+            "c",
+            "u",
+            "te"
+          ],
+          "imgQuery": "cute+baby+adorable",
+          "sentences": [
+            "So cute!",
+            "What a cute face!"
+          ]
+        },
+        {
+          "id": 156,
+          "word": "tune",
+          "emoji": "🎵",
+          "hint": "tu+ne / 노래!",
+          "syllables": [
+            "t",
+            "u",
+            "ne"
+          ],
+          "imgQuery": "musical+notes",
+          "sentences": [
+            "Sing a tune!",
+            "A happy tune."
+          ]
+        },
+        {
+          "id": 157,
+          "word": "cube",
+          "emoji": "🟦",
+          "hint": "cu+be / 큐브!",
+          "syllables": [
+            "c",
+            "u",
+            "be"
+          ],
+          "imgQuery": "cube+block",
+          "sentences": [
+            "A blue cube!",
+            "Stack the cubes."
+          ]
+        },
+        {
+          "id": 158,
+          "word": "mule",
+          "emoji": "🐴",
+          "hint": "mu+le / 노새!",
+          "syllables": [
+            "m",
+            "u",
+            "le"
+          ],
+          "imgQuery": "mule+donkey",
+          "sentences": [
+            "A stubborn mule.",
+            "The mule kicks!"
+          ]
+        },
+        {
+          "id": 159,
+          "word": "vine",
+          "emoji": "🌿",
+          "hint": "vi+ne / 덩굴!",
+          "syllables": [
+            "v",
+            "i",
+            "ne"
+          ],
+          "imgQuery": "vine+plant+green",
+          "sentences": [
+            "Climb the vine!",
+            "A long vine."
+          ]
+        },
+        {
+          "id": 160,
+          "word": "wave",
+          "emoji": "🌊",
+          "hint": "wa+ve / 파도!",
+          "syllables": [
+            "w",
+            "a",
+            "ve"
+          ],
+          "imgQuery": "ocean+wave+beach",
+          "sentences": [
+            "Ride the wave!",
+            "Big wave!"
+          ]
+        }
+      ]
+    }
+  ]
+}

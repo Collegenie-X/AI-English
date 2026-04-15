@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>초등 150패턴 마스터 테스트 | 한글↔영어 인터랙티브</title>
+  <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --radius: 16px;
+      --shadow: 0 4px 18px rgba(0,0,0,0.10);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --transition: 0.25s ease;
+      --main-grad: linear-gradient(135deg, #11998e, #38ef7d);
+      --bg-grad: linear-gradient(160deg, #e6fffa 0%, #e8f5e9 50%, #f1f8e9 100%);
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: var(--bg-grad);
+      min-height: 100vh;
+      padding: 16px;
+      padding-bottom: 120px;
+    }
+
+    /* ====== HEADER ====== */
+    .header {
+      text-align: center;
+      padding: 28px 20px 24px;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      font-size: 2.2em;
+      color: #2c3e50;
+      letter-spacing: -0.5px;
+      background: var(--main-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p { color: #7f8c8d; font-size: 1em; margin-top: 6px; }
+    .header-meta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .meta-badge {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.82em;
+      font-weight: 700;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .meta-badge.blue { background: #e3f2fd; color: #1565c0; }
+    .meta-badge.purple { background: #f3e5f5; color: #6a1b9a; }
+
+    /* ====== PROGRESS BAR ====== */
+    .progress-wrap {
+      margin-top: 14px;
+      background: #ecf0f1;
+      border-radius: 10px;
+      height: 10px;
+      overflow: hidden;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #11998e, #38ef7d);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+    #progressText { margin-top: 6px; font-size: 0.88em; color: #95a5a6; }
+
+    /* ====== SETTINGS PANEL ====== */
+    .settings-panel {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .settings-header {
+      padding: 15px 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--main-grad);
+      color: white;
+      user-select: none;
+      transition: opacity var(--transition);
+    }
+    .settings-header:hover { opacity: 0.92; }
+    .settings-header-title { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1em; }
+    .settings-body {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+    }
+    .setting-item label {
+      display: block;
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .setting-item select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 0.88em;
+      background: #fafafa;
+      cursor: pointer;
+      transition: border-color var(--transition);
+    }
+    .setting-item select:focus { outline: none; border-color: #11998e; }
+    .slider-row { display: flex; align-items: center; gap: 10px; }
+    .slider-val {
+      min-width: 40px;
+      text-align: right;
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #11998e;
+    }
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: #e0e0e0;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #11998e;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(17, 153, 142, 0.4);
+    }
+
+    /* ====== GLOBAL CONTROLS ====== */
+    .global-controls {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+    .ctrl-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .ctrl-label { font-size: 0.88em; font-weight: 700; color: #555; }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.92em;
+      font-weight: 700;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-green  { background: #4CAF50; color: white; }
+    .btn-orange { background: #FF9800; color: white; }
+    .btn-red    { background: #ef5350; color: white; }
+    .btn-teal   { background: #11998e; color: white; }
+    .btn-sm { padding: 7px 14px; font-size: 0.83em; }
+
+    .separator { width: 1px; height: 32px; background: #e0e0e0; }
+
+    /* ====== PART FILTER ====== */
+    .filter-bar {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 12px 22px;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-label { font-size: 0.88em; font-weight: 700; color: #555; }
+    .filter-btn {
+      padding: 8px 16px;
+      border: 2px solid #e0e0e0;
+      background: white;
+      color: #555;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85em;
+      font-weight: 700;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover { border-color: #11998e; color: #11998e; }
+    .filter-btn.active {
+      background: #11998e;
+      color: white;
+      border-color: #11998e;
+    }
+
+    /* ====== QUIZ CONTROLS ====== */
+    .quiz-bar {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 12px 22px;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .quiz-label { font-size: 0.88em; font-weight: 700; color: #555; }
+    .quiz-btn {
+      padding: 8px 16px;
+      border: 2px solid #e0e0e0;
+      background: white;
+      color: #555;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85em;
+      font-weight: 700;
+      transition: all var(--transition);
+    }
+    .quiz-btn:hover { border-color: #FF9800; color: #FF9800; }
+    .quiz-btn.active {
+      background: #FF9800;
+      color: white;
+      border-color: #FF9800;
+    }
+
+    /* ====== QUIZ SCORE BAR ====== */
+    .quiz-score-bar {
+      display: none;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 14px 22px;
+      margin-bottom: 14px;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .quiz-score-bar.visible { display: flex; }
+    .quiz-score-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95em;
+      font-weight: 700;
+    }
+    .quiz-score-item .score-num {
+      font-size: 1.3em;
+      min-width: 32px;
+      text-align: center;
+    }
+    .score-correct { color: #4CAF50; }
+    .score-wrong { color: #EF5350; }
+    .score-remaining { color: #78909C; }
+
+    /* ====== SEARCH ====== */
+    .search-box {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 14px 22px;
+      margin-bottom: 14px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1em;
+      transition: border-color var(--transition);
+    }
+    .search-input:focus { outline: none; border-color: #11998e; }
+
+    /* ====== SECTION HEADERS ====== */
+    .category-section {
+      background: white;
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .category-header {
+      padding: 16px 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: opacity var(--transition);
+      background: white;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .category-header:hover { opacity: 0.93; }
+    .cat-title-group { display: flex; align-items: center; gap: 14px; }
+    .cat-emoji { font-size: 2em; }
+    .cat-name { font-size: 1.1em; font-weight: 800; color: #2c3e50; }
+    .cat-count {
+      background: #f0f2f5;
+      color: #555;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 700;
+    }
+    .chevron { color: #2c3e50; font-size: 1.1em; transition: transform 0.3s; }
+    .category-section.open .chevron { transform: rotate(180deg); }
+
+    .category-body {
+      display: none;
+      padding: 18px;
+      background: #f8fafc;
+    }
+    .category-section.open .category-body { display: block; }
+
+    .cat-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+
+    /* ====== SENTENCE CARDS GRID ====== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .sentence-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      border-left: 5px solid #ccc;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    @keyframes pulseGlow {
+      0%   { box-shadow: 0 0 0 0 rgba(17, 153, 142, 0.45); }
+      60%  { box-shadow: 0 0 0 10px rgba(17, 153, 142, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(17, 153, 142, 0); }
+    }
+    .sentence-card.playing {
+      transform: scale(1.015);
+      outline: 2px solid #11998e;
+      animation: pulseGlow 1.4s infinite;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .card-num {
+      background: #f0f2f5;
+      color: #888;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.75em;
+      font-weight: 800;
+    }
+    .card-play-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: #11998e;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .card-play-btn:hover { transform: scale(1.12); }
+
+    .card-english {
+      font-size: 1.35em;
+      font-weight: 800;
+      color: #2c3e50;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .card-english.quiz-hidden {
+      filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      transition: filter 0.3s;
+    }
+    .card-english.quiz-hidden:hover { filter: blur(5px); }
+    .card-english.quiz-revealed { filter: none !important; }
+
+    .card-korean {
+      font-size: 1em;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .card-korean.quiz-hidden {
+      filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      transition: filter 0.3s;
+    }
+    .card-korean.quiz-hidden:hover { filter: blur(5px); }
+    .card-korean.quiz-revealed { filter: none !important; }
+
+    .card-hint {
+      display: inline-block;
+      background: #FFF3E0;
+      color: #E65100;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-qa {
+      border-top: 1px solid #f0f0f0;
+      padding-top: 10px;
+    }
+
+    .quiz-check-buttons {
+      display: none;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .quiz-active .quiz-check-buttons { display: flex; }
+
+    .btn-correct {
+      padding: 6px 14px;
+      background: #E8F5E9;
+      color: #2E7D32;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-correct:hover { transform: scale(1.08); background: #C8E6C9; }
+
+    .btn-wrong {
+      padding: 6px 14px;
+      background: #FFEBEE;
+      color: #C62828;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-wrong:hover { transform: scale(1.08); background: #EF9A9A; }
+
+    .quiz-result-icon {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 1.6em;
+      z-index: 2;
+    }
+    .quiz-active .quiz-result-icon { display: block; }
+
+    .sentence-card.quiz-correct { border-left-color: #4CAF50 !important; background: #F1F8E9; }
+    .sentence-card.quiz-wrong { border-left-color: #EF5350 !important; background: #FFEBEE; }
+
+    /* ====== FLOATING MINI PLAYER ====== */
+    /* ====== FLOATING MINI PLAYER ====== */
+    #miniPlayer {
+      position: fixed; bottom: 20px; right: 20px;
+      border-radius: 16px; padding: 13px 16px 11px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      display: none; z-index: 999;
+      min-width: 230px; max-width: 300px;
+      border: 2.5px solid #0d9488; border-left-width: 6px;
+      background: #fff;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+    #miniPlayer.visible { display: block; }
+    #miniPlayer.state-playing {
+      border-color: #0d9488; background: #fff;
+      box-shadow: 0 8px 32px rgba(13,148,136,0.18);
+    }
+    #miniPlayer.state-paused {
+      border-color: #FFA726; border-style: dashed;
+      border-left-style: solid; background: #FFF8E1;
+      box-shadow: 0 8px 32px rgba(255,167,38,0.22);
+    }
+    .mini-status-row { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+    .mini-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 2px 9px; border-radius: 20px;
+      font-size: 0.76em; font-weight: 800; letter-spacing: 0.4px;
+      transition: background 0.25s, color 0.25s;
+    }
+    #miniPlayer.state-playing .mini-badge { background: #CCFBF1; color: #0f766e; }
+    #miniPlayer.state-paused  .mini-badge { background: #FFF3E0; color: #E65100; }
+    .mini-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+    @keyframes pulse-dot2 {
+      0%,100% { opacity:1; transform:scale(1.1); }
+      50%      { opacity:0.3; transform:scale(0.6); }
+    }
+    #miniPlayer.state-playing .mini-dot { background: #0d9488; animation: pulse-dot2 1s ease-in-out infinite; }
+    #miniPlayer.state-paused  .mini-dot { background: #FFA726; animation: none; }
+    .mini-text {
+      font-size: 1em; font-weight: 700; color: #2c3e50;
+      line-height: 1.4; min-height: 1.4em; transition: color 0.2s;
+    }
+    #miniPlayer.state-paused .mini-text { color: #999; }
+    .mini-hint { font-size: 0.70em; color: #ccc; margin-top: 4px; text-align: right; }
+    .mini-controls { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6em; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .global-controls { flex-direction: column; align-items: flex-start; }
+      .settings-body { grid-template-columns: 1fr; }
+      #miniPlayer { min-width: 200px; }
+    }
+
+    .hidden { display: none !important; }
+
+    /* Twemoji size fix */
+    img.emoji {
+      width: 1.2em !important;
+      height: 1.2em !important;
+      vertical-align: -0.15em;
+      margin: 0 1px;
+    }
+    .cat-emoji img.emoji {
+      width: 1.6em !important;
+      height: 1.6em !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<div class="header">
+  <h1>🎯 초등 150패턴 마스터 테스트</h1>
+  <p>한글 ↔ 영어 인터랙티브 학습 | Interactive Korean ↔ English</p>
+  <div class="header-meta">
+    <span class="meta-badge">📚 120개 문제 × Part 1~4</span>
+    <span class="meta-badge blue">🎯 한글→영어 / 영어→한글 / 청크 채우기 / 대화 완성</span>
+    <span class="meta-badge purple">🔊 Web Speech API</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="globalProgressBar"></div>
+  </div>
+  <div id="progressText">0 / 120 문제</div>
+</div>
+
+<!-- ====== SETTINGS PANEL ====== -->
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header" onclick="toggleSettings()">
+    <div class="settings-header-title">⚙️ 음성 설정 (Voice Settings)</div>
+    <span id="settingsChevron">▼</span>
+  </div>
+  <div class="settings-body" id="settingsBody">
+    <div class="setting-item">
+      <label>🎤 목소리 선택</label>
+      <select id="voiceSelect"><option>음성 로딩 중…</option></select>
+    </div>
+    <div class="setting-item">
+      <label>🐢 읽기 속도 (Rate)</label>
+      <div class="slider-row">
+        <input type="range" id="rateSlider" min="0.3" max="2.0" step="0.05" value="0.85">
+        <span class="slider-val" id="rateVal">0.85×</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>🎵 음높이 (Pitch)</label>
+      <div class="slider-row">
+        <input type="range" id="pitchSlider" min="0.5" max="2.0" step="0.05" value="1.2">
+        <span class="slider-val" id="pitchVal">1.20</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>🔊 볼륨 (Volume)</label>
+      <div class="slider-row">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1.0">
+        <span class="slider-val" id="volumeVal">100%</span>
+      </div>
+    </div>
+    <div class="setting-item">
+      <label>⏱ 문장 간 간격 (Interval)</label>
+      <div class="slider-row">
+        <input type="range" id="intervalSlider" min="0" max="10000" step="200" value="400">
+        <span class="slider-val" id="intervalVal">0.4초</span>
+      </div>
+    </div>
+    <div class="setting-item" style="align-self: flex-end;">
+      <label>&nbsp;</label>
+      <button class="btn btn-teal" onclick="testVoice()">🎧 테스트 듣기</button>
+    </div>
+    <!-- 대화 상대 목소리 구분선 -->
+    <div style="grid-column:1/-1; border-top:1px dashed #99f6e4; margin:4px 0; padding-top:10px;">
+      <span style="font-size:0.8rem; font-weight:700; color:#0d9488;">💬 대화 상대 (Partner) 목소리</span>
+    </div>
+    <div class="setting-item">
+      <label>🗣 상대방 목소리</label>
+      <select id="voiceSelect2"><option>음성 로딩 중…</option></select>
+    </div>
+    <div class="setting-item">
+      <label>🐇 상대방 속도</label>
+      <div class="slider-row">
+        <input type="range" id="rateSlider2" min="0.3" max="2.0" step="0.05" value="1.0">
+        <span class="slider-val" id="rateVal2">1.00×</span>
+      </div>
+    </div>
+    <div class="setting-item" style="align-self: flex-end;">
+      <label>&nbsp;</label>
+      <button class="btn btn-teal" onclick="testPartnerVoice()">🎧 상대방 테스트</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== GLOBAL CONTROLS ====== -->
+<div class="global-controls">
+  <div class="ctrl-group">
+    <button class="btn btn-green" id="btnPlayAll" onclick="playAll()">▶ 전체 듣기</button>
+    <button class="btn btn-orange" id="btnPause" onclick="togglePause()" disabled>⏸ 일시정지</button>
+    <button class="btn btn-red" id="btnStop" onclick="stopAll()" disabled>⏹ 정지</button>
+  </div>
+  <div class="separator"></div>
+  <div class="ctrl-group" style="align-items:center; gap:8px; flex-wrap:wrap;">
+    <span style="font-size:0.82rem; font-weight:600; color:#555; white-space:nowrap;">⏱ 문장 간격</span>
+    <input type="range" id="intervalSliderGlobal" min="0" max="10000" step="200" value="400"
+      style="width:180px; accent-color:#0d9488; cursor:pointer;">
+    <span id="intervalValGlobal" style="font-size:0.88rem; font-weight:700; color:#0d9488; min-width:40px; text-align:right;">0.4초</span>
+  </div>
+  <div class="separator"></div>
+  <div class="ctrl-group">
+    <button class="btn btn-teal btn-sm" onclick="openAllSections()">📂 모두 열기</button>
+    <button class="btn btn-teal btn-sm" onclick="closeAllSections()">📁 모두 닫기</button>
+  </div>
+</div>
+
+<!-- ====== PART FILTER ====== -->
+<div class="filter-bar">
+  <span class="filter-label">📋 파트 필터:</span>
+  <button class="filter-btn active" data-part="0" onclick="filterByPart(0)">전체</button>
+  <button class="filter-btn" data-part="1" onclick="filterByPart(1)">Part 1: 한글→영어</button>
+  <button class="filter-btn" data-part="2" onclick="filterByPart(2)">Part 2: 영어→한글</button>
+  <button class="filter-btn" data-part="3" onclick="filterByPart(3)">Part 3: 청크 채우기</button>
+  <button class="filter-btn" data-part="4" onclick="filterByPart(4)">Part 4: 대화 완성</button>
+</div>
+
+<!-- ====== QUIZ CONTROLS ====== -->
+<div class="quiz-bar">
+  <span class="quiz-label">🎯 퀴즈 모드:</span>
+  <button class="quiz-btn active" data-quiz="none" onclick="setQuizMode('none')">전체보기</button>
+  <button class="quiz-btn" data-quiz="ko-en" onclick="setQuizMode('ko-en')">한글→영어</button>
+  <button class="quiz-btn" data-quiz="en-ko" onclick="setQuizMode('en-ko')">영어→한글</button>
+</div>
+
+<!-- ====== QUIZ SCORE BAR ====== -->
+<div class="quiz-score-bar" id="quizScoreBar">
+  <div class="quiz-score-item score-correct">
+    <span>✅ 정답:</span>
+    <span class="score-num" id="scoreCorrect">0</span>
+  </div>
+  <div class="quiz-score-item score-wrong">
+    <span>❌ 오답:</span>
+    <span class="score-num" id="scoreWrong">0</span>
+  </div>
+  <div class="quiz-score-item score-remaining">
+    <span>📝 남은 문제:</span>
+    <span class="score-num" id="scoreRemaining">0</span>
+  </div>
+</div>
+
+<!-- ====== SEARCH ====== -->
+<div class="search-box">
+  <input type="text" class="search-input" id="searchInput" placeholder="문제 검색... (한글 또는 영어)">
+</div>
+
+<!-- ====== CATEGORIES & CARDS ====== -->
+<div id="categoriesContainer"></div>
+
+<!-- ====== MINI PLAYER ====== -->
+<div id="miniPlayer" class="state-playing">
+  <div class="mini-status-row">
+    <span class="mini-badge">
+      <span class="mini-dot"></span>
+      <span id="miniStateLabel">재생 중</span>
+    </span>
+  </div>
+  <div class="mini-text" id="miniPlayerText">—</div>
+  <div class="mini-hint">Space = 일시정지 / 재개</div>
+  <div class="mini-controls">
+    <button class="btn btn-orange btn-sm" id="miniPauseBtn" onclick="togglePause()">⏸</button>
+    <button class="btn btn-red btn-sm" onclick="stopAll()">⏹</button>
+  </div>
+</div>
+
+<script>
+// ====== DATA ======
+const QUESTIONS = [
+  // Part 1: 한글 → 영어 (50문제)
+  {no:"001",part:1,cat:"인사와 소개",q:"안녕! 어떻게 지내?",ht:"🟢",hint:"H_ t_ _ _ _! H_ _'s it g_ _ _ _?",en:"Hi there! How's it going?",ko:"안녕! 어떻게 지내?"},
+  {no:"002",part:1,cat:"인사와 소개",q:"야! 뭐해?",ht:"🟡",hint:"(3단어)",en:"Hey! What's up?",ko:"야! 뭐해?"},
+  {no:"003",part:1,cat:"인사와 소개",q:"다시 보니 좋다!",ht:"🟢",hint:"G_ _ _ to s_ _ you!",en:"Good to see you!",ko:"다시 보니 좋다!"},
+  {no:"004",part:1,cat:"인사와 소개",q:"오랜만이야!",ht:"🟡",hint:"(4단어)",en:"Long time no see!",ko:"오랜만이야!"},
+  {no:"005",part:1,cat:"인사와 소개",q:"어떻게 지내?",ht:"🟢",hint:"H_ _'s it g_ _ _ _?",en:"How's it going?",ko:"어떻게 지내?"},
+  {no:"006",part:1,cat:"인사와 소개",q:"학교에서 하루 어땠어?",ht:"🟡",hint:"(6단어)",en:"How was your day at school?",ko:"학교에서 하루 어땠어?"},
+  {no:"007",part:1,cat:"인사와 소개",q:"내일 학교에서 보자!",ht:"🟢",hint:"S_ _ you t_ _ _ _ _ _ _ at s_ _ _ _ _!",en:"See you tomorrow at school!",ko:"내일 학교에서 보자!"},
+  {no:"008",part:1,cat:"인사와 소개",q:"조심해서 가!",ht:"🟡",hint:"(2단어)",en:"Take care!",ko:"조심해서 가!"},
+  {no:"009",part:1,cat:"인사와 소개",q:"나는 서울, 한국에서 왔어.",ht:"🟢",hint:"I'm f_ _ _ Seoul, K_ _ _ _.",en:"I'm from Seoul, Korea.",ko:"나는 서울, 한국에서 왔어."},
+  {no:"010",part:1,cat:"인사와 소개",q:"나는 5학년이야.",ht:"🟡",hint:"(5단어)",en:"I'm in the 5th grade.",ko:"나는 5학년이야."},
+  {no:"011",part:1,cat:"감정과 상태",q:"나는 시험에 통과해서 너무 행복해!",ht:"🟢",hint:"I'm so h_ _ _ _ that I passed!",en:"I'm so happy that I passed!",ko:"나는 시험에 통과해서 너무 행복해!"},
+  {no:"012",part:1,cat:"감정과 상태",q:"여행이 너무 기대돼!",ht:"🟡",hint:"(4단어 이상)",en:"I'm so excited about the trip!",ko:"여행이 너무 기대돼!"},
+  {no:"013",part:1,cat:"감정과 상태",q:"나 정말 긴장돼.",ht:"🟢",hint:"I'm r_ _ _ _ _ n_ _ _ _ _ _.",en:"I'm really nervous.",ko:"나 정말 긴장돼."},
+  {no:"014",part:1,cat:"감정과 상태",q:"그게 오늘 완전 기분 좋게 해줬어!",ht:"🟡",hint:"(4단어)",en:"That really made my day!",ko:"그게 오늘 완전 기분 좋게 해줬어!"},
+  {no:"015",part:1,cat:"감정과 상태",q:"오늘 기분이 정말 좋아!",ht:"🟢",hint:"I'm in a r_ _ _ _ _ good m_ _ _ today!",en:"I'm in a really good mood today!",ko:"오늘 기분이 정말 좋아!"},
+  {no:"016",part:1,cat:"감정과 상태",q:"나 좀 몸이 안 좋아.",ht:"🟡",hint:"(5단어 이상)",en:"I'm feeling a bit under the weather.",ko:"나 좀 몸이 안 좋아."},
+  {no:"017",part:1,cat:"일상 루틴",q:"나는 매일 아침 7시에 일어나.",ht:"🟢",hint:"I w_ _ _ up at 7 every morning.",en:"I wake up at 7 every morning.",ko:"나는 매일 아침 7시에 일어나."},
+  {no:"018",part:1,cat:"일상 루틴",q:"나는 항상 학교 가기 전에 아침을 먹어.",ht:"🟡",hint:"(6단어 이상)",en:"I always have breakfast before school.",ko:"나는 항상 학교 가기 전에 아침을 먹어."},
+  {no:"019",part:1,cat:"일상 루틴",q:"나는 방과 후에 두 시간 공부해.",ht:"🟢",hint:"I s_ _ _ _ for two hours after school.",en:"I study for two hours after school.",ko:"나는 방과 후에 두 시간 공부해."},
+  {no:"020",part:1,cat:"일상 루틴",q:"나는 9시 30분에 자.",ht:"🟡",hint:"(5단어)",en:"I go to bed at 9:30.",ko:"나는 9시 30분에 자."},
+  {no:"021",part:1,cat:"학교생활",q:"지우개 빌릴 수 있어?",ht:"🟢",hint:"C_ _ I b_ _ _ _ _ your eraser?",en:"Can I borrow your eraser?",ko:"지우개 빌릴 수 있어?"},
+  {no:"022",part:1,cat:"학교생활",q:"이 문제 이해가 안 돼.",ht:"🟡",hint:"(4단어)",en:"I don't understand this problem.",ko:"이 문제 이해가 안 돼."},
+  {no:"023",part:1,cat:"학교생활",q:"시험이 정말 어려웠어.",ht:"🟢",hint:"The t_ _ _ was r_ _ _ _ _ tough.",en:"The test was really tough.",ko:"시험이 정말 어려웠어."},
+  {no:"024",part:1,cat:"학교생활",q:"숙제하는 거 깜빡했어!",ht:"🟡",hint:"(5단어)",en:"I forgot to do my homework!",ko:"숙제하는 거 깜빡했어!"},
+  {no:"025",part:1,cat:"학교생활",q:"같이 이거 해 보자.",ht:"🟢",hint:"L_ _'s w_ _ _ on this t_ _ _ _ _ _ _.",en:"Let's work on this together.",ko:"같이 이거 해 보자."},
+  {no:"026",part:1,cat:"취미와 친구",q:"재미로 뭐 해?",ht:"🟡",hint:"(4단어)",en:"What do you do for fun?",ko:"재미로 뭐 해?"},
+  {no:"027",part:1,cat:"취미와 친구",q:"나는 학교 축구팀에 있어.",ht:"🟢",hint:"I'm on the school s_ _ _ _ _ team.",en:"I'm on the school soccer team.",ko:"나는 학교 축구팀에 있어."},
+  {no:"028",part:1,cat:"취미와 친구",q:"이번 주말에 놀래?",ht:"🟡",hint:"(4단어 이상)",en:"Want to hang out this weekend?",ko:"이번 주말에 놀래?"},
+  {no:"029",part:1,cat:"취미와 친구",q:"그거 정말 재미있었어!",ht:"🟢",hint:"That was s_ m_ _ _ fun!",en:"That was so much fun!",ko:"그거 정말 재미있었어!"},
+  {no:"030",part:1,cat:"취미와 친구",q:"너는 내 가장 친한 친구야!",ht:"🟡",hint:"(4단어)",en:"You're my best friend!",ko:"너는 내 가장 친한 친구야!"},
+  {no:"031",part:1,cat:"자기소개",q:"내가 가장 좋아하는 과목은 과학이야.",ht:"🟢",hint:"My favorite s_ _ _ _ _ _ is s_ _ _ _ _ _.",en:"My favorite subject is science.",ko:"내가 가장 좋아하는 과목은 과학이야."},
+  {no:"032",part:1,cat:"자기소개",q:"나는 맥스라는 개가 있어.",ht:"🟡",hint:"(5단어)",en:"I have a dog named Max.",ko:"나는 맥스라는 개가 있어."},
+  {no:"033",part:1,cat:"자기소개",q:"나는 K팝에 빠져 있어.",ht:"🟢",hint:"I'm r_ _ _ _ _ into K-pop.",en:"I'm really into K-pop.",ko:"나는 K팝에 빠져 있어."},
+  {no:"034",part:1,cat:"자기소개",q:"나는 그림 잘 그려.",ht:"🟡",hint:"(4단어)",en:"I'm good at drawing.",ko:"나는 그림 잘 그려."},
+  {no:"035",part:1,cat:"자기소개",q:"내 꿈은 의사가 되는 거야.",ht:"🟢",hint:"My d_ _ _ _ is to be a d_ _ _ _ _.",en:"My dream is to be a doctor.",ko:"내 꿈은 의사가 되는 거야."},
+  {no:"036",part:1,cat:"자기소개",q:"나는 남동생이 둘 있어.",ht:"🟡",hint:"(3단어)",en:"I have two brothers.",ko:"나는 남동생이 둘 있어."},
+  {no:"037",part:1,cat:"자기소개",q:"이야기 나눠서 좋았어!",ht:"🟢",hint:"N_ _ _ talking to you!",en:"Nice talking to you!",ko:"이야기 나눠서 좋았어!"},
+  {no:"038",part:1,cat:"여행 표현",q:"버스 정류장이 어디예요?",ht:"🟡",hint:"(5단어)",en:"Where is the bus stop?",ko:"버스 정류장이 어디예요?"},
+  {no:"039",part:1,cat:"여행 표현",q:"입장료가 얼마예요?",ht:"🟢",hint:"How m_ _ _ is the a_ _ _ _ _ _ _ _ fee?",en:"How much is the admission fee?",ko:"입장료가 얼마예요?"},
+  {no:"040",part:1,cat:"여행 표현",q:"이것은 얼마예요?",ht:"🟡",hint:"(4단어)",en:"How much is this?",ko:"이것은 얼마예요?"},
+  {no:"041",part:1,cat:"여행 표현",q:"메뉴판 좀 볼 수 있어요?",ht:"🟢",hint:"Can I s_ _ the m_ _ _?",en:"Can I see the menu?",ko:"메뉴판 좀 볼 수 있어요?"},
+  {no:"042",part:1,cat:"여행 표현",q:"이거 추천해 주세요.",ht:"🟡",hint:"(5단어)",en:"Can you recommend this?",ko:"이거 추천해 주세요."},
+  {no:"043",part:1,cat:"여행 표현",q:"계산서 주세요.",ht:"🟢",hint:"Can I have the c_ _ _ _?",en:"Can I have the check?",ko:"계산서 주세요."},
+  {no:"044",part:1,cat:"여행 표현",q:"사진 찍어 주실 수 있어요?",ht:"🟡",hint:"(7단어)",en:"Can you take a picture of us?",ko:"사진 찍어 주실 수 있어요?"},
+  {no:"045",part:1,cat:"여행 표현",q:"이것들을 구경해도 돼요?",ht:"🟢",hint:"Can I l_ _ _ around?",en:"Can I look around?",ko:"이것들을 구경해도 돼요?"},
+  {no:"046",part:1,cat:"질문과 대답",q:"왜 그렇게 생각해?",ht:"🟡",hint:"(4단어)",en:"Why do you think so?",ko:"왜 그렇게 생각해?"},
+  {no:"047",part:1,cat:"질문과 대답",q:"무슨 말인지 설명해 줄 수 있어?",ht:"🟢",hint:"Can you e_ _ _ _ _ _ that?",en:"Can you explain that?",ko:"무슨 말인지 설명해 줄 수 있어?"},
+  {no:"048",part:1,cat:"질문과 대답",q:"다시 한번 말해 줄 수 있어?",ht:"🟡",hint:"(6단어)",en:"Can you say that again?",ko:"다시 한번 말해 줄 수 있어?"},
+  {no:"049",part:1,cat:"질문과 대답",q:"영어로 뭐라고 해?",ht:"🟢",hint:"How do you say that in E_ _ _ _ _ _?",en:"How do you say that in English?",ko:"영어로 뭐라고 해?"},
+  {no:"050",part:1,cat:"질문과 대답",q:"이걸 어떻게 발음해?",ht:"🟡",hint:"(4단어)",en:"How do you pronounce this?",ko:"이걸 어떻게 발음해?"},
+
+  // Part 2: 영어 → 한글 (20문제)
+  {no:"051",part:2,cat:"인사와 일상",q:"What's new with you?",ht:"🟢",hint:"너에게 무슨 _ _ 이 있어?",en:"What's new with you?",ko:"너에게 무슨 새로운 일 있어?"},
+  {no:"052",part:2,cat:"인사와 일상",q:"I practice piano every day.",ht:"🟡",hint:"(매일 연습)",en:"I practice piano every day.",ko:"나는 매일 피아노를 연습해."},
+  {no:"053",part:2,cat:"인사와 일상",q:"Nice talking to you!",ht:"🟢",hint:"이야기 나눠서 _ _ _ 어!",en:"Nice talking to you!",ko:"이야기 나눠서 좋았어!"},
+  {no:"054",part:2,cat:"인사와 일상",q:"I'm on the school soccer team.",ht:"🟡",hint:"(학교 팀 소속)",en:"I'm on the school soccer team.",ko:"나는 학교 축구팀에 있어."},
+  {no:"055",part:2,cat:"인사와 일상",q:"That really made my day!",ht:"🟢",hint:"그게 정말 오늘 _ _ _ _ 해줬어!",en:"That really made my day!",ko:"그게 오늘 완전 기분 좋게 해줬어!"},
+  {no:"056",part:2,cat:"인사와 일상",q:"I'm really nervous.",ht:"🟡",hint:"(긴장된 감정)",en:"I'm really nervous.",ko:"나 정말 긴장돼."},
+  {no:"057",part:2,cat:"인사와 일상",q:"Want to hang out this weekend?",ht:"🟢",hint:"이번 _ _ 에 _ 래?",en:"Want to hang out this weekend?",ko:"이번 주말에 놀래?"},
+  {no:"058",part:2,cat:"인사와 일상",q:"I forgot to do my homework!",ht:"🟡",hint:"(숙제 깜빡)",en:"I forgot to do my homework!",ko:"숙제하는 거 깜빡했어!"},
+  {no:"059",part:2,cat:"인사와 일상",q:"Let's work on this together.",ht:"🟢",hint:"같이 _ _ 해 보자.",en:"Let's work on this together.",ko:"같이 이거 해 보자."},
+  {no:"060",part:2,cat:"인사와 일상",q:"The test was really tough.",ht:"🟡",hint:"(시험 어려움)",en:"The test was really tough.",ko:"시험이 정말 어려웠어."},
+  {no:"061",part:2,cat:"여행과 쇼핑",q:"How much is this?",ht:"🟢",hint:"이것은 _ _ 예요?",en:"How much is this?",ko:"이것은 얼마예요?"},
+  {no:"062",part:2,cat:"여행과 쇼핑",q:"Can I look around?",ht:"🟡",hint:"(구경 허가)",en:"Can I look around?",ko:"이것들을 구경해도 돼요?"},
+  {no:"063",part:2,cat:"여행과 쇼핑",q:"Can I see the menu?",ht:"🟢",hint:"_ _ 판 좀 볼 수 있어요?",en:"Can I see the menu?",ko:"메뉴판 좀 볼 수 있어요?"},
+  {no:"064",part:2,cat:"여행과 쇼핑",q:"Can you take a picture of us?",ht:"🟡",hint:"(사진 부탁)",en:"Can you take a picture of us?",ko:"사진 찍어 주실 수 있어요?"},
+  {no:"065",part:2,cat:"여행과 쇼핑",q:"Can I have the check?",ht:"🟢",hint:"_ _ 서 주세요.",en:"Can I have the check?",ko:"계산서 주세요."},
+  {no:"066",part:2,cat:"여행과 쇼핑",q:"Where is the bus stop?",ht:"🟡",hint:"(버스 정류장 위치)",en:"Where is the bus stop?",ko:"버스 정류장이 어디예요?"},
+  {no:"067",part:2,cat:"여행과 쇼핑",q:"I'm good at drawing.",ht:"🟢",hint:"나는 그림을 _ _ 그려.",en:"I'm good at drawing.",ko:"나는 그림 잘 그려."},
+  {no:"068",part:2,cat:"여행과 쇼핑",q:"My dream is to be a doctor.",ht:"🟡",hint:"(장래 희망 - 의사)",en:"My dream is to be a doctor.",ko:"내 꿈은 의사가 되는 거야."},
+  {no:"069",part:2,cat:"여행과 쇼핑",q:"I'm really into K-pop.",ht:"🟢",hint:"나는 K팝에 _ _ _ 있어.",en:"I'm really into K-pop.",ko:"나는 K팝에 빠져 있어."},
+  {no:"070",part:2,cat:"여행과 쇼핑",q:"You're my best friend!",ht:"🟡",hint:"(우정 표현)",en:"You're my best friend!",ko:"너는 내 가장 친한 친구야!"},
+
+  // Part 3: 청크 채우기 (30문제)
+  {no:"071",part:3,cat:"청크 채우기 - 인사",q:"Hi ___! How's it going?",ht:"🟢",hint:"there (여기에)",en:"Hi there! How's it going?",ko:"안녕! 어떻게 지내?"},
+  {no:"072",part:3,cat:"청크 채우기 - 인사",q:"Long time ___ see!",ht:"🟡",hint:"no (아니다)",en:"Long time no see!",ko:"오랜만이야!"},
+  {no:"073",part:3,cat:"청크 채우기 - 인사",q:"___ to see you again!",ht:"🟢",hint:"Good (좋다)",en:"Good to see you again!",ko:"다시 보니 좋다!"},
+  {no:"074",part:3,cat:"청크 채우기 - 감정",q:"I'm so ___ about the trip!",ht:"🟡",hint:"기대, 흥분 (excited)",en:"I'm so excited about the trip!",ko:"여행이 너무 기대돼!"},
+  {no:"075",part:3,cat:"청크 채우기 - 감정",q:"That really made my ___!",ht:"🟢",hint:"day (하루)",en:"That really made my day!",ko:"그게 오늘 완전 기분 좋게 해줬어!"},
+  {no:"076",part:3,cat:"청크 채우기 - 일상",q:"I always have ___ before school.",ht:"🟡",hint:"아침 식사 (breakfast)",en:"I always have breakfast before school.",ko:"나는 항상 학교 가기 전에 아침을 먹어."},
+  {no:"077",part:3,cat:"청크 채우기 - 일상",q:"I go to ___ at 9:30.",ht:"🟢",hint:"bed (침대 → 자다)",en:"I go to bed at 9:30.",ko:"나는 9시 30분에 자."},
+  {no:"078",part:3,cat:"청크 채우기 - 학교",q:"Can I ___ your eraser?",ht:"🟡",hint:"빌리다 (borrow)",en:"Can I borrow your eraser?",ko:"지우개 빌릴 수 있어?"},
+  {no:"079",part:3,cat:"청크 채우기 - 학교",q:"I ___ to do my homework!",ht:"🟢",hint:"forgot (깜빡하다)",en:"I forgot to do my homework!",ko:"숙제하는 거 깜빡했어!"},
+  {no:"080",part:3,cat:"청크 채우기 - 학교",q:"Let's work on this ___.",ht:"🟡",hint:"함께 (together)",en:"Let's work on this together.",ko:"같이 이거 해 보자."},
+  {no:"081",part:3,cat:"청크 채우기 - 친구",q:"What do you do for ___?",ht:"🟢",hint:"fun (재미)",en:"What do you do for fun?",ko:"재미로 뭐 해?"},
+  {no:"082",part:3,cat:"청크 채우기 - 친구",q:"Want to hang ___ this weekend?",ht:"🟡",hint:"out (나가서)",en:"Want to hang out this weekend?",ko:"이번 주말에 놀래?"},
+  {no:"083",part:3,cat:"청크 채우기 - 친구",q:"That was so much ___!",ht:"🟢",hint:"fun (재미있었어)",en:"That was so much fun!",ko:"그거 정말 재미있었어!"},
+  {no:"084",part:3,cat:"청크 채우기 - 소개",q:"My ___ subject is science.",ht:"🟡",hint:"좋아하는 (favorite)",en:"My favorite subject is science.",ko:"내가 가장 좋아하는 과목은 과학이야."},
+  {no:"085",part:3,cat:"청크 채우기 - 소개",q:"My ___ is to be a doctor.",ht:"🟢",hint:"dream (꿈)",en:"My dream is to be a doctor.",ko:"내 꿈은 의사가 되는 거야."},
+  {no:"086",part:3,cat:"청크 채우기 - 소개",q:"I'm really ___ K-pop.",ht:"🟡",hint:"into (빠져)",en:"I'm really into K-pop.",ko:"나는 K팝에 빠져 있어."},
+  {no:"087",part:3,cat:"청크 채우기 - 소개",q:"I'm ___ at drawing.",ht:"🟢",hint:"good (잘해)",en:"I'm good at drawing.",ko:"나는 그림 잘 그려."},
+  {no:"088",part:3,cat:"청크 채우기 - 소개",q:"I'm ___ the 5th grade.",ht:"🟡",hint:"in (~에 있어)",en:"I'm in the 5th grade.",ko:"나는 5학년이야."},
+  {no:"089",part:3,cat:"청크 채우기 - 인사",q:"Nice ___ to you!",ht:"🟢",hint:"talking (이야기하는)",en:"Nice talking to you!",ko:"이야기 나눠서 좋았어!"},
+  {no:"090",part:3,cat:"청크 채우기 - 인사",q:"How was your ___ at school?",ht:"🟡",hint:"day (하루)",en:"How was your day at school?",ko:"학교에서 하루 어땠어?"},
+  {no:"091",part:3,cat:"청크 채우기 - 여행",q:"How ___ is this?",ht:"🟢",hint:"much (얼마)",en:"How much is this?",ko:"이것은 얼마예요?"},
+  {no:"092",part:3,cat:"청크 채우기 - 여행",q:"Can I ___ the menu?",ht:"🟡",hint:"see (보다)",en:"Can I see the menu?",ko:"메뉴판 좀 볼 수 있어요?"},
+  {no:"093",part:3,cat:"청크 채우기 - 여행",q:"Can I ___ around?",ht:"🟢",hint:"look (둘러보다)",en:"Can I look around?",ko:"이것들을 구경해도 돼요?"},
+  {no:"094",part:3,cat:"청크 채우기 - 여행",q:"Can I have the ___?",ht:"🟡",hint:"check (계산서)",en:"Can I have the check?",ko:"계산서 주세요."},
+  {no:"095",part:3,cat:"청크 채우기 - 여행",q:"Where is the bus ___?",ht:"🟢",hint:"stop (정류장)",en:"Where is the bus stop?",ko:"버스 정류장이 어디예요?"},
+  {no:"096",part:3,cat:"청크 채우기 - 질문",q:"Can you ___ that?",ht:"🟡",hint:"explain (설명하다)",en:"Can you explain that?",ko:"무슨 말인지 설명해 줄 수 있어?"},
+  {no:"097",part:3,cat:"청크 채우기 - 질문",q:"How do you ___ this?",ht:"🟢",hint:"pronounce (발음하다)",en:"How do you pronounce this?",ko:"이걸 어떻게 발음해?"},
+  {no:"098",part:3,cat:"청크 채우기 - 질문",q:"Can you say that ___?",ht:"🟡",hint:"again (다시)",en:"Can you say that again?",ko:"다시 한번 말해 줄 수 있어?"},
+  {no:"099",part:3,cat:"청크 채우기 - 감정",q:"I'm really ___.",ht:"🟢",hint:"nervous (긴장된)",en:"I'm really nervous.",ko:"나 정말 긴장돼."},
+  {no:"100",part:3,cat:"청크 채우기 - 일상",q:"I wake ___ at 7 every morning.",ht:"🟡",hint:"up (~에 기상하다)",en:"I wake up at 7 every morning.",ko:"나는 매일 아침 7시에 일어나."},
+
+  // Part 4: 대화 완성하기 (20문제)
+  {no:"101",part:4,cat:"대화 - 학교 만남",q:"A: Hi there! ___ it going?\\nB: Pretty good! You?",ht:"🟡",hint:"How's (어떻게)",en:"A: Hi there! How's it going?",ko:"A: 안녕! 어떻게 지내?"},
+  {no:"102",part:4,cat:"대화 - 학교 만남",q:"A: How was your day at school?\\nB: It was ___! We had PE class!",ht:"🟢",hint:"great (좋았어)",en:"B: It was great! We had PE class!",ko:"B: 좋았어! 체육 수업 있었어!"},
+  {no:"103",part:4,cat:"대화 - 친구 초대",q:"A: Want to hang out this weekend?\\nB: ___! What do you want to do?",ht:"🟡",hint:"긍정 동의",en:"B: Sure! What do you want to do?",ko:"B: 좋아! 뭐 하고 싶어?"},
+  {no:"104",part:4,cat:"대화 - 친구 초대",q:"A: That was so much fun!\\nB: ___! Best day ever!",ht:"🟢",hint:"Totally (완전)",en:"B: Totally! Best day ever!",ko:"B: 완전! 역대 최고의 날이야!"},
+  {no:"105",part:4,cat:"대화 - 학교생활",q:"A: Can I borrow your eraser?\\nB: Sure! ___ you go!",ht:"🟡",hint:"여기요",en:"B: Sure! Here you go!",ko:"B: 물론! 여기!"},
+  {no:"106",part:4,cat:"대화 - 학교생활",q:"A: The test was really tough!\\nB: Same! Let's ___ together next time!",ht:"🟢",hint:"study (공부하다)",en:"B: Let's study together next time!",ko:"B: 다음에는 같이 공부하자!"},
+  {no:"107",part:4,cat:"대화 - 자기소개",q:"A: What's your favorite subject?\\nB: My ___ subject is science!",ht:"🟡",hint:"favorite (제일 좋아하는)",en:"B: My favorite subject is science!",ko:"B: 과학이야!"},
+  {no:"108",part:4,cat:"대화 - 자기소개",q:"A: What do you want to be when you grow up?\\nB: My ___ is to be a doctor!",ht:"🟢",hint:"dream (꿈)",en:"B: My dream is to be a doctor!",ko:"B: 내 꿈은 의사가 되는 거야!"},
+  {no:"109",part:4,cat:"대화 - 여행",q:"A: Excuse me! How much is this?\\nB: It's 10 ___!",ht:"🟡",hint:"dollars/won (통화)",en:"B: It's 10 dollars!",ko:"B: 10달러예요!"},
+  {no:"110",part:4,cat:"대화 - 여행",q:"A: Can you take a picture of us?\\nB: Of ___! Say cheese!",ht:"🟢",hint:"course (물론)",en:"B: Of course! Say cheese!",ko:"B: 물론이죠! 치즈!"},
+  {no:"111",part:4,cat:"대화 - 감정",q:"A: You seem happy today!\\nB: I am! I'm in a really good ___ today!",ht:"🟡",hint:"mood (기분)",en:"B: I'm in a really good mood today!",ko:"B: 맞아! 오늘 기분이 정말 좋아!"},
+  {no:"112",part:4,cat:"대화 - 감정",q:"A: Are you okay? You look pale.\\nB: I'm really ___! Wish me luck!",ht:"🟢",hint:"nervous (긴장)",en:"B: I'm really nervous! Wish me luck!",ko:"B: 정말 긴장돼! 행운 빌어줘!"},
+  {no:"113",part:4,cat:"대화 - 루틴",q:"A: What time do you wake up?\\nB: I ___ up at 7 every morning!",ht:"🟡",hint:"wake (일어나다)",en:"B: I wake up at 7 every morning!",ko:"B: 나는 매일 아침 7시에 일어나!"},
+  {no:"114",part:4,cat:"대화 - 루틴",q:"A: Do you eat breakfast?\\nB: Yes! I always have breakfast ___ school!",ht:"🟢",hint:"before (전에)",en:"B: I always have breakfast before school!",ko:"B: 항상 학교 가기 전에 아침 먹어!"},
+  {no:"115",part:4,cat:"대화 - 취미",q:"A: What do you do for fun?\\nB: I play video games and ___!",ht:"🟡",hint:"취미 (draw/play/read 등)",en:"B: I play video games and draw comics!",ko:"B: 비디오 게임하고 만화 그려!"},
+  {no:"116",part:4,cat:"대화 - 취미",q:"A: Are you into sports?\\nB: Yes! I'm on the school ___ team!",ht:"🟢",hint:"soccer/basketball 등",en:"B: Yes! I'm on the school soccer team!",ko:"B: 응! 학교 축구팀에 있어!"},
+  {no:"117",part:4,cat:"대화 - 우정",q:"A: Thanks for always being there for me!\\nB: Of course! You're my ___ friend!",ht:"🟡",hint:"best (가장 친한)",en:"B: You're my best friend!",ko:"B: 너는 내 가장 친한 친구야!"},
+  {no:"118",part:4,cat:"대화 - 우정",q:"A: Long time no see! Where have you been?\\nB: I moved to a ___ school!",ht:"🟢",hint:"different (다른)",en:"B: I moved to a different school!",ko:"B: 다른 학교로 이사 갔어!"},
+  {no:"119",part:4,cat:"대화 - 헤어짐",q:"A: I'm going home now. Take care!\\nB: Take care! See you at practice ___!",ht:"🟡",hint:"tomorrow (내일)",en:"B: See you at practice tomorrow!",ko:"B: 내일 연습에서 보자!"},
+  {no:"120",part:4,cat:"대화 - 헤어짐",q:"A: I gotta go! Nice talking to you!\\nB: Same here! Let's hang out ___!",ht:"🟢",hint:"again/soon",en:"B: Let's hang out again sometime!",ko:"B: 언제 또 놀자!"},
+  {no:"121",part:1,cat:"학교 수업",q:"영어가 쉬워.",ht:"🟢",hint:"E_ _ _ _ _ is easy.",en:"English is easy.",ko:"영어가 쉬워."},
+{no:"122",part:1,cat:"학교 수업",q:"국어 숙제가 많아.",ht:"🟡",hint:"H_ _ _ _ _ is a lot.",en:"Korean homework is a lot.",ko:"국어 숙제가 많아."},
+{no:"123",part:1,cat:"학교 수업",q:"수학 시험이 어려워.",ht:"🟡",hint:"M_ _ _ test is difficult.",en:"Math test is difficult.",ko:"수학 시험이 어려워."},
+{no:"124",part:1,cat:"학교 수업",q:"과학 실험이 재미있어.",ht:"🔴",hint:"S_ _ _ _ _ experiment is fun.",en:"Science experiment is fun.",ko:"과학 실험이 재미있어."},
+{no:"125",part:1,cat:"학교 수업",q:"음악 시간이 제일 좋아.",ht:"🟢",hint:"M_ _ _ _ class is the best.",en:"Music class is the best.",ko:"음악 시간이 제일 좋아."},
+{no:"126",part:1,cat:"학교 수업",q:"미술 과제를 완료했어.",ht:"🟡",hint:"I finished the art a_ _ _ _ _ _ _ _.",en:"I finished the art assignment.",ko:"미술 과제를 완료했어."},
+{no:"127",part:1,cat:"학교 수업",q:"역사 수업을 좋아해.",ht:"🔴",hint:"I like h_ _ _ _ _ class.",en:"I like history class.",ko:"역사 수업을 좋아해."},
+{no:"128",part:1,cat:"학교 수업",q:"체육 시간에 달렸어.",ht:"🟡",hint:"I ran in PE c_ _ _.",en:"I ran in PE class.",ko:"체육 시간에 달렸어."},
+{no:"129",part:1,cat:"학교 수업",q:"영어 발표가 떨렸어.",ht:"🟢",hint:"I was nervous about my English p_ _ _ _ _ _ _ _ _ _.",en:"I was nervous about my English presentation.",ko:"영어 발표가 떨렸어."},
+{no:"130",part:1,cat:"학교 수업",q:"컴퓨터 수업이 지루해.",ht:"🟡",hint:"C_ _ _ _ _ _ _ class is boring.",en:"Computer class is boring.",ko:"컴퓨터 수업이 지루해."},
+{no:"131",part:1,cat:"방과 후 생활",q:"도서관에서 공부해.",ht:"🟢",hint:"I study at the l_ _ _ _ _ _.",en:"I study at the library.",ko:"도서관에서 공부해."},
+{no:"132",part:1,cat:"방과 후 생활",q:"학원에 가야 해.",ht:"🟡",hint:"I need to go to h_ _ _ _ _ school.",en:"I need to go to hagwon.",ko:"학원에 가야 해."},
+{no:"133",part:1,cat:"방과 후 생활",q:"친구와 놀았어.",ht:"🟢",hint:"I p_ _ _ _ with my friend.",en:"I played with my friend.",ko:"친구와 놀았어."},
+{no:"134",part:1,cat:"방과 후 생활",q:"숙제를 다 했어.",ht:"🟢",hint:"I finished all my h_ _ _ _ _ _.",en:"I finished all my homework.",ko:"숙제를 다 했어."},
+{no:"135",part:1,cat:"방과 후 생활",q:"피아노 연습을 했어.",ht:"🟡",hint:"I practiced p_ _ _ _.",en:"I practiced piano.",ko:"피아노 연습을 했어."},
+{no:"136",part:1,cat:"방과 후 생활",q:"책을 읽고 있어.",ht:"🟢",hint:"I'm reading a b_ _ _.",en:"I'm reading a book.",ko:"책을 읽고 있어."},
+{no:"137",part:1,cat:"방과 후 생활",q:"스마트폰 게임을 해.",ht:"🟡",hint:"I play games on my s_ _ _ _ _ _ _ _ _.",en:"I play games on my smartphone.",ko:"스마트폰 게임을 해."},
+{no:"138",part:1,cat:"방과 후 생활",q:"유튜브를 봤어.",ht:"🟢",hint:"I watched Y_ _ _ _ _.",en:"I watched YouTube.",ko:"유튜브를 봤어."},
+{no:"139",part:1,cat:"방과 후 생활",q:"숙면을 못 했어.",ht:"🔴",hint:"I didn't get enough s_ _ _.",en:"I didn't get enough sleep.",ko:"숙면을 못 했어."},
+{no:"140",part:1,cat:"방과 후 생활",q:"집에서 쉬고 싶어.",ht:"🟢",hint:"I want to r_ _ at home.",en:"I want to rest at home.",ko:"집에서 쉬고 싶어."},
+{no:"141",part:1,cat:"스포츠 활동",q:"축구를 잘 해.",ht:"🟢",hint:"I'm good at s_ _ _ _ _.",en:"I'm good at soccer.",ko:"축구를 잘 해."},
+{no:"142",part:1,cat:"스포츠 활동",q:"테니스를 배우고 있어.",ht:"🟡",hint:"I'm learning t_ _ _ _ _.",en:"I'm learning tennis.",ko:"테니스를 배우고 있어."},
+{no:"143",part:1,cat:"스포츠 활동",q:"수영이 재미있어.",ht:"🟢",hint:"S_ _ _ _ _ _ is fun.",en:"Swimming is fun.",ko:"수영이 재미있어."},
+{no:"144",part:1,cat:"스포츠 활동",q:"농구 경기에 이겼어.",ht:"🔴",hint:"We won the b_ _ _ _ _ _ game.",en:"We won the basketball game.",ko:"농구 경기에 이겼어."},
+{no:"145",part:1,cat:"스포츠 활동",q:"배드민턴을 칠 거야.",ht:"🟡",hint:"I'm going to play b_ _ _ _ _ _ _ _.",en:"I'm going to play badminton.",ko:"배드민턴을 칠 거야."},
+{no:"146",part:1,cat:"음식 주문",q:"피자를 주문했어.",ht:"🟢",hint:"I ordered p_ _ _ _.",en:"I ordered pizza.",ko:"피자를 주문했어."},
+{no:"147",part:1,cat:"음식 주문",q:"카페에서 커피를 마셨어.",ht:"🟡",hint:"I drank c_ _ _ _ at the cafe.",en:"I drank coffee at the cafe.",ko:"카페에서 커피를 마셨어."},
+{no:"148",part:1,cat:"음식 주문",q:"햄버거가 맛있어.",ht:"🟢",hint:"The h_ _ _ _ _ _ _ is delicious.",en:"The hamburger is delicious.",ko:"햄버거가 맛있어."},
+{no:"149",part:1,cat:"음식 주문",q:"국수를 먹고 싶어.",ht:"🔴",hint:"I want to eat n_ _ _ _ _.",en:"I want to eat noodles.",ko:"국수를 먹고 싶어."},
+{no:"150",part:1,cat:"음식 주문",q:"김밥을 준비했어.",ht:"🟡",hint:"I p_ _ _ _ _ _ kimbap.",en:"I prepared kimbap.",ko:"김밥을 준비했어."},
+{no:"151",part:1,cat:"날씨 대화",q:"오늘 날씨가 좋아.",ht:"🟢",hint:"The weather is nice t_ _ _ _.",en:"The weather is nice today.",ko:"오늘 날씨가 좋아."},
+{no:"152",part:1,cat:"날씨 대화",q:"비가 많이 왔어.",ht:"🟡",hint:"It rained a l_ _.",en:"It rained a lot.",ko:"비가 많이 왔어."},
+{no:"153",part:1,cat:"날씨 대화",q:"아침이 추웠어.",ht:"🟢",hint:"It was c_ _ _ in the morning.",en:"It was cold in the morning.",ko:"아침이 추웠어."},
+{no:"154",part:1,cat:"날씨 대화",q:"햇빛이 강해.",ht:"🔴",hint:"The sun is s_ _ _ _ _.",en:"The sun is strong.",ko:"햇빛이 강해."},
+{no:"155",part:1,cat:"날씨 대화",q:"눈이 많이 내렸어.",ht:"🟡",hint:"It snowed a l_ _.",en:"It snowed a lot.",ko:"눈이 많이 내렸어."},
+{no:"156",part:1,cat:"가족 소개",q:"엄마가 선생님이야.",ht:"🟢",hint:"My m_ _ _ is a teacher.",en:"My mom is a teacher.",ko:"엄마가 선생님이야."},
+{no:"157",part:1,cat:"가족 소개",q:"아빠가 회사원이야.",ht:"🟡",hint:"My dad is a b_ _ _ _ _ _ man.",en:"My dad is a businessman.",ko:"아빠가 회사원이야."},
+{no:"158",part:1,cat:"가족 소개",q:"언니가 대학교에 가.",ht:"🟢",hint:"My s_ _ _ _ goes to university.",en:"My sister goes to university.",ko:"언니가 대학교에 가."},
+{no:"159",part:1,cat:"가족 소개",q:"형이 고등학교 2학년이야.",ht:"🔴",hint:"My b_ _ _ _ _ is a high school s_ _ _ _ _ _.",en:"My brother is a high school sophomore.",ko:"형이 고등학교 2학년이야."},
+{no:"160",part:1,cat:"가족 소개",q:"할머니와 함께 살아.",ht:"🟡",hint:"I live with my g_ _ _ _ _ _ _ _.",en:"I live with my grandmother.",ko:"할머니와 함께 살아."},
+{no:"161",part:1,cat:"감정 표현",q:"나는 행복해.",ht:"🟢",hint:"I'm h_ _ _ _.",en:"I'm happy.",ko:"나는 행복해."},
+{no:"162",part:1,cat:"감정 표현",q:"정말 슬퍼.",ht:"🟡",hint:"I'm very s_ _.",en:"I'm very sad.",ko:"정말 슬퍼."},
+{no:"163",part:1,cat:"감정 표현",q:"화가 났어.",ht:"🟢",hint:"I'm a_ _ _.",en:"I'm angry.",ko:"화가 났어."},
+{no:"164",part:1,cat:"감정 표현",q:"놀랐어.",ht:"🔴",hint:"I'm s_ _ _ _ _ _ _.",en:"I'm surprised.",ko:"놀랐어."},
+{no:"165",part:1,cat:"감정 표현",q:"지쳤어.",ht:"🟡",hint:"I'm t_ _ _ _.",en:"I'm tired.",ko:"지쳤어."},
+{no:"166",part:1,cat:"여행 표현",q:"여행을 가고 싶어.",ht:"🟢",hint:"I want to go on a t_ _ _.",en:"I want to go on a trip.",ko:"여행을 가고 싶어."},
+{no:"167",part:1,cat:"여행 표현",q:"비행기를 탔어.",ht:"🟡",hint:"I took a p_ _ _ _.",en:"I took a plane.",ko:"비행기를 탔어."},
+{no:"168",part:1,cat:"여행 표현",q:"호텔에 묵었어.",ht:"🟢",hint:"I stayed at a h_ _ _ _.",en:"I stayed at a hotel.",ko:"호텔에 묵었어."},
+{no:"169",part:1,cat:"여행 표현",q:"관광지를 방문했어.",ht:"🔴",hint:"I visited a t_ _ _ _ _ _ attraction.",en:"I visited a tourist attraction.",ko:"관광지를 방문했어."},
+{no:"170",part:1,cat:"여행 표현",q:"사진을 많이 찍었어.",ht:"🟡",hint:"I took many p_ _ _ _ _ _.",en:"I took many photos.",ko:"사진을 많이 찍었어."},
+{no:"171",part:1,cat:"건강 상태",q:"감기에 걸렸어.",ht:"🟡",hint:"I have a c_ _ _.",en:"I have a cold.",ko:"감기에 걸렸어."},
+{no:"172",part:1,cat:"건강 상태",q:"배가 아파.",ht:"🟢",hint:"My s_ _ _ _ _ aches.",en:"My stomach aches.",ko:"배가 아파."},
+{no:"173",part:1,cat:"건강 상태",q:"머리가 아파.",ht:"🟡",hint:"I have a h_ _ _ _ _ _.",en:"I have a headache.",ko:"머리가 아파."},
+{no:"174",part:1,cat:"건강 상태",q:"기침을 하고 있어.",ht:"🔴",hint:"I'm c_ _ _ _ _ _.",en:"I'm coughing.",ko:"기침을 하고 있어."},
+{no:"175",part:1,cat:"건강 상태",q:"열이 났어.",ht:"🟡",hint:"I have a f_ _ _ _.",en:"I have a fever.",ko:"열이 났어."},
+{no:"176",part:1,cat:"취미 소개",q:"그림을 그려.",ht:"🟡",hint:"I d_ _ _.",en:"I draw.",ko:"그림을 그려."},
+{no:"177",part:1,cat:"취미 소개",q:"음악을 들어.",ht:"🟢",hint:"I listen to m_ _ _ _.",en:"I listen to music.",ko:"음악을 들어."},
+{no:"178",part:1,cat:"취미 소개",q:"영화를 봐.",ht:"🟡",hint:"I watch m_ _ _ _ _.",en:"I watch movies.",ko:"영화를 봐."},
+{no:"179",part:1,cat:"취미 소개",q:"책을 좋아해.",ht:"🔴",hint:"I love r_ _ _ _ _ _.",en:"I love reading.",ko:"책을 좋아해."},
+{no:"180",part:1,cat:"취미 소개",q:"노래를 불러.",ht:"🟡",hint:"I s_ _ _.",en:"I sing.",ko:"노래를 불러."},
+{no:"181",part:1,cat:"학교 생활",q:"급식이 맛있어.",ht:"🟡",hint:"The s_ _ _ _ lunch is d_ _ _ _ _ _ _ _.",en:"The school lunch is delicious.",ko:"급식이 맛있어."},
+{no:"182",part:1,cat:"학교 생활",q:"친구를 사귀었어.",ht:"🟢",hint:"I m_ _ _ a new friend.",en:"I made a new friend.",ko:"친구를 사귀었어."},
+{no:"183",part:1,cat:"학교 생활",q:"선생님께 물었어.",ht:"🟡",hint:"I a_ _ _ _ my teacher.",en:"I asked my teacher.",ko:"선생님께 물었어."},
+{no:"184",part:1,cat:"학교 생활",q:"학교 축제가 있었어.",ht:"🔴",hint:"We had a school f_ _ _ _ _ _.",en:"We had a school festival.",ko:"학교 축제가 있었어."},
+{no:"185",part:1,cat:"학교 생활",q:"청소 당번이었어.",ht:"🟡",hint:"It was my t_ _ _ to clean.",en:"It was my turn to clean.",ko:"청소 당번이었어."},
+{no:"186",part:1,cat:"친구 관계",q:"친구가 좋아.",ht:"🟡",hint:"My f_ _ _ _ _ are nice.",en:"My friends are nice.",ko:"친구가 좋아."},
+{no:"187",part:1,cat:"친구 관계",q:"친구와 싸웠어.",ht:"🟢",hint:"I f_ _ _ _ with my friend.",en:"I fought with my friend.",ko:"친구와 싸웠어."},
+{no:"188",part:1,cat:"친구 관계",q:"친구가 도와줬어.",ht:"🟡",hint:"My friend h_ _ _ _ me.",en:"My friend helped me.",ko:"친구가 도와줬어."},
+{no:"189",part:1,cat:"친구 관계",q:"함께 웃었어.",ht:"🔴",hint:"We l_ _ _ _ _ _ together.",en:"We laughed together.",ko:"함께 웃었어."},
+{no:"190",part:1,cat:"친구 관계",q:"비밀을 말했어.",ht:"🟡",hint:"I t_ _ _ a s_ _ _ _ _.",en:"I told a secret.",ko:"비밀을 말했어."},
+{no:"191",part:2,cat:"쇼핑 표현",q:"Do you like shopping?",ht:"🟢",hint:"쇼핑을 좋아하니?",en:"Do you like shopping?",ko:"쇼핑을 좋아하니?"},
+{no:"192",part:2,cat:"쇼핑 표현",q:"This dress is very pretty.",ht:"🟡",hint:"이 드레스는 정말 예뻐.",en:"This dress is very pretty.",ko:"이 드레스는 정말 예뻐."},
+{no:"193",part:2,cat:"쇼핑 표현",q:"How much does it cost?",ht:"🟢",hint:"그것이 얼마예요?",en:"How much does it cost?",ko:"그것이 얼마예요?"},
+{no:"194",part:2,cat:"쇼핑 표현",q:"I need a new pair of shoes.",ht:"🔴",hint:"나는 새 신발이 필요해.",en:"I need a new pair of shoes.",ko:"나는 새 신발이 필요해."},
+{no:"195",part:2,cat:"쇼핑 표현",q:"Do you have this in blue?",ht:"🟡",hint:"파란색이 있어요?",en:"Do you have this in blue?",ko:"파란색이 있어요?"},
+{no:"196",part:2,cat:"쇼핑 표현",q:"Can I try this on?",ht:"🟢",hint:"이것을 입어 봐도 돼?",en:"Can I try this on?",ko:"이것을 입어 봐도 돼?"},
+{no:"197",part:2,cat:"쇼핑 표현",q:"That's too expensive.",ht:"🟡",hint:"그것은 너무 비싸.",en:"That's too expensive.",ko:"그것은 너무 비싸."},
+{no:"198",part:2,cat:"쇼핑 표현",q:"Is there a discount?",ht:"🟢",hint:"할인이 있어요?",en:"Is there a discount?",ko:"할인이 있어요?"},
+{no:"199",part:2,cat:"쇼핑 표현",q:"I'll take this one.",ht:"🟡",hint:"이것으로 할게.",en:"I'll take this one.",ko:"이것으로 할게."},
+{no:"200",part:2,cat:"쇼핑 표현",q:"Do you accept credit cards?",ht:"🔴",hint:"신용카드를 받아요?",en:"Do you accept credit cards?",ko:"신용카드를 받아요?"},
+{no:"201",part:2,cat:"음식 감상",q:"This pizza is delicious!",ht:"🟢",hint:"이 피자는 정말 맛있어!",en:"This pizza is delicious!",ko:"이 피자는 정말 맛있어!"},
+{no:"202",part:2,cat:"음식 감상",q:"What's your favorite food?",ht:"🟡",hint:"너의 가장 좋아하는 음식은 뭐야?",en:"What's your favorite food?",ko:"너의 가장 좋아하는 음식은 뭐야?"},
+{no:"203",part:2,cat:"음식 감상",q:"This cake is too sweet.",ht:"🟢",hint:"이 케이크는 너무 달아.",en:"This cake is too sweet.",ko:"이 케이크는 너무 달아."},
+{no:"204",part:2,cat:"음식 감상",q:"Can I have more rice?",ht:"🔴",hint:"밥을 더 줄 수 있어?",en:"Can I have more rice?",ko:"밥을 더 줄 수 있어?"},
+{no:"205",part:2,cat:"음식 감상",q:"I don't like spicy food.",ht:"🟡",hint:"나는 맵고 자극적인 음식을 좋아하지 않아.",en:"I don't like spicy food.",ko:"나는 맵고 자극적인 음식을 좋아하지 않아."},
+{no:"206",part:2,cat:"환경 이야기",q:"We need to save the Earth.",ht:"🟢",hint:"우리는 지구를 구해야 해.",en:"We need to save the Earth.",ko:"우리는 지구를 구해야 해."},
+{no:"207",part:2,cat:"환경 이야기",q:"Do you recycle?",ht:"🟡",hint:"너는 재활용해?",en:"Do you recycle?",ko:"너는 재활용해?"},
+{no:"208",part:2,cat:"환경 이야기",q:"Plastic bags are bad for nature.",ht:"🟢",hint:"비닐봉지는 자연에 나빠.",en:"Plastic bags are bad for nature.",ko:"비닐봉지는 자연에 나빠."},
+{no:"209",part:2,cat:"환경 이야기",q:"We should use less water.",ht:"🔴",hint:"우리는 더 적은 물을 사용해야 해.",en:"We should use less water.",ko:"우리는 더 적은 물을 사용해야 해."},
+{no:"210",part:2,cat:"환경 이야기",q:"Protect the animals!",ht:"🟡",hint:"동물을 보호해!",en:"Protect the animals!",ko:"동물을 보호해!"},
+{no:"211",part:2,cat:"동물 이야기",q:"Dogs are loyal pets.",ht:"🟢",hint:"개는 충성스러운 애완동물이야.",en:"Dogs are loyal pets.",ko:"개는 충성스러운 애완동물이야."},
+{no:"212",part:2,cat:"동물 이야기",q:"Cats can jump very high.",ht:"🟡",hint:"고양이는 매우 높이 뛸 수 있어.",en:"Cats can jump very high.",ko:"고양이는 매우 높이 뛸 수 있어."},
+{no:"213",part:2,cat:"동물 이야기",q:"Birds sing beautiful songs.",ht:"🟢",hint:"새는 아름다운 노래를 불러.",en:"Birds sing beautiful songs.",ko:"새는 아름다운 노래를 불러."},
+{no:"214",part:2,cat:"동물 이야기",q:"Fish live in water.",ht:"🔴",hint:"물고기는 물에서 살아.",en:"Fish live in water.",ko:"물고기는 물에서 살아."},
+{no:"215",part:2,cat:"동물 이야기",q:"Tigers are strong animals.",ht:"🟡",hint:"호랑이는 강한 동물이야.",en:"Tigers are strong animals.",ko:"호랑이는 강한 동물이야."},
+{no:"216",part:2,cat:"독서와 공부",q:"Reading books helps you learn.",ht:"🟢",hint:"책을 읽는 것은 배우는 데 도움이 돼.",en:"Reading books helps you learn.",ko:"책을 읽는 것은 배우는 데 도움이 돼."},
+{no:"217",part:2,cat:"독서와 공부",q:"What's your favorite book?",ht:"🟡",hint:"너의 가장 좋아하는 책은 뭐야?",en:"What's your favorite book?",ko:"너의 가장 좋아하는 책은 뭐야?"},
+{no:"218",part:2,cat:"독서와 공부",q:"I like mystery novels.",ht:"🟢",hint:"나는 미스터리 소설을 좋아해.",en:"I like mystery novels.",ko:"나는 미스터리 소설을 좋아해."},
+{no:"219",part:2,cat:"독서와 공부",q:"Study hard for the exam.",ht:"🔴",hint:"시험을 위해 열심히 공부해.",en:"Study hard for the exam.",ko:"시험을 위해 열심히 공부해."},
+{no:"220",part:2,cat:"독서와 공부",q:"The library is quiet.",ht:"🟡",hint:"도서관은 조용해.",en:"The library is quiet.",ko:"도서관은 조용해."},
+{no:"221",part:2,cat:"음악 이야기",q:"Do you like music?",ht:"🟢",hint:"너는 음악을 좋아해?",en:"Do you like music?",ko:"너는 음악을 좋아해?"},
+{no:"222",part:2,cat:"음악 이야기",q:"What's your favorite song?",ht:"🟡",hint:"너의 가장 좋아하는 노래는 뭐야?",en:"What's your favorite song?",ko:"너의 가장 좋아하는 노래는 뭐야?"},
+{no:"223",part:2,cat:"음악 이야기",q:"I play the guitar.",ht:"🟢",hint:"나는 기타를 쳐.",en:"I play the guitar.",ko:"나는 기타를 쳐."},
+{no:"224",part:2,cat:"음악 이야기",q:"Concert tickets are expensive.",ht:"🔴",hint:"콘서트 티켓은 비싸.",en:"Concert tickets are expensive.",ko:"콘서트 티켓은 비싸."},
+{no:"225",part:2,cat:"음악 이야기",q:"The beat is catchy.",ht:"🟡",hint:"그 비트는 중독적이야.",en:"The beat is catchy.",ko:"그 비트는 중독적이야."},
+{no:"226",part:2,cat:"IT와 게임",q:"Video games are fun.",ht:"🟢",hint:"비디오 게임은 재미있어.",en:"Video games are fun.",ko:"비디오 게임은 재미있어."},
+{no:"227",part:2,cat:"IT와 게임",q:"What game do you play?",ht:"🟡",hint:"너는 어떤 게임을 해?",en:"What game do you play?",ko:"너는 어떤 게임을 해?"},
+{no:"228",part:2,cat:"IT와 게임",q:"I'm addicted to mobile games.",ht:"🟢",hint:"나는 모바일 게임에 중독되어 있어.",en:"I'm addicted to mobile games.",ko:"나는 모바일 게임에 중독되어 있어."},
+{no:"229",part:2,cat:"IT와 게임",q:"The computer is broken.",ht:"🔴",hint:"컴퓨터가 고장 났어.",en:"The computer is broken.",ko:"컴퓨터가 고장 났어."},
+{no:"230",part:2,cat:"IT와 게임",q:"Can I download this app?",ht:"🟡",hint:"이 앱을 다운로드할 수 있어?",en:"Can I download this app?",ko:"이 앱을 다운로드할 수 있어?"},
+{no:"231",part:2,cat:"영화와 드라마",q:"Do you watch movies?",ht:"🟢",hint:"너는 영화를 봐?",en:"Do you watch movies?",ko:"너는 영화를 봐?"},
+{no:"232",part:2,cat:"영화와 드라마",q:"This movie is interesting.",ht:"🟡",hint:"이 영화는 흥미로워.",en:"This movie is interesting.",ko:"이 영화는 흥미로워."},
+{no:"233",part:2,cat:"영화와 드라마",q:"The ending was sad.",ht:"🟢",hint:"그 끝은 슬펐어.",en:"The ending was sad.",ko:"그 끝은 슬펐어."},
+{no:"234",part:2,cat:"영화와 드라마",q:"I love action movies.",ht:"🔴",hint:"나는 액션 영화를 좋아해.",en:"I love action movies.",ko:"나는 액션 영화를 좋아해."},
+{no:"235",part:2,cat:"영화와 드라마",q:"The actor is talented.",ht:"🟡",hint:"그 배우는 재능이 있어.",en:"The actor is talented.",ko:"그 배우는 재능이 있어."},
+{no:"236",part:2,cat:"운동 성과",q:"I run every morning.",ht:"🟢",hint:"나는 매일 아침 달려.",en:"I run every morning.",ko:"나는 매일 아침 달려."},
+{no:"237",part:2,cat:"운동 성과",q:"Exercise is good for your health.",ht:"🟡",hint:"운동은 너의 건강에 좋아.",en:"Exercise is good for your health.",ko:"운동은 너의 건강에 좋아."},
+{no:"238",part:2,cat:"운동 성과",q:"I'm getting stronger.",ht:"🟢",hint:"나는 더 강해지고 있어.",en:"I'm getting stronger.",ko:"나는 더 강해지고 있어."},
+{no:"239",part:2,cat:"운동 성과",q:"The gym is crowded.",ht:"🔴",hint:"그 짐은 붐비워.",en:"The gym is crowded.",ko:"그 짐은 붐비워."},
+{no:"240",part:2,cat:"운동 성과",q:"I feel energetic today.",ht:"🟡",hint:"나는 오늘 활기찬 기분이야.",en:"I feel energetic today.",ko:"나는 오늘 활기찬 기분이야."},
+{no:"241",part:2,cat:"꿈과 직업",q:"What do you want to be?",ht:"🟢",hint:"너는 뭐가 되고 싶어?",en:"What do you want to be?",ko:"너는 뭐가 되고 싶어?"},
+{no:"242",part:2,cat:"꿈과 직업",q:"I want to be an engineer.",ht:"🟡",hint:"나는 엔지니어가 되고 싶어.",en:"I want to be an engineer.",ko:"나는 엔지니어가 되고 싶어."},
+{no:"243",part:2,cat:"꿈과 직업",q:"Teachers help students learn.",ht:"🟢",hint:"교사는 학생들이 배우도록 도와.",en:"Teachers help students learn.",ko:"교사는 학생들이 배우도록 도와."},
+{no:"244",part:2,cat:"꿈과 직업",q:"Doctors save lives.",ht:"🔴",hint:"의사는 목숨을 구해.",en:"Doctors save lives.",ko:"의사는 목숨을 구해."},
+{no:"245",part:2,cat:"꿈과 직업",q:"I'm interested in science.",ht:"🟡",hint:"나는 과학에 관심이 있어.",en:"I'm interested in science.",ko:"나는 과학에 관심이 있어."},
+{no:"246",part:2,cat:"학교 규칙",q:"We must follow school rules.",ht:"🟢",hint:"우리는 학교 규칙을 따라야 해.",en:"We must follow school rules.",ko:"우리는 학교 규칙을 따라야 해."},
+{no:"247",part:2,cat:"학교 규칙",q:"Don't run in the hallway.",ht:"🟡",hint:"복도에서 뛰지 마.",en:"Don't run in the hallway.",ko:"복도에서 뛰지 마."},
+{no:"248",part:2,cat:"학교 규칙",q:"Uniforms must be neat.",ht:"🟢",hint:"교복은 깨끗해야 해.",en:"Uniforms must be neat.",ko:"교복은 깨끗해야 해."},
+{no:"249",part:2,cat:"학교 규칙",q:"Using phones is not allowed.",ht:"🔴",hint:"휴대폰 사용은 금지돼.",en:"Using phones is not allowed.",ko:"휴대폰 사용은 금지돼."},
+{no:"250",part:2,cat:"학교 규칙",q:"Be respectful to teachers.",ht:"🟡",hint:"선생님에게 존경심을 가져.",en:"Be respectful to teachers.",ko:"선생님에게 존경심을 가져."},
+{no:"251",part:2,cat:"여행 준비",q:"Have you packed your bags?",ht:"🟢",hint:"너는 짐을 쌌어?",en:"Have you packed your bags?",ko:"너는 짐을 쌌어?"},
+{no:"252",part:2,cat:"여행 준비",q:"Don't forget your passport.",ht:"🟡",hint:"너의 여권을 잊지 마.",en:"Don't forget your passport.",ko:"너의 여권을 잊지 마."},
+{no:"253",part:2,cat:"여행 준비",q:"The hotel reservation is confirmed.",ht:"🟢",hint:"호텔 예약은 확인됐어.",en:"The hotel reservation is confirmed.",ko:"호텔 예약은 확인됐어."},
+{no:"254",part:2,cat:"여행 준비",q:"Check the flight information.",ht:"🔴",hint:"비행기 정보를 확인해.",en:"Check the flight information.",ko:"비행기 정보를 확인해."},
+{no:"255",part:2,cat:"여행 준비",q:"Travel insurance is helpful.",ht:"🟡",hint:"여행 보험은 도움이 돼.",en:"Travel insurance is helpful.",ko:"여행 보험은 도움이 돼."},
+{no:"256",part:2,cat:"문화 차이",q:"Different cultures are interesting.",ht:"🟢",hint:"다른 문화는 흥미로워.",en:"Different cultures are interesting.",ko:"다른 문화는 흥미로워."},
+{no:"257",part:2,cat:"문화 차이",q:"Respect other traditions.",ht:"🟡",hint:"다른 전통을 존경해.",en:"Respect other traditions.",ko:"다른 전통을 존경해."},
+{no:"258",part:2,cat:"문화 차이",q:"Food reflects culture.",ht:"🟢",hint:"음식은 문화를 반영해.",en:"Food reflects culture.",ko:"음식은 문화를 반영해."},
+{no:"259",part:2,cat:"문화 차이",q:"Holidays are celebrated differently.",ht:"🔴",hint:"휴일은 다르게 축하돼.",en:"Holidays are celebrated differently.",ko:"휴일은 다르게 축하돼."},
+{no:"260",part:2,cat:"문화 차이",q:"Language connects people.",ht:"🟡",hint:"언어는 사람들을 연결해.",en:"Language connects people.",ko:"언어는 사람들을 연결해."},
+{no:"261",part:2,cat:"문화 차이",q:"Our culture is unique.",ht:"🟢",hint:"우리의 문화는 독특해.",en:"Our culture is unique.",ko:"우리의 문화는 독특해."},
+{no:"262",part:2,cat:"문화 차이",q:"Customs vary worldwide.",ht:"🟡",hint:"관습은 세계 곳곳마다 달라.",en:"Customs vary worldwide.",ko:"관습은 세계 곳곳마다 달라."},
+{no:"263",part:2,cat:"문화 차이",q:"Festival traditions are special.",ht:"🟢",hint:"축제 전통은 특별해.",en:"Festival traditions are special.",ko:"축제 전통은 특별해."},
+{no:"264",part:2,cat:"문화 차이",q:"Learn different customs.",ht:"🔴",hint:"다른 관습을 배워.",en:"Learn different customs.",ko:"다른 관습을 배워."},
+{no:"265",part:2,cat:"문화 차이",q:"Cultural exchange matters.",ht:"🟡",hint:"문화 교류는 중요해.",en:"Cultural exchange matters.",ko:"문화 교류는 중요해."},
+{no:"266",part:3,cat:"청크-학교",q:"I need to ___ my homework before dinner.",ht:"🟡",hint:"finish (끝내다)",en:"I need to finish my homework before dinner.",ko:"저녁 먹기 전에 숙제를 끝내야 해."},
+{no:"267",part:3,cat:"청크-학교",q:"She ___ the math problem very quickly.",ht:"🟡",hint:"solved (풀었다)",en:"She solved the math problem very quickly.",ko:"그녀는 수학 문제를 매우 빨리 풀었어."},
+{no:"268",part:3,cat:"청크-학교",q:"We ___ English every day at school.",ht:"🟢",hint:"learn (배운다)",en:"We learn English every day at school.",ko:"우리는 학교에서 매일 영어를 배워."},
+{no:"269",part:3,cat:"청크-학교",q:"The teacher ___ us the new lesson.",ht:"🔴",hint:"taught (가르쳤다)",en:"The teacher taught us the new lesson.",ko:"선생님은 우리에게 새로운 수업을 가르쳐 주셨어."},
+{no:"270",part:3,cat:"청크-학교",q:"My ___ teacher is very kind.",ht:"🟡",hint:"English (영어)",en:"My English teacher is very kind.",ko:"나의 영어 선생님은 매우 친절해."},
+{no:"271",part:3,cat:"청크-감정",q:"I'm ___ because I won the game.",ht:"🟡",hint:"happy (행복하다)",en:"I'm happy because I won the game.",ko:"나는 게임에 이겨서 행복해."},
+{no:"272",part:3,cat:"청크-감정",q:"She ___ when she heard the sad news.",ht:"🟡",hint:"cried (울었다)",en:"She cried when she heard the sad news.",ko:"그녀는 슬픈 소식을 들었을 때 울었어."},
+{no:"273",part:3,cat:"청크-감정",q:"I was ___ about the surprise party.",ht:"🟢",hint:"excited (들떴다)",en:"I was excited about the surprise party.",ko:"나는 깜짝 파티에 대해 들떴어."},
+{no:"274",part:3,cat:"청크-감정",q:"He feels ___ after getting good grades.",ht:"🔴",hint:"proud (자랑스럽다)",en:"He feels proud after getting good grades.",ko:"그는 좋은 성적을 받아서 자랑스러워."},
+{no:"275",part:3,cat:"청크-감정",q:"I was ___ when I saw the spider.",ht:"🟡",hint:"scared (무서워했다)",en:"I was scared when I saw the spider.",ko:"나는 거미를 봤을 때 무서워했어."},
+{no:"276",part:3,cat:"청크-음식",q:"I ___ pizza with my friends.",ht:"🟡",hint:"ate (먹었다)",en:"I ate pizza with my friends.",ko:"나는 친구들과 피자를 먹었어."},
+{no:"277",part:3,cat:"청크-음식",q:"The soup is too ___.",ht:"🟡",hint:"hot (뜨겁다)",en:"The soup is too hot.",ko:"그 스프는 너무 뜨거워."},
+{no:"278",part:3,cat:"청크-음식",q:"We ___ dinner at 6 o'clock.",ht:"🟢",hint:"have (먹다)",en:"We have dinner at 6 o'clock.",ko:"우리는 오후 6시에 저녁을 먹어."},
+{no:"279",part:3,cat:"청크-음식",q:"This cake is very ___.",ht:"🔴",hint:"sweet (달다)",en:"This cake is very sweet.",ko:"이 케이크는 정말 달아."},
+{no:"280",part:3,cat:"청크-음식",q:"I ___ my lunch box.",ht:"🟡",hint:"forgot (잊었다)",en:"I forgot my lunch box.",ko:"나는 도시락을 잊었어."},
+{no:"281",part:3,cat:"청크-스포츠",q:"I ___ every morning.",ht:"🟡",hint:"run (달린다)",en:"I jog in the park every day.",ko:"나는 매일 공원에서 조깅해."},
+{no:"282",part:3,cat:"청크-스포츠",q:"He ___ very fast.",ht:"🟡",hint:"swims (수영한다)",en:"He swims very fast.",ko:"그는 매우 빠르게 수영해."},
+{no:"283",part:3,cat:"청크-스포츠",q:"We ___ soccer at school.",ht:"🟢",hint:"play (한다)",en:"We play soccer at school.",ko:"우리는 학교에서 축구를 해."},
+{no:"284",part:3,cat:"청크-스포츠",q:"She ___ the basketball game yesterday.",ht:"🔴",hint:"won (이겼다)",en:"She won the basketball game yesterday.",ko:"그녀는 어제 농구 경기에서 이겼어."},
+{no:"285",part:3,cat:"청크-스포츠",q:"My brother is a ___ player.",ht:"🟡",hint:"soccer (축구)",en:"My brother is a soccer player.",ko:"나의 형은 축구 선수야."},
+{no:"286",part:3,cat:"청크-날씨",q:"It's ___ today.",ht:"🟡",hint:"sunny (햇빛이 난다)",en:"It's sunny today.",ko:"오늘은 햇빛이 나."},
+{no:"287",part:3,cat:"청크-날씨",q:"The weather is ___.",ht:"🟡",hint:"rainy (비가 온다)",en:"The weather is rainy.",ko:"날씨가 비가 와."},
+{no:"288",part:3,cat:"청크-날씨",q:"It was ___ yesterday.",ht:"🟢",hint:"cold (추웠다)",en:"It was cold yesterday.",ko:"어제는 추웠어."},
+{no:"289",part:3,cat:"청크-날씨",q:"The wind is very ___.",ht:"🔴",hint:"strong (강하다)",en:"The wind is very strong.",ko:"바람이 매우 강해."},
+{no:"290",part:3,cat:"청크-날씨",q:"I need an ___ today.",ht:"🟡",hint:"umbrella (우산)",en:"I need an umbrella today.",ko:"나는 오늘 우산이 필요해."},
+{no:"291",part:3,cat:"청크-가족",q:"I have a ___ and a sister.",ht:"🟡",hint:"brother (형)",en:"I have a brother and a sister.",ko:"나는 형과 누나가 있어."},
+{no:"292",part:3,cat:"청크-가족",q:"My father is a ___.",ht:"🟡",hint:"teacher (선생님)",en:"My father is a teacher.",ko:"나의 아버지는 선생님이야."},
+{no:"293",part:3,cat:"청크-가족",q:"I live with my ___.",ht:"🟢",hint:"parents (부모)",en:"I live with my parents.",ko:"나는 부모와 함께 살아."},
+{no:"294",part:3,cat:"청크-가족",q:"My grandmother is very ___.",ht:"🔴",hint:"kind (친절하다)",en:"My grandmother is very kind.",ko:"나의 할머니는 매우 친절해."},
+{no:"295",part:3,cat:"청크-가족",q:"I ___ my family very much.",ht:"🟡",hint:"love (사랑한다)",en:"I love my family very much.",ko:"나는 가족을 정말 많이 사랑해."},
+{no:"296",part:3,cat:"청크-취미",q:"I like to ___.",ht:"🟡",hint:"draw (그리다)",en:"I like to draw.",ko:"나는 그리기를 좋아해."},
+{no:"297",part:3,cat:"청크-취미",q:"She ___ music every day.",ht:"🟡",hint:"listens (듣는다)",en:"She listens to music every day.",ko:"그녀는 매일 음악을 들어."},
+{no:"298",part:3,cat:"청크-취미",q:"I enjoy ___ books.",ht:"🟢",hint:"reading (읽기)",en:"I enjoy reading books.",ko:"나는 책 읽기를 즐겨."},
+{no:"299",part:3,cat:"청크-취미",q:"He ___ video games.",ht:"🔴",hint:"plays (한다)",en:"He plays video games.",ko:"그는 비디오 게임을 해."},
+{no:"300",part:3,cat:"청크-취미",q:"I want to learn to ___.",ht:"🟡",hint:"sing (노래하다)",en:"I want to learn to sing.",ko:"나는 노래하는 법을 배우고 싶어."},
+{no:"301",part:3,cat:"청크-여행",q:"I went to ___ last summer.",ht:"🟡",hint:"Jeju Island (제주도)",en:"I went to Jeju Island last summer.",ko:"나는 지난 여름에 제주도에 갔어."},
+{no:"302",part:3,cat:"청크-여행",q:"I ___ the beach.",ht:"🟡",hint:"visited (방문했다)",en:"I visited the beach.",ko:"나는 해변을 방문했어."},
+{no:"303",part:3,cat:"청크-여행",q:"We ___ a lot of photos.",ht:"🟢",hint:"took (찍었다)",en:"We took a lot of photos.",ko:"우리는 많은 사진을 찍었어."},
+{no:"304",part:3,cat:"청크-여행",q:"The ___ was beautiful.",ht:"🔴",hint:"scenery (풍경)",en:"The scenery was beautiful.",ko:"그 풍경은 아름다웠어."},
+{no:"305",part:3,cat:"청크-여행",q:"I stayed at a ___.",ht:"🟡",hint:"hotel (호텔)",en:"We slept in a tent last night.",ko:"우리는 어젯밤 텐트에서 잠을 잤어."},
+{no:"306",part:3,cat:"청크-건강",q:"I need to ___ more water.",ht:"🟡",hint:"drink (마시다)",en:"I need to drink more water.",ko:"나는 더 많은 물을 마셔야 해."},
+{no:"307",part:3,cat:"청크-건강",q:"I have a ___.",ht:"🟡",hint:"cold (감기)",en:"I have a stomachache.",ko:"나 배가 아파."},
+{no:"308",part:3,cat:"청크-건강",q:"I ___ medicine.",ht:"🟢",hint:"took (먹었다)",en:"I took medicine.",ko:"나는 약을 먹었어."},
+{no:"309",part:3,cat:"청크-건강",q:"The doctor gave me ___.",ht:"🔴",hint:"advice (조언)",en:"The doctor gave me advice.",ko:"의사는 나에게 조언을 해 줬어."},
+{no:"310",part:3,cat:"청크-건강",q:"I need to sleep ___.",ht:"🟡",hint:"more (더)",en:"I need to sleep more.",ko:"나는 더 많이 자야 해."},
+{no:"311",part:3,cat:"청크-IT",q:"I use the ___ every day.",ht:"🟡",hint:"computer (컴퓨터)",en:"I use the computer every day.",ko:"나는 매일 컴퓨터를 써."},
+{no:"312",part:3,cat:"청크-IT",q:"The ___ is broken.",ht:"🟡",hint:"keyboard (키보드)",en:"The keyboard is broken.",ko:"그 키보드는 고장 났어."},
+{no:"313",part:3,cat:"청크-IT",q:"I ___ the app.",ht:"🟢",hint:"downloaded (다운로드했다)",en:"I downloaded the app.",ko:"나는 그 앱을 다운로드했어."},
+{no:"314",part:3,cat:"청크-IT",q:"The ___ is fast.",ht:"🔴",hint:"WiFi (와이파이)",en:"The WiFi is fast.",ko:"그 와이파이는 빨라."},
+{no:"315",part:3,cat:"청크-IT",q:"I ___ online games.",ht:"🟡",hint:"play (한다)",en:"I play online games.",ko:"나는 온라인 게임을 해."},
+{no:"316",part:3,cat:"청크-환경",q:"We must ___ the Earth.",ht:"🟡",hint:"save (구하다)",en:"We must save the Earth.",ko:"우리는 지구를 구해야 해."},
+{no:"317",part:3,cat:"청크-환경",q:"Please don't throw ___.",ht:"🟡",hint:"trash (쓰레기)",en:"Please don't throw trash.",ko:"쓰레기를 던지지 마."},
+{no:"318",part:3,cat:"청크-환경",q:"I ___ plastic bags.",ht:"🟢",hint:"avoid (피한다)",en:"I avoid plastic bags.",ko:"나는 비닐봉지를 피해."},
+{no:"319",part:3,cat:"청크-환경",q:"Trees are very ___.",ht:"🔴",hint:"important (중요하다)",en:"Trees are very important.",ko:"나무는 매우 중요해."},
+{no:"320",part:3,cat:"청크-환경",q:"I ___ every day.",ht:"🟡",hint:"recycle (재활용한다)",en:"I recycle every day.",ko:"나는 매일 재활용해."},
+{no:"321",part:3,cat:"청크-친구",q:"My best friend is very ___.",ht:"🟡",hint:"kind (친절하다)",en:"My best friend is very kind.",ko:"나의 가장 친한 친구는 매우 친절해."},
+{no:"322",part:3,cat:"청크-친구",q:"I ___ my friends.",ht:"🟡",hint:"love (사랑한다)",en:"I love my friends.",ko:"나는 친구를 사랑해."},
+{no:"323",part:3,cat:"청크-친구",q:"We play ___ after school.",ht:"🟢",hint:"together (함께)",en:"We play together after school.",ko:"우리는 방과 후에 함께 놀아."},
+{no:"324",part:3,cat:"청크-친구",q:"My friend helped me ___.",ht:"🔴",hint:"yesterday (어제)",en:"My friend helped me yesterday.",ko:"나의 친구는 어제 나를 도와줬어."},
+{no:"325",part:3,cat:"청크-친구",q:"I ___ with my friends.",ht:"🟡",hint:"talk (말한다)",en:"I talk with my friends.",ko:"나는 친구와 말해."},
+{no:"326",part:3,cat:"청크-직업",q:"I want to be a ___.",ht:"🟡",hint:"teacher (선생님)",en:"I want to be a teacher.",ko:"나는 선생님이 되고 싶어."},
+{no:"327",part:3,cat:"청크-직업",q:"My mother is a ___.",ht:"🟡",hint:"nurse (간호사)",en:"My mother is a nurse.",ko:"나의 어머니는 간호사야."},
+{no:"328",part:3,cat:"청크-직업",q:"Scientists ___ many things.",ht:"🟢",hint:"discover (발견한다)",en:"Scientists discover many things.",ko:"과학자는 많은 것을 발견해."},
+{no:"329",part:3,cat:"청크-직업",q:"Doctors help ___ people.",ht:"🔴",hint:"sick (아픈)",en:"Doctors help sick people.",ko:"의사는 아픈 사람을 도와."},
+{no:"330",part:3,cat:"청크-직업",q:"I will ___ hard for my dream.",ht:"🟡",hint:"work (일한다)",en:"I will work hard for my dream.",ko:"나는 나의 꿈을 위해 열심히 일할 거야."},
+{no:"331",part:4,cat:"대화-교실",q:"A: Did you finish your homework?\nB: ___",ht:"🟢",hint:"Yes, I did.",en:"B: Yes, I did.",ko:"B: 응, 다 했어."},
+{no:"332",part:4,cat:"대화-교실",q:"A: What's the answer to question 5?\nB: ___",ht:"🟡",hint:"I don't know / The answer is...",en:"B: I don't know.",ko:"B: 나도 몰라."},
+{no:"333",part:4,cat:"대화-교실",q:"A: Can I borrow your pencil?\nB: ___",ht:"🟢",hint:"Sure, here you go.",en:"B: Sure, here you go.",ko:"B: 그래, 여기 있어."},
+{no:"334",part:4,cat:"대화-교실",q:"A: The test was difficult, right?\nB: ___",ht:"🔴",hint:"Yes, it was really tough!",en:"B: Yes, it was really tough!",ko:"B: 응, 정말 어려웠어!"},
+{no:"335",part:4,cat:"대화-교실",q:"A: Do you understand this lesson?\nB: ___",ht:"🟡",hint:"No, not really. / Yes, I do.",en:"B: No, not really.",ko:"B: 아니, 잘 모르겠어."},
+{no:"336",part:4,cat:"대화-교실",q:"A: When is the exam?\nB: ___",ht:"🟢",hint:"Next Monday.",en:"B: Next Monday.",ko:"B: 다음 월요일이야."},
+{no:"337",part:4,cat:"대화-교실",q:"A: Did you raise your hand in class?\nB: ___",ht:"🟡",hint:"Yes, I did. / No, I didn't.",en:"B: I did! It was so good.",ko:"B: 응! 정말 재미있었어."},
+{no:"338",part:4,cat:"대화-교실",q:"A: Who is your favorite teacher?\nB: ___",ht:"🟢",hint:"Mr. Kim.",en:"B: Mr. Kim.",ko:"B: 김 선생님이야."},
+{no:"339",part:4,cat:"대화-교실",q:"A: Can you help me with math?\nB: ___",ht:"🟡",hint:"Sure, I can help you.",en:"B: Sure, I can help you.",ko:"B: 그래, 도와줄 수 있어."},
+{no:"340",part:4,cat:"대화-교실",q:"A: Do you like PE class?\nB: ___",ht:"🔴",hint:"Yes, very much!",en:"B: Yes, very much!",ko:"B: 응, 정말 좋아!"},
+{no:"341",part:4,cat:"대화-방과후",q:"A: What did you do after school?\nB: ___",ht:"🟡",hint:"I played soccer.",en:"B: I played soccer.",ko:"B: 축구를 했어."},
+{no:"342",part:4,cat:"대화-방과후",q:"A: Do you go to hagwon?\nB: ___",ht:"🟢",hint:"Yes, I go on Mondays and Wednesdays.",en:"B: Yes, I go on Mondays and Wednesdays.",ko:"B: 응, 월요일과 수요일에 가."},
+{no:"343",part:4,cat:"대화-방과후",q:"A: How long do you study?\nB: ___",ht:"🟡",hint:"For two hours.",en:"B: For two hours.",ko:"B: 2시간 동안."},
+{no:"344",part:4,cat:"대화-방과후",q:"A: Do you have time to play?\nB: ___",ht:"🔴",hint:"Yes, I do. / Only on weekends.",en:"B: Only on weekends.",ko:"B: 주말에만 있어."},
+{no:"345",part:4,cat:"대화-방과후",q:"A: What time do you go to bed?\nB: ___",ht:"🟡",hint:"At 10 o'clock.",en:"B: At 10 o'clock.",ko:"B: 10시에."},
+{no:"346",part:4,cat:"대화-방과후",q:"A: Do you play any instruments?\nB: ___",ht:"🟢",hint:"Yes, I play piano.",en:"B: Yes, I play piano.",ko:"B: 응, 피아노를 쳐."},
+{no:"347",part:4,cat:"대화-방과후",q:"A: How often do you visit the library?\nB: ___",ht:"🟡",hint:"Once a week.",en:"B: Once a week.",ko:"B: 주에 한 번."},
+{no:"348",part:4,cat:"대화-방과후",q:"A: Did you watch TV last night?\nB: ___",ht:"🟢",hint:"Yes, I watched a movie.",en:"B: Yes, I watched a movie.",ko:"B: 응, 영화를 봤어."},
+{no:"349",part:4,cat:"대화-방과후",q:"A: What's your hobby?\nB: ___",ht:"🟡",hint:"Reading books.",en:"B: Reading books.",ko:"B: 책 읽기."},
+{no:"350",part:4,cat:"대화-방과후",q:"A: Do you have a lot of homework?\nB: ___",ht:"🔴",hint:"Yes, too much!",en:"B: Yes, too much!",ko:"B: 응, 너무 많아!"},
+{no:"351",part:4,cat:"대화-친구사귀기",q:"A: Can I be your friend?\nB: ___",ht:"🟢",hint:"Of course!",en:"B: Of course!",ko:"B: 물론이지!"},
+{no:"352",part:4,cat:"대화-친구사귀기",q:"A: What's your name?\nB: ___",ht:"🟡",hint:"I'm Min-joon.",en:"B: I'm Min-joon.",ko:"B: 나는 민준이야."},
+{no:"353",part:4,cat:"대화-친구사귀기",q:"A: Where are you from?\nB: ___",ht:"🟢",hint:"I'm from Seoul.",en:"B: I'm from Seoul.",ko:"B: 나는 서울에서 왔어."},
+{no:"354",part:4,cat:"대화-친구사귀기",q:"A: Do you want to play together?\nB: ___",ht:"🔴",hint:"Yes! What should we play?",en:"B: Yes! What should we play?",ko:"B: 응! 뭐 할까?"},
+{no:"355",part:4,cat:"대화-친구사귀기",q:"A: What's your favorite color?\nB: ___",ht:"🟡",hint:"Blue.",en:"B: Blue.",ko:"B: 파란색."},
+{no:"356",part:4,cat:"대화-친구사귀기",q:"A: Do you like sports?\nB: ___",ht:"🟢",hint:"Yes, I love soccer!",en:"B: Yes, I love soccer!",ko:"B: 응, 축구를 정말 좋아!"},
+{no:"357",part:4,cat:"대화-친구사귀기",q:"A: What's your hobby?\nB: ___",ht:"🟡",hint:"I like drawing.",en:"B: I like drawing.",ko:"B: 나는 그림 그리기를 좋아."},
+{no:"358",part:4,cat:"대화-친구사귀기",q:"A: Can I sit next to you?\nB: ___",ht:"🟢",hint:"Sure!",en:"B: Sure!",ko:"B: 그래!"},
+{no:"359",part:4,cat:"대화-친구사귀기",q:"A: Do you have a lot of friends?\nB: ___",ht:"🟡",hint:"Yes, I have many friends.",en:"B: Yes, I have many friends.",ko:"B: 응, 친구가 많아."},
+{no:"360",part:4,cat:"대화-친구사귀기",q:"A: Let's be friends!\nB: ___",ht:"🔴",hint:"Great! I like that!",en:"B: Great! I like that!",ko:"B: 좋아! 나도 그렇고 싶어!"},
+{no:"361",part:4,cat:"대화-식당",q:"A: What would you like to eat?\nB: ___",ht:"🟡",hint:"I'd like pizza.",en:"B: I'd like pizza.",ko:"B: 나는 피자를 먹고 싶어."},
+{no:"362",part:4,cat:"대화-식당",q:"A: Is the food good?\nB: ___",ht:"🟢",hint:"Yes, it's delicious!",en:"B: Yes, it's delicious!",ko:"B: 응, 맛있어!"},
+{no:"363",part:4,cat:"대화-식당",q:"A: Do you like spicy food?\nB: ___",ht:"🟡",hint:"No, not really.",en:"B: Hmm, not much. I just relaxed.",ko:"B: 음, 별로. 그냥 쉬었어."},
+{no:"364",part:4,cat:"대화-식당",q:"A: What's your favorite food?\nB: ___",ht:"🔴",hint:"My favorite is chicken!",en:"B: My favorite is chicken!",ko:"B: 나의 제일 좋아하는 음식은 치킨이야!"},
+{no:"365",part:4,cat:"대화-식당",q:"A: Can I have more rice?\nB: ___",ht:"🟡",hint:"Of course!",en:"B: Absolutely! Let's do it.",ko:"B: 당연하지! 하자."},
+{no:"366",part:4,cat:"대화-식당",q:"A: Is the soup too salty?\nB: ___",ht:"🟢",hint:"No, it's perfect.",en:"B: No, it's perfect.",ko:"B: 아니, 딱 좋아."},
+{no:"367",part:4,cat:"대화-식당",q:"A: Do you like dessert?\nB: ___",ht:"🟡",hint:"Yes, I love ice cream!",en:"B: Yes, I love ice cream!",ko:"B: 응, 아이스크림을 정말 좋아!"},
+{no:"368",part:4,cat:"대화-식당",q:"A: What's your favorite restaurant?\nB: ___",ht:"🟢",hint:"The Korean restaurant near school.",en:"B: The Korean restaurant near school.",ko:"B: 학교 근처의 한식당."},
+{no:"369",part:4,cat:"대화-식당",q:"A: Is the food expensive?\nB: ___",ht:"🟡",hint:"No, it's affordable.",en:"B: No, it's affordable.",ko:"B: 아니, 저렴해."},
+{no:"370",part:4,cat:"대화-식당",q:"A: Can I try some of your food?\nB: ___",ht:"🔴",hint:"Sure, you can have some!",en:"B: Sure, you can have some!",ko:"B: 그래, 먹어도 돼!"},
+{no:"371",part:3,cat:"청크-학교",q:"I ___ at school every day.",ht:"🟡",hint:"go",en:"I go at school every day.",ko:"나는 매일 학교에 간다."},
+{no:"372",part:3,cat:"청크-학교",q:"School ___ at 3 PM.",ht:"🟡",hint:"ends",en:"School ends at 3 PM.",ko:"학교는 오후 3시에 끝난다."},
+{no:"373",part:3,cat:"청크-학교",q:"I have ___ subjects.",ht:"🟡",hint:"five",en:"I have five subjects.",ko:"나는 다섯 개의 과목이 있다."},
+{no:"374",part:3,cat:"청크-학교",q:"My teacher is very ___.",ht:"🟡",hint:"kind",en:"My teacher is very kind.",ko:"나의 선생님은 매우 친절하다."},
+{no:"375",part:3,cat:"청크-학교",q:"I ___ hard in school.",ht:"🟡",hint:"study",en:"I study hard in school.",ko:"나는 학교에서 열심히 공부한다."},
+{no:"376",part:3,cat:"청크-학교",q:"The class is very ___.",ht:"🟡",hint:"interesting",en:"The class is very interesting.",ko:"수업은 매우 재미있다."},
+{no:"377",part:3,cat:"청크-학교",q:"I ___ my lessons.",ht:"🟡",hint:"like",en:"I like my lessons.",ko:"나는 나의 수업을 좋아한다."},
+{no:"378",part:3,cat:"청크-학교",q:"My school has a ___.",ht:"🟡",hint:"playground",en:"My school has a playground.",ko:"나의 학교는 놀이터가 있다."},
+{no:"379",part:3,cat:"청크-학교",q:"School is ___.",ht:"🟡",hint:"fun",en:"School is fun.",ko:"학교는 재미있다."},
+{no:"380",part:3,cat:"청크-학교",q:"I ___ to school by bus.",ht:"🟡",hint:"go",en:"I go to school by bus.",ko:"나는 버스로 학교에 간다."},
+{no:"381",part:3,cat:"청크-집",q:"I live in a ___.",ht:"🟡",hint:"house",en:"I live in a house.",ko:"나는 집에서 산다."},
+{no:"382",part:3,cat:"청크-집",q:"My room is very ___.",ht:"🟡",hint:"clean",en:"My room is very clean.",ko:"나의 방은 매우 깨끗하다."},
+{no:"383",part:3,cat:"청크-집",q:"My house is ___.",ht:"🟡",hint:"big",en:"My house is big.",ko:"나의 집은 크다."},
+{no:"384",part:3,cat:"청크-집",q:"I help with ___ at home.",ht:"🟡",hint:"chores",en:"I help with chores at home.",ko:"나는 집에서 집안일을 도와준다."},
+{no:"385",part:3,cat:"청크-집",q:"My kitchen is ___.",ht:"🟡",hint:"nice",en:"My kitchen is nice.",ko:"나의 부엌은 좋다."},
+{no:"386",part:3,cat:"청크-집",q:"My bedroom is ___.",ht:"🟡",hint:"comfortable",en:"My bedroom is comfortable.",ko:"나의 침실은 편하다."},
+{no:"387",part:3,cat:"청크-집",q:"I ___ in my room.",ht:"🟡",hint:"sleep",en:"I sleep in my room.",ko:"나는 나의 방에서 잔다."},
+{no:"388",part:3,cat:"청크-집",q:"My house has a ___.",ht:"🟡",hint:"garden",en:"My house has a garden.",ko:"나의 집은 정원이 있다."},
+{no:"389",part:3,cat:"청크-집",q:"I ___ at home.",ht:"🟡",hint:"relax",en:"I relax at home.",ko:"나는 집에서 휴식한다."},
+{no:"390",part:3,cat:"청크-집",q:"Home is very ___.",ht:"🟡",hint:"comfortable",en:"Home is very comfortable.",ko:"집은 매우 편하다."},
+{no:"391",part:3,cat:"청크-공원",q:"I play in the ___.",ht:"🟡",hint:"park",en:"I play in the park.",ko:"나는 공원에서 놀아."},
+{no:"392",part:3,cat:"청크-공원",q:"The park is very ___.",ht:"🟡",hint:"green",en:"The park is very green.",ko:"공원은 매우 녹색이다."},
+{no:"393",part:3,cat:"청크-공원",q:"I ___ with my friends at the park.",ht:"🟡",hint:"run",en:"I run with my friends at the park.",ko:"나는 공원에서 친구들과 뛴다."},
+{no:"394",part:3,cat:"청크-공원",q:"There are ___ in the park.",ht:"🟡",hint:"trees",en:"There are trees in the park.",ko:"공원에는 나무들이 있다."},
+{no:"395",part:3,cat:"청크-공원",q:"The park has a ___.",ht:"🟡",hint:"playground",en:"The park has a playground.",ko:"공원은 놀이터가 있다."},
+{no:"396",part:3,cat:"청크-공원",q:"I ___ in the park.",ht:"🟡",hint:"play",en:"I ride my bike near the park.",ko:"나는 공원 근처에서 자전거를 타."},
+{no:"397",part:3,cat:"청크-공원",q:"The park is ___.",ht:"🟡",hint:"beautiful",en:"The park is beautiful.",ko:"공원은 아름답다."},
+{no:"398",part:3,cat:"청크-공원",q:"Children ___ in the park.",ht:"🟡",hint:"laugh",en:"Children laugh in the park.",ko:"아이들은 공원에서 웃는다."},
+{no:"399",part:3,cat:"청크-공원",q:"I like ___ to the park.",ht:"🟡",hint:"going",en:"I like going to the park.",ko:"나는 공원에 가는 것을 좋아한다."},
+{no:"400",part:3,cat:"청크-공원",q:"The park is a ___ place.",ht:"🟡",hint:"fun",en:"The park is a fun place.",ko:"공원은 재미있는 장소다."},
+{no:"401",part:3,cat:"청크-도서관",q:"I ___ in the library.",ht:"🟡",hint:"read",en:"I read in the library.",ko:"나는 도서관에서 읽는다."},
+{no:"402",part:3,cat:"청크-도서관",q:"The library is ___.",ht:"🟡",hint:"quiet",en:"The reading room is very silent.",ko:"독서실은 아주 조용해."},
+{no:"403",part:3,cat:"청크-도서관",q:"I like many ___ in the library.",ht:"🟡",hint:"books",en:"I like many books in the library.",ko:"나는 도서관의 많은 책들을 좋아한다."},
+{no:"404",part:3,cat:"청크-도서관",q:"The librarian is very ___.",ht:"🟡",hint:"kind",en:"The librarian is very kind.",ko:"사서는 매우 친절하다."},
+{no:"405",part:3,cat:"청크-도서관",q:"I ___ books at the library.",ht:"🟡",hint:"borrow",en:"I borrow books at the library.",ko:"나는 도서관에서 책을 빌려간다."},
+{no:"406",part:3,cat:"청크-도서관",q:"The library has many ___.",ht:"🟡",hint:"books",en:"The library has many books.",ko:"도서관은 많은 책을 가지고 있다."},
+{no:"407",part:3,cat:"청크-도서관",q:"I ___ to the library.",ht:"🟡",hint:"go",en:"I go to the library.",ko:"나는 도서관에 간다."},
+{no:"408",part:3,cat:"청크-도서관",q:"The library is a ___ place.",ht:"🟡",hint:"good",en:"The library is a good place.",ko:"도서관은 좋은 장소다."},
+{no:"409",part:3,cat:"청크-도서관",q:"I like ___ at the library.",ht:"🟡",hint:"studying",en:"I like studying at the library.",ko:"나는 도서관에서 공부하는 것을 좋아한다."},
+{no:"410",part:3,cat:"청크-도서관",q:"Books are very ___.",ht:"🟡",hint:"interesting",en:"Books are very interesting.",ko:"책들은 매우 재미있다."},
+{no:"411",part:3,cat:"청크-음악",q:"I ___ music.",ht:"🟡",hint:"like",en:"I like music.",ko:"나는 음악을 좋아한다."},
+{no:"412",part:3,cat:"청크-음악",q:"I play the ___.",ht:"🟡",hint:"piano",en:"I play the piano.",ko:"나는 피아노를 친다."},
+{no:"413",part:3,cat:"청크-음악",q:"Music makes me ___.",ht:"🟡",hint:"happy",en:"Music makes me happy.",ko:"음악은 나를 행복하게 만든다."},
+{no:"414",part:3,cat:"청크-음악",q:"I ___ songs.",ht:"🟡",hint:"sing",en:"I sing songs.",ko:"나는 노래한다."},
+{no:"415",part:3,cat:"청크-음악",q:"Music is very ___.",ht:"🟡",hint:"interesting",en:"Music is very interesting.",ko:"음악은 매우 흥미롭다."},
+{no:"416",part:3,cat:"청크-음악",q:"I ___ the guitar.",ht:"🟡",hint:"play",en:"I practice the violin every week.",ko:"나는 매주 바이올린 연습을 해."},
+{no:"417",part:3,cat:"청크-음악",q:"My favorite ___ is pop.",ht:"🟡",hint:"music",en:"My favorite music is pop.",ko:"나의 가장 좋아하는 음악은 팝이다."},
+{no:"418",part:3,cat:"청크-음악",q:"I ___ music lessons.",ht:"🟡",hint:"have",en:"I have music lessons.",ko:"나는 음악 수업을 받는다."},
+{no:"419",part:3,cat:"청크-음악",q:"Music is ___.",ht:"🟡",hint:"beautiful",en:"Music is beautiful.",ko:"음악은 아름답다."},
+{no:"420",part:3,cat:"청크-음악",q:"I can ___ very well.",ht:"🟡",hint:"sing",en:"I can sing very well.",ko:"나는 매우 잘 노래할 수 있다."},
+{no:"421",part:3,cat:"청크-스포츠",q:"I ___ basketball.",ht:"🟡",hint:"play",en:"I play basketball.",ko:"나는 농구를 한다."},
+{no:"422",part:3,cat:"청크-스포츠",q:"I'm ___ at soccer.",ht:"🟡",hint:"good",en:"I'm on the basketball team.",ko:"나는 농구팀에 있어."},
+{no:"423",part:3,cat:"청크-스포츠",q:"I ___ every day.",ht:"🟡",hint:"exercise",en:"I exercise every day.",ko:"나는 매일 운동한다."},
+{no:"424",part:3,cat:"청크-스포츠",q:"Sports are very ___.",ht:"🟡",hint:"fun",en:"Sports are very fun.",ko:"스포츠는 매우 재미있다."},
+{no:"425",part:3,cat:"청크-스포츠",q:"I like ___ sports.",ht:"🟡",hint:"playing",en:"I like playing sports.",ko:"나는 스포츠를 하는 것을 좋아한다."},
+{no:"426",part:3,cat:"청크-스포츠",q:"I ___ in a team.",ht:"🟡",hint:"play",en:"I play in a team.",ko:"나는 팀에서 한다."},
+{no:"427",part:3,cat:"청크-스포츠",q:"Running is very ___.",ht:"🟡",hint:"good",en:"Running is very good.",ko:"달리기는 매우 좋다."},
+{no:"428",part:3,cat:"청크-스포츠",q:"I ___ swimming.",ht:"🟡",hint:"love",en:"I love swimming.",ko:"나는 수영을 사랑한다."},
+{no:"429",part:3,cat:"청크-스포츠",q:"My favorite sport is ___.",ht:"🟡",hint:"tennis",en:"My favorite sport is tennis.",ko:"나의 가장 좋아하는 스포츠는 테니스다."},
+{no:"430",part:3,cat:"청크-스포츠",q:"I ___ sports three times a week.",ht:"🟡",hint:"do",en:"I do sports three times a week.",ko:"나는 주에 3번 스포츠를 한다."},
+{no:"431",part:3,cat:"청크-음식",q:"I ___ pizza.",ht:"🟡",hint:"like",en:"I like pizza.",ko:"나는 피자를 좋아한다."},
+{no:"432",part:3,cat:"청크-음식",q:"Apples are ___.",ht:"🟡",hint:"healthy",en:"Apples are healthy.",ko:"사과는 건강하다."},
+{no:"433",part:3,cat:"청크-음식",q:"I ___ in the morning.",ht:"🟡",hint:"eat",en:"I eat in the morning.",ko:"나는 아침에 먹는다."},
+{no:"434",part:3,cat:"청크-음식",q:"Ice cream is ___.",ht:"🟡",hint:"delicious",en:"Ice cream is delicious.",ko:"아이스크림은 맛있다."},
+{no:"435",part:3,cat:"청크-음식",q:"I ___ breakfast.",ht:"🟡",hint:"have",en:"I have breakfast.",ko:"나는 아침을 먹는다."},
+{no:"436",part:3,cat:"청크-음식",q:"Vegetables are ___.",ht:"🟡",hint:"good",en:"Vegetables are good.",ko:"야채는 좋다."},
+{no:"437",part:3,cat:"청크-음식",q:"I ___ rice every day.",ht:"🟡",hint:"eat",en:"I eat rice every day.",ko:"나는 매일 밥을 먹는다."},
+{no:"438",part:3,cat:"청크-음식",q:"Bread is ___.",ht:"🟡",hint:"delicious",en:"Bread is delicious.",ko:"빵은 맛있다."},
+{no:"439",part:3,cat:"청크-음식",q:"I ___ water every day.",ht:"🟡",hint:"drink",en:"I drink water every day.",ko:"나는 매일 물을 마신다."},
+{no:"440",part:3,cat:"청크-음식",q:"My favorite food is ___.",ht:"🟡",hint:"chicken",en:"My favorite food is chicken.",ko:"나의 가장 좋아하는 음식은 치킨이다."},
+{no:"441",part:3,cat:"청크-날씨",q:"The sun is very ___.",ht:"🟡",hint:"bright",en:"The sun is very bright.",ko:"태양은 매우 밝다."},
+{no:"442",part:3,cat:"청크-날씨",q:"It's ___ today.",ht:"🟡",hint:"sunny",en:"The weather is perfect for a picnic.",ko:"오늘 소풍하기 딱 좋은 날씨야."},
+{no:"443",part:3,cat:"청크-날씨",q:"I ___ rain.",ht:"🟡",hint:"like",en:"I like rain.",ko:"나는 비를 좋아한다."},
+{no:"444",part:3,cat:"청크-날씨",q:"The sky is ___.",ht:"🟡",hint:"blue",en:"The sky is blue.",ko:"하늘은 파란색이다."},
+{no:"445",part:3,cat:"청크-날씨",q:"Winter is very ___.",ht:"🟡",hint:"cold",en:"Winter is very cold.",ko:"겨울은 매우 춥다."},
+{no:"446",part:3,cat:"청크-날씨",q:"It ___ yesterday.",ht:"🟡",hint:"rained",en:"It rained yesterday.",ko:"어제 비가 왔다."},
+{no:"447",part:3,cat:"청크-날씨",q:"Spring is ___.",ht:"🟡",hint:"beautiful",en:"Spring is beautiful.",ko:"봄은 아름답다."},
+{no:"448",part:3,cat:"청크-날씨",q:"The clouds are ___.",ht:"🟡",hint:"white",en:"The clouds are white.",ko:"구름들은 하얀색이다."},
+{no:"449",part:3,cat:"청크-날씨",q:"I like ___ weather.",ht:"🟡",hint:"warm",en:"I like warm weather.",ko:"나는 따뜻한 날씨를 좋아한다."},
+{no:"450",part:3,cat:"청크-날씨",q:"Snow is very ___.",ht:"🟡",hint:"white",en:"Snow is very white.",ko:"눈은 매우 하얀색이다."},
+{no:"451",part:3,cat:"청크-건강",q:"I'm very ___.",ht:"🟡",hint:"healthy",en:"I'm very healthy.",ko:"나는 매우 건강하다."},
+{no:"452",part:3,cat:"청크-건강",q:"I ___ a cold.",ht:"🟡",hint:"have",en:"I sprained my ankle.",ko:"나 발목을 삐었어."},
+{no:"453",part:3,cat:"청크-건강",q:"I ___ very tired.",ht:"🟡",hint:"feel",en:"I feel very tired.",ko:"나는 매우 피곤함을 느낀다."},
+{no:"454",part:3,cat:"청크-건강",q:"Vegetables are ___.",ht:"🟡",hint:"good",en:"Fresh fruit is also healthy.",ko:"신선한 과일도 건강에 좋아."},
+{no:"455",part:3,cat:"청크-건강",q:"I ___ sleep.",ht:"🟡",hint:"need",en:"I need sleep.",ko:"나는 수면이 필요하다."},
+{no:"456",part:3,cat:"청크-건강",q:"Exercise is ___.",ht:"🟡",hint:"good",en:"Exercise is good.",ko:"운동은 좋다."},
+{no:"457",part:3,cat:"청크-건강",q:"I ___ my teeth.",ht:"🟡",hint:"brush",en:"I brush my teeth.",ko:"나는 이를 닦는다."},
+{no:"458",part:3,cat:"청크-건강",q:"I take ___ every day.",ht:"🟡",hint:"vitamins",en:"I take vitamins every day.",ko:"나는 매일 비타민을 먹는다."},
+{no:"459",part:3,cat:"청크-건강",q:"Health is very ___.",ht:"🟡",hint:"important",en:"Health is very important.",ko:"건강은 매우 중요하다."},
+{no:"460",part:3,cat:"청크-건강",q:"I ___ every day.",ht:"🟡",hint:"exercise",en:"I stretch every morning.",ko:"나는 매일 아침 스트레칭을 해."},
+{no:"461",part:3,cat:"청크-감정",q:"I'm very ___.",ht:"🟡",hint:"happy",en:"I'm very happy.",ko:"나는 매우 행복하다."},
+{no:"462",part:3,cat:"청크-감정",q:"I'm ___ today.",ht:"🟡",hint:"sad",en:"I'm sad today.",ko:"나는 오늘 슬프다."},
+{no:"463",part:3,cat:"청크-감정",q:"I'm ___ about the test.",ht:"🟡",hint:"nervous",en:"I'm nervous about the test.",ko:"나는 시험에 대해 떨린다."},
+{no:"464",part:3,cat:"청크-감정",q:"I'm very ___.",ht:"🟡",hint:"excited",en:"I'm very excited.",ko:"나는 매우 신난다."},
+{no:"465",part:3,cat:"청크-감정",q:"I feel ___.",ht:"🟡",hint:"tired",en:"I feel tired.",ko:"나는 피곤함을 느낀다."},
+{no:"466",part:3,cat:"청크-감정",q:"I'm ___.",ht:"🟡",hint:"angry",en:"I feel frustrated today.",ko:"오늘 짜증이 나."},
+{no:"467",part:3,cat:"청크-감정",q:"I feel ___.",ht:"🟡",hint:"great",en:"I feel great.",ko:"나는 기분이 좋다."},
+{no:"468",part:3,cat:"청크-감정",q:"I'm very ___.",ht:"🟡",hint:"proud",en:"I'm very proud.",ko:"나는 매우 자랑스럽다."},
+{no:"469",part:3,cat:"청크-감정",q:"I feel ___ today.",ht:"🟡",hint:"wonderful",en:"I feel wonderful today.",ko:"나는 오늘 멋진 기분이다."},
+{no:"470",part:3,cat:"청크-감정",q:"I'm ___ right now.",ht:"🟡",hint:"scared",en:"I'm scared right now.",ko:"나는 지금 무섭다."},
+{no:"471",part:3,cat:"청크-가족",q:"My mom is a ___.",ht:"🟡",hint:"teacher",en:"My dad works at a hospital.",ko:"우리 아빠는 병원에서 일해."},
+{no:"472",part:3,cat:"청크-가족",q:"I ___ my family.",ht:"🟡",hint:"love",en:"I love my family.",ko:"나는 나의 가족을 사랑한다."},
+{no:"473",part:3,cat:"청크-가족",q:"My brother is ___.",ht:"🟡",hint:"tall",en:"My brother is tall.",ko:"나의 형은 크다."},
+{no:"474",part:3,cat:"청크-가족",q:"My sister ___ in the city.",ht:"🟡",hint:"lives",en:"My sister lives in the city.",ko:"나의 누나는 도시에서 산다."},
+{no:"475",part:3,cat:"청크-가족",q:"I ___ with my grandmother.",ht:"🟡",hint:"live",en:"My grandfather lives nearby.",ko:"우리 할아버지는 근처에 사셔."},
+{no:"476",part:3,cat:"청크-가족",q:"My dad is very ___.",ht:"🟡",hint:"strong",en:"My dad is very strong.",ko:"나의 아빠는 매우 강하다."},
+{no:"477",part:3,cat:"청크-가족",q:"I ___ my parents.",ht:"🟡",hint:"respect",en:"I respect my parents.",ko:"나는 나의 부모님을 존경한다."},
+{no:"478",part:3,cat:"청크-가족",q:"My family is very ___.",ht:"🟡",hint:"kind",en:"My family is very kind.",ko:"나의 가족은 매우 친절하다."},
+{no:"479",part:3,cat:"청크-가족",q:"We eat ___ together.",ht:"🟡",hint:"dinner",en:"We eat dinner together.",ko:"우리는 함께 저녁을 먹는다."},
+{no:"480",part:3,cat:"청크-가족",q:"My family ___ me very much.",ht:"🟡",hint:"loves",en:"My family loves me very much.",ko:"나의 가족은 나를 매우 사랑한다."},
+{no:"481",part:3,cat:"청크-IT",q:"I use a ___.",ht:"🟡",hint:"computer",en:"I use a computer.",ko:"나는 컴퓨터를 사용한다."},
+{no:"482",part:3,cat:"청크-IT",q:"I like ___.",ht:"🟡",hint:"video games",en:"I like video games.",ko:"나는 비디오 게임을 좋아한다."},
+{no:"483",part:3,cat:"청크-IT",q:"I watch ___.",ht:"🟡",hint:"YouTube",en:"I watch YouTube.",ko:"나는 유튜브를 본다."},
+{no:"484",part:3,cat:"청크-IT",q:"I play ___ on my phone.",ht:"🟡",hint:"games",en:"I play games on my phone.",ko:"나는 내 휴대폰에서 게임을 한다."},
+{no:"485",part:3,cat:"청크-IT",q:"I use the ___ every day.",ht:"🟡",hint:"internet",en:"I use the internet every day.",ko:"나는 매일 인터넷을 사용한다."},
+{no:"486",part:3,cat:"청크-IT",q:"My ___ is very fast.",ht:"🟡",hint:"computer",en:"My computer is very fast.",ko:"나의 컴퓨터는 매우 빠르다."},
+{no:"487",part:3,cat:"청크-IT",q:"I have a ___.",ht:"🟡",hint:"phone",en:"I have a phone.",ko:"나는 휴대폰을 가지고 있다."},
+{no:"488",part:3,cat:"청크-IT",q:"Technology is very ___.",ht:"🟡",hint:"interesting",en:"Technology is very interesting.",ko:"기술은 매우 흥미롭다."},
+{no:"489",part:3,cat:"청크-IT",q:"I like ___ online.",ht:"🟡",hint:"learning",en:"I like learning online.",ko:"나는 온라인에서 배우는 것을 좋아한다."},
+{no:"490",part:3,cat:"청크-IT",q:"The internet is ___.",ht:"🟡",hint:"useful",en:"The internet is useful.",ko:"인터넷은 유용하다."},
+{no:"491",part:3,cat:"청크-여행",q:"I want to ___ the world.",ht:"🟡",hint:"travel",en:"I want to travel the world.",ko:"나는 세계를 여행하고 싶다."},
+{no:"492",part:3,cat:"청크-여행",q:"I took a ___.",ht:"🟡",hint:"trip",en:"I took a trip.",ko:"나는 여행을 갔다."},
+{no:"493",part:3,cat:"청크-여행",q:"The beach is ___.",ht:"🟡",hint:"nice",en:"The beach is nice.",ko:"해변은 좋다."},
+{no:"494",part:3,cat:"청크-여행",q:"I visited ___.",ht:"🟡",hint:"Seoul",en:"I visited Seoul.",ko:"나는 서울을 방문했다."},
+{no:"495",part:3,cat:"청크-여행",q:"I went by ___.",ht:"🟡",hint:"plane",en:"I went by plane.",ko:"나는 비행기로 갔다."},
+{no:"496",part:4,cat:"대화-영화",q:"A: Do you watch movies?\nB: ___",ht:"🟢",hint:"Yes, I watch movies.",en:"B: Yes, I watch movies.",ko:"B: 응, 나는 영화를 봐."},
+{no:"497",part:4,cat:"대화-영화",q:"A: What's your favorite movie?\nB: ___",ht:"🟡",hint:"My favorite is action movies.",en:"B: My favorite is action movies.",ko:"B: 내가 제일 좋아하는 건 액션 영화야."},
+{no:"498",part:4,cat:"대화-영화",q:"A: Did you watch it recently?\nB: ___",ht:"🟢",hint:"Yes, last week.",en:"B: Yes, last week.",ko:"B: 응, 지난주에."},
+{no:"499",part:4,cat:"대화-영화",q:"A: Was it interesting?\nB: ___",ht:"🟡",hint:"Yes, very interesting!",en:"B: Yes, very interesting!",ko:"B: 응, 정말 재미있었어!"},
+{no:"500",part:4,cat:"대화-영화",q:"A: Who did you watch it with?\nB: ___",ht:"🔴",hint:"I watched it with my family.",en:"B: I watched it with my family.",ko:"B: 나는 가족과 함께 봤어."},
+{no:"501",part:4,cat:"대화-음악",q:"A: Do you like music?\nB: ___",ht:"🟢",hint:"Yes, I love music!",en:"B: Yes, I love music!",ko:"B: 응, 나는 음악을 정말 좋아!"},
+{no:"502",part:4,cat:"대화-음악",q:"A: What kind of music?\nB: ___",ht:"🟡",hint:"I like K-pop.",en:"B: I like K-pop.",ko:"B: 나는 K팝을 좋아해."},
+{no:"503",part:4,cat:"대화-음악",q:"A: Do you play instruments?\nB: ___",ht:"🟢",hint:"Yes, I play piano.",en:"B: Yes, I take piano lessons!",ko:"B: 응, 나 피아노 레슨 받아!"},
+{no:"504",part:4,cat:"대화-음악",q:"A: Who's your favorite singer?\nB: ___",ht:"🟡",hint:"BTS is my favorite.",en:"B: BTS is my favorite.",ko:"B: BTS가 나의 가장 좋아하는 가수야."},
+{no:"505",part:4,cat:"대화-음악",q:"A: Have you been to a concert?\nB: ___",ht:"🔴",hint:"Yes, I went last year.",en:"B: Yes, I went last year.",ko:"B: 응, 나는 작년에 갔어."},
+{no:"506",part:4,cat:"대화-책",q:"A: Do you like reading?\nB: ___",ht:"🟡",hint:"Yes, I love reading!",en:"B: Yes, I love reading!",ko:"B: 응, 나는 읽기를 정말 좋아!"},
+{no:"507",part:4,cat:"대화-책",q:"A: What kind of books?\nB: ___",ht:"🟢",hint:"I like adventure stories.",en:"B: I like adventure stories.",ko:"B: 나는 모험 이야기를 좋아해."},
+{no:"508",part:4,cat:"대화-책",q:"A: How many books do you have?\nB: ___",ht:"🟡",hint:"I have about fifty.",en:"B: I have about fifty.",ko:"B: 나는 약 50권을 가지고 있어."},
+{no:"509",part:4,cat:"대화-책",q:"A: What's your favorite book?\nB: ___",ht:"🔴",hint:"Harry Potter is my favorite.",en:"B: Harry Potter is my favorite.",ko:"B: 해리 포터가 나의 가장 좋아하는 책이야."},
+{no:"510",part:4,cat:"대화-책",q:"A: Are you reading now?\nB: ___",ht:"🟡",hint:"Yes, a mystery novel.",en:"B: Yes, a mystery novel.",ko:"B: 응, 미스터리 소설 중이야."},
+{no:"511",part:4,cat:"대화-애완동물",q:"A: Do you have a pet?\nB: ___",ht:"🟢",hint:"Yes, I have a dog.",en:"B: Yes, I have a dog.",ko:"B: 응, 나는 개를 가지고 있어."},
+{no:"512",part:4,cat:"대화-애완동물",q:"A: What's your pet's name?\nB: ___",ht:"🟡",hint:"My dog's name is Buddy.",en:"B: My dog's name is Buddy.",ko:"B: 나의 개 이름은 버디야."},
+{no:"513",part:4,cat:"대화-애완동물",q:"A: What kind of pet do you want?\nB: ___",ht:"🟢",hint:"I want a cat.",en:"B: I want a cat.",ko:"B: 나는 고양이를 원해."},
+{no:"514",part:4,cat:"대화-애완동물",q:"A: How often do you feed it?\nB: ___",ht:"🟡",hint:"Twice a day.",en:"B: Twice a day.",ko:"B: 하루에 두 번."},
+{no:"515",part:4,cat:"대화-애완동물",q:"A: Do you take walks?\nB: ___",ht:"🔴",hint:"Yes, every day in the park.",en:"B: Yes, every day in the park.",ko:"B: 응, 매일 공원에서."},
+{no:"516",part:4,cat:"대화-날씨",q:"A: How's the weather?\nB: ___",ht:"🟡",hint:"It's sunny and warm.",en:"B: It's sunny and warm.",ko:"B: 해가 나고 따뜻해."},
+{no:"517",part:4,cat:"대화-날씨",q:"A: Do you like this weather?\nB: ___",ht:"🟢",hint:"Yes, I love sunny days.",en:"B: Yes, I love sunny days.",ko:"B: 응, 나는 맑은 날을 좋아해."},
+{no:"518",part:4,cat:"대화-날씨",q:"A: Did it rain yesterday?\nB: ___",ht:"🟡",hint:"Yes, all day.",en:"B: Yes, all day.",ko:"B: 응, 하루 종일."},
+{no:"519",part:4,cat:"대화-날씨",q:"A: What's your favorite season?\nB: ___",ht:"🔴",hint:"My favorite is spring.",en:"B: My favorite is spring.",ko:"B: 나의 가장 좋아하는 계절은 봄이야."},
+{no:"520",part:4,cat:"대화-날씨",q:"A: Is it cold outside?\nB: ___",ht:"🟡",hint:"Yes, very cold.",en:"B: Yes, very cold.",ko:"B: 응, 정말 추워."},
+{no:"521",part:4,cat:"대화-학교행사",q:"A: Is there a festival?\nB: ___",ht:"🟢",hint:"Yes, next month.",en:"B: Yes, next month.",ko:"B: 응, 다음 달이야."},
+{no:"522",part:4,cat:"대화-학교행사",q:"A: Are you joining?\nB: ___",ht:"🟡",hint:"Yes, I'm excited!",en:"B: Yes, I'm excited!",ko:"B: 응, 나는 설레!"},
+{no:"523",part:4,cat:"대화-학교행사",q:"A: What will you do?\nB: ___",ht:"🔴",hint:"I'll perform a song.",en:"B: I'll perform a song.",ko:"B: 나는 노래를 부를 거야."},
+{no:"524",part:4,cat:"대화-학교행사",q:"A: Did you enjoy the trip?\nB: ___",ht:"🟡",hint:"Yes, it was amazing!",en:"B: Yes, it was amazing!",ko:"B: 응, 정말 멋있었어!"},
+{no:"525",part:4,cat:"대화-학교행사",q:"A: Will you join sports day?\nB: ___",ht:"🟢",hint:"Yes, I'll run the relay.",en:"B: Yes, I'll run the relay.",ko:"B: 응, 나는 릴레이 경기를 할 거야."},
+{no:"526",part:4,cat:"대화-계절",q:"A: What season is it?\nB: ___",ht:"🟡",hint:"It's summer.",en:"B: It's summer.",ko:"B: 지금은 여름이야."},
+{no:"527",part:4,cat:"대화-계절",q:"A: Do you like winter?\nB: ___",ht:"🟢",hint:"Yes, I love snow.",en:"B: Yes, I love snow.",ko:"B: 응, 나는 눈을 좋아해."},
+{no:"528",part:4,cat:"대화-계절",q:"A: What do you do in autumn?\nB: ___",ht:"🟡",hint:"I collect colorful leaves.",en:"B: I collect colorful leaves.",ko:"B: 나는 알록달록한 잎을 모아."},
+{no:"529",part:4,cat:"대화-계절",q:"A: Is summer hot?\nB: ___",ht:"🔴",hint:"Yes, very hot and humid.",en:"B: Yes, very hot and humid.",ko:"B: 응, 정말 덥고 습해."},
+{no:"530",part:4,cat:"대화-계절",q:"A: When do you wear jackets?\nB: ___",ht:"🟡",hint:"In autumn and winter.",en:"B: In autumn and winter.",ko:"B: 가을과 겨울에."},
+{no:"531",part:4,cat:"대화-하루일과",q:"A: What time do you wake up?\nB: ___",ht:"🟢",hint:"At 7 AM.",en:"B: At 7 AM.",ko:"B: 오전 7시에."},
+{no:"532",part:4,cat:"대화-하루일과",q:"A: Do you have breakfast?\nB: ___",ht:"🟡",hint:"Yes, I eat cereal.",en:"B: Yes, I eat cereal.",ko:"B: 응, 나는 시리얼을 먹어."},
+{no:"533",part:4,cat:"대화-하루일과",q:"A: When do you go to school?\nB: ___",ht:"🟢",hint:"At 8:30.",en:"B: At 8:30.",ko:"B: 8시 30분에."},
+{no:"534",part:4,cat:"대화-하루일과",q:"A: What time is lunch?\nB: ___",ht:"🟡",hint:"At noon.",en:"B: At noon.",ko:"B: 정오에."},
+{no:"535",part:4,cat:"대화-하루일과",q:"A: What do you do after dinner?\nB: ___",ht:"🔴",hint:"I study then relax.",en:"B: I study then relax.",ko:"B: 나는 공부하고 나서 쉬어."},
+{no:"536",part:4,cat:"대화-꿈",q:"A: What's your dream job?\nB: ___",ht:"🟡",hint:"I want to be an engineer.",en:"B: I want to be an engineer.",ko:"B: 나는 엔지니어가 되고 싶어."},
+{no:"537",part:4,cat:"대화-꿈",q:"A: Do you want to travel?\nB: ___",ht:"🟢",hint:"Yes, around the world.",en:"B: Yes, around the world.",ko:"B: 응, 세계를 여행하고 싶어."},
+{no:"538",part:4,cat:"대화-꿈",q:"A: What will you study?\nB: ___",ht:"🟡",hint:"I want to study science.",en:"B: I want to study science.",ko:"B: 나는 과학을 공부하고 싶어."},
+{no:"539",part:4,cat:"대화-꿈",q:"A: Where do you want to live?\nB: ___",ht:"🔴",hint:"Near the beach.",en:"B: Near the beach.",ko:"B: 해변 근처에서 살고 싶어."},
+{no:"540",part:4,cat:"대화-꿈",q:"A: Will your dream come true?\nB: ___",ht:"🟡",hint:"Yes, I'll work hard!",en:"B: Yes, I'll work hard!",ko:"B: 응, 나는 열심히 할 거야!"},
+{no:"541",part:4,cat:"대화-음식선호",q:"A: Are you vegetarian?\nB: ___",ht:"🟢",hint:"No, I eat everything.",en:"B: No, I eat everything.",ko:"B: 아니, 나는 다 먹어."},
+{no:"542",part:4,cat:"대화-음식선호",q:"A: Do you like seafood?\nB: ___",ht:"🟡",hint:"Yes, I love shrimp.",en:"B: Yes, I love shrimp.",ko:"B: 응, 나는 새우를 좋아해."},
+{no:"543",part:4,cat:"대화-음식선호",q:"A: What don't you like?\nB: ___",ht:"🟡",hint:"I don't like spicy food.",en:"B: I don't like spicy food.",ko:"B: 나는 맵고 자극적인 음식을 좋아하지 않아."},
+{no:"544",part:4,cat:"대화-음식선호",q:"A: Do you cook?\nB: ___",ht:"🟡",hint:"Yes, simple dishes.",en:"B: Yes, simple dishes.",ko:"B: 응, 나는 간단한 요리를 할 수 있어."},
+{no:"545",part:4,cat:"대화-음식선호",q:"A: What's for dinner?\nB: ___",ht:"🔴",hint:"We're having pasta.",en:"B: We're having pasta.",ko:"B: 우리는 파스타를 먹을 거야."},
+{no:"546",part:4,cat:"대화-학용품",q:"A: Do you need a pencil?\nB: ___",ht:"🟢",hint:"Yes, please.",en:"B: Yes, please.",ko:"B: 응, 주세요."},
+{no:"547",part:4,cat:"대화-학용품",q:"A: Where's your notebook?\nB: ___",ht:"🟡",hint:"In my backpack.",en:"B: In my backpack.",ko:"B: 내 배낭에 있어."},
+{no:"548",part:4,cat:"대화-학용품",q:"A: Can you lend me a ruler?\nB: ___",ht:"🟡",hint:"Sure, here you go.",en:"B: No problem, take it!",ko:"B: 문제없어, 가져가!"},
+{no:"549",part:4,cat:"대화-학용품",q:"A: Do you have a calculator?\nB: ___",ht:"🟡",hint:"Yes, right here.",en:"B: Yes, right here.",ko:"B: 응, 여기 있어."},
+{no:"550",part:4,cat:"대화-학용품",q:"A: What color is your pen?\nB: ___",ht:"🔴",hint:"It's blue.",en:"B: It's blue.",ko:"B: 파란색이야."},
+{no:"551",part:4,cat:"대화-숙제",q:"A: Did you do homework?\nB: ___",ht:"🟡",hint:"Yes, I finished yesterday.",en:"B: Yes, I finished yesterday.",ko:"B: 응, 나는 어제 다 했어."},
+{no:"552",part:4,cat:"대화-숙제",q:"A: How much homework?\nB: ___",ht:"🟢",hint:"I got a lot.",en:"B: I got a lot.",ko:"B: 나는 많이 받았어."},
+{no:"553",part:4,cat:"대화-숙제",q:"A: Can you help me?\nB: ___",ht:"🟡",hint:"Yes, I can help.",en:"B: Yes, I can help.",ko:"B: 응, 나는 도와줄 수 있어."},
+{no:"554",part:4,cat:"대화-숙제",q:"A: Is it difficult?\nB: ___",ht:"🔴",hint:"Yes, very hard.",en:"B: Yes, very hard.",ko:"B: 응, 정말 어려워."},
+{no:"555",part:4,cat:"대화-숙제",q:"A: When is it due?\nB: ___",ht:"🟡",hint:"Tomorrow.",en:"B: Tomorrow.",ko:"B: 내일까지야."},
+{no:"556",part:4,cat:"대화-취침",q:"A: Are you tired?\nB: ___",ht:"🟡",hint:"Yes, very tired.",en:"B: Yes, very tired.",ko:"B: 응, 정말 피곤해."},
+{no:"557",part:4,cat:"대화-취침",q:"A: When do you sleep?\nB: ___",ht:"🟢",hint:"At 10 PM.",en:"B: At 10 PM.",ko:"B: 밤 10시에."},
+{no:"558",part:4,cat:"대화-취침",q:"A: Do you sleep well?\nB: ___",ht:"🟡",hint:"Yes, very well.",en:"B: Yes, very well.",ko:"B: 응, 나는 잘 자."},
+{no:"559",part:4,cat:"대화-취침",q:"A: How many hours?\nB: ___",ht:"🔴",hint:"I sleep eight hours.",en:"B: I sleep eight hours.",ko:"B: 나는 8시간을 자."},
+{no:"560",part:4,cat:"대화-취침",q:"A: Do you take naps?\nB: ___",ht:"🟡",hint:"Yes, on weekends.",en:"B: Yes, on weekends.",ko:"B: 응, 주말에."},
+{no:"561",part:4,cat:"대화-운동",q:"A: Do you exercise?\nB: ___",ht:"🟡",hint:"Yes, three times a week.",en:"B: Yes, three times a week.",ko:"B: 응, 나는 주에 3번 운동해."},
+{no:"562",part:4,cat:"대화-운동",q:"A: What's your favorite exercise?\nB: ___",ht:"🟢",hint:"I love running.",en:"B: I love running.",ko:"B: 나는 달리기를 좋아해."},
+{no:"563",part:4,cat:"대화-운동",q:"A: Do you go to the gym?\nB: ___",ht:"🟡",hint:"Yes, on weekdays.",en:"B: Yes, on weekdays.",ko:"B: 응, 나는 평일에 가."},
+{no:"564",part:4,cat:"대화-운동",q:"A: Are you fit?\nB: ___",ht:"🔴",hint:"Yes, I stay healthy.",en:"B: Yes, I stay healthy.",ko:"B: 응, 나는 건강하려고 노력해."},
+{no:"565",part:4,cat:"대화-운동",q:"A: Do you stretch?\nB: ___",ht:"🟡",hint:"Yes, before and after.",en:"B: Yes, before and after.",ko:"B: 응, 운동 전후로."},
+{no:"566",part:4,cat:"대화-가정",q:"A: Who do you live with?\nB: ___",ht:"🟡",hint:"With parents and brother.",en:"B: With parents and brother.",ko:"B: 부모님과 형과 함께."},
+{no:"567",part:4,cat:"대화-가정",q:"A: Have your own room?\nB: ___",ht:"🟢",hint:"Yes, I do.",en:"B: Yes, I do.",ko:"B: 응, 나는 있어."},
+{no:"568",part:4,cat:"대화-가정",q:"A: Who does chores?\nB: ___",ht:"🟡",hint:"We all help out.",en:"B: We all help out.",ko:"B: 우리 모두 도와."},
+{no:"569",part:4,cat:"대화-가정",q:"A: Do you clean your room?\nB: ___",ht:"🔴",hint:"Yes, every week.",en:"B: Yes, every week.",ko:"B: 응, 나는 매주 청소해."},
+{no:"570",part:4,cat:"대화-가정",q:"A: What's your favorite room?\nB: ___",ht:"🟡",hint:"The kitchen.",en:"B: The kitchen.",ko:"B: 부엌이야."},
+{no:"571",part:4,cat:"대화-용돈",q:"A: Do you get allowance?\nB: ___",ht:"🟡",hint:"Yes, every week.",en:"B: Yes, on Saturdays!",ko:"B: 응, 토요일에!"},
+{no:"572",part:4,cat:"대화-용돈",q:"A: How much?\nB: ___",ht:"🟢",hint:"I get ten dollars.",en:"B: I get ten dollars.",ko:"B: 나는 10달러를 받아."},
+{no:"573",part:4,cat:"대화-용돈",q:"A: What do you spend it on?\nB: ___",ht:"🟡",hint:"On snacks and games.",en:"B: On snacks and games.",ko:"B: 간식과 게임에."},
+{no:"574",part:4,cat:"대화-용돈",q:"A: Do you save money?\nB: ___",ht:"🔴",hint:"Yes, I save half.",en:"B: Yes, I save half.",ko:"B: 응, 나는 절반을 저금해."},
+{no:"575",part:4,cat:"대화-용돈",q:"A: What are you saving for?\nB: ___",ht:"🟡",hint:"A new phone.",en:"B: A new phone.",ko:"B: 새 휴대폰을 사기 위해."},
+{no:"576",part:4,cat:"대화-선물",q:"A: Did you get a gift?\nB: ___",ht:"🟡",hint:"Yes, a nice present.",en:"B: Yes, a nice present.",ko:"B: 응, 나는 좋은 선물을 받았어."},
+{no:"577",part:4,cat:"대화-선물",q:"A: What did you want for your birthday?\nB: ___",ht:"🟢",hint:"A video game.",en:"B: A video game.",ko:"B: 비디오 게임을 원했어."},
+{no:"578",part:4,cat:"대화-선물",q:"A: Do you like gifts?\nB: ___",ht:"🟡",hint:"Yes, very much!",en:"B: Yes, I really enjoyed it!",ko:"B: 응, 정말 즐거웠어!"},
+{no:"579",part:4,cat:"대화-선물",q:"A: What will you give?\nB: ___",ht:"🔴",hint:"A book.",en:"B: A book.",ko:"B: 책을 줄 거야."},
+{no:"580",part:4,cat:"대화-선물",q:"A: Have you wrapped it?\nB: ___",ht:"🟡",hint:"Yes, nicely.",en:"B: Yes, nicely.",ko:"B: 응, 나는 예쁘게 포장했어."},
+{no:"581",part:4,cat:"대화-안전",q:"A: Know about road safety?\nB: ___",ht:"🟡",hint:"Yes, I look both ways.",en:"B: Yes, I look both ways.",ko:"B: 응, 나는 양쪽을 본다."},
+{no:"582",part:4,cat:"대화-안전",q:"A: Wear a helmet biking?\nB: ___",ht:"🟢",hint:"Yes, always.",en:"B: Yes, always.",ko:"B: 응, 항상."},
+{no:"583",part:4,cat:"대화-안전",q:"A: Is safety important?\nB: ___",ht:"🟡",hint:"Yes, very important.",en:"B: Yes, very important.",ko:"B: 응, 안전은 정말 중요해."},
+{no:"584",part:4,cat:"대화-안전",q:"A: Learn about first aid?\nB: ___",ht:"🔴",hint:"Yes, at school.",en:"B: Yes, at school.",ko:"B: 응, 학교에서."},
+{no:"585",part:4,cat:"대화-안전",q:"A: Know the emergency number?\nB: ___",ht:"🟡",hint:"Yes, it's 911.",en:"B: Yes, it's 911.",ko:"B: 응, 911이야."},
+{no:"586",part:4,cat:"대화-인터넷",q:"A: How often use the internet?\nB: ___",ht:"🟡",hint:"Every day.",en:"B: Every day.",ko:"B: 나는 매일 사용해."},
+{no:"587",part:4,cat:"대화-인터넷",q:"A: What websites do you visit?\nB: ___",ht:"🟢",hint:"YouTube and education sites.",en:"B: YouTube and education sites.",ko:"B: 유튜브와 교육 사이트."},
+{no:"588",part:4,cat:"대화-인터넷",q:"A: Have social media?\nB: ___",ht:"🟡",hint:"Yes, I have an account.",en:"B: Yes, I have an account.",ko:"B: 응, 나는 계정이 있어."},
+{no:"589",part:4,cat:"대화-인터넷",q:"A: How much time online?\nB: ___",ht:"🔴",hint:"About an hour.",en:"B: About an hour.",ko:"B: 약 한 시간."},
+{no:"590",part:4,cat:"대화-인터넷",q:"A: Is internet important?\nB: ___",ht:"🟡",hint:"Yes, for learning.",en:"B: Yes, for learning.",ko:"B: 응, 공부할 때 유용해."},
+{no:"591",part:4,cat:"대화-학문",q:"A: What's your favorite subject?\nB: ___",ht:"🟡",hint:"I like English.",en:"B: I like English.",ko:"B: 나는 영어를 좋아해."},
+{no:"592",part:4,cat:"대화-학문",q:"A: Do you study hard?\nB: ___",ht:"🟢",hint:"Yes, every day.",en:"B: Yes, every day.",ko:"B: 응, 나는 매일 공부해."},
+{no:"593",part:4,cat:"대화-학문",q:"A: What's difficult?\nB: ___",ht:"🟡",hint:"Math is difficult.",en:"B: Math is difficult.",ko:"B: 수학이 좀 어려워."},
+{no:"594",part:4,cat:"대화-학문",q:"A: Have a tutor?\nB: ___",ht:"🔴",hint:"Yes, English tutor.",en:"B: Yes, English tutor.",ko:"B: 응, 나는 영어 선생님이 있어."},
+{no:"595",part:4,cat:"대화-학문",q:"A: Are your grades good?\nB: ___",ht:"🟡",hint:"Yes, mostly As.",en:"B: Yes, mostly As.",ko:"B: 응, 나는 대부분 A를 받아."},
+{no:"596",part:4,cat:"대화-물건",q:"A: Did you lose something?\nB: ___",ht:"🟡",hint:"Yes, my keys.",en:"B: Yes, my keys.",ko:"B: 응, 나는 열쇠를 잃어버렸어."},
+{no:"597",part:4,cat:"대화-물건",q:"A: Where did you lose it?\nB: ___",ht:"🟢",hint:"At school.",en:"B: At school.",ko:"B: 학교에서."},
+{no:"598",part:4,cat:"대화-물건",q:"A: Did you find it?\nB: ___",ht:"🟡",hint:"No, still can't find it.",en:"B: No, still can't find it.",ko:"B: 아니, 아직도 못 찾았어."},
+{no:"599",part:4,cat:"대화-물건",q:"A: Can I help?\nB: ___",ht:"🔴",hint:"Yes, very kind of you.",en:"B: Yes, very kind of you.",ko:"B: 응, 그거 정말 고마워."},
+{no:"600",part:4,cat:"대화-물건",q:"A: Ask the office?\nB: ___",ht:"🟡",hint:"Yes, good idea!",en:"B: Yes, good idea!",ko:"B: 응, 좋은 생각이야!"},
+{no:"601",part:4,cat:"대화-도움",q:"A: Can you help me?\nB: ___",ht:"🟡",hint:"What do you need?",en:"B: What do you need?",ko:"B: 뭐가 필요해?"},
+{no:"602",part:4,cat:"대화-도움",q:"A: I'm stuck on this problem.\nB: ___",ht:"🟢",hint:"Let me see if I can help.",en:"B: Let me see if I can help.",ko:"B: 내가 도와줄 수 있는지 보자."},
+{no:"603",part:4,cat:"대화-도움",q:"A: Can you explain this?\nB: ___",ht:"🟡",hint:"I'll explain slowly.",en:"B: I'll explain slowly.",ko:"B: 응, 천천히 설명할게."},
+{no:"604",part:4,cat:"대화-도움",q:"A: Thank you for helping!\nB: ___",ht:"🔴",hint:"Happy to help!",en:"B: Happy to help!",ko:"B: 도와줘서 기뻐!"},
+{no:"605",part:4,cat:"대화-도움",q:"A: Help me practice?\nB: ___",ht:"🟡",hint:"Let's practice together.",en:"B: Let's practice together.",ko:"B: 응, 함께 연습하자."},
+{no:"606",part:4,cat:"대화-병원",q:"A: Are you okay?\nB: ___",ht:"🟢",hint:"No, I feel sick.",en:"B: No, I feel sick.",ko:"B: 아니, 나는 기분이 안 좋아."},
+{no:"607",part:4,cat:"대화-병원",q:"A: What's wrong?\nB: ___",ht:"🟡",hint:"I have a headache.",en:"B: I have a headache.",ko:"B: 나는 두통이 있어."},
+{no:"608",part:4,cat:"대화-병원",q:"A: Should you see a doctor?\nB: ___",ht:"🟡",hint:"Yes, I need to.",en:"B: Yes, I need to.",ko:"B: 응, 나는 가야 해."},
+{no:"609",part:4,cat:"대화-병원",q:"A: When will you go?\nB: ___",ht:"🟡",hint:"This afternoon.",en:"B: This afternoon.",ko:"B: 이 오후에."},
+{no:"610",part:4,cat:"대화-병원",q:"A: Hope you feel better!\nB: ___",ht:"🔴",hint:"Thank you so much!",en:"B: Thank you so much!",ko:"B: 정말 고마워!"},
+{no:"611",part:4,cat:"대화-신발",q:"A: Do you like sports shoes?\nB: ___",ht:"🟡",hint:"Yes, I do!",en:"B: Yes, I do!",ko:"B: 응, 나는 좋아!"},
+{no:"612",part:4,cat:"대화-신발",q:"A: What's your favorite brand?\nB: ___",ht:"🟢",hint:"Nike.",en:"B: Nike.",ko:"B: 나이키."},
+{no:"613",part:4,cat:"대화-신발",q:"A: Are they comfortable?\nB: ___",ht:"🟡",hint:"Yes, very comfortable.",en:"B: Yes, very comfortable.",ko:"B: 응, 정말 편해."},
+{no:"614",part:4,cat:"대화-신발",q:"A: How much did you pay?\nB: ___",ht:"🔴",hint:"Fifty dollars.",en:"B: Fifty dollars.",ko:"B: 50달러."},
+{no:"615",part:4,cat:"대화-신발",q:"A: Will you buy more?\nB: ___",ht:"🟡",hint:"Yes, next month.",en:"B: Yes, this coming Friday!",ko:"B: 응, 이번 주 금요일에!"},
+{no:"616",part:4,cat:"대화-공부시간",q:"A: When do you study?\nB: ___",ht:"🟡",hint:"After school.",en:"B: After school.",ko:"B: 방과 후에."},
+{no:"617",part:4,cat:"대화-공부시간",q:"A: How long?\nB: ___",ht:"🟢",hint:"Two hours.",en:"B: Two hours.",ko:"B: 2시간."},
+{no:"618",part:4,cat:"대화-공부시간",q:"A: Where do you study?\nB: ___",ht:"🟡",hint:"At home.",en:"B: At home.",ko:"B: 집에서."},
+{no:"619",part:4,cat:"대화-공부시간",q:"A: Do you study on weekends?\nB: ___",ht:"🔴",hint:"Yes, every day.",en:"B: Yes, twice a day!",ko:"B: 응, 하루에 두 번!"},
+{no:"620",part:4,cat:"대화-공부시간",q:"A: Is studying important?\nB: ___",ht:"🟡",hint:"Yes, very important.",en:"B: Absolutely, we must protect it!",ko:"B: 물론이지, 반드시 지켜야 해!"},
+];
+
+const CATEGORY_EMOJIS = {
+  "인사와 소개": "👋",
+  "감정과 상태": "😊",
+  "일상 루틴": "⏰",
+  "학교생활": "🏫",
+  "취미와 친구": "🎮",
+  "자기소개": "🙋",
+  "여행 표현": "✈️",
+  "질문과 대답": "❓",
+  "인사와 일상": "👋",
+  "여행과 쇼핑": "🛍️",
+  "청크 채우기 - 인사": "👋",
+  "청크 채우기 - 감정": "😊",
+  "청크 채우기 - 일상": "⏰",
+  "청크 채우기 - 학교": "🏫",
+  "청크 채우기 - 친구": "🎮",
+  "청크 채우기 - 소개": "🙋",
+  "청크 채우기 - 여행": "✈️",
+  "청크 채우기 - 질문": "❓",
+  "대화 - 학교 만남": "🏫",
+  "대화 - 친구 초대": "👫",
+  "대화 - 학교생활": "📝",
+  "대화 - 자기소개": "🙋",
+  "대화 - 여행": "✈️",
+  "대화 - 감정": "😊",
+  "대화 - 루틴": "⏰",
+  "대화 - 취미": "🎮",
+  "대화 - 우정": "💛",
+  "대화 - 헤어짐": "👋",
+};
+
+let currentPart = 0;
+let quizMode = 'none';
+let isPlaying = false;
+let currentPlayIndex = -1;
+let filteredQuestions = [...QUESTIONS];
+let quizScores = {
+  correct: 0,
+  wrong: 0,
+  remaining: QUESTIONS.length
+};
+
+const voiceSettings = {
+  rate: 0.85,
+  pitch: 1.2,
+  volume: 1.0,
+  interval: 400,
+  rate2: 1.0     // 대화 상대 속도
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  initVoices();
+  renderCategories();
+  updateProgress();
+  setupSearchListener();
+  setupSliderListeners();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    togglePause();
+  }
+  if (e.code === 'Enter') {
+    e.preventDefault();
+    playAll();
+  }
+});
+
+function initVoices() {
+  const synth = window.speechSynthesis;
+  const populateSelects = () => {
+    const voices = synth.getVoices();
+    ['voiceSelect', 'voiceSelect2'].forEach(id => {
+      const sel = document.getElementById(id);
+      sel.innerHTML = '';
+      voices.forEach((voice, idx) => {
+        const opt = document.createElement('option');
+        opt.textContent = voice.name + ' (' + voice.lang + ')';
+        opt.value = idx;
+        sel.appendChild(opt);
+      });
+    });
+    // 기본 목소리: 영어 첫 번째
+    const enVoice = voices.findIndex(v => v.lang.includes('en'));
+    if (enVoice >= 0) document.getElementById('voiceSelect').value = enVoice;
+    // 대화 상대 기본값: 여성 영어 목소리 찾기
+    const femIdx = voices.findIndex(v => /female|woman|Samantha|Karen|Victoria|Fiona/i.test(v.name));
+    const partnerIdx = femIdx >= 0 ? femIdx : (enVoice >= 0 ? Math.min(enVoice + 1, voices.length - 1) : 0);
+    document.getElementById('voiceSelect2').value = partnerIdx;
+  };
+  synth.onvoiceschanged = populateSelects;
+  populateSelects();
+}
+
+function toggleSettings() {
+  const body = document.getElementById('settingsBody');
+  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function setupSliderListeners() {
+  document.getElementById('rateSlider').addEventListener('input', (e) => {
+    voiceSettings.rate = parseFloat(e.target.value);
+    document.getElementById('rateVal').textContent = e.target.value + '×';
+  });
+  document.getElementById('pitchSlider').addEventListener('input', (e) => {
+    voiceSettings.pitch = parseFloat(e.target.value);
+    document.getElementById('pitchVal').textContent = parseFloat(e.target.value).toFixed(2);
+  });
+  document.getElementById('volumeSlider').addEventListener('input', (e) => {
+    voiceSettings.volume = parseFloat(e.target.value);
+    document.getElementById('volumeVal').textContent = Math.round(e.target.value * 100) + '%';
+  });
+  // 설정 패널 인터벌 슬라이더 (글로벌 슬라이더와 동기화)
+  document.getElementById('intervalSlider').addEventListener('input', (e) => {
+    const ms = parseInt(e.target.value);
+    voiceSettings.interval = ms;
+    const label = (ms / 1000).toFixed(1) + '초';
+    document.getElementById('intervalVal').textContent = label;
+    document.getElementById('intervalSliderGlobal').value = ms;
+    document.getElementById('intervalValGlobal').textContent = label;
+  });
+
+  // 글로벌 컨트롤 인터벌 슬라이더 (설정 패널 슬라이더와 동기화)
+  document.getElementById('intervalSliderGlobal').addEventListener('input', (e) => {
+    const ms = parseInt(e.target.value);
+    voiceSettings.interval = ms;
+    const label = (ms / 1000).toFixed(1) + '초';
+    document.getElementById('intervalValGlobal').textContent = label;
+    document.getElementById('intervalSlider').value = ms;
+    document.getElementById('intervalVal').textContent = label;
+  });
+
+  // 대화 상대 속도 슬라이더
+  document.getElementById('rateSlider2').addEventListener('input', (e) => {
+    voiceSettings.rate2 = parseFloat(e.target.value);
+    document.getElementById('rateVal2').textContent = parseFloat(e.target.value).toFixed(2) + '×';
+  });
+}
+
+function testVoice() {
+  speak('Hello! This is the main voice. How are you today?');
+}
+
+function testPartnerVoice() {
+  speakPartner("Hi! I'm the partner voice. Nice to meet you!");
+}
+
+// 목소리 헬퍼 함수
+function makeUtt(text, isPartner = false) {
+  const synth = window.speechSynthesis;
+  const voices = synth.getVoices();
+  const u = new SpeechSynthesisUtterance(text);
+  const selId = isPartner ? 'voiceSelect2' : 'voiceSelect';
+  const voiceIdx = parseInt(document.getElementById(selId).value);
+  if (voices[voiceIdx]) u.voice = voices[voiceIdx];
+  u.rate   = isPartner ? voiceSettings.rate2 : voiceSettings.rate;
+  u.pitch  = voiceSettings.pitch;
+  u.volume = voiceSettings.volume;
+  return u;
+}
+
+// 대화 라인 파싱 ("A: ..." / "B: ..." 형식)
+function parseDialogue(enText) {
+  if (!/^[AB]:/i.test(enText.trim())) return null;
+  return enText.split(/\n/).map(line => {
+    const isB = /^B:/i.test(line.trim());
+    return { text: line.replace(/^[AB]:\s*/i, '').trim(), isPartner: isB };
+  }).filter(l => l.text);
+}
+
+// 대화 라인 순차 재생
+function speakLines(lines, idx, onDone) {
+  const synth = window.speechSynthesis;
+  if (idx >= lines.length) { if (onDone) onDone(); return; }
+  const u = makeUtt(lines[idx].text, lines[idx].isPartner);
+  u.onend = () => speakLines(lines, idx + 1, onDone);
+  synth.speak(u);
+}
+
+function speak(text, onEnd = null) {
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const lines = parseDialogue(text);
+  if (lines) {
+    speakLines(lines, 0, onEnd || (() => {}));
+  } else {
+    const u = makeUtt(text, false);
+    u.onend = onEnd || (() => {});
+    synth.speak(u);
+  }
+}
+
+function speakPartner(text, onEnd = null) {
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const u = makeUtt(text, true);
+  u.onend = onEnd || (() => {});
+  synth.speak(u);
+}
+
+function playAll() {
+  if (!filteredQuestions.length) return;
+  isPlaying = true;
+  currentPlayIndex = 0;
+  document.getElementById('btnPlayAll').disabled = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('btnStop').disabled = false;
+  showMiniPlayer('로딩 중...');
+  playNext();
+}
+
+function playNext() {
+  if (!isPlaying || currentPlayIndex >= filteredQuestions.length) {
+    stopAll();
+    return;
+  }
+
+  const q = filteredQuestions[currentPlayIndex];
+  const cardEl = document.querySelector('[data-qid="' + q.no + '"]');
+  if (cardEl) {
+    cardEl.classList.add('playing');
+    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  updateMiniPlayer(q);
+
+  const textToSpeak = q.en;
+  const idx = currentPlayIndex;
+
+  speak(textToSpeak, () => {
+    if (cardEl) cardEl.classList.remove('playing');
+    if (isPlaying && idx === currentPlayIndex) {
+      currentPlayIndex++;
+      setTimeout(playNext, voiceSettings.interval);
+    }
+  });
+}
+
+/* ── 미니플레이어 상태 관리 ── */
+function setMiniState(playing) {
+  const mp  = document.getElementById('miniPlayer');
+  const lbl = document.getElementById('miniStateLabel');
+  const mpb = document.getElementById('miniPauseBtn');
+  const pb  = document.getElementById('btnPause');
+  if (playing) {
+    mp.classList.remove('state-paused');
+    mp.classList.add('state-playing');
+    if (lbl) lbl.textContent = '재생 중';
+    if (mpb) { mpb.textContent = '⏸'; mpb.classList.remove('btn-green'); mpb.classList.add('btn-orange'); }
+    if (pb)  { pb.textContent = '⏸ 일시정지'; pb.classList.remove('btn-green'); pb.classList.add('btn-orange'); }
+  } else {
+    mp.classList.remove('state-playing');
+    mp.classList.add('state-paused');
+    if (lbl) lbl.textContent = '일시 정지';
+    if (mpb) { mpb.textContent = '▶'; mpb.classList.remove('btn-orange'); mpb.classList.add('btn-green'); }
+    if (pb)  { pb.textContent = '▶ 재개'; pb.classList.remove('btn-orange'); pb.classList.add('btn-green'); }
+  }
+}
+
+function showMiniPlayer(text) {
+  document.getElementById('miniPlayerText').textContent = text;
+  document.getElementById('miniPlayer').classList.add('visible');
+  setMiniState(true);
+}
+
+function hideMiniPlayer() {
+  document.getElementById('miniPlayer').classList.remove('visible');
+  const pb = document.getElementById('btnPause');
+  if (pb) { pb.textContent = '⏸ 일시정지'; pb.classList.remove('btn-green'); pb.classList.add('btn-orange'); }
+}
+
+function togglePause() {
+  const synth = window.speechSynthesis;
+  if (synth.paused) {
+    synth.resume();
+    setMiniState(true);
+  } else {
+    synth.pause();
+    setMiniState(false);
+  }
+}
+
+function stopAll() {
+  window.speechSynthesis.cancel();
+  isPlaying = false;
+  currentPlayIndex = -1;
+  document.querySelectorAll('.sentence-card.playing').forEach(el => el.classList.remove('playing'));
+  document.getElementById('btnPlayAll').disabled = false;
+  document.getElementById('btnPause').disabled = true;
+  document.getElementById('btnStop').disabled = true;
+  hideMiniPlayer();
+}
+
+function updateMiniPlayer(q) {
+  showMiniPlayer(q.en);
+}
+
+function playSectionQuestions(sectionCat, part) {
+  const questions = filteredQuestions.filter(q => q.cat === sectionCat && q.part === part);
+  if (!questions.length) return;
+
+  isPlaying = true;
+  currentPlayIndex = 0;
+  const origFiltered = filteredQuestions;
+  filteredQuestions = questions;
+
+  document.getElementById('btnPlayAll').disabled = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('btnStop').disabled = false;
+  showMiniPlayer('로딩 중...');
+
+  playNext();
+
+  const stopOverride = stopAll;
+  stopAll = function() {
+    stopOverride();
+    filteredQuestions = origFiltered;
+  };
+}
+
+function playCard(qid) {
+  const q = QUESTIONS.find(x => x.no === qid);
+  if (!q) return;
+  speak(q.en, () => {
+    document.querySelector('[data-qid="' + qid + '"]')?.classList.remove('playing');
+  });
+  document.querySelector('[data-qid="' + qid + '"]')?.classList.add('playing');
+  updateMiniPlayer(q);
+}
+
+function filterByPart(part) {
+  currentPart = part;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[data-part="' + part + '"]').classList.add('active');
+  updateFiltered();
+}
+
+function setupSearchListener() {
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    updateFiltered();
+  });
+}
+
+function updateFiltered() {
+  const searchVal = document.getElementById('searchInput').value.toLowerCase();
+  filteredQuestions = QUESTIONS.filter(q => {
+    const partMatch = currentPart === 0 || q.part === currentPart;
+    const searchMatch = !searchVal ||
+      q.ko.toLowerCase().includes(searchVal) ||
+      q.en.toLowerCase().includes(searchVal) ||
+      q.q.toLowerCase().includes(searchVal);
+    return partMatch && searchMatch;
+  });
+  renderCategories();
+  updateProgress();
+}
+
+function setQuizMode(mode) {
+  quizMode = mode;
+  document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.quiz-btn[data-quiz="' + mode + '"]').classList.add('active');
+
+  if (mode !== 'none') {
+    document.querySelector('.quiz-score-bar').classList.add('visible');
+    document.querySelectorAll('.sentence-card').forEach(card => {
+      card.classList.add('quiz-active');
+    });
+    quizScores = { correct: 0, wrong: 0, remaining: filteredQuestions.length };
+    updateQuizScore();
+  } else {
+    document.querySelector('.quiz-score-bar').classList.remove('visible');
+    document.querySelectorAll('.sentence-card').forEach(card => {
+      card.classList.remove('quiz-active', 'quiz-correct', 'quiz-wrong');
+    });
+  }
+
+  renderCategories();
+}
+
+function markQuizAnswer(qid, isCorrect) {
+  const card = document.querySelector('[data-qid="' + qid + '"]');
+  if (!card) return;
+
+  // 블러 처리된 답 공개
+  card.querySelectorAll('.quiz-hidden').forEach(el => el.classList.add('quiz-revealed'));
+
+  // 버튼 잠금 (재수정 불가)
+  card.querySelectorAll('.btn-correct, .btn-wrong').forEach(b => {
+    b.disabled = true;
+    b.style.opacity = '0.5';
+    b.style.cursor = 'not-allowed';
+  });
+
+  if (isCorrect) {
+    quizScores.correct++;
+    card.classList.add('quiz-correct');
+    card.querySelector('.quiz-result-icon').textContent = '✅';
+  } else {
+    quizScores.wrong++;
+    card.classList.add('quiz-wrong');
+    card.querySelector('.quiz-result-icon').textContent = '❌';
+  }
+
+  quizScores.remaining = filteredQuestions.length - (quizScores.correct + quizScores.wrong);
+  updateQuizScore();
+}
+
+function updateQuizScore() {
+  document.getElementById('scoreCorrect').textContent = quizScores.correct;
+  document.getElementById('scoreWrong').textContent = quizScores.wrong;
+  document.getElementById('scoreRemaining').textContent = quizScores.remaining;
+}
+
+function openAllSections() {
+  document.querySelectorAll('.category-section').forEach(sec => {
+    sec.classList.add('open');
+  });
+}
+
+function closeAllSections() {
+  document.querySelectorAll('.category-section').forEach(sec => {
+    sec.classList.remove('open');
+  });
+}
+
+function toggleSection(cat, part) {
+  const secId = 'sec-' + part + '-' + cat.replace(/\s+/g, '_');
+  const sec = document.getElementById(secId);
+  if (sec) sec.classList.toggle('open');
+}
+
+function renderCategories() {
+  const container = document.getElementById('categoriesContainer');
+  container.innerHTML = '';
+
+  const grouped = {};
+  filteredQuestions.forEach(q => {
+    const key = q.part + '|' + q.cat;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(q);
+  });
+
+  Object.entries(grouped).sort().forEach(([key, questions]) => {
+    const parts = key.split('|');
+    const partNum = parseInt(parts[0]);
+    const cat = parts[1];
+    const emoji = CATEGORY_EMOJIS[cat] || '📌';
+    const secId = 'sec-' + partNum + '-' + cat.replace(/\s+/g, '_');
+
+    const section = document.createElement('div');
+    section.className = 'category-section';
+    section.id = secId;
+
+    let headerHtml = '<div class="category-header" onclick="toggleSection(\'' + cat.replace(/'/g, "\\'") + '\', ' + partNum + ')">';
+    headerHtml += '<div class="cat-title-group"><span class="cat-emoji">' + emoji + '</span>';
+    headerHtml += '<div><div class="cat-name">' + cat + '</div></div></div>';
+    headerHtml += '<div style="display: flex; align-items: center; gap: 12px;">';
+    headerHtml += '<span class="cat-count">' + questions.length + '문제</span>';
+    headerHtml += '<span class="chevron">▼</span></div></div>';
+
+    let bodyHtml = '<div class="category-body">';
+    bodyHtml += '<div class="cat-actions">';
+    bodyHtml += '<button class="btn btn-teal btn-sm" onclick="playSectionQuestions(\'' + cat.replace(/'/g, "\\'") + '\', ' + partNum + ')">▶ 섹션 듣기</button>';
+    bodyHtml += '</div>';
+    bodyHtml += '<div class="cards-grid" id="grid-' + secId + '"></div>';
+    bodyHtml += '</div>';
+
+    section.innerHTML = headerHtml + bodyHtml;
+    container.appendChild(section);
+
+    const grid = document.getElementById('grid-' + secId);
+    questions.forEach(q => {
+      const card = renderCard(q);
+      grid.appendChild(card);
+    });
+  });
+}
+
+function renderCard(q) {
+  const card = document.createElement('div');
+  card.className = 'sentence-card';
+  card.setAttribute('data-qid', q.no);
+  if (quizMode !== 'none') {
+    card.classList.add('quiz-active');
+  }
+
+  let enClass = '';
+  let koClass = '';
+
+  if (quizMode === 'ko-en') {
+    enClass = 'quiz-hidden';
+  } else if (quizMode === 'en-ko') {
+    koClass = 'quiz-hidden';
+  }
+
+  let cardHtml = '<div class="card-top"><span class="card-num">No. ' + q.no + '</span>';
+  cardHtml += '<button class="card-play-btn" onclick="playCard(\'' + q.no + '\')">🔊</button></div>';
+  cardHtml += '<div class="card-english ' + enClass + '" onclick="revealElement(this)">' + q.en + '</div>';
+  cardHtml += '<div class="card-korean ' + koClass + '" onclick="revealElement(this)">' + q.ko + '</div>';
+  if (q.hint) {
+    cardHtml += '<div class="card-hint">' + q.ht + ' ' + q.hint + '</div>';
+  }
+  if (quizMode !== 'none') {
+    cardHtml += '<div class="quiz-result-icon"></div>';
+    cardHtml += '<div class="card-qa">';
+    cardHtml += '<div class="quiz-check-buttons">';
+    cardHtml += '<button class="btn-correct" onclick="markQuizAnswer(\'' + q.no + '\', true)">✅ 정답</button>';
+    cardHtml += '<button class="btn-wrong" onclick="markQuizAnswer(\'' + q.no + '\', false)">❌ 오답</button>';
+    cardHtml += '</div></div>';
+  }
+
+  card.innerHTML = cardHtml;
+  return card;
+}
+
+function revealElement(el) {
+  if (el.classList.contains('quiz-hidden')) {
+    el.classList.add('quiz-revealed');
+  }
+}
+
+function updateProgress() {
+  const total = QUESTIONS.length;
+  const current = filteredQuestions.length;
+  const percent = (current / total) * 100;
+
+  document.getElementById('globalProgressBar').style.width = percent + '%';
+  document.getElementById('progressText').textContent = current + ' / ' + total + ' 문제';
+}
+</script>
+</body>
+</html>

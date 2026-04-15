@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 전설의 초등 회화 150패턴 - 청크 마스터</title>
+<style>
+  :root{
+    --green:#38a169;--green-l:#c6f6d5;--green-ll:#f0fff4;
+    --blue:#4A90D9;--blue-l:#bee3f8;--blue-ll:#ebf8ff;
+    --orange:#E8763A;--orange-l:#fbd38d;--orange-ll:#fffbeb;
+    --teal:#319795;--teal-l:#b2f5ea;--teal-ll:#e6fffa;
+    --grad:linear-gradient(135deg,#11998e,#38ef7d);
+    --grad2:linear-gradient(135deg,#4facfe,#00f2fe);
+    --bg:#f8f9fa;--card:#fff;--border:#e2e8f0;--radius:12px;--shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:var(--bg);color:#2d3748;line-height:1.6;padding-bottom:60px}
+
+  header{background:var(--grad);color:#fff;padding:28px 20px 20px;text-align:center}
+  header h1{font-size:1.7rem;margin-bottom:6px}
+  header p{font-size:.9rem;opacity:.9}
+  .header-badges{display:flex;justify-content:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .badge{background:rgba(255,255,255,.22);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600}
+
+  .ctrl-bar{background:#fff;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .ctrl-bar input{flex:1;min-width:160px;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;outline:none}
+  .ctrl-bar input:focus{border-color:#11998e}
+  .cbtn{padding:7px 14px;border:none;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:700}
+  .cbtn.expand{background:#11998e;color:#fff}.cbtn.collapse{background:#e2e8f0;color:#4a5568}
+  .speed-wrap{display:flex;align-items:center;gap:4px;font-size:.74rem;font-weight:700;color:#276749;white-space:nowrap}
+  .speed-btn{padding:2px 8px;border:1.5px solid var(--green-l);border-radius:5px;font-size:.7rem;cursor:pointer;font-weight:700;background:#fff;color:#4a5568;transition:all .15s}
+  .speed-btn.spd-active{background:#11998e;color:#fff;border-color:#11998e}
+
+  .toc-wrap{max-width:1100px;margin:18px auto;padding:0 16px}
+  .toc-details summary{cursor:pointer;font-weight:700;color:#11998e;padding:10px 14px;background:#fff;border-radius:var(--radius);border:1.5px solid var(--teal-l);list-style:none}
+  .toc-details summary::-webkit-details-marker{display:none}
+  .toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;padding:10px 0}
+  .toc-item{display:flex;align-items:center;gap:6px;padding:7px 10px;background:#fff;border-radius:8px;border:1px solid var(--border);text-decoration:none;color:#2d3748;font-size:.82rem;transition:all .15s}
+  .toc-item:hover{border-color:#11998e;background:var(--teal-ll);transform:translateY(-1px)}
+  .toc-num{font-weight:700;color:#11998e;font-size:.76rem;min-width:28px}
+
+  .star-row{display:flex;align-items:center;gap:4px;font-size:.75rem}
+  .star-num{font-size:.7rem;background:#e2e8f0;color:#718096;border-radius:8px;padding:1px 6px;font-weight:700}
+
+  main{max-width:920px;margin:0 auto;padding:0 16px}
+
+  .pat-wrap{margin-bottom:12px}
+  .pat-details{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1.5px solid var(--border);overflow:hidden}
+  .pat-details[open]{border-color:#a0aec0}
+  .pat-summary{cursor:pointer;display:flex;align-items:center;gap:10px;padding:13px 16px;list-style:none;user-select:none;background:linear-gradient(90deg,#f0fff4,#fff);transition:background .2s}
+  .pat-summary::-webkit-details-marker{display:none}
+  .pat-details[open] .pat-summary{background:linear-gradient(90deg,var(--teal-ll),#f7ffff)}
+  .pat-summary:hover{background:var(--teal-ll)}
+  .pat-num{background:var(--grad);color:#fff;border-radius:7px;padding:3px 9px;font-size:.75rem;font-weight:700;white-space:nowrap}
+  .pat-en{font-size:.98rem;font-weight:700;flex:1;color:#2d3748}
+  .pat-ko{font-size:.82rem;color:#718096}
+  .pat-body{padding:12px 16px 16px;border-top:1px solid var(--border)}
+
+  .chunk-box{background:var(--teal-ll);border-radius:8px;padding:10px 14px;margin-bottom:10px;border-left:3px solid #319795}
+  .chunk-en{font-size:.92rem;font-weight:700;color:#2d3748;margin-bottom:3px}
+  .chunk-ko{font-size:.85rem;color:#4a5568}
+  .chunk-point{font-size:.8rem;color:#11998e;margin-top:5px}
+  .chunk-usage{font-size:.78rem;color:#718096;margin-top:3px;font-style:italic}
+
+  .dial-header{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 6px}
+  .dial-title{font-size:.85rem;font-weight:700;color:#276749;flex:1}
+  .btn-play-all{padding:5px 12px;border:none;border-radius:6px;font-size:.76rem;cursor:pointer;font-weight:700;background:linear-gradient(135deg,#11998e,#38a169);color:#fff;transition:all .2s;box-shadow:0 2px 5px rgba(17,153,142,.3)}
+  .btn-play-all:hover{transform:translateY(-1px)}
+  .btn-play-all.playing-state{background:linear-gradient(135deg,#e53e3e,#c53030);animation:pulse .9s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.72}}
+
+  .play-ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:7px 12px;background:var(--green-ll);border:1px solid var(--green-l);border-radius:9px;margin-bottom:8px}
+  .interval-wrap{display:flex;align-items:center;gap:5px;font-size:.74rem;color:#276749;font-weight:700;white-space:nowrap}
+  .interval-slider{-webkit-appearance:none;appearance:none;width:90px;height:4px;border-radius:3px;background:var(--green-l);outline:none;cursor:pointer}
+  .interval-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#11998e;cursor:pointer}
+  .interval-val{min-width:26px;text-align:center;font-size:.76rem;font-weight:700;color:#276749;background:var(--green-l);border-radius:4px;padding:1px 4px}
+  .play-prog{font-size:.73rem;font-weight:700;color:#718096;background:#edf2f7;border-radius:10px;padding:2px 9px;white-space:nowrap;margin-left:auto}
+  .play-prog.active{color:#276749;background:var(--green-l)}
+
+  .dial-line{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:7px;margin-bottom:5px;border:1.5px solid transparent;transition:all .2s}
+  .dial-line.sp-A{background:var(--blue-ll);border-color:var(--blue-l)}
+  .dial-line.sp-B{background:var(--orange-ll);border-color:var(--orange-l)}
+  .dial-line.speaking{transform:scale(1.01);box-shadow:0 0 0 2px rgba(17,153,142,.5)}
+  .spk-badge{font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;min-width:30px;text-align:center}
+  .sp-A .spk-badge{background:var(--blue);color:#fff}
+  .sp-B .spk-badge{background:var(--orange);color:#fff}
+  .line-text{flex:1}
+  .line-en{font-size:.88rem;font-weight:600;color:#2d3748}
+  .line-ko{font-size:.8rem;color:#718096;margin-top:2px}
+  .btn-speak-one{flex-shrink:0;background:#fff;border:1.5px solid var(--blue-l);border-radius:5px;padding:2px 8px;font-size:.68rem;cursor:pointer;color:#2b6cb0;font-weight:700;transition:all .15s}
+  .btn-speak-one:hover{background:var(--blue-ll)}
+  .btn-speak-one.speaking-one{background:var(--blue-l);animation:pulse .9s infinite}
+  .sp-B .btn-speak-one{border-color:var(--orange-l);color:#c05621}
+  .sp-B .btn-speak-one.speaking-one{background:var(--orange-l)}
+
+  .prac-details{margin-top:10px;border:1.5px solid var(--teal-l);border-radius:8px;overflow:hidden}
+  .prac-details summary{cursor:pointer;background:var(--teal-ll);padding:7px 12px;font-size:.82rem;font-weight:700;color:#276749;list-style:none}
+  .prac-details summary::-webkit-details-marker{display:none}
+  .prac-list{padding:10px 14px;background:#fff;border-top:1px solid var(--teal-l)}
+  .prac-list li{font-size:.82rem;margin-bottom:6px;padding-left:8px;border-left:3px solid #68d391;list-style:none;line-height:1.5}
+
+  .legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:10px 16px;max-width:920px;margin:12px auto 0;font-size:.8rem;color:#718096}
+  .ldot{width:11px;height:11px;border-radius:2px;display:inline-block;margin-right:3px}
+  .hidden{display:none!important}
+
+  @media(max-width:600px){header h1{font-size:1.3rem}.pat-en{font-size:.88rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 전설의 초등 회화 150패턴</h1>
+  <p>청크(의미단위) 마스터 · 어순 중심 직독직해 · 상황별 실전 대화</p>
+  <div class="header-badges">
+    <span class="badge">📦 150패턴</span>
+    <span class="badge">🗣️ 전체 듣기</span>
+    <span class="badge">🔊 한문장 듣기</span>
+    <span class="badge">📖 청크 분해</span>
+    <span class="badge">💬 실전 대화</span>
+    <span class="badge">⭐ 활용도 표시</span>
+  </div>
+</header>
+
+<div class="ctrl-bar">
+  <input type="text" id="searchBox" placeholder="🔍 패턴 검색 (영어/한국어)..." oninput="filterPatterns()">
+  <button class="cbtn expand" onclick="expandAll()">전체 펼치기</button>
+  <button class="cbtn collapse" onclick="collapseAll()">전체 접기</button>
+  <div class="speed-wrap" style="margin-left:auto">
+    속도:
+    <button class="speed-btn" onclick="setGlobalSpeed(0.75,this)">0.75x</button>
+    <button class="speed-btn spd-active" onclick="setGlobalSpeed(1,this)">1x</button>
+    <button class="speed-btn" onclick="setGlobalSpeed(1.25,this)">1.25x</button>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="ldot" style="background:var(--blue-l)"></span>화자 A</span>
+  <span><span class="ldot" style="background:var(--orange-l)"></span>화자 B</span>
+  <span>⭐ 활용도 5단계</span>
+  <span>🔊 한문장씩 듣기 가능</span>
+</div>
+
+<div class="toc-wrap">
+  <details class="toc-details" id="tocPanel">
+    <summary>📋 전체 목차 보기 (클릭해서 열기)</summary>
+    <div class="toc-grid" id="tocGrid"></div>
+  </details>
+</div>
+
+<main id="mainArea"></main>
+
+<script>
+const PATTERNS = [
+  // === Part 1: 인사와 자기소개 001-020 ===
+  {no:"001",cat:"👋 인사와 자기소개",en:"Hi there! How's it going?",ko:"안녕! 어떻게 지내?",star:5,
+   chunk:"Hi there! / How's it / going?",chunkKo:"안녕! / 어떻게 / 지내?",
+   point:"Hi there! (친근한 인사) → How's it (어떻게) → going? (진행되고 있니)",
+   usage:"친구를 만났을 때 일상적으로 사용",
+   dial:[{s:"A",en:"Hi there! How's it going?",ko:"안녕! 어떻게 지내?"},{s:"B",en:"Hey! Pretty good! How about you?",ko:"야! 꽤 좋아! 너는?"},{s:"A",en:"I'm doing great! Want to play basketball after school?",ko:"나 아주 잘 지내! 방과 후에 농구 할래?"},{s:"B",en:"Sure! That sounds fun!",ko:"물론이지! 재미있을 것 같아!"}],
+   prac:["아침에 친구에게: Hi there! How's it going today?","점심시간에: Hey! How's it going? Let's eat together!","주말에 만났을 때: Hi! How's it going? What did you do this weekend?"]},
+  {no:"002",cat:"👋 인사와 자기소개",en:"Hey! What's up, dude?",ko:"야! 뭐해, 친구?",star:5,
+   chunk:"Hey! / What's up, / dude?",chunkKo:"야! / 별일 없어, / 친구야?",
+   point:"Hey! (호출) → What's up, (무슨 일) → dude? (친구)",
+   usage:"가까운 친구에게 캐주얼하게 인사할 때",
+   dial:[{s:"A",en:"Hey! What's up, dude?",ko:"야! 뭐해, 친구?"},{s:"B",en:"Not much! Just finished math class. You?",ko:"별일 없어! 방금 수학 수업 끝났어. 너는?"},{s:"A",en:"Same! The test was so hard. What's up after school?",ko:"나도! 시험 너무 어려웠어. 방과 후에 뭐 해?"},{s:"B",en:"Nothing planned! Want to play basketball?",ko:"계획 없어! 농구 할래?"}],
+   prac:["복도에서: Hey! What's up?","쉬는 시간: What's up? Wanna hang out?","친한 친구에게: What's up, buddy?"]},
+  {no:"003",cat:"👋 인사와 자기소개",en:"Good to see you again!",ko:"다시 만나서 좋아!",star:4,
+   chunk:"Good to see you / again!",chunkKo:"만나서 좋아 / 다시!",
+   point:"Good to see you (만나서 좋아) → again! (다시)",
+   usage:"오랜만에 친구를 만났을 때",
+   dial:[{s:"A",en:"Good to see you again! It's been a while!",ko:"다시 만나서 좋아! 오래됐다!"},{s:"B",en:"I know! How was your summer?",ko:"맞아! 여름 어땠어?"},{s:"A",en:"Amazing! I went to Busan! How about you?",ko:"완전 좋았어! 부산 다녀왔어! 너는?"},{s:"B",en:"Cool! I stayed home but played lots of games!",ko:"멋지다! 나는 집에 있었는데 게임 많이 했어!"}],
+   prac:["방학 후: Good to see you again after vacation!","오랜만에: Good to see you! You look great!","이웃에게: Good to see you again!"]},
+  {no:"004",cat:"👋 인사와 자기소개",en:"Long time no see!",ko:"오랜만이야!",star:3,
+   chunk:"Long time / no see! / Where have you been?",chunkKo:"오랜 시간 동안 / 보지 못했네! / 너 어디 있었어?",
+   point:"Long time (오랜 시간) → no see! (못 봤네)",
+   usage:"한동안 보지 못한 친구를 만났을 때",
+   dial:[{s:"A",en:"Long time no see! Where have you been?",ko:"오랜만이야! 어디 있었어?"},{s:"B",en:"I moved to a different school last year!",ko:"작년에 다른 학교로 이사 갔어!"},{s:"A",en:"Oh wow! I missed you so much!",ko:"오 와! 너무 보고 싶었어!"},{s:"B",en:"Me too! Let's catch up!",ko:"나도! 이야기 많이 하자!"}],
+   prac:["이사 간 친구: Long time no see! Miss you!","방학 후: Long time no see! How was vacation?","옛날 친구: Wow! Long time no see!"]},
+  {no:"005",cat:"👋 인사와 자기소개",en:"How's it going?",ko:"어떻게 지내?",star:5,
+   chunk:"Hey, / how's it / going?",chunkKo:"야, / 어떻게 / 지내?",
+   point:"How's it (어떻게) → going? (되어가고 있니)",
+   usage:"일상적인 안부 인사",
+   dial:[{s:"A",en:"Hey! How's it going?",ko:"야! 어떻게 지내?"},{s:"B",en:"Pretty good! Just finished homework. You?",ko:"꽤 좋아! 방금 숙제 끝냈어. 너는?"},{s:"A",en:"Same! Want to go to the park?",ko:"나도! 공원 갈래?"},{s:"B",en:"Yes! Let's go!",ko:"응! 가자!"}],
+   prac:["친구에게: Hey! How's it going today?","선생님께: Good morning! How's it going?","이웃에게: Hi! How's it going?"]},
+  {no:"006",cat:"👋 인사와 자기소개",en:"What's new with you?",ko:"너에게 무슨 새로운 일 있어?",star:4,
+   chunk:"What's new / with you?",chunkKo:"무슨 새로운 일 있어 / 너에게?",
+   point:"What's new (새로운 게 뭐야) → with you? (너에게)",
+   usage:"오래된 친구와 근황 나눌 때",
+   dial:[{s:"A",en:"Hey! What's new with you?",ko:"야! 뭐 새로운 거 있어?"},{s:"B",en:"I joined the soccer team! It's awesome!",ko:"축구팀에 들어갔어! 완전 좋아!"},{s:"A",en:"No way! That's so cool!",ko:"말도 안 돼! 너무 멋지다!"},{s:"B",en:"Yeah! We have a game this Saturday!",ko:"응! 이번 토요일에 게임 있어!"}],
+   prac:["오랜만에: Hey! What's new?","근황 물을 때: What's new with you lately?","친구에게: Anything new going on?"]},
+  {no:"007",cat:"👋 인사와 자기소개",en:"How was your day at school?",ko:"학교에서 하루 어땠어?",star:5,
+   chunk:"How was / your day / at school?",chunkKo:"어떠했니 / 너의 하루는 / 학교에서?",
+   point:"How was (어땠어) → your day (너의 하루) → at school? (학교에서)",
+   usage:"방과 후 부모님이나 친구에게",
+   dial:[{s:"A",en:"Welcome home! How was your day at school?",ko:"어서 와! 학교에서 하루 어땠어?"},{s:"B",en:"It was great! We had PE class!",ko:"좋았어! 체육 수업 있었어!"},{s:"A",en:"Fun! What did you do?",ko:"재밌겠다! 뭐 했어?"},{s:"B",en:"We played soccer! I scored a goal!",ko:"축구 했어! 나 골 넣었어!"}],
+   prac:["부모님께: How was my day? Great!","친구에게: How was your day? Mine was awesome!","저녁에: How was your day, Dad?"]},
+  {no:"008",cat:"👋 인사와 자기소개",en:"See you tomorrow at school!",ko:"내일 학교에서 보자!",star:5,
+   chunk:"See you / tomorrow / at school!",chunkKo:"보자 / 내일 / 학교에서!",
+   point:"See you (보자) → tomorrow (내일) → at school! (학교에서)",
+   usage:"학교 친구와 헤어질 때",
+   dial:[{s:"A",en:"I have to go! See you tomorrow at school!",ko:"가야 해! 내일 학교에서 보자!"},{s:"B",en:"See you! Don't forget the homework!",ko:"또 봐! 숙제 잊지 마!"},{s:"A",en:"I won't! Bye!",ko:"안 잊을게! 안녕!"},{s:"B",en:"Bye! See you tomorrow!",ko:"안녕! 내일 봐!"}],
+   prac:["하교 시: See you tomorrow! Bye!","같은 반에게: See you at school tomorrow!","약속하며: See you tomorrow at lunch!"]},
+  {no:"009",cat:"👋 인사와 자기소개",en:"Take care! See you later!",ko:"조심해서 가! 나중에 봐!",star:4,
+   chunk:"Take care! / See you / later!",chunkKo:"조심해서 가! / 보자 / 나중에!",
+   point:"Take care! (조심해) → See you (보자) → later! (나중에)",
+   usage:"헤어질 때 따뜻하게",
+   dial:[{s:"A",en:"I'm going home now. Take care!",ko:"나 이제 집에 가. 조심해서 가!"},{s:"B",en:"Take care! See you at practice tomorrow!",ko:"잘 가! 내일 연습에서 보자!"},{s:"A",en:"Right! Don't be late!",ko:"맞아! 늦지 마!"},{s:"B",en:"I won't! See you later!",ko:"안 늦을게! 나중에 봐!"}],
+   prac:["헤어질 때: Take care! Stay safe!","주말 전: Take care this weekend!","친구에게: Take care! See you Monday!"]},
+  {no:"010",cat:"👋 인사와 자기소개",en:"Have a good one! Bye!",ko:"좋은 하루 가져! 안녕!",star:3,
+   chunk:"Have / a good one! / Bye!",chunkKo:"가져라 / 좋은 하루를! / 안녕!",
+   point:"Have (가지다) → a good one! (좋은 것) → Bye! (작별)",
+   usage:"캐주얼한 작별 인사",
+   dial:[{s:"A",en:"Alright, I gotta go! Have a good one!",ko:"좋아, 나 가야 해! 좋은 하루 보내!"},{s:"B",en:"You too! Have a great day!",ko:"너도! 멋진 하루 보내!"},{s:"A",en:"Thanks! See you around!",ko:"고마워! 또 봐!"},{s:"B",en:"Yep! Bye!",ko:"응! 안녕!"}],
+   prac:["일반적인 헤어짐: Have a good one!","선생님께: Have a good one, teacher!","이웃에게: Have a good one! See you!"]},
+
+  // === Part 2: 자기소개 011-020 ===
+  {no:"011",cat:"👋 인사와 자기소개",en:"I'm from Seoul, Korea.",ko:"나는 서울, 한국에서 왔어.",star:5,
+   chunk:"I'm from / Seoul, / Korea.",chunkKo:"나는 왔어 / 서울, / 한국에서.",
+   point:"I'm from (나는 출신) → [도시], (도시) → [나라]. (나라)",
+   usage:"자기 출신 소개할 때",
+   dial:[{s:"A",en:"Where are you from?",ko:"어디 출신이야?"},{s:"B",en:"I'm from Seoul, Korea! How about you?",ko:"서울, 한국 출신이야! 너는?"},{s:"A",en:"Cool! I'm from New York!",ko:"멋지다! 나는 뉴욕 출신이야!"},{s:"B",en:"Wow! America! That's awesome!",ko:"와! 미국! 멋지다!"}],
+   prac:["외국인에게: I'm from Seoul, Korea!","학교에서: Where are you from? I'm from Busan!","자기소개: My name is Tom. I'm from Korea."]},
+  {no:"012",cat:"👋 인사와 자기소개",en:"I'm in the 5th grade.",ko:"나는 5학년이야.",star:5,
+   chunk:"I'm in / the 5th / grade.",chunkKo:"나는 있어 / 5학년에 / 있어.",
+   point:"I'm in (나는 있어) → the [숫자]th (몇 번째) → grade. (학년)",
+   usage:"학년을 말할 때",
+   dial:[{s:"A",en:"What grade are you in?",ko:"몇 학년이야?"},{s:"B",en:"I'm in the 5th grade! You?",ko:"5학년이야! 너는?"},{s:"A",en:"Same! We might be in the same class!",ko:"나도! 같은 반일 수도 있겠다!"},{s:"B",en:"Really? What class are you in?",ko:"정말? 몇 반이야?"}],
+   prac:["학년 소개: I'm in the 3rd grade.","학교 정보: I go to Sunshine Elementary. I'm in 4th grade.","새 친구에게: I'm in 5th grade. How about you?"]},
+  {no:"013",cat:"👋 인사와 자기소개",en:"My favorite subject is science.",ko:"내가 가장 좋아하는 과목은 과학이야.",star:4,
+   chunk:"My favorite subject / is / science.",chunkKo:"내가 가장 좋아하는 과목 / 은 / 과학.",
+   point:"My favorite (내가 제일 좋아하는) → subject (과목) → is [과목]. (이다)",
+   usage:"좋아하는 과목 말할 때",
+   dial:[{s:"A",en:"What's your favorite subject?",ko:"제일 좋아하는 과목이 뭐야?"},{s:"B",en:"My favorite subject is science! It's so cool!",ko:"과학이야! 너무 신기해!"},{s:"A",en:"Really? I like math better!",ko:"정말? 나는 수학이 더 좋아!"},{s:"B",en:"Math? That's hard for me!",ko:"수학? 나한테는 어려워!"}],
+   prac:["자기소개: My favorite subject is English.","친구에게: What's yours? Mine is PE!","선생님께: My favorite subject is your class!"]},
+  {no:"014",cat:"👋 인사와 자기소개",en:"I have a dog named Max.",ko:"나는 맥스라는 개가 있어.",star:4,
+   chunk:"I have / a dog / named Max.",chunkKo:"나는 있어 / 개가 / 맥스라는.",
+   point:"I have (나는 있어) → a [동물] (동물) → named [이름]. (이름이 ~인)",
+   usage:"반려동물 소개할 때",
+   dial:[{s:"A",en:"Do you have any pets?",ko:"반려동물 있어?"},{s:"B",en:"Yes! I have a dog named Max!",ko:"응! 맥스라는 개가 있어!"},{s:"A",en:"So cute! What does he look like?",ko:"귀엽다! 어떻게 생겼어?"},{s:"B",en:"He's big and fluffy! You should meet him!",ko:"크고 털이 복실복실해! 한번 만나봐!"}],
+   prac:["반려동물: I have a cat named Nabi.","반려동물 없을 때: I don't have pets, but I want a dog!","소개: My dog's name is Max. He's really cute!"]},
+  {no:"015",cat:"👋 인사와 자기소개",en:"I'm really into K-pop.",ko:"나는 K팝에 빠져 있어.",star:5,
+   chunk:"I'm really / into / K-pop.",chunkKo:"나는 정말 / 빠져 있어 / K팝에.",
+   point:"I'm really (나는 정말) → into (빠져) → [취미]. (무엇에)",
+   usage:"관심사나 취미 말할 때",
+   dial:[{s:"A",en:"What are you into these days?",ko:"요즘 뭐에 빠져 있어?"},{s:"B",en:"I'm really into K-pop! Do you like it?",ko:"K팝에 완전 빠져 있어! 너도 좋아해?"},{s:"A",en:"Yes! My favorite group is BTS!",ko:"응! 내가 좋아하는 그룹은 BTS야!"},{s:"B",en:"Me too! They're the best!",ko:"나도! 최고야!"}],
+   prac:["취미 소개: I'm really into drawing lately.","관심사: I'm into gaming and soccer.","새 취미: I'm into cooking! It's so fun!"]},
+  {no:"016",cat:"👋 인사와 자기소개",en:"I'm good at drawing.",ko:"나는 그림 잘 그려.",star:4,
+   chunk:"I'm good / at / drawing.",chunkKo:"나는 잘해 / ~을 / 그림 그리기.",
+   point:"I'm good (나는 잘해) → at (에서) → [동명사]. (무엇을)",
+   usage:"잘하는 것 말할 때",
+   dial:[{s:"A",en:"What are you good at?",ko:"잘하는 게 뭐야?"},{s:"B",en:"I'm good at drawing! Want to see?",ko:"그림 잘 그려! 보고 싶어?"},{s:"A",en:"Sure! Wow, this is amazing!",ko:"응! 와, 이거 진짜 대단하다!"},{s:"B",en:"Thanks! I practice every day!",ko:"고마워! 매일 연습해!"}],
+   prac:["잘하는 것: I'm good at math!","체육: I'm good at soccer and swimming.","음악: I'm good at playing the piano."]},
+  {no:"017",cat:"👋 인사와 자기소개",en:"My dream is to be a doctor.",ko:"내 꿈은 의사가 되는 거야.",star:4,
+   chunk:"My dream / is to be / a doctor.",chunkKo:"내 꿈 / 은 되는 것 / 의사가.",
+   point:"My dream (내 꿈) → is to be (되는 것) → [직업]. (직업)",
+   usage:"장래 희망 말할 때",
+   dial:[{s:"A",en:"What do you want to be when you grow up?",ko:"커서 뭐가 되고 싶어?"},{s:"B",en:"My dream is to be a doctor!",ko:"내 꿈은 의사가 되는 거야!"},{s:"A",en:"That's cool! Why a doctor?",ko:"멋지다! 왜 의사?"},{s:"B",en:"I want to help sick people!",ko:"아픈 사람들을 돕고 싶어!"}],
+   prac:["꿈 소개: My dream is to be a teacher.","이유: My dream is to be a soccer player!","확신: My dream is to be an engineer someday."]},
+  {no:"018",cat:"👋 인사와 자기소개",en:"I have two brothers.",ko:"나는 남동생이 둘 있어.",star:4,
+   chunk:"I have / two / brothers.",chunkKo:"나는 있어 / 둘 / 남동생이.",
+   point:"I have (있어) → [숫자] (개수) → [가족]. (누가)",
+   usage:"가족 소개할 때",
+   dial:[{s:"A",en:"Do you have any siblings?",ko:"형제자매 있어?"},{s:"B",en:"Yes! I have two brothers!",ko:"응! 남동생 둘 있어!"},{s:"A",en:"Wow! Are they older or younger?",ko:"와! 형들이야, 동생들이야?"},{s:"B",en:"One older and one younger!",ko:"한 명은 형, 한 명은 동생이야!"}],
+   prac:["가족 소개: I have one sister.","외동: I don't have brothers or sisters.","여러 명: I have three siblings!"]},
+  {no:"019",cat:"👋 인사와 자기소개",en:"I live in an apartment.",ko:"나는 아파트에 살아.",star:3,
+   chunk:"I live / in an apartment.",chunkKo:"나는 살아 / 아파트에.",
+   point:"I live (나는 살아) → in [장소]. (어디에)",
+   usage:"사는 곳 말할 때",
+   dial:[{s:"A",en:"Do you live near here?",ko:"여기 근처에 살아?"},{s:"B",en:"Yes! I live in an apartment nearby!",ko:"응! 근처 아파트에 살아!"},{s:"A",en:"Cool! We can hang out more often!",ko:"멋지다! 더 자주 놀 수 있겠다!"},{s:"B",en:"Totally! Come over sometime!",ko:"맞아! 언제 놀러 와!"}],
+   prac:["집 소개: I live in a house with a garden.","위치: I live near the school.","동네: I live in Gangnam, Seoul."]},
+  {no:"020",cat:"👋 인사와 자기소개",en:"Nice talking to you!",ko:"이야기 나눠서 좋았어!",star:4,
+   chunk:"Nice / talking / to you!",chunkKo:"좋았어 / 이야기하는 게 / 너와!",
+   point:"Nice (좋았어) → talking (이야기하는 게) → to you! (너와)",
+   usage:"대화 끝낼 때",
+   dial:[{s:"A",en:"I gotta go! Nice talking to you!",ko:"가야 해! 이야기 나눠서 좋았어!"},{s:"B",en:"Same here! It was great meeting you!",ko:"나도! 만나서 정말 좋았어!"},{s:"A",en:"Let's hang out again sometime!",ko:"언제 또 놀자!"},{s:"B",en:"Definitely! See you around!",ko:"꼭! 또 봐!"}],
+   prac:["새로운 만남 후: Nice talking to you!","전화 마칠 때: Nice talking to you! Bye!","오랜만에 만남 후: Nice talking to you again!"]},
+
+  // === Part 3: 감정과 상태 021-040 ===
+  {no:"021",cat:"😊 감정과 상태",en:"I'm so excited about the trip!",ko:"여행이 너무 기대돼!",star:5,
+   chunk:"I'm so excited / about / the trip!",chunkKo:"나는 너무 기대돼 / ~에 대해 / 여행!",
+   point:"I'm so excited (너무 기대돼) → about (에 대해) → [명사]. (무엇이)",
+   usage:"기대되는 일 말할 때",
+   dial:[{s:"A",en:"I'm so excited about the trip! Are you?",ko:"여행이 너무 기대돼! 너는?"},{s:"B",en:"Me too! I can't wait!",ko:"나도! 빨리 가고 싶어!"},{s:"A",en:"What are you most looking forward to?",ko:"뭐가 제일 기대돼?"},{s:"B",en:"The beach! I love swimming!",ko:"바다! 수영 엄청 좋아해!"}],
+   prac:["소풍: I'm so excited about the field trip!","생일: I'm so excited about my birthday party!","대회: I'm excited about the soccer game!"]},
+  {no:"022",cat:"😊 감정과 상태",en:"I'm really nervous.",ko:"나 정말 긴장돼.",star:4,
+   chunk:"I'm really / nervous.",chunkKo:"나는 정말 / 긴장돼.",
+   point:"I'm really (나는 정말) → nervous. (긴장된)",
+   usage:"시험이나 발표 전에",
+   dial:[{s:"A",en:"Are you okay? You look pale.",ko:"괜찮아? 얼굴이 창백해."},{s:"B",en:"I'm really nervous about the presentation!",ko:"발표 때문에 정말 긴장돼!"},{s:"A",en:"It's okay! You practiced so much!",ko:"괜찮아! 연습 많이 했잖아!"},{s:"B",en:"I know, but still! Wish me luck!",ko:"알아, 그래도! 행운 빌어줘!"}],
+   prac:["시험 전: I'm nervous about the test.","발표 전: I'm so nervous! My hands are shaking!","대회 전: I'm a little nervous, but excited too."]},
+  {no:"023",cat:"😊 감정과 상태",en:"That really made my day!",ko:"그게 오늘 완전 기분 좋게 해줬어!",star:4,
+   chunk:"That really / made / my day!",chunkKo:"그게 정말 / 만들어줬어 / 내 하루를!",
+   point:"That really (그게 정말) → made (만들어줬어) → my day! (내 하루를)",
+   usage:"좋은 일이 있었을 때",
+   dial:[{s:"A",en:"Did you see? We won the game!",ko:"봤어? 우리 이겼어!"},{s:"B",en:"I know! That really made my day!",ko:"알아! 그거 때문에 완전 기분 좋아!"},{s:"A",en:"Same! Best day ever!",ko:"나도! 최고의 날이야!"},{s:"B",en:"Let's celebrate after school!",ko:"방과 후에 축하하자!"}],
+   prac:["좋은 소식: Hearing that really made my day!","칭찬받았을 때: Your compliment made my day!","친구에게: You made my day! Thanks!"]},
+  {no:"024",cat:"😊 감정과 상태",en:"I'm in a really good mood today!",ko:"오늘 기분이 정말 좋아!",star:4,
+   chunk:"I'm in / a really good mood / today!",chunkKo:"나는 / 정말 좋은 기분 / 오늘!",
+   point:"I'm in (나는 있어) → a good mood (좋은 기분에) → today! (오늘)",
+   usage:"기분 좋은 날 표현",
+   dial:[{s:"A",en:"You seem happy today!",ko:"오늘 행복해 보여!"},{s:"B",en:"I am! I'm in a really good mood today!",ko:"맞아! 오늘 기분이 정말 좋아!"},{s:"A",en:"What happened?",ko:"무슨 일이야?"},{s:"B",en:"I got an A on my test!",ko:"시험에서 A 받았어!"}],
+   prac:["아침에: I'm in a good mood this morning!","좋은 일 후: I'm in such a good mood right now!","친구에게: Why are you in such a good mood?"]},
+  {no:"025",cat:"😊 감정과 상태",en:"I'm feeling a bit under the weather.",ko:"나 좀 몸이 안 좋아.",star:3,
+   chunk:"I'm feeling / a bit / under the weather.",chunkKo:"나는 느껴 / 좀 / 몸이 안 좋다고.",
+   point:"I'm feeling (나는 느껴) → a bit (조금) → under the weather. (몸 안 좋은)",
+   usage:"몸이 좀 안 좋을 때",
+   dial:[{s:"A",en:"Are you coming to practice?",ko:"연습에 와?"},{s:"B",en:"I'm feeling a bit under the weather. Maybe not.",ko:"나 몸이 좀 안 좋아. 못 갈 것 같아."},{s:"A",en:"Oh no! You should rest.",ko:"이런! 쉬어야 해."},{s:"B",en:"Yeah. I hope I'm better tomorrow.",ko:"응. 내일은 낫길 바라."}],
+   prac:["학교에서: I'm feeling under the weather today.","아플 때: I'm not feeling well. My head hurts.","집에서: Mom, I'm feeling a bit sick."]},
+
+  // === Part 4: 일상 루틴 041-065 ===
+  {no:"041",cat:"📅 일상 루틴",en:"I wake up at 7 every morning.",ko:"나는 매일 아침 7시에 일어나.",star:5,
+   chunk:"I wake up / at 7 / every morning.",chunkKo:"나는 일어나 / 7시에 / 매일 아침.",
+   point:"I wake up (일어나) → at [시간] (몇 시에) → every morning. (매일 아침)",
+   usage:"일과 설명할 때",
+   dial:[{s:"A",en:"What time do you wake up?",ko:"몇 시에 일어나?"},{s:"B",en:"I wake up at 7 every morning! You?",ko:"나는 매일 아침 7시에 일어나! 너는?"},{s:"A",en:"I wake up at 6:30! School starts early.",ko:"나는 6시 30분에 일어나! 학교가 일찍 시작해."},{s:"B",en:"Wow, that's early! I'd be so tired!",ko:"와, 일찍 일어나네! 나라면 너무 피곤할 것 같아!"}],
+   prac:["일과 설명: I wake up at 6 for school.","주말: On weekends I wake up at 9!","자랑: I wake up early and exercise!"]},
+  {no:"042",cat:"📅 일상 루틴",en:"I always have breakfast before school.",ko:"나는 항상 학교 가기 전에 아침을 먹어.",star:5,
+   chunk:"I always have / breakfast / before school.",chunkKo:"나는 항상 먹어 / 아침을 / 학교 가기 전에.",
+   point:"I always have (항상 먹어) → breakfast (아침) → before school. (학교 가기 전에)",
+   usage:"아침 루틴 말할 때",
+   dial:[{s:"A",en:"Do you eat breakfast every day?",ko:"매일 아침 먹어?"},{s:"B",en:"Yes! I always have breakfast before school!",ko:"응! 항상 학교 가기 전에 아침 먹어!"},{s:"A",en:"What do you usually eat?",ko:"보통 뭐 먹어?"},{s:"B",en:"Rice and soup! It's the best!",ko:"밥이랑 국! 최고야!"}],
+   prac:["식습관: I always have a healthy breakfast.","바쁠 때: I sometimes skip breakfast when I'm late.","권유: You should always have breakfast!"]},
+  {no:"043",cat:"📅 일상 루틴",en:"I study for two hours after school.",ko:"나는 방과 후에 두 시간 공부해.",star:4,
+   chunk:"I study / for two hours / after school.",chunkKo:"나는 공부해 / 두 시간 동안 / 방과 후에.",
+   point:"I study (공부해) → for [시간] (얼마나) → after school. (방과 후에)",
+   usage:"학습 루틴 말할 때",
+   dial:[{s:"A",en:"When do you do your homework?",ko:"숙제 언제 해?"},{s:"B",en:"I study for two hours after school!",ko:"방과 후에 두 시간 공부해!"},{s:"A",en:"Wow, two hours is a lot!",ko:"와, 두 시간은 많다!"},{s:"B",en:"I know, but I want to get good grades!",ko:"알아, 그런데 좋은 성적 받고 싶어!"}],
+   prac:["공부 습관: I study every evening for an hour.","시험 준비: I study extra before exams.","자랑: I studied for three hours yesterday!"]},
+  {no:"044",cat:"📅 일상 루틴",en:"I go to bed at 9:30.",ko:"나는 9시 30분에 자.",star:4,
+   chunk:"I go to bed / at 9:30.",chunkKo:"나는 자 / 9시 30분에.",
+   point:"I go to bed (나는 자) → at [시간]. (몇 시에)",
+   usage:"취침 시간 말할 때",
+   dial:[{s:"A",en:"What time do you go to bed?",ko:"몇 시에 자?"},{s:"B",en:"I go to bed at 9:30. My mom says so!",ko:"9시 30분에 자. 엄마가 그렇게 해!"},{s:"A",en:"Same! My bedtime is 10.",ko:"나도! 나는 10시야."},{s:"B",en:"We need sleep to grow tall!",ko:"키 크려면 자야 해!"}],
+   prac:["취침 시간: I go to bed early on school nights.","주말: On weekends I stay up later!","수면 중요성: Going to bed on time is important!"]},
+  {no:"045",cat:"📅 일상 루틴",en:"I practice piano every day.",ko:"나는 매일 피아노를 연습해.",star:4,
+   chunk:"I practice / piano / every day.",chunkKo:"나는 연습해 / 피아노를 / 매일.",
+   point:"I practice (연습해) → [악기/기술] (무엇을) → every day. (매일)",
+   usage:"꾸준한 연습 말할 때",
+   dial:[{s:"A",en:"You're so good at piano! How?",ko:"피아노 진짜 잘 치네! 어떻게?"},{s:"B",en:"I practice piano every day for an hour!",ko:"매일 한 시간씩 피아노 연습해!"},{s:"A",en:"Every day? That's impressive!",ko:"매일? 대단하다!"},{s:"B",en:"It's hard but worth it!",ko:"힘들지만 할 만해!"}],
+   prac:["꾸준함: I practice soccer every day after school.","습관: I practice reading English every morning.","격려: If you practice every day, you'll improve!"]},
+
+  // === Part 5: 학교생활 066-085 ===
+  {no:"066",cat:"🏫 학교생활",en:"Can I borrow your eraser?",ko:"지우개 빌릴 수 있어?",star:5,
+   chunk:"Can I borrow / your eraser?",chunkKo:"빌릴 수 있어 / 네 지우개를?",
+   point:"Can I borrow (빌릴 수 있어?) → your [물건]? (네 것을)",
+   usage:"물건 빌릴 때",
+   dial:[{s:"A",en:"Can I borrow your eraser? I forgot mine.",ko:"지우개 빌릴 수 있어? 내 것 깜빡했어."},{s:"B",en:"Sure! Here you go!",ko:"물론! 여기!"},{s:"A",en:"Thanks a lot! I'll give it back soon.",ko:"고마워! 곧 돌려줄게."},{s:"B",en:"No problem! Take your time!",ko:"괜찮아! 천천히 써!"}],
+   prac:["필기구: Can I borrow your pencil?","교과서: Can I borrow your math book?","자: Can I borrow your ruler for a minute?"]},
+  {no:"067",cat:"🏫 학교생활",en:"I don't understand this problem.",ko:"이 문제 이해가 안 돼.",star:5,
+   chunk:"I don't understand / this problem.",chunkKo:"나는 이해 못 해 / 이 문제를.",
+   point:"I don't understand (이해 못 해) → this problem. (이 문제를)",
+   usage:"모르는 것 있을 때",
+   dial:[{s:"A",en:"I don't understand this problem. Can you help?",ko:"이 문제 이해가 안 돼. 도와줄 수 있어?"},{s:"B",en:"Sure! Which part is confusing?",ko:"물론! 어느 부분이 헷갈려?"},{s:"A",en:"This part with fractions.",ko:"분수 이 부분."},{s:"B",en:"Ah! I'll explain! It's easy once you get it!",ko:"아! 설명해줄게! 알고 나면 쉬워!"}],
+   prac:["수업 중: Teacher, I don't understand question 3.","친구에게: I don't understand this. Help me!","솔직하게: I don't understand this at all."]},
+  {no:"068",cat:"🏫 학교생활",en:"The test was really tough.",ko:"시험이 정말 어려웠어.",star:4,
+   chunk:"The test / was really / tough.",chunkKo:"시험이 / 정말 / 어려웠어.",
+   point:"The test (시험이) → was really (정말 ~했어) → tough. (어려운)",
+   usage:"시험 후 대화할 때",
+   dial:[{s:"A",en:"How did the test go?",ko:"시험 어땠어?"},{s:"B",en:"The test was really tough! I hope I passed.",ko:"시험이 정말 어려웠어! 합격했으면 좋겠어."},{s:"A",en:"Same! I think I got some wrong.",ko:"나도! 몇 개 틀린 것 같아."},{s:"B",en:"Let's study together next time!",ko:"다음에는 같이 공부하자!"}],
+   prac:["시험 후: That test was so tough!","위로: Don't worry! The test was tough for everyone.","다짐: Next time I'll study more!"]},
+  {no:"069",cat:"🏫 학교생활",en:"I forgot to do my homework!",ko:"숙제하는 거 깜빡했어!",star:4,
+   chunk:"I forgot / to do / my homework!",chunkKo:"나는 깜빡했어 / 하는 것을 / 숙제!",
+   point:"I forgot (깜빡했어) → to do (하는 것을) → my homework! (숙제를)",
+   usage:"숙제 잊었을 때",
+   dial:[{s:"A",en:"Oh no! I forgot to do my homework!",ko:"이런! 숙제하는 거 깜빡했어!"},{s:"B",en:"Really? The teacher will be upset!",ko:"정말? 선생님이 화낼 거야!"},{s:"A",en:"I know! Maybe I can do it at lunch.",ko:"알아! 점심때 해야겠어."},{s:"B",en:"Quick! The class starts in 10 minutes!",ko:"빨리! 10분 후에 수업 시작해!"}],
+   prac:["솔직하게: I forgot to do my homework. I'm sorry.","변명: I forgot because I was busy.","다짐: I'll set a reminder so I don't forget!"]},
+  {no:"070",cat:"🏫 학교생활",en:"Let's work on this together.",ko:"같이 이거 해 보자.",star:5,
+   chunk:"Let's work on / this / together.",chunkKo:"같이 해 보자 / 이것을 / 함께.",
+   point:"Let's work on (같이 해 보자) → this (이것을) → together. (함께)",
+   usage:"협력 제안할 때",
+   dial:[{s:"A",en:"This project is so hard!",ko:"이 프로젝트 너무 어려워!"},{s:"B",en:"Let's work on it together! Two brains are better!",ko:"같이 해 보자! 두 머리가 하나보다 낫지!"},{s:"A",en:"Good idea! When can we meet?",ko:"좋은 생각이야! 언제 만날 수 있어?"},{s:"B",en:"How about this Saturday?",ko:"이번 토요일 어때?"}],
+   prac:["팀 프로젝트: Let's work on this project together!","공부: Let's study together for the exam!","숙제: Let's do our homework together!"]},
+
+  // === Part 6: 취미와 친구 086-105 ===
+  {no:"086",cat:"🎮 취미와 친구",en:"What do you do for fun?",ko:"재미로 뭐 해?",star:5,
+   chunk:"What do you / do / for fun?",chunkKo:"뭐 해 / 너는 / 재미로?",
+   point:"What do you (뭐 해) → do (하니) → for fun? (재미로)",
+   usage:"취미 물어볼 때",
+   dial:[{s:"A",en:"Hey! What do you do for fun?",ko:"야! 재미로 뭐 해?"},{s:"B",en:"I play video games and draw comics!",ko:"비디오 게임하고 만화 그려!"},{s:"A",en:"Cool! What games do you play?",ko:"멋지다! 어떤 게임 해?"},{s:"B",en:"Mostly RPG games! What about you?",ko:"주로 RPG 게임! 너는?"}],
+   prac:["새 친구에게: What do you do for fun after school?","취미 대화: I play soccer for fun! You?","공통점 찾기: What do you do for fun? We might have the same hobby!"]},
+  {no:"087",cat:"🎮 취미와 친구",en:"I'm on the school soccer team.",ko:"나는 학교 축구팀에 있어.",star:4,
+   chunk:"I'm on / the school / soccer team.",chunkKo:"나는 있어 / 학교 / 축구팀에.",
+   point:"I'm on (나는 있어) → the school (학교의) → [스포츠] team. (팀에)",
+   usage:"소속 팀 말할 때",
+   dial:[{s:"A",en:"Are you into sports?",ko:"운동 좋아해?"},{s:"B",en:"Yes! I'm on the school soccer team!",ko:"응! 학교 축구팀에 있어!"},{s:"A",en:"That's awesome! When's your next game?",ko:"멋지다! 다음 경기 언제야?"},{s:"B",en:"Next Friday! You should come and watch!",ko:"다음 주 금요일! 와서 봐!"}],
+   prac:["소개: I'm on the basketball team.","초청: I'm on the swim team. Come watch!","권유: You should join a team!"]},
+  {no:"088",cat:"🎮 취미와 친구",en:"Want to hang out this weekend?",ko:"이번 주말에 놀래?",star:5,
+   chunk:"Want to / hang out / this weekend?",chunkKo:"~하고 싶어? / 어울려 놀 / 이번 주말에?",
+   point:"Want to (하고 싶어?) → hang out (어울려 놀다) → this weekend? (이번 주말에)",
+   usage:"만남 제안할 때",
+   dial:[{s:"A",en:"Want to hang out this weekend?",ko:"이번 주말에 놀래?"},{s:"B",en:"Sure! What do you want to do?",ko:"좋아! 뭐 하고 싶어?"},{s:"A",en:"Maybe go to the mall or play at the park?",ko:"쇼핑몰 가거나 공원에서 놀거나?"},{s:"B",en:"The park sounds fun! Let's do it!",ko:"공원이 재밌을 것 같아! 그러자!"}],
+   prac:["주말 약속: Want to hang out Saturday?","방과 후: Want to hang out after school?","여러 명: Want to all hang out at my place?"]},
+  {no:"089",cat:"🎮 취미와 친구",en:"That was so much fun!",ko:"그거 정말 재미있었어!",star:5,
+   chunk:"That was / so much / fun!",chunkKo:"그게 / 너무 많이 / 재미있었어!",
+   point:"That was (그게 ~했어) → so much (너무 많이) → fun! (재미있었어)",
+   usage:"활동 후 즐거움 표현",
+   dial:[{s:"A",en:"That was so much fun! Let's do it again!",ko:"정말 재미있었어! 다시 하자!"},{s:"B",en:"Totally! Best day ever!",ko:"완전! 역대 최고의 날이야!"},{s:"A",en:"We should do this every weekend!",ko:"매주 주말마다 이러자!"},{s:"B",en:"Yes! I'll ask my mom!",ko:"응! 엄마한테 물어볼게!"}],
+   prac:["파티 후: That birthday party was so much fun!","경기 후: The soccer game was so much fun!","여행 후: That trip was so much fun!"]},
+  {no:"090",cat:"🎮 취미와 친구",en:"You're my best friend!",ko:"너는 내 가장 친한 친구야!",star:5,
+   chunk:"You're / my best / friend!",chunkKo:"너는 / 내 가장 친한 / 친구야!",
+   point:"You're (너는) → my best (내 가장 친한) → friend! (친구야)",
+   usage:"우정 표현할 때",
+   dial:[{s:"A",en:"Thanks for always being there for me!",ko:"항상 내 곁에 있어줘서 고마워!"},{s:"B",en:"Of course! You're my best friend!",ko:"물론이지! 너는 내 가장 친한 친구야!"},{s:"A",en:"You're mine too! BFFs!",ko:"나도! BFF야!"},{s:"B",en:"Forever! Best friends forever!",ko:"영원히! 영원한 베프!"}],
+   prac:["고마운 친구에게: You're my best friend!","우정 선언: We're best friends, right?","친구에게: I'm so happy you're my friend!"]},
+];
+
+let globalSpeed = 1;
+let currentUtterance = null;
+let playingAll = null;
+
+function stars(n){ return '⭐'.repeat(n); }
+
+function buildTOC(){
+  const grid = document.getElementById('tocGrid');
+  const cats = {};
+  PATTERNS.forEach(p=>{ if(!cats[p.cat])cats[p.cat]=[]; cats[p.cat].push(p); });
+  Object.keys(cats).forEach(cat=>{
+    const label = document.createElement('div');
+    label.style.cssText='grid-column:1/-1;font-weight:700;font-size:.8rem;color:#11998e;padding:4px 2px;margin-top:6px;border-bottom:1px solid var(--teal-l);';
+    label.textContent=cat; grid.appendChild(label);
+    cats[cat].forEach(p=>{
+      const a=document.createElement('a');
+      a.className='toc-item'; a.href='#pat-'+p.no;
+      a.innerHTML=`<span class="toc-num">${p.no}</span><span>${p.en}</span>`;
+      grid.appendChild(a);
+    });
+  });
+}
+
+function buildPatterns(){
+  const main = document.getElementById('mainArea');
+  let lastCat = '';
+  PATTERNS.forEach(p=>{
+    if(p.cat !== lastCat){
+      const hdr=document.createElement('h2');
+      hdr.style.cssText='font-size:1rem;color:#11998e;padding:16px 4px 6px;border-bottom:2px solid var(--teal-l);margin-bottom:10px';
+      hdr.textContent=p.cat; main.appendChild(hdr); lastCat=p.cat;
+    }
+    const wrap=document.createElement('div');
+    wrap.className='pat-wrap'; wrap.id='pat-'+p.no;
+    wrap.dataset.en=p.en.toLowerCase(); wrap.dataset.ko=p.ko;
+    wrap.innerHTML=makePatternHTML(p);
+    main.appendChild(wrap);
+  });
+}
+
+function makePatternHTML(p){
+  const dialLines = p.dial.map((d,i)=>`
+    <div class="dial-line sp-${d.s}" id="dl-${p.no}-${i}">
+      <span class="spk-badge">${d.s}</span>
+      <div class="line-text">
+        <div class="line-en">${d.en}</div>
+        <div class="line-ko">${d.ko}</div>
+      </div>
+      <button class="btn-speak-one" onclick="speakOne(this,'${escQ(d.en)}')">🔊 듣기</button>
+    </div>`).join('');
+
+  const pracItems = p.prac.map(pr=>`<li>${pr}</li>`).join('');
+
+  return `
+  <details class="pat-details">
+    <summary class="pat-summary">
+      <span class="pat-num">${p.no}</span>
+      <div style="flex:1">
+        <div class="pat-en">${p.en}</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:2px">
+          <span class="pat-ko">${p.ko}</span>
+          <span style="font-size:.7rem;color:#f6ad55">${stars(p.star)}</span>
+        </div>
+      </div>
+    </summary>
+    <div class="pat-body">
+      <div class="chunk-box">
+        <div style="font-size:.75rem;font-weight:700;color:#11998e;margin-bottom:4px">📦 청크 분해</div>
+        <div class="chunk-en">${p.chunk}</div>
+        <div class="chunk-ko">${p.chunkKo}</div>
+        <div class="chunk-point">💡 ${p.point}</div>
+        ${p.usage?`<div class="chunk-usage">📌 활용: ${p.usage}</div>`:''}
+      </div>
+      <div class="dial-header">
+        <span class="dial-title">💬 실전 대화</span>
+        <button class="btn-play-all" onclick="playAll(this,'${p.no}')">▶ 전체 듣기</button>
+      </div>
+      <div class="play-ctrl">
+        <div class="interval-wrap">
+          <label>간격</label>
+          <input type="range" class="interval-slider" min="0.5" max="3" step="0.5" value="1.5" oninput="this.nextElementSibling.textContent=this.value+'s'">
+          <span class="interval-val">1.5s</span>
+        </div>
+        <div style="width:1px;height:18px;background:var(--green-l)"></div>
+        <div class="speed-wrap">
+          속도:
+          <button class="speed-btn ${globalSpeed===0.75?'spd-active':''}" onclick="setSpeed(this,.75)">0.75x</button>
+          <button class="speed-btn ${globalSpeed===1?'spd-active':''}" onclick="setSpeed(this,1)">1x</button>
+          <button class="speed-btn ${globalSpeed===1.25?'spd-active':''}" onclick="setSpeed(this,1.25)">1.25x</button>
+        </div>
+        <span class="play-prog" id="prog-${p.no}">0 / ${p.dial.length}</span>
+      </div>
+      ${dialLines}
+      <details class="prac-details">
+        <summary>🎯 응용 연습 (클릭해서 열기)</summary>
+        <ul class="prac-list">${pracItems}</ul>
+      </details>
+    </div>
+  </details>`;
+}
+
+function escQ(s){ return s.replace(/'/g,"\\'"); }
+
+function speakOne(btn, text){
+  if(currentUtterance){ speechSynthesis.cancel(); currentUtterance=null; }
+  btn.classList.add('speaking-one'); btn.textContent='⏸ 정지';
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=globalSpeed;
+  u.onend=()=>{ btn.classList.remove('speaking-one'); btn.textContent='🔊 듣기'; currentUtterance=null; };
+  u.onerror=()=>{ btn.classList.remove('speaking-one'); btn.textContent='🔊 듣기'; currentUtterance=null; };
+  currentUtterance=u; speechSynthesis.speak(u);
+}
+
+function playAll(btn, patNo){
+  if(btn.classList.contains('playing-state')){
+    speechSynthesis.cancel();
+    if(playingAll) clearTimeout(playingAll);
+    btn.classList.remove('playing-state'); btn.textContent='▶ 전체 듣기';
+    document.querySelectorAll(`#pat-${patNo} .dial-line`).forEach(l=>l.classList.remove('speaking'));
+    document.getElementById('prog-'+patNo).classList.remove('active');
+    return;
+  }
+  const wrap=document.getElementById('pat-'+patNo);
+  if(!wrap.querySelector('.pat-details[open]')) wrap.querySelector('.pat-details').setAttribute('open','');
+  const lines=wrap.querySelectorAll('.dial-line');
+  const prog=document.getElementById('prog-'+patNo);
+  const slider=wrap.querySelector('.interval-slider');
+  const interval=parseFloat(slider?slider.value:1.5)*1000;
+  btn.classList.add('playing-state'); btn.textContent='⏹ 정지';
+  let idx=0;
+  const speakNext=()=>{
+    if(idx>=lines.length){
+      btn.classList.remove('playing-state'); btn.textContent='▶ 전체 듣기';
+      lines.forEach(l=>l.classList.remove('speaking')); prog.classList.remove('active'); return;
+    }
+    lines.forEach(l=>l.classList.remove('speaking'));
+    lines[idx].classList.add('speaking');
+    prog.textContent=`${idx+1} / ${lines.length}`; prog.classList.add('active');
+    lines[idx].scrollIntoView({behavior:'smooth',block:'nearest'});
+    const txt=lines[idx].querySelector('.line-en').textContent;
+    const u=new SpeechSynthesisUtterance(txt);
+    u.lang='en-US'; u.rate=globalSpeed;
+    u.onend=()=>{ idx++; playingAll=setTimeout(speakNext, interval); };
+    u.onerror=()=>{ idx++; playingAll=setTimeout(speakNext, interval); };
+    speechSynthesis.speak(u);
+  };
+  speakNext();
+}
+
+function setSpeed(btn, spd){
+  globalSpeed=spd;
+  btn.closest('.play-ctrl').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('spd-active'));
+  btn.classList.add('spd-active');
+}
+function setGlobalSpeed(spd, btn){
+  globalSpeed=spd;
+  document.querySelectorAll('.ctrl-bar .speed-btn').forEach(b=>b.classList.remove('spd-active'));
+  btn.classList.add('spd-active');
+}
+function expandAll(){ document.querySelectorAll('.pat-details').forEach(d=>d.setAttribute('open','')); }
+function collapseAll(){ document.querySelectorAll('.pat-details').forEach(d=>d.removeAttribute('open')); }
+function filterPatterns(){
+  const q=document.getElementById('searchBox').value.toLowerCase();
+  document.querySelectorAll('.pat-wrap').forEach(w=>{
+    const match=!q||w.dataset.en.includes(q)||w.dataset.ko.includes(q)||w.id.includes(q);
+    w.classList.toggle('hidden',!match);
+  });
+}
+
+buildTOC();
+buildPatterns();
+</script>
+</body>
+</html>
