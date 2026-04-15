@@ -97,6 +97,42 @@ export interface PhonicsContent {
   situations: PhonicsSituation[]
 }
 
+// ── Conversation Dialog types (50 situations × 10 turns) ──
+
+export interface ConvTipObj {
+  tag: string
+  text: string
+}
+
+export interface ConvDialogTurn {
+  turn: number
+  role: 'b' | 'c' | string
+  speaker: string
+  english: string
+  korean: string
+  chunks: string[]
+  tip?: ConvTipObj
+}
+
+export interface ConvDialogSituation {
+  id: number
+  emoji: string
+  name: string
+  nameEn: string
+  color: string
+  turns: ConvDialogTurn[]
+}
+
+export interface ConvDialogData {
+  title: string
+  description: string
+  version: string
+  level: string
+  total_sentences: number
+  meta: { target: string; totalTurns: number; situations: number }
+  situations: ConvDialogSituation[]
+}
+
 // ── Korean word learning types ──
 export interface KoWordItem {
   id: string
