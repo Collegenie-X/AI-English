@@ -740,6 +740,72 @@
 .puzzle-chip-explode { animation: wordExplode 0.7s ease forwards; }
 .puzzle-cell-hint    { animation: hintPulse 0.55s ease 3; background: #FFF9C4 !important; border-color: #F9A825 !important; }
 
+/* ── KoPuzzleDialog cell styles (HTML 파일과 동일) ── */
+.ko-pzl-cell {
+  background: white; border: 2.5px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+  transition: all 0.16s; color: #333; font-weight: 700;
+}
+.ko-pzl-cell:hover:not(.pzl-cell-found-0):not(.pzl-cell-found-1):not(.pzl-cell-found-2):not(.pzl-cell-found-3):not(.pzl-cell-found-4) {
+  transform: scale(1.09); box-shadow: 0 4px 12px rgba(126,87,194,0.22); border-color: #CE93D8;
+}
+/* 드래그 선택 */
+.pzl-cell-start { background: linear-gradient(135deg,#FFF176,#FFEE58); border-color: #F9A825; transform: scale(1.12); z-index: 3; animation: cellPulse 0.9s ease infinite; }
+.pzl-cell-path  { background: linear-gradient(135deg,#B3E5FC,#81D4FA); border-color: #0288D1; transform: scale(1.08); z-index: 2; }
+/* 오답 */
+.pzl-cell-wrong { animation: wrongShake 0.4s ease; background: #FFCDD2; border-color: #C62828; }
+/* 힌트 */
+.pzl-cell-hint  { animation: hintCellBlink 0.48s ease-in-out 2 !important; border-color: #F57F17 !important; z-index: 5; position: relative; }
+/* 정답 (단어별 색) */
+.pzl-cell-found-0 { background: linear-gradient(135deg,#A5D6A7,#66BB6A); color: white; border-color: #2E7D32; }
+.pzl-cell-found-1 { background: linear-gradient(135deg,#90CAF9,#42A5F5); color: white; border-color: #1565C0; }
+.pzl-cell-found-2 { background: linear-gradient(135deg,#FFCC80,#FFA726); color: white; border-color: #E65100; }
+.pzl-cell-found-3 { background: linear-gradient(135deg,#CE93D8,#AB47BC); color: white; border-color: #6A1B9A; }
+.pzl-cell-found-4 { background: linear-gradient(135deg,#80DEEA,#26C6DA); color: white; border-color: #006064; }
+/* 진행 중 */
+.pzl-cell-prog-0 { background: linear-gradient(135deg,#A5D6A740,#66BB6A40); border-color: #66BB6A; color: #2E7D32; }
+.pzl-cell-prog-1 { background: linear-gradient(135deg,#90CAF940,#42A5F540); border-color: #42A5F5; color: #1565C0; }
+.pzl-cell-prog-2 { background: linear-gradient(135deg,#FFCC8040,#FFA72640); border-color: #FFA726; color: #E65100; }
+.pzl-cell-prog-3 { background: linear-gradient(135deg,#CE93D840,#AB47BC40); border-color: #AB47BC; color: #6A1B9A; }
+.pzl-cell-prog-4 { background: linear-gradient(135deg,#80DEEA40,#26C6DA40); border-color: #26C6DA; color: #006064; }
+/* 초급 첫글자 힌트 */
+.pzl-cell-easy-0 { border-color: #43A047 !important; background: #F1FFF3; }
+.pzl-cell-easy-1 { border-color: #1976D2 !important; background: #EAF4FF; }
+.pzl-cell-easy-2 { border-color: #E64A19 !important; background: #FFF5EE; }
+.pzl-cell-easy-3 { border-color: #7B1FA2 !important; background: #F8F0FF; }
+.pzl-cell-easy-4 { border-color: #00695C !important; background: #E0F7FA; }
+/* 칩 폭발 */
+.ko-chip-explode { animation: wordExplode 0.72s ease forwards; }
+/* starburst */
+.ko-starburst {
+  position: fixed; pointer-events: none; z-index: 9999;
+  width: 80px; height: 80px; margin-left: -40px; margin-top: -40px;
+  font-size: 2.5em; line-height: 80px; text-align: center;
+  animation: starburst 0.8s ease forwards;
+}
+@keyframes starburst {
+  0%   { opacity:1; transform: scale(0) rotate(0deg); }
+  60%  { opacity:0.9; transform: scale(1.4) rotate(180deg); }
+  100% { opacity:0; transform: scale(2) rotate(360deg); }
+}
+@keyframes cellPulse {
+  0%,100% { box-shadow: 0 4px 14px rgba(249,168,37,0.35); }
+  50%      { box-shadow: 0 4px 22px rgba(249,168,37,0.7); }
+}
+@keyframes hintCellBlink {
+  0%   { background: linear-gradient(135deg,#FFE082,#FFCA28); box-shadow: 0 0 0 4px rgba(255,160,0,0.6); transform: scale(1.22); }
+  25%  { background: white; box-shadow: 0 0 0 2px rgba(255,160,0,0.2); transform: scale(1.05); }
+  50%  { background: linear-gradient(135deg,#FFE082,#FFCA28); box-shadow: 0 0 0 6px rgba(255,160,0,0.7); transform: scale(1.25); }
+  75%  { background: white; box-shadow: 0 0 0 2px rgba(255,160,0,0.2); transform: scale(1.05); }
+  100% { background: linear-gradient(135deg,#FFE082,#FFCA28); box-shadow: 0 0 0 4px rgba(255,160,0,0.5); transform: scale(1.18); }
+}
+@keyframes wrongShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px); }
+}
+
 /* ─────────────────────────────────────────
    QUIZ SLIDER
 ───────────────────────────────────────── */
