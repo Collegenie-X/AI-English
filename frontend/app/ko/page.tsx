@@ -126,6 +126,7 @@ export default function KoreanPage() {
   const [selectedCatWords, setSelectedCatWords] = useState<KoWordItem[]>([])
   const [selectedCatName, setSelectedCatName] = useState('')
   const [selectedCatColor, setSelectedCatColor] = useState('#FF4B4B')
+  const [selectedCatId, setSelectedCatId] = useState('')
 
   useEffect(() => {
     fetch('/data/ko/words.json')
@@ -184,11 +185,12 @@ export default function KoreanPage() {
     })
   }
 
-  const openLearnAt = (item: KoWordItem, catWords: KoWordItem[], catName: string, catColor: string) => {
+  const openLearnAt = (item: KoWordItem, catWords: KoWordItem[], catName: string, catColor: string, catId?: string) => {
     setSelectedWord(item)
     setSelectedCatWords(catWords)
     setSelectedCatName(catName)
     setSelectedCatColor(catColor)
+    setSelectedCatId(catId ?? stageCats.find(c => c.words.some(w => w.id === item.id))?.id ?? stageCats[0]?.id ?? '')
     setLearnOpen(true)
   }
 
@@ -488,7 +490,7 @@ export default function KoreanPage() {
                     {/* Mode buttons */}
                     <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
                       <button
-                        onClick={() => openLearnAt(cat.words[0], cat.words, cat.name, catColor)}
+                        onClick={() => openLearnAt(cat.words[0], cat.words, cat.name, catColor, cat.id)}
                         disabled={cat.words.length === 0}
                         style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 10px', border: 'none', borderRadius: '10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.74rem', fontWeight: 800, background: '#58CC02', color: 'white' }}
                       >
@@ -522,7 +524,7 @@ export default function KoreanPage() {
                           key={item.id}
                           item={item}
                           bgColor={catColor}
-                          onClick={() => openLearnAt(item, cat.words, cat.name, catColor)}
+                          onClick={() => openLearnAt(item, cat.words, cat.name, catColor, cat.id)}
                         />
                       ))}
                     </div>
@@ -537,10 +539,9 @@ export default function KoreanPage() {
       {/* ── Dialogs ── */}
       {learnOpen && selectedWord && (
         <KoLearnDialog
-          words={selectedCatWords}
+          allCategories={stageCats}
+          initialCatId={selectedCatId}
           initialWord={selectedWord}
-          catName={selectedCatName}
-          catColor={selectedCatColor}
           onClose={() => setLearnOpen(false)}
         />
       )}

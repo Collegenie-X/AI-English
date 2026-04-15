@@ -1,10 +1,9 @@
 'use client'
 
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { useTTS } from '@/hooks/useTTS'
-import type { KoWordItem } from '@/types/content'
+import type { KoWordItem, KoCategory } from '@/types/content'
 
-// ── Syllable color sets ───────────────────────────────────────────────────────
 const SYL_COLORS = [
   { bg: '#7c3aed', text: 'white' },
   { bg: '#ec4899', text: 'white' },
@@ -13,41 +12,72 @@ const SYL_COLORS = [
   { bg: '#f97316', text: 'white' },
 ]
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 interface KoLearnDialogProps {
-  words: KoWordItem[]
+  allCategories: KoCategory[]
+  initialCatId: string
   initialWord?: KoWordItem
-  catName: string
-  catColor: string
   onClose: () => void
 }
 
-export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }: KoLearnDialogProps) {
-  const initialIdx = initialWord ? Math.max(0, words.findIndex(w => w.id === initialWord.id)) : 0
-  const [idx, setIdx] = useState(initialIdx)
+export function KoLearnDialog({ allCategories, initialCatId, initialWord, onClose }: KoLearnDialogProps) {
+  const [selectedCatIds, setSelectedCatIds] = useState<Set<string>>(new Set([initialCatId]))
+  const [words, setWords] = useState<KoWordItem[]>([])
+  const [idx, setIdx] = useState(0)
   const [autoPlay, setAutoPlay] = useState(false)
   const [playingIdx, setPlayingIdx] = useState<number | null>(null)
   const autoRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { speak, speaking } = useTTS()
 
-  const item = words[idx] ?? words[0]
-  if (!item) return null
+  const primaryCat = allCategories.find(c => c.id === initialCatId) ?? allCategories[0]
+  const activeCat = allCategories.find(c => c.id === [...selectedCatIds][0]) ?? primaryCat
 
-  const syllables = Array.from(item.word)
+  const buildShuffledWords = useCallback((catIds: Set<string>) => {
+    const merged = allCategories
+      .filter(c => catIds.has(c.id))
+      .flatMap(c => c.words)
+    return shuffleArray(merged)
+  }, [allCategories])
+
+  // Init words on mount
+  useEffect(() => {
+    const shuffled = buildShuffledWords(new Set([initialCatId]))
+    const startIdx = initialWord
+      ? Math.max(0, shuffled.findIndex(w => w.id === initialWord.id))
+      : 0
+    setWords(shuffled)
+    setIdx(startIdx)
+  }, [])
+
+  const item = words[idx] ?? words[0]
+  if (!item && words.length === 0) return null
+
+  const syllables = item ? Array.from(item.word) : []
+
+  const currentCatColor = allCategories.find(c =>
+    c.words.some(w => w.id === item?.id)
+  )?.color ?? primaryCat.color
 
   const playWord = useCallback(() => {
-    speak(item.word, 'ko-KR', 0.85)
+    if (item) speak(item.word, 'ko-KR', 0.85)
   }, [item, speak])
 
-  // Auto-play on idx change
   useEffect(() => {
+    if (!item) return
     const t = setTimeout(playWord, 280)
     return () => clearTimeout(t)
   }, [idx])
 
-  // Auto-play carousel
   useEffect(() => {
     if (!autoPlay) return
-    // Wait for TTS to finish + pause, then advance
     autoRef.current = setTimeout(() => {
       if (idx < words.length - 1) {
         setIdx(i => i + 1)
@@ -58,7 +88,6 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
     return () => { if (autoRef.current) clearTimeout(autoRef.current) }
   }, [autoPlay, idx, words.length])
 
-  // Keyboard nav
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { onClose(); return }
@@ -78,7 +107,32 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
   const handlePrev = () => { setAutoPlay(false); setIdx(i => Math.max(0, i - 1)) }
   const handleNext = () => { setAutoPlay(false); setIdx(i => Math.min(words.length - 1, i + 1)) }
 
-  const pct = ((idx + 1) / words.length) * 100
+  const toggleCat = (catId: string) => {
+    setSelectedCatIds(prev => {
+      const next = new Set(prev)
+      if (next.has(catId) && next.size > 1) {
+        next.delete(catId)
+      } else {
+        next.add(catId)
+      }
+      const newWords = buildShuffledWords(next)
+      setWords(newWords)
+      setIdx(0)
+      setAutoPlay(false)
+      return next
+    })
+  }
+
+  const handleShuffle = () => {
+    const newWords = buildShuffledWords(selectedCatIds)
+    setWords(newWords)
+    setIdx(0)
+    setAutoPlay(false)
+  }
+
+  const pct = words.length > 0 ? ((idx + 1) / words.length) * 100 : 0
+
+  if (!item) return null
 
   return (
     <div className="dialog-overlay" onClick={onClose} role="dialog" aria-modal aria-label={`${item.word} 학습`}>
@@ -87,11 +141,11 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
         {/* ── Colored gradient header ── */}
         <div
           className="dialog-header-gradient"
-          style={{ background: `linear-gradient(135deg, ${catColor}, ${catColor}bb)` }}
+          style={{ background: `linear-gradient(135deg, ${currentCatColor}, ${currentCatColor}bb)` }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <span style={{ color: 'white', fontWeight: 900, fontSize: '1.05rem' }}>
-              {catName}
+              {allCategories.filter(c => selectedCatIds.has(c.id)).map(c => c.name).join(' + ')}
             </span>
             <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.8rem', fontWeight: 600 }}>
               {item.word} · {item.meaning}
@@ -100,15 +154,105 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
           <button className="dialog-close-btn" onClick={onClose} aria-label="닫기">✕</button>
         </div>
 
+        {/* ── Category multi-select tabs + shuffle ── */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          padding: '10px 14px 8px',
+          background: '#fafafa',
+          borderBottom: '1px solid #f0f0f0',
+          overflowX: 'auto',
+        }}>
+          <div style={{ display: 'flex', gap: '6px', flex: 1, flexWrap: 'wrap' }}>
+            {allCategories.map(cat => {
+              const isSelected = selectedCatIds.has(cat.id)
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => toggleCat(cat.id)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '5px 10px',
+                    borderRadius: '20px',
+                    border: isSelected ? `2px solid ${cat.color}` : '2px solid #e5e7eb',
+                    background: isSelected ? `${cat.color}18` : 'white',
+                    color: isSelected ? cat.color : '#9ca3af',
+                    fontWeight: 700,
+                    fontSize: '0.78rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.18s',
+                    fontFamily: 'inherit',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.name}</span>
+                  <span style={{
+                    fontSize: '0.7rem',
+                    background: isSelected ? cat.color : '#e5e7eb',
+                    color: isSelected ? 'white' : '#9ca3af',
+                    borderRadius: '10px',
+                    padding: '1px 5px',
+                    fontWeight: 800,
+                  }}>
+                    {cat.words.length}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Shuffle / Refresh button */}
+          <button
+            onClick={handleShuffle}
+            title="단어 섞기"
+            style={{
+              flexShrink: 0,
+              width: '34px',
+              height: '34px',
+              border: '2px solid #e5e7eb',
+              borderRadius: '50%',
+              background: 'white',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.18s',
+              color: '#6b7280',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = currentCatColor
+              e.currentTarget.style.borderColor = currentCatColor
+              e.currentTarget.style.color = 'white'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'white'
+              e.currentTarget.style.borderColor = '#e5e7eb'
+              e.currentTarget.style.color = '#6b7280'
+            }}
+            aria-label="단어 섞기"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="16 3 21 3 21 8" />
+              <line x1="4" y1="20" x2="21" y2="3" />
+              <polyline points="21 16 21 21 16 21" />
+              <line x1="15" y1="15" x2="21" y2="21" />
+            </svg>
+          </button>
+        </div>
+
         {/* ── Progress bar ── */}
         <div style={{ height: '5px', background: '#f0f0f0', overflow: 'hidden' }}>
-          <div style={{ height: '100%', background: catColor, width: `${pct}%`, transition: 'width 0.45s cubic-bezier(0.22,1,0.36,1)' }} />
+          <div style={{ height: '100%', background: currentCatColor, width: `${pct}%`, transition: 'width 0.45s cubic-bezier(0.22,1,0.36,1)' }} />
         </div>
 
         {/* ── Big emoji hero ── */}
         <div
           style={{
-            background: `linear-gradient(160deg, ${catColor}22 0%, ${catColor}11 100%)`,
+            background: `linear-gradient(160deg, ${currentCatColor}22 0%, ${currentCatColor}11 100%)`,
             padding: '32px 24px 20px',
             display: 'flex',
             flexDirection: 'column',
@@ -116,17 +260,16 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
             gap: '10px',
           }}
         >
-          {/* Emoji on colored card */}
           <div
             style={{
-              background: catColor,
+              background: currentCatColor,
               borderRadius: '28px',
               width: '140px',
               height: '140px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: `0 8px 32px ${catColor}55`,
+              boxShadow: `0 8px 32px ${currentCatColor}55`,
               cursor: 'pointer',
               transition: 'transform 0.15s',
               userSelect: 'none',
@@ -140,15 +283,13 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
             </span>
           </div>
 
-          {/* Word */}
           <p style={{ fontSize: '2.2rem', fontWeight: 900, color: '#1a1a2e', letterSpacing: '-1px', margin: 0 }}>
             {item.word}
           </p>
 
-          {/* Audio wave */}
           <div className={`audio-wave ${speaking ? '' : 'paused'}`} style={{ height: '28px' }}>
             {[10, 18, 26, 20, 14, 20, 26].map((h, i) => (
-              <div key={i} className="wave-bar" style={{ background: catColor, height: `${h}px` }} />
+              <div key={i} className="wave-bar" style={{ background: currentCatColor, height: `${h}px` }} />
             ))}
           </div>
         </div>
@@ -179,7 +320,7 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
           {/* Meaning chip */}
           <div style={{ textAlign: 'center' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', padding: '5px 16px', borderRadius: '20px', background: '#f3f4f6', color: '#6b7280', fontWeight: 700, fontSize: '0.88rem' }}>
-              뜻: {item.meaning}
+              영어 {item.meaning}
             </span>
           </div>
 
@@ -196,8 +337,8 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px',
-                      background: `${catColor}0f`,
-                      border: `1.5px solid ${catColor}22`,
+                      background: `${currentCatColor}0f`,
+                      border: `1.5px solid ${currentCatColor}22`,
                       borderRadius: '14px',
                       padding: '10px 14px',
                       cursor: 'pointer',
@@ -206,10 +347,10 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
                       width: '100%',
                       transition: 'background 0.15s',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = `${catColor}22`)}
-                    onMouseLeave={e => (e.currentTarget.style.background = `${catColor}0f`)}
+                    onMouseEnter={e => (e.currentTarget.style.background = `${currentCatColor}22`)}
+                    onMouseLeave={e => (e.currentTarget.style.background = `${currentCatColor}0f`)}
                   >
-                    <span style={{ fontSize: '18px', flexShrink: 0, color: catColor }}>
+                    <span style={{ fontSize: '18px', flexShrink: 0, color: currentCatColor }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                         <polygon points="3,8 3,16 7,16 13,21 13,3 7,8" />
                         <path d="M16 8.5a5 5 0 010 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
@@ -235,14 +376,14 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
                 fontFamily: 'inherit',
                 fontSize: '0.9rem',
                 fontWeight: 700,
-                background: autoPlay ? `linear-gradient(135deg,${catColor},${catColor}bb)` : '#f0f2f5',
+                background: autoPlay ? `linear-gradient(135deg,${currentCatColor},${currentCatColor}bb)` : '#f0f2f5',
                 color: autoPlay ? 'white' : '#666',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '6px',
                 transition: 'all 0.2s',
-                boxShadow: autoPlay ? `0 4px 16px ${catColor}44` : 'none',
+                boxShadow: autoPlay ? `0 4px 16px ${currentCatColor}44` : 'none',
               }}
             >
               {autoPlay ? (
@@ -315,12 +456,12 @@ export function KoLearnDialog({ words, initialWord, catName, catColor, onClose }
                 width: '44px', height: '44px',
                 border: 'none',
                 borderRadius: '50%',
-                background: idx === words.length - 1 ? '#f5f5f5' : catColor,
+                background: idx === words.length - 1 ? '#f5f5f5' : currentCatColor,
                 color: idx === words.length - 1 ? '#ccc' : 'white',
                 cursor: idx === words.length - 1 ? 'not-allowed' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: 'inherit', fontWeight: 900, fontSize: '1.1rem', transition: 'all 0.15s',
-                boxShadow: idx === words.length - 1 ? 'none' : `0 4px 14px ${catColor}55`,
+                boxShadow: idx === words.length - 1 ? 'none' : `0 4px 14px ${currentCatColor}55`,
               }}
               aria-label="다음"
             >
