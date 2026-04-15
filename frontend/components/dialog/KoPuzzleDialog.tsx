@@ -6,9 +6,9 @@ import type { KoWordItem } from '@/types/content'
 
 // ── Config (HTML 파일과 동일) ─────────────────────────────────────────────────
 const PUZZLE_CONFIG = {
-  easy:   { label: '초급', grid: 4, targetCount: 3, totalRounds: 3, cellPx: 74, fontSize: '1.5em', dirs: ['h'] as Dir[], showEasyHint: true  },
-  medium: { label: '중급', grid: 5, targetCount: 3, totalRounds: 3, cellPx: 62, fontSize: '1.35em', dirs: ['h','v'] as Dir[], showEasyHint: false },
-  hard:   { label: '고급', grid: 6, targetCount: 3, totalRounds: 3, cellPx: 52, fontSize: '1.18em', dirs: ['h','v'] as Dir[], showEasyHint: false },
+  easy:   { label: '초급', grid: 4, targetCount: 3, totalRounds: 3, cellPx: 88, fontSize: '1.65em', dirs: ['h'] as Dir[], showEasyHint: true  },
+  medium: { label: '중급', grid: 5, targetCount: 3, totalRounds: 3, cellPx: 72, fontSize: '1.45em', dirs: ['h','v'] as Dir[], showEasyHint: false },
+  hard:   { label: '고급', grid: 6, targetCount: 3, totalRounds: 3, cellPx: 58, fontSize: '1.25em', dirs: ['h','v'] as Dir[], showEasyHint: false },
 }
 type DiffId = keyof typeof PUZZLE_CONFIG
 type Dir = 'h' | 'v'
@@ -142,19 +142,11 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
   const [hintCell, setHintCell]   = useState<[number,number]|null>(null)
   const [dragCells, setDragCells] = useState<[number,number][]>([])
   const [wrongCells, setWrongCells] = useState<[number,number][]>([])
-  const [hintMsg, setHintMsg] = useState('💡 단어를 찾아보세요!')
 
   const usedIdsRef = useRef(new Set<string>())
   const dragRef    = useRef<{ active:boolean; startR:number; startC:number; dir:'H'|'V'|null; cells:[number,number][] }>
                          ({ active:false, startR:-1, startC:-1, dir:null, cells:[] })
-  const hintTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
   const cfg = PUZZLE_CONFIG[diff]
-
-  const showHint = useCallback((msg: string) => {
-    setHintMsg(msg)
-    clearTimeout(hintTimerRef.current)
-    hintTimerRef.current = setTimeout(() => setHintMsg('💡 단어를 찾아보세요!'), 3500)
-  }, [])
 
   // ── Init / next round ───────────────────────────────────────────────────────
   const initGame = useCallback((d: DiffId) => {
@@ -162,13 +154,11 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
     setRound(1); setTotalFound(0); setIsDone(false)
     setDragCells([]); setWrongCells([]); setHintCell(null)
     setRs(buildRound(words, d, usedIdsRef.current))
-    setHintMsg('💡 단어를 찾아보세요!')
   }, [words])
 
   const nextRound = useCallback((d: DiffId, n: number) => {
     setRound(n); setDragCells([]); setWrongCells([]); setHintCell(null)
     setRs(buildRound(words, d, usedIdsRef.current))
-    setHintMsg('💡 단어를 찾아보세요!')
   }, [words])
 
   useEffect(() => { initGame('easy') }, [initGame])
@@ -224,8 +214,7 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
     if (!pl || prog >= pl.cells.length) return
     setHintCell(pl.cells[prog])
     setTimeout(() => setHintCell(null), 1100)
-    showHint(`💡 "${t.word}"의 첫 글자를 찾아봐요!`)
-  }, [rs.foundWords, rs.wordProgress, rs.placements, speak, showHint])
+  }, [rs.foundWords, rs.wordProgress, rs.placements, speak])
 
   // ── Tap cell: char matching ─────────────────────────────────────────────────
   const tapCell = useCallback((r: number, c: number) => {
@@ -248,7 +237,6 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
     }
     if (!matchId) {
       setWrongCells([[r,c]]); setTimeout(() => setWrongCells([]), 420)
-      showHint('😊 다시 해봐요!')
       return
     }
     const target = rs.targets.find(t => t.id === matchId)!
@@ -264,15 +252,13 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
         inProgressCells: { ...prev.inProgressCells, [matchId!]: [] },
       }))
       markWordFound(matchId, [...prevCells, newCell])
-      showHint(`🎉 "${target.word}" 찾았어요! 대단해요!`)
     } else {
       setRs(prev => ({ ...prev,
         wordProgress: { ...prev.wordProgress, [matchId!]: newProg },
         inProgressCells: { ...prev.inProgressCells, [matchId!]: [...(prev.inProgressCells[matchId!]??[]), newCell] },
       }))
-      showHint(`👍 "${target.word}" ${newProg}/${syls.length} — ${syls.length-newProg}글자 더!`)
     }
-  }, [rs, speak, markWordFound, showHint])
+  }, [rs, speak, markWordFound])
 
   // ── Drag ────────────────────────────────────────────────────────────────────
   const getCellAt = (x:number, y:number):[number,number]|null => {
@@ -323,10 +309,8 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
     const target=match?rs.targets.find(t=>t.word===match.word):null
     if (target&&!rs.foundWords.has(target.word)) {
       markWordFound(target.id, cells)
-      showHint(`🎉 "${target.word}" 찾았어요! 대단해요!`)
     } else {
       setWrongCells(cells); setTimeout(()=>setWrongCells([]),420)
-      showHint('😊 다시 해봐요! 첫 글자 → 끝 글자!')
     }
   }
   const onTouchStart=(e:React.TouchEvent)=>{ const t=e.touches[0]; const cell=getCellAt(t.clientX,t.clientY); if(!cell)return; dragRef.current={active:true,startR:cell[0],startC:cell[1],dir:null,cells:[cell]}; setDragCells([]) }
@@ -337,20 +321,6 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
     const h=(e:KeyboardEvent)=>{ if(e.key==='Escape') onClose() }
     window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h)
   },[onClose])
-
-  // ── Hint button ─────────────────────────────────────────────────────────────
-  const onHintBtn = useCallback(() => {
-    const notFound = rs.targets.filter(t => !rs.foundWords.has(t.word))
-    if (!notFound.length) { showHint('모두 찾았어요! 🏆'); return }
-    const t = notFound[0]
-    const pl = rs.placements.find(p => p.word === t.word)
-    if (!pl) return
-    const prog = rs.wordProgress[t.id] ?? 0
-    const hCell = pl.cells[Math.min(prog, pl.cells.length-1)]
-    setHintCell(hCell); setTimeout(() => setHintCell(null), 1100)
-    speak(t.word, 'ko-KR', 0.9)
-    showHint(`💡 "${t.word}" ${cfg.dirs.includes('v') ? '' : '→ 가로'}방향에 있어요!`)
-  }, [rs, cfg, speak, showHint])
 
   // ── Cell helpers ─────────────────────────────────────────────────────────────
   const isCorrect    = (r:number,c:number) => rs.correctCells.some(([cr,cc])=>cr===r&&cc===c)
@@ -417,11 +387,6 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
     </div>
   )
 
-  // ── Playing ─────────────────────────────────────────────────────────────────
-  const instruction = cfg.dirs.includes('v')
-    ? '👆 가로(→)·세로(↓) 방향으로 단어가 숨어있어요!<br/>끌거나 한 글자씩 탭해 보세요!'
-    : '👆 가로(→) 방향으로만 단어가 숨어있어요!<br/>끌거나 한 글자씩 탭해 보세요!'
-
   return (
     <div className="dialog-overlay" onClick={onClose}>
       <div className="dialog-panel" onClick={e=>e.stopPropagation()} style={{maxWidth:440}}>
@@ -463,8 +428,10 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
           <button
             onClick={()=>nextRound(diff,round)}
             title="새로고침"
-            style={{width:28,height:28,borderRadius:'50%',border:'1.5px solid #ce93d8',background:'#ede7f6',color:'#7E57C2',cursor:'pointer',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:'1rem',lineHeight:1,padding:0,flexShrink:0}}>
-            ↺
+            style={{width:32,height:32,borderRadius:'50%',border:'none',background:'linear-gradient(135deg,#7E57C2,#9C27B0)',cursor:'pointer',display:'inline-flex',alignItems:'center',justifyContent:'center',padding:0,flexShrink:0,boxShadow:'0 2px 8px rgba(126,87,194,0.35)'}}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8h-2c0 3.31-2.69 6-6 6s-6-2.69-6-6 2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z" fill="white"/>
+            </svg>
           </button>
         </div>
 
@@ -493,7 +460,7 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
                     boxShadow:'0 2px 10px rgba(0,0,0,0.09)',transition:'all 0.25s',
                   }}>
                   {found&&<span style={{position:'absolute',top:-10,right:-8,fontSize:'1.2rem'}}>✅</span>}
-                  <div style={{fontSize:'2.8rem',lineHeight:1,marginBottom:2}}>{t.emoji}</div>
+                  <div style={{fontSize:'3.6rem',lineHeight:1,marginBottom:4}}>{t.emoji}</div>
                   <div style={{fontSize:'0.78rem',color:found?'#2E7D32':'#2c3e50',fontWeight:700}}>{t.word}</div>
                   {/* 음절 박스 */}
                   <div style={{display:'flex',gap:2,justifyContent:'center',marginTop:4,flexWrap:'nowrap'}}>
@@ -511,14 +478,10 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
                       )
                     })}
                   </div>
-                  {found&&<div style={{fontSize:'0.65rem',background:'#E8F5E9',color:'#2E7D32',borderRadius:8,padding:'2px 6px',marginTop:3,display:'inline-block'}}>✓ 찾았어요!</div>}
                 </button>
               )
             })}
           </div>
-
-          {/* ── 안내 문구 ── */}
-          <div style={{textAlign:'center',fontSize:'0.88rem',color:'#7E57C2',marginBottom:12,background:'#F3E5F5',borderRadius:12,padding:'8px 12px',fontWeight:700}} dangerouslySetInnerHTML={{__html:instruction}} />
 
           {/* ── 그리드 ── */}
           <div style={{display:'flex',justifyContent:'center',marginBottom:12}}>
@@ -540,8 +503,6 @@ export function KoPuzzleDialog({ words, catName, onClose }: KoPuzzleDialogProps)
             </div>
           </div>
 
-          {/* ── 힌트 박스 ── */}
-          <div style={{textAlign:'center',fontSize:'0.88rem',color:'#888',minHeight:22,padding:'0 8px'}}>{hintMsg}</div>
         </div>
       </div>
     </div>
