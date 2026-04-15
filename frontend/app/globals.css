@@ -1,0 +1,849 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* === LingoBaby — TodoSchool-inspired bright kids game theme === */
+  /* Pure white background — content pops with vivid card colors */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.20 0.02 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.20 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.20 0.02 260);
+
+  /* Primary: vibrant Duolingo green */
+  --primary: oklch(0.60 0.22 145);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Secondary: warm orange */
+  --secondary: oklch(0.70 0.22 40);
+  --secondary-foreground: oklch(1 0 0);
+
+  /* Muted */
+  --muted: oklch(0.95 0.005 240);
+  --muted-foreground: oklch(0.50 0.02 250);
+
+  /* Accent: sunny yellow */
+  --accent: oklch(0.84 0.20 90);
+  --accent-foreground: oklch(0.20 0.02 260);
+
+  --destructive: oklch(0.60 0.24 22);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.90 0.01 240);
+  --input: oklch(0.95 0.005 240);
+  --ring: oklch(0.60 0.22 145);
+
+  /* ── Vivid game palette — used as full card backgrounds ── */
+  --game-green:       #58CC02;
+  --game-green-dark:  #46A302;
+  --game-green-light: #D7F5A8;
+  --game-blue:        #1CB0F6;
+  --game-blue-dark:   #0A98DA;
+  --game-blue-light:  #D0F0FF;
+  --game-orange:      #FF9600;
+  --game-orange-dark: #E08200;
+  --game-orange-light:#FFE9B0;
+  --game-red:         #FF4B4B;
+  --game-red-dark:    #E03030;
+  --game-red-light:   #FFD0D0;
+  --game-pink:        #FF86C8;
+  --game-pink-dark:   #E05EA8;
+  --game-pink-light:  #FFD6EE;
+  --game-purple:      #CE82FF;
+  --game-purple-dark: #A855D4;
+  --game-purple-light:#F0D6FF;
+  --game-yellow:      #FFD900;
+  --game-yellow-dark: #DEB800;
+  --game-yellow-light:#FFF5B0;
+  --game-teal:        #00C2A0;
+  --game-teal-dark:   #00A082;
+  --game-teal-light:  #B0F0E8;
+
+  --chart-1: #58CC02;
+  --chart-2: #FF9600;
+  --chart-3: #1CB0F6;
+  --chart-4: #FFD900;
+  --chart-5: #CE82FF;
+
+  --radius: 1.125rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.20 0.02 260);
+  --sidebar-primary: #58CC02;
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.95 0.005 240);
+  --sidebar-accent-foreground: oklch(0.20 0.02 260);
+  --sidebar-border: oklch(0.90 0.01 240);
+  --sidebar-ring: #58CC02;
+}
+
+@theme inline {
+  --font-sans: 'Nunito', 'Nunito Fallback', sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  --color-game-green:        var(--game-green);
+  --color-game-green-dark:   var(--game-green-dark);
+  --color-game-green-light:  var(--game-green-light);
+  --color-game-blue:         var(--game-blue);
+  --color-game-blue-dark:    var(--game-blue-dark);
+  --color-game-blue-light:   var(--game-blue-light);
+  --color-game-orange:       var(--game-orange);
+  --color-game-orange-dark:  var(--game-orange-dark);
+  --color-game-orange-light: var(--game-orange-light);
+  --color-game-red:          var(--game-red);
+  --color-game-red-dark:     var(--game-red-dark);
+  --color-game-red-light:    var(--game-red-light);
+  --color-game-pink:         var(--game-pink);
+  --color-game-pink-dark:    var(--game-pink-dark);
+  --color-game-pink-light:   var(--game-pink-light);
+  --color-game-purple:       var(--game-purple);
+  --color-game-purple-dark:  var(--game-purple-dark);
+  --color-game-purple-light: var(--game-purple-light);
+  --color-game-yellow:       var(--game-yellow);
+  --color-game-yellow-dark:  var(--game-yellow-dark);
+  --color-game-yellow-light: var(--game-yellow-light);
+  --color-game-teal:         var(--game-teal);
+  --color-game-teal-dark:    var(--game-teal-dark);
+  --color-game-teal-light:   var(--game-teal-light);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ─────────────────────────────────────────
+   GAME BUTTON — 3D press effect (Duolingo)
+───────────────────────────────────────── */
+.btn-game {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  border-radius: 0.875rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s, box-shadow 0.1s;
+  padding-bottom: 4px;
+}
+.btn-game::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border-bottom: 4px solid;
+  border-bottom-color: oklch(from var(--btn-color, #58cc02) calc(l - 0.12) c h);
+  pointer-events: none;
+}
+.btn-game:active {
+  transform: translateY(2px);
+  padding-bottom: 2px;
+}
+.btn-game:active::after {
+  border-bottom-width: 2px;
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────── */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-6deg) scale(1.05); }
+  50%       { transform: rotate(6deg)  scale(1.05); }
+}
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  80%  { transform: scale(0.93); }
+  100% { transform: scale(1); }
+}
+.animate-bounce-in {
+  animation: bounce-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+.animate-pop {
+  animation: pop 0.35s ease forwards;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-5px); }
+  80%       { transform: translateX(5px); }
+}
+.animate-shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes float-up {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-48px) scale(1.4); opacity: 0; }
+}
+.animate-float-up {
+  animation: float-up 0.8s ease forwards;
+}
+
+@keyframes xp-fill {
+  from { width: 0%; }
+  to   { width: var(--xp-width, 0%); }
+}
+.xp-bar-fill {
+  animation: xp-fill 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  30%       { transform: scale(1.3); }
+  60%       { transform: scale(0.9); }
+}
+.animate-heart {
+  animation: heart-beat 0.4s ease forwards;
+}
+
+@keyframes streak-fire {
+  0%, 100% { transform: scaleY(1) rotate(-2deg); }
+  50%       { transform: scaleY(1.1) rotate(2deg); }
+}
+.animate-fire {
+  animation: streak-fire 0.6s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+@keyframes confetti-burst {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(var(--cx, 40px), var(--cy, -80px)) rotate(var(--cr, 360deg)) scale(0.3); opacity: 0; }
+}
+.confetti-particle {
+  animation: confetti-burst 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ─────────────────────────────────────────
+   CARD STYLES
+───────────────────────────────────────── */
+.game-card {
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.game-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.12);
+}
+.game-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 3-D card press — bottom border bottom-shadow */
+.card-3d {
+  border-bottom: 4px solid;
+  transition: transform 0.1s, border-bottom-width 0.1s;
+}
+.card-3d:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+/* Card flip */
+.flip-card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.48s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flip-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* ─────────────────────────────────────────
+   LISTENING PULSE — big TTS hero button
+───────────────────────────────────────── */
+@keyframes listen-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--pulse-color, #1CB0F6); }
+  40%  { box-shadow: 0 0 0 18px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.listen-pulse {
+  animation: listen-pulse 1.2s ease-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   PUZZLE TILE — syllable block
+───────────────────────────────────────── */
+.puzzle-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  font-weight: 900;
+  font-size: 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 4px solid;
+  transition: transform 0.1s, border-bottom-width 0.1s, opacity 0.15s;
+}
+.puzzle-tile:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+.puzzle-tile.used {
+  opacity: 0.25;
+  pointer-events: none;
+}
+.puzzle-tile.correct {
+  animation: pop 0.3s ease;
+}
+
+/* ─────────────────────────────────────────
+   WORD CARD — full-color fill (TodoSchool)
+───────────────────────────────────────── */
+.word-card-fill {
+  border-radius: 1.25rem;
+  border-bottom: 5px solid;
+  transition: transform 0.12s ease, border-bottom-width 0.1s;
+  cursor: pointer;
+  overflow: hidden;
+}
+.word-card-fill:hover  { transform: translateY(-4px) scale(1.03); }
+.word-card-fill:active { transform: translateY(1px); border-bottom-width: 2px; }
+
+/* ─────────────────────────────────────────
+   CATEGORY SECTION HEADER
+───────────────────────────────────────── */
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  font-weight: 900;
+  font-size: 0.875rem;
+  color: white;
+}
+
+/* ─────────────────────────────────────────
+   GAME MODE TAB
+───────────────────────────────────────── */
+.game-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 0.6rem 0.25rem 0.5rem;
+  font-weight: 900;
+  font-size: 0.65rem;
+  border-top: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  cursor: pointer;
+  user-select: none;
+}
+.game-tab.active {
+  border-top-color: var(--tab-color, #58CC02);
+  color: var(--tab-color, #58CC02);
+  background: var(--tab-bg, #D7F5A8);
+}
+.game-tab:not(.active) {
+  color: oklch(0.50 0.02 250);
+}
+
+/* ─────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─────────────────────────────────────────
+   PROGRESS BAR
+───────────────────────────────────────── */
+.progress-bar {
+  height: 12px;
+  border-radius: 999px;
+  background: oklch(0.88 0.01 90);
+  overflow: hidden;
+  border: 2px solid oklch(0.82 0.02 90);
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--game-green);
+  box-shadow: 0 0 8px oklch(0.62 0.20 145 / 0.5);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+}
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  right: 8px;
+  height: 3px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 0.35);
+}
+
+/* ─────────────────────────────────────────
+   DUOLINGO-STYLE BOTTOM TAB (mobile)
+───────────────────────────────────────── */
+.bottom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: oklch(1 0 0);
+  border-top: 2px solid oklch(0.88 0.01 90);
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* ─────────────────────────────────────────
+   TTS PULSE RING
+───────────────────────────────────────── */
+@keyframes tts-ring {
+  0%   { box-shadow: 0 0 0 0 var(--game-green); }
+  70%  { box-shadow: 0 0 0 12px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.tts-active {
+  animation: tts-ring 1s ease infinite;
+}
+
+/* ─────────────────────────────────────────
+   CHOICE BUTTON CORRECT / WRONG
+───────────────────────────────────────── */
+.choice-correct {
+  background-color: oklch(0.88 0.12 145) !important;
+  border-color: oklch(0.62 0.20 145) !important;
+  color: oklch(0.22 0.02 260) !important;
+}
+.choice-wrong {
+  background-color: oklch(0.95 0.08 22) !important;
+  border-color: oklch(0.62 0.24 22) !important;
+  color: oklch(0.62 0.24 22) !important;
+}
+
+/* ─────────────────────────────────────────
+   MODAL DIALOG OVERLAY
+───────────────────────────────────────── */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+@media (min-width: 640px) {
+  .dialog-overlay {
+    align-items: center;
+    padding: 1rem;
+  }
+}
+
+.dialog-panel {
+  background: white;
+  border-radius: 1.5rem 1.5rem 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  animation: dialog-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.dialog-panel::-webkit-scrollbar { display: none; }
+@media (min-width: 640px) {
+  .dialog-panel {
+    border-radius: 1.5rem;
+    max-height: 85svh;
+  }
+}
+@keyframes dialog-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@media (min-width: 640px) {
+  @keyframes dialog-up {
+    from { transform: scale(0.92) translateY(20px); opacity: 0; }
+    to   { transform: scale(1)    translateY(0);    opacity: 1; }
+  }
+}
+
+/* dialog gradient header */
+.dialog-header-gradient {
+  padding: 16px 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+.dialog-close-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.28);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 1rem;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.dialog-close-btn:hover { background: rgba(255,255,255,0.45); }
+
+/* ─────────────────────────────────────────
+   KO WORD CARD — big card with colored top
+───────────────────────────────────────── */
+.ko-word-card {
+  background: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.09), 0 4px 0 rgba(0,0,0,0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  border: 2px solid rgba(0,0,0,0.06);
+}
+.ko-word-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.16), 0 6px 0 rgba(0,0,0,0.08);
+}
+.ko-word-card:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.ko-card-img {
+  width: 100%;
+  padding-top: 80%;
+  position: relative;
+  overflow: hidden;
+}
+.ko-card-img-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ko-card-body {
+  padding: 10px 10px 12px;
+  text-align: center;
+}
+.ko-card-word {
+  font-size: 1.15em;
+  font-weight: 900;
+  color: #2c3e50;
+  margin-bottom: 5px;
+  word-break: break-word;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+.ko-card-syllables {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.ko-syllable-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.82em;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+/* ─────────────────────────────────────────
+   SYLLABLE BLOCK — learn dialog (고 + 양 + 이)
+───────────────────────────────────────── */
+.syl-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+  transition: transform 0.15s, filter 0.15s;
+}
+.syl-block:hover  { transform: scale(1.15) translateY(-3px); filter: brightness(1.08); }
+.syl-block:active { transform: scale(0.93); }
+.syl-block-label  { font-size: 0.34em; font-weight: 700; opacity: 0.82; margin-top: 3px; line-height: 1; letter-spacing: 0; }
+
+@keyframes syl-pulse {
+  0%, 100% { transform: scale(1); }
+  40%       { transform: scale(1.25); }
+}
+.syl-block.playing { animation: syl-pulse 0.55s ease; }
+
+/* 5 color sets cycling */
+.syl-c0 { background: linear-gradient(135deg, #667eea, #764ba2); }
+.syl-c1 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.syl-c2 { background: linear-gradient(135deg, #4facfe, #00f2fe); color: #0d4a7a !important; }
+.syl-c3 { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #0d4a1a !important; }
+.syl-c4 { background: linear-gradient(135deg, #fa709a, #fee140); color: #5c2a00 !important; }
+
+.syl-plus { color: #ccc; font-weight: 900; font-size: 1.2rem; line-height: 1; align-self: center; }
+
+/* ─────────────────────────────────────────
+   PUZZLE GRID (낱말 퍼즐)
+───────────────────────────────────────── */
+.puzzle-letter-grid {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  background: white;
+  border-radius: 1rem;
+  border: 2px solid #ede7f6;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.puzzle-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: white;
+  border: 2px solid #e8e0f0;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.1s;
+}
+.puzzle-cell:hover { background: #f3e8ff; border-color: #9c27b0; transform: scale(1.07); }
+.puzzle-cell.selected { background: #ede7f6; border-color: #7c3aed; color: #7c3aed; transform: scale(1.1); }
+.puzzle-cell.correct  { background: #4caf50; border-color: #388e3c; color: white; }
+.puzzle-cell.wrong    { background: #ef5350; border-color: #c62828; color: white; animation: shake 0.35s ease; }
+
+.puzzle-target-card {
+  background: #f3e8ff;
+  border: 2px solid #e0c8f8;
+  border-radius: 14px;
+  padding: 10px 8px 8px;
+  text-align: center;
+  transition: background 0.2s;
+  cursor: pointer;
+  font-family: inherit;
+}
+.puzzle-target-card.found { background: #e8f5e9; border-color: #a5d6a7; }
+
+/* ─────────────────────────────────────────
+   QUIZ SLIDER
+───────────────────────────────────────── */
+input[type=range].quiz-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e8e0ff;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range].quiz-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9c27b0, #ce82ff);
+  box-shadow: 0 2px 8px rgba(156,39,176,0.4);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+input[type=range].quiz-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+input[type=range].quiz-slider::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9c27b0, #ce82ff);
+  box-shadow: 0 2px 8px rgba(156,39,176,0.4);
+  border: none; cursor: pointer;
+}
+
+/* ─────────────────────────────────────────
+   STAGE SECTION DIVIDER (ko/page)
+───────────────────────────────────────── */
+.stage-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 28px 0 14px; padding: 0 2px;
+}
+.stage-divider-line { flex: 1; height: 2px; background: #eee; border-radius: 1px; }
+.stage-divider-icon {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: white; flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* ─────────────────────────────────────────
+   AUDIO WAVE ANIMATION (learn dialog)
+───────────────────────────────────────── */
+.audio-wave {
+  display: flex; gap: 4px; justify-content: center;
+  align-items: flex-end; height: 28px;
+}
+.wave-bar {
+  width: 5px;
+  border-radius: 3px;
+  animation: wave-bounce 0.8s ease-in-out infinite;
+}
+.wave-bar:nth-child(1) { animation-delay: 0s;    height: 10px; }
+.wave-bar:nth-child(2) { animation-delay: 0.1s;  height: 18px; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s;  height: 26px; }
+.wave-bar:nth-child(4) { animation-delay: 0.3s;  height: 20px; }
+.wave-bar:nth-child(5) { animation-delay: 0.4s;  height: 14px; }
+.wave-bar:nth-child(6) { animation-delay: 0.3s;  height: 20px; }
+.wave-bar:nth-child(7) { animation-delay: 0.2s;  height: 26px; }
+@keyframes wave-bounce {
+  0%, 100% { transform: scaleY(0.35); }
+  50%       { transform: scaleY(1); }
+}
+.audio-wave.paused .wave-bar { animation-play-state: paused; }
+
+/* ─────────────────────────────────────────
+   KO PAGE BADGES
+───────────────────────────────────────── */
+.ko-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.ko-badge-green  { background: #e8f5e9; color: #2e7d32; }
+.ko-badge-blue   { background: #e3f2fd; color: #1565c0; }
+.ko-badge-purple { background: #f3e5f5; color: #6a1b9a; }
+.ko-badge-pink   { background: #fce4ec; color: #880e4f; }
+
+/* ─────────────────────────────────────────
+   HOME PAGE HOVER EFFECTS
+   CSS custom props (--sh-base, --sh-hover)
+   are set inline per element
+───────────────────────────────────────── */
+
+/* Hero CTA — Korean (fixed pink) */
+.home-hero-cta-ko {
+  box-shadow: 0 5px 0 #C84A98;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.home-hero-cta-ko:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #C84A98;
+}
+
+/* Hero CTA — English (glass bg) */
+.home-hero-cta-en {
+  transition: transform 0.1s, background 0.1s;
+}
+.home-hero-cta-en:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Stage / subject CTA button — dynamic shadow via CSS var */
+.home-lift-btn {
+  box-shadow: var(--sh-base);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.home-lift-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-hover);
+}
+
+/* Reason card — lift only */
+.home-lift-card {
+  transition: transform 0.15s;
+}
+.home-lift-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Subject start card — lift + dynamic shadow */
+.home-subject-card {
+  box-shadow: var(--sh-base);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.home-subject-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sh-hover);
+}

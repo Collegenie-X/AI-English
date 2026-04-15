@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🌈 한글 단어 학습</title>
+  <link rel="stylesheet" href="main.css">
+  <!-- Twemoji (이모지 SVG 렌더링) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="tts-warning" id="tts-warning">
+  ⚠️ 이 브라우저는 한국어 음성을 지원하지 않을 수 있습니다. Chrome 브라우저를 권장합니다.
+</div>
+
+<div class="app not-loaded" id="app">
+
+  <!-- ===== JSON 업로드 ===== -->
+  <div class="json-upload-section" id="json-upload-section">
+    <div class="json-upload-header">
+      <span class="icon">📂</span>
+      <span class="label">JSON 데이터 로드</span>
+      <span id="json-loaded-status"></span>
+      <button class="json-update-btn" id="json-update-btn"
+              onclick="toggleUpdateDropzone()"
+              style="display:none"
+              title="새 JSON 파일로 데이터 업데이트">
+        📂 변경
+      </button>
+    </div>
+    <div class="json-dropzone" id="json-dropzone">
+      <input type="file" accept=".json" id="json-file-input" onchange="handleJsonFile(this.files[0])">
+      <div class="dz-icon">📎</div>
+      <div class="dz-title">JSON 파일을 드래그하거나 클릭하여 업로드</div>
+      <div class="dz-sub">한글_단어_유아.json · 영어_단어_데이터.json 등 어떤 파일이든 OK</div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <h1 id="app-title">🌈 유아 한글 단어 학습</h1>
+    <p class="subtitle">귀엽고 재미있는 한글 단어 배우기 ✨</p>
+    <div class="word-count-badges">
+      <span class="badge badge-green">📚 총 0단어</span>
+      <span class="badge badge-blue">🗂️ 0개 주제</span>
+      <span class="badge badge-purple">🔊 그림 클릭 → 음성!</span>
+    </div>
+    <div class="mode-tabs">
+      <button class="mode-btn active" data-mode="learn"  onclick="switchMode('learn')">📚 학습모드</button>
+      <button class="mode-btn"        data-mode="quiz"   onclick="openQuizDialog()">🎯 퀴즈모드</button>
+      <button class="mode-btn"        data-mode="puzzle" onclick="openPuzzleDialog()">🧩 낱말퍼즐</button>
+    </div>
+  </header>
+
+  <!-- ===== CATEGORY FILTER SECTION ===== -->
+  <div class="filter-section" id="filter-section">
+    <div class="filter-header" onclick="toggleFilterSection()">
+      <span class="filter-header-title">🔍 상황 필터</span>
+      <div class="filter-header-right">
+        <span class="filter-sel-badge" id="filter-sel-badge">0개 선택</span>
+        <span class="filter-toggle-icon" id="filter-toggle-icon">▲</span>
+      </div>
+    </div>
+    <div class="filter-body" id="filter-body">
+      <div class="filter-controls">
+        <button class="filter-ctrl-btn filter-all-btn" id="filter-all-btn"
+                onclick="toggleAllCategories()">✅ 전체 선택</button>
+        <button class="filter-ctrl-btn filter-reset-btn"
+                onclick="resetCategorySelection()">🔄 초기화</button>
+        <span class="filter-sent-preview" id="filter-sent-preview">0문장 재생 예정</span>
+      </div>
+      <div class="filter-pills" id="category-nav"></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+
+    <!-- ── LEARN MODE ── -->
+    <section class="mode-section active" id="learn-mode">
+      <div class="section-divider">
+        <div class="divider-icon" style="background:linear-gradient(135deg,#4CAF50,#8BC34A)">📚</div>
+        <span class="divider-title">학습모드</span>
+        <div class="divider-line"></div>
+      </div>
+      <div class="learn-controls-bar" id="learn-controls-bar">
+        <div class="learn-progress-row">
+          <span class="learn-progress-label" id="learn-progress-label">0 / 0 들음</span>
+          <div class="progress-bar-wrap" style="flex:1">
+            <div class="progress-bar-fill" id="learn-progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="learn-btns-row">
+          <button class="master-toggle-btn" id="master-accordion-btn"
+                  onclick="toggleAllAccordion()" title="전체 펼치기/접기">📂 전체 펼치기</button>
+          <button class="btn btn-green" id="play-all-btn"
+                  onclick="startPlayAll()" title="전체 듣기 (Space / Enter)">▶️ 전체 듣기</button>
+          <button class="btn btn-gray btn-sm" onclick="resetListened()" title="듣기 기록 초기화">🔄 초기화</button>
+          <button class="settings-open-btn" onclick="openSettings()" title="음성 설정">⚙️ 음성 설정</button>
+          <span style="font-size:0.82em;color:#aaa;align-self:center">💡 음절 클릭 → 음운 확장</span>
+        </div>
+      </div>
+      <div id="learn-grid"></div>
+    </section>
+
+    <!-- ── QUIZ MODE (legacy shell, 실제 내용은 dialog로) ── -->
+    <section class="mode-section" id="quiz-mode">
+      <div class="section-divider">
+        <div class="divider-icon" style="background:linear-gradient(135deg,#FF9800,#FF5722)">🎯</div>
+        <span class="divider-title">퀴즈모드</span>
+        <div class="divider-line"></div>
+      </div>
+      <div class="quiz-panel">
+        <div id="quiz-content"></div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /app -->
+
+<!-- ===== 음운 분석 모달 ===== -->
+<div class="phonics-overlay" id="phonics-overlay" onclick="overlayClickClose(event)">
+  <div class="phonics-sheet" id="phonics-sheet">
+    <div class="phonics-header">
+      <div class="phonics-header-title">
+        🔡 <span id="phonics-header-label">음운 분석</span>
+      </div>
+      <button class="phonics-close-btn" onclick="closePhonicsModal()" title="닫기">✕</button>
+    </div>
+    <div class="phonics-body">
+      <div id="phonics-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 낱말 퍼즐 다이얼로그 ===== -->
+<div class="puzzle-overlay" id="puzzle-overlay" onclick="puzzleOverlayClick(event)">
+  <div class="puzzle-dialog" id="puzzle-dialog">
+    <div class="pdlg-header">
+      <div class="pdlg-header-left">
+        <span style="font-size:1.4em">🧩</span>
+        <span class="pdlg-title">낱말 퍼즐</span>
+        <span id="puzzle-diff-badge"></span>
+      </div>
+      <button class="pdlg-close-btn" onclick="closePuzzleDialog()" title="닫기">✕</button>
+    </div>
+    <div class="puzzle-diff-tabs">
+      <button class="puzzle-diff-btn active easy" data-diff="easy"
+              onclick="setPuzzleDiff('easy')">🟢 초급 (4×4)</button>
+      <button class="puzzle-diff-btn medium" data-diff="medium"
+              onclick="setPuzzleDiff('medium')">🟡 중급 (5×5)</button>
+      <button class="puzzle-diff-btn hard" data-diff="hard"
+              onclick="setPuzzleDiff('hard')">🔴 고급 (6×6)</button>
+    </div>
+    <div class="puzzle-source-info" id="puzzle-source-info"></div>
+    <div class="pdlg-body">
+      <div id="puzzle-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 컨페티 컨테이너 ===== -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<!-- ===== 퀴즈 다이얼로그 오버레이 ===== -->
+<div class="quiz-dialog-overlay" id="quiz-dialog-overlay" onclick="quizOverlayClick(event)">
+  <div class="quiz-dialog-box" id="quiz-dialog-box">
+    <div class="qdlg-header">
+      <h2 id="qdlg-title">🎯 퀴즈모드</h2>
+      <button class="qdlg-close-btn" onclick="closeQuizDialog()" title="닫기">✕</button>
+    </div>
+    <div class="qdlg-body" id="qdlg-body">
+      <div class="quiz-type-tabs" id="quiz-type-tabs">
+        <button class="quiz-type-btn active" data-type="multiple"
+                onclick="setQuizType('multiple')">📋 객관식</button>
+        <button class="quiz-type-btn" data-type="typing"
+                onclick="setQuizType('typing')">⌨️ 주관식 (타자)</button>
+      </div>
+      <div class="quiz-count-slider-row" id="quiz-count-slider-row">
+        <span class="qcs-label">📝 문제 수</span>
+        <div class="qcs-track-wrap">
+          <input type="range" class="qcs-range" id="qdlg-count-slider"
+                 min="3" max="30" value="10"
+                 oninput="onQuizCountSliderInput(this.value)"
+                 onchange="onQuizCountSliderChange(this.value)">
+        </div>
+        <span class="qcs-value" id="qdlg-count-value">10문제</span>
+      </div>
+      <div class="qdlg-quiz-panel" id="qdlg-quiz-panel">
+        <div class="quiz-panel">
+          <div id="qdlg-quiz-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 단어 카드 → 듣기 다이얼로그 (wv-overlay) ===== -->
+<div class="wv-overlay" id="wv-overlay" onclick="wvOverlayClick(event)">
+  <div class="wv-dialog" id="wv-dialog">
+    <div class="wv-dialog-close-bar">
+      <div class="wv-dialog-cat-info" id="wv-dialog-cat-info"></div>
+      <button class="wv-close-btn" onclick="closeWvDialog()" title="닫기">✕</button>
+    </div>
+    <div class="listen-panel">
+      <div class="listen-nav-layout">
+        <button class="listen-side-btn" title="이전" onclick="listenPrev()">◀</button>
+        <div class="listen-center">
+          <div class="listen-img-wrap" id="listen-img-wrap"
+               onclick="listenRepeat()" title="클릭하면 음성이 나와요!">
+            <div class="listen-emoji-wrap" id="listen-emoji"></div>
+            <img class="listen-photo" id="listen-photo" alt="">
+            <div class="listen-img-overlay">🔊</div>
+          </div>
+          <div class="audio-wave hidden" id="audio-wave">
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+          <div class="listen-word"      id="listen-word">-</div>
+          <div class="listen-syllables" id="listen-syllables"></div>
+          <div class="listen-hint"      id="listen-hint"></div>
+          <div class="listen-sentences" id="listen-sentences"></div>
+        </div>
+        <button class="listen-side-btn" title="다음" onclick="listenNext()">▶</button>
+      </div>
+      <div class="listen-controls">
+        <button class="btn btn-green"  id="autoplay-btn" onclick="toggleAutoPlay()">▶️ 자동재생</button>
+        <button class="btn btn-orange" onclick="listenRepeat()">🔊 다시 듣기</button>
+      </div>
+      <div class="listen-progress-text" id="listen-progress-text">1 / 1</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="listen-progress-bar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 음성 피드백 토스트 ===== -->
+<div class="voice-feedback-toast" id="voice-feedback-toast"></div>
+
+<!-- ===== 설정 모달 ===== -->
+<div class="settings-overlay" id="settings-overlay">
+  <div class="settings-modal">
+    <div class="settings-header">
+      <div style="display:flex;align-items:center;gap:10px">
+        <h2 id="settings-title">⚙️ 음성 설정</h2>
+        <span id="vs-lang-badge" style="background:#E53935;color:white;border-radius:12px;padding:3px 10px;font-size:0.75em;font-weight:800;">
+          🇰🇷 한국어
+        </span>
+      </div>
+      <button class="settings-close-btn" onclick="closeSettings()">✕</button>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">🎤 음성 선택 (TTS Voice)</div>
+      <select class="settings-select" id="vs-voice-select" onchange="onVoiceSelectChange()">
+        <option value="-1">🤖 자동 (한국어 기본)</option>
+      </select>
+      <div style="margin-top:10px;text-align:right">
+        <button class="preset-btn" id="vs-preview-btn" onclick="previewVoice()" style="font-size:0.82em">
+          🔊 미리 듣기
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">🐇 읽기 속도 (Speed)</div>
+      <div class="settings-row">
+        <span class="settings-row-label">속도</span>
+        <span class="settings-value-chip" id="vs-rate-val">0.8x</span>
+      </div>
+      <input type="range" class="settings-range" id="vs-rate"
+             min="0.4" max="1.8" step="0.05" value="0.82"
+             oninput="onSliderChange('vs-rate', v=>voiceSettings.rate=v, v=>v.toFixed(2)+'x')">
+      <div class="range-labels"><span>🐌 Slow</span><span>Normal</span><span>🐇 Fast</span></div>
+      <div class="preset-row">
+        <button class="preset-btn" id="preset-child"  onclick="applyPreset(0.65,1.3,'slow')">🧒 천천히</button>
+        <button class="preset-btn active" id="preset-normal" onclick="applyPreset(0.82,1.1,'normal')">😊 기본</button>
+        <button class="preset-btn" id="preset-fast"   onclick="applyPreset(1.1,1.0,'fast')">⚡ 빠름</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">🎵 음높이 (Pitch)</div>
+      <div class="settings-row">
+        <span class="settings-row-label">음높이</span>
+        <span class="settings-value-chip" id="vs-pitch-val">1.1</span>
+      </div>
+      <input type="range" class="settings-range" id="vs-pitch"
+             min="0.5" max="2.0" step="0.1" value="1.1"
+             oninput="onSliderChange('vs-pitch', v=>voiceSettings.pitch=v, v=>parseFloat(v).toFixed(1))">
+      <div class="range-labels"><span>▼ 낮게</span><span>기본 (1.0)</span><span>▲ 높게</span></div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">🔈 볼륨</div>
+      <div class="settings-row">
+        <span class="settings-row-label">볼륨</span>
+        <span class="settings-value-chip" id="vs-volume-val">100%</span>
+      </div>
+      <input type="range" class="settings-range" id="vs-volume"
+             min="0.1" max="1.0" step="0.05" value="1.0"
+             oninput="onSliderChange('vs-volume', v=>voiceSettings.volume=v, v=>Math.round(v*100)+'%')">
+      <div class="range-labels"><span>🔇 작게</span><span>보통</span><span>🔊 크게</span></div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">⏱️ 단어 사이 간격 (자동재생 공통)</div>
+      <div class="settings-row">
+        <span class="settings-row-label">단어 간격</span>
+        <span class="settings-value-chip" id="vs-gap-val">1.2초</span>
+      </div>
+      <input type="range" class="settings-range" id="vs-gap"
+             min="500" max="4000" step="100" value="1200"
+             oninput="onSliderChange('vs-gap', v=>{voiceSettings.wordGap=v;state.listen.speed=v;_syncSpeedBtns(v);}, v=>(v/1000).toFixed(1)+'초')">
+      <div class="range-labels"><span>⚡ 0.5초</span><span>1.2초</span><span>🐌 4초</span></div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">📖 전체 듣기 옵션</div>
+      <div class="toggle-wrap">
+        <span class="toggle-wrap-label">💬 예문 문장도 함께 읽기</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="vs-read-sentences" onchange="onToggleSentences()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div style="font-size:0.78em;color:#bbb;margin-top:6px">활성화하면 단어 → 예문 순서로 읽어줘요</div>
+    </div>
+
+  </div><!-- /settings-modal -->
+</div><!-- /settings-overlay -->
+
+<!-- ============================================================
+     JS 로드 순서 (의존성 순):
+     1. korean.js   — CHO/JUNG/JONG 상수, decompose, jamo HTML
+     2. audio.js    — AudioContext 효과음, confetti, Unsplash
+     3. tts.js      — speak(), voiceSettings, 설정 모달 함수
+     4. state.js    — WORD_DATA, state, listenedMap, 헬퍼
+     5. dataManager.js — autoFetch(), handleJsonFile(), onDataLoaded()
+     6. categoryFilter.js — renderCategoryNav(), toggleCategory()
+     7. learnMode.js — renderLearnMode(), accordion, catPlayStart()
+     8. listenDialog.js — openWvDialog(), updateListenDisplay()
+     9. phonicsModal.js — openPhonicsModal()
+    10. quizMode.js — openQuizDialog(), 퀴즈 렌더링
+    11. puzzleMode.js — PUZZLE_CONFIG, generateWordSearch()
+    12. app.js — switchMode(), puzzleState, DOMContentLoaded
+============================================================ -->
+<script src="js/korean.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/state.js"></script>
+<script src="js/dataManager.js"></script>
+<script src="js/categoryFilter.js"></script>
+<script src="js/learnMode.js"></script>
+<script src="js/listenDialog.js"></script>
+<script src="js/phonicsModal.js"></script>
+<script src="js/quizMode.js"></script>
+<script src="js/puzzleMode.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

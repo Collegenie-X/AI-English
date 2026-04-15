@@ -1,0 +1,44 @@
+{
+  "stage": 1,
+  "language": "en",
+  "title": "Stage 1: Alphabet & Basic Words",
+  "description": "Learn the alphabet and basic English words",
+  "totalItems": 26,
+  "categories": [
+    {
+      "id": "alphabet",
+      "name": "Alphabet",
+      "icon": "🔤",
+      "level": 1,
+      "color": "#3b82f6",
+      "words": [
+        { "id": 1, "word": "Apple", "letter": "A", "emoji": "🍎", "hint": "A is for Apple!", "syllables": ["Ap", "ple"], "tts": "Apple", "sentences": ["An apple a day!", "I eat a red apple."] },
+        { "id": 2, "word": "Ball", "letter": "B", "emoji": "⚽", "hint": "B is for Ball!", "syllables": ["Ball"], "tts": "Ball", "sentences": ["I kick the ball.", "The ball is round."] },
+        { "id": 3, "word": "Cat", "letter": "C", "emoji": "🐱", "hint": "C is for Cat!", "syllables": ["Cat"], "tts": "Cat", "sentences": ["The cat says meow.", "I have a cat."] },
+        { "id": 4, "word": "Dog", "letter": "D", "emoji": "🐶", "hint": "D is for Dog!", "syllables": ["Dog"], "tts": "Dog", "sentences": ["Dogs say woof!", "My dog is cute."] },
+        { "id": 5, "word": "Egg", "letter": "E", "emoji": "🥚", "hint": "E is for Egg!", "syllables": ["Egg"], "tts": "Egg", "sentences": ["I eat an egg.", "The egg is yellow."] },
+        { "id": 6, "word": "Fish", "letter": "F", "emoji": "🐟", "hint": "F is for Fish!", "syllables": ["Fish"], "tts": "Fish", "sentences": ["Fish can swim.", "I see a fish."] },
+        { "id": 7, "word": "Grape", "letter": "G", "emoji": "🍇", "hint": "G is for Grape!", "syllables": ["Grape"], "tts": "Grape", "sentences": ["Grapes are purple.", "I like grapes."] },
+        { "id": 8, "word": "Hat", "letter": "H", "emoji": "🎩", "hint": "H is for Hat!", "syllables": ["Hat"], "tts": "Hat", "sentences": ["I wear a hat.", "The hat is big."] },
+        { "id": 9, "word": "Ice cream", "letter": "I", "emoji": "🍦", "hint": "I is for Ice cream!", "syllables": ["Ice", "cream"], "tts": "Ice cream", "sentences": ["I love ice cream!", "Ice cream is cold."] },
+        { "id": 10, "word": "Juice", "letter": "J", "emoji": "🧃", "hint": "J is for Juice!", "syllables": ["Juice"], "tts": "Juice", "sentences": ["I drink juice.", "Orange juice is yummy!"] },
+        { "id": 11, "word": "Kite", "letter": "K", "emoji": "🪁", "hint": "K is for Kite!", "syllables": ["Kite"], "tts": "Kite", "sentences": ["I fly a kite.", "The kite is high."] },
+        { "id": 12, "word": "Lion", "letter": "L", "emoji": "🦁", "hint": "L is for Lion!", "syllables": ["Li", "on"], "tts": "Lion", "sentences": ["Lions roar loudly.", "A lion is big."] },
+        { "id": 13, "word": "Moon", "letter": "M", "emoji": "🌙", "hint": "M is for Moon!", "syllables": ["Moon"], "tts": "Moon", "sentences": ["The moon is bright.", "I see the moon."] },
+        { "id": 14, "word": "Nest", "letter": "N", "emoji": "🪹", "hint": "N is for Nest!", "syllables": ["Nest"], "tts": "Nest", "sentences": ["Birds live in a nest.", "The nest is small."] },
+        { "id": 15, "word": "Orange", "letter": "O", "emoji": "🍊", "hint": "O is for Orange!", "syllables": ["Or", "ange"], "tts": "Orange", "sentences": ["Oranges are juicy.", "I peel an orange."] },
+        { "id": 16, "word": "Pig", "letter": "P", "emoji": "🐷", "hint": "P is for Pig!", "syllables": ["Pig"], "tts": "Pig", "sentences": ["Pigs say oink!", "The pig is pink."] },
+        { "id": 17, "word": "Queen", "letter": "Q", "emoji": "👑", "hint": "Q is for Queen!", "syllables": ["Queen"], "tts": "Queen", "sentences": ["The queen has a crown.", "She is a queen."] },
+        { "id": 18, "word": "Rainbow", "letter": "R", "emoji": "🌈", "hint": "R is for Rainbow!", "syllables": ["Rain", "bow"], "tts": "Rainbow", "sentences": ["I see a rainbow!", "Rainbows are colorful."] },
+        { "id": 19, "word": "Sun", "letter": "S", "emoji": "☀️", "hint": "S is for Sun!", "syllables": ["Sun"], "tts": "Sun", "sentences": ["The sun is warm.", "I love the sun!"] },
+        { "id": 20, "word": "Tree", "letter": "T", "emoji": "🌳", "hint": "T is for Tree!", "syllables": ["Tree"], "tts": "Tree", "sentences": ["Trees are green.", "I climb a tree."] },
+        { "id": 21, "word": "Umbrella", "letter": "U", "emoji": "☂️", "hint": "U is for Umbrella!", "syllables": ["Um", "brel", "la"], "tts": "Umbrella", "sentences": ["I use an umbrella.", "The umbrella is blue."] },
+        { "id": 22, "word": "Violin", "letter": "V", "emoji": "🎻", "hint": "V is for Violin!", "syllables": ["Vi", "o", "lin"], "tts": "Violin", "sentences": ["I play the violin.", "The violin is pretty."] },
+        { "id": 23, "word": "Water", "letter": "W", "emoji": "💧", "hint": "W is for Water!", "syllables": ["Wa", "ter"], "tts": "Water", "sentences": ["I drink water.", "Water is good for me."] },
+        { "id": 24, "word": "Fox", "letter": "X", "emoji": "🦊", "hint": "X is in Fox!", "syllables": ["Fox"], "tts": "Fox", "sentences": ["The fox is clever.", "A fox has a bushy tail."] },
+        { "id": 25, "word": "Yarn", "letter": "Y", "emoji": "🧶", "hint": "Y is for Yarn!", "syllables": ["Yarn"], "tts": "Yarn", "sentences": ["Cats love yarn!", "The yarn is soft."] },
+        { "id": 26, "word": "Zebra", "letter": "Z", "emoji": "🦓", "hint": "Z is for Zebra!", "syllables": ["Ze", "bra"], "tts": "Zebra", "sentences": ["Zebras have stripes.", "A zebra is fast."] }
+      ]
+    }
+  ]
+}

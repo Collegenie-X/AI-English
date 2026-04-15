@@ -1,0 +1,145 @@
+{
+  "stage": 4,
+  "language": "en",
+  "title": "Stage 4: Chunk Reading & Dialogue",
+  "description": "Learn chunk reading and real conversation dialogues",
+  "totalItems": 10,
+  "situations": [
+    {
+      "id": 1,
+      "emoji": "👋",
+      "name": "Greetings",
+      "color": "#f97316",
+      "turns": [
+        { "turn": 1, "role": "child", "speaker": "You", "english": "Hi! How are you?", "korean": "안녕! 어때?", "chunks": ["Hi!", "How are you?"] },
+        { "turn": 2, "role": "teacher", "speaker": "Friend", "english": "I'm fine, thank you! And you?", "korean": "나는 괜찮아, 고마워! 너는?", "chunks": ["I'm fine,", "thank you!", "And you?"] }
+      ],
+      "quizChoices": ["I'm fine, thank you!", "I'm very sad.", "I don't know.", "Goodbye!"],
+      "answer": 0,
+      "difficulty": 1
+    },
+    {
+      "id": 2,
+      "emoji": "🍕",
+      "name": "Ordering Food",
+      "color": "#ef4444",
+      "turns": [
+        { "turn": 1, "role": "teacher", "speaker": "Server", "english": "What would you like?", "korean": "뭘 드릴까요?", "chunks": ["What", "would you like?"] },
+        { "turn": 2, "role": "child", "speaker": "You", "english": "I want a pizza, please!", "korean": "피자 주세요!", "chunks": ["I want", "a pizza,", "please!"] }
+      ],
+      "quizChoices": ["I want a pizza, please!", "I don't like food.", "I want to sleep.", "No thank you."],
+      "answer": 0,
+      "difficulty": 1
+    },
+    {
+      "id": 3,
+      "emoji": "🏫",
+      "name": "At School",
+      "color": "#3b82f6",
+      "turns": [
+        { "turn": 1, "role": "teacher", "speaker": "Teacher", "english": "Good morning, class!", "korean": "안녕, 여러분!", "chunks": ["Good morning,", "class!"] },
+        { "turn": 2, "role": "child", "speaker": "You", "english": "Good morning, teacher!", "korean": "안녕하세요, 선생님!", "chunks": ["Good morning,", "teacher!"] },
+        { "turn": 3, "role": "teacher", "speaker": "Teacher", "english": "Are you ready to learn?", "korean": "배울 준비됐어요?", "chunks": ["Are you ready", "to learn?"] },
+        { "turn": 4, "role": "child", "speaker": "You", "english": "Yes, I'm ready!", "korean": "네, 준비됐어요!", "chunks": ["Yes,", "I'm ready!"] }
+      ],
+      "quizChoices": ["Yes, I'm ready!", "No, I'm sleeping.", "I forgot.", "Maybe later."],
+      "answer": 0,
+      "difficulty": 2
+    },
+    {
+      "id": 4,
+      "emoji": "🎂",
+      "name": "Birthday Party",
+      "color": "#ec4899",
+      "turns": [
+        { "turn": 1, "role": "child", "speaker": "You", "english": "Happy birthday!", "korean": "생일 축하해!", "chunks": ["Happy birthday!"] },
+        { "turn": 2, "role": "teacher", "speaker": "Friend", "english": "Thank you so much!", "korean": "정말 고마워!", "chunks": ["Thank you", "so much!"] }
+      ],
+      "quizChoices": ["Thank you so much!", "I don't like birthdays.", "That's not mine.", "Who are you?"],
+      "answer": 0,
+      "difficulty": 1
+    },
+    {
+      "id": 5,
+      "emoji": "🏥",
+      "name": "Feeling Sick",
+      "color": "#10b981",
+      "turns": [
+        { "turn": 1, "role": "teacher", "speaker": "Parent", "english": "Are you okay?", "korean": "괜찮니?", "chunks": ["Are you okay?"] },
+        { "turn": 2, "role": "child", "speaker": "You", "english": "I have a headache.", "korean": "머리가 아파요.", "chunks": ["I have", "a headache."] },
+        { "turn": 3, "role": "teacher", "speaker": "Parent", "english": "Oh no! Let's go to the doctor.", "korean": "어머나! 병원에 가자.", "chunks": ["Oh no!", "Let's go", "to the doctor."] }
+      ],
+      "quizChoices": ["I have a headache.", "I'm very happy!", "I want to dance.", "Let's play!"],
+      "answer": 0,
+      "difficulty": 2
+    },
+    {
+      "id": 6,
+      "emoji": "🛒",
+      "name": "Shopping",
+      "color": "#8b5cf6",
+      "turns": [
+        { "turn": 1, "role": "teacher", "speaker": "Shopkeeper", "english": "Can I help you?", "korean": "도와드릴까요?", "chunks": ["Can I help you?"] },
+        { "turn": 2, "role": "child", "speaker": "You", "english": "Yes, how much is this?", "korean": "네, 이거 얼마예요?", "chunks": ["Yes,", "how much", "is this?"] },
+        { "turn": 3, "role": "teacher", "speaker": "Shopkeeper", "english": "It's two dollars.", "korean": "2달러예요.", "chunks": ["It's", "two dollars."] }
+      ],
+      "quizChoices": ["Yes, how much is this?", "I don't want anything.", "Let me think.", "Goodbye!"],
+      "answer": 0,
+      "difficulty": 2
+    },
+    {
+      "id": 7,
+      "emoji": "🌦️",
+      "name": "Weather Talk",
+      "color": "#06b6d4",
+      "turns": [
+        { "turn": 1, "role": "child", "speaker": "You", "english": "It's raining today!", "korean": "오늘 비가 와!", "chunks": ["It's raining", "today!"] },
+        { "turn": 2, "role": "teacher", "speaker": "Friend", "english": "Let's stay inside and play.", "korean": "안에서 놀자.", "chunks": ["Let's", "stay inside", "and play."] }
+      ],
+      "quizChoices": ["Let's stay inside and play.", "Let's go swimming!", "I like the rain.", "Run outside!"],
+      "answer": 0,
+      "difficulty": 1
+    },
+    {
+      "id": 8,
+      "emoji": "🐾",
+      "name": "Talking About Pets",
+      "color": "#f59e0b",
+      "turns": [
+        { "turn": 1, "role": "teacher", "speaker": "Friend", "english": "Do you have a pet?", "korean": "반려동물 있어?", "chunks": ["Do you have", "a pet?"] },
+        { "turn": 2, "role": "child", "speaker": "You", "english": "Yes! I have a dog named Max.", "korean": "응! 맥스라는 개가 있어.", "chunks": ["Yes!", "I have a dog", "named Max."] },
+        { "turn": 3, "role": "teacher", "speaker": "Friend", "english": "Wow! I love dogs!", "korean": "와! 나도 개 좋아해!", "chunks": ["Wow!", "I love dogs!"] }
+      ],
+      "quizChoices": ["Yes! I have a dog named Max.", "I don't like animals.", "I'm not sure.", "I have a dragon."],
+      "answer": 0,
+      "difficulty": 2
+    },
+    {
+      "id": 9,
+      "emoji": "📚",
+      "name": "Library Visit",
+      "color": "#6366f1",
+      "turns": [
+        { "turn": 1, "role": "child", "speaker": "You", "english": "Can I borrow this book?", "korean": "이 책 빌릴 수 있어요?", "chunks": ["Can I borrow", "this book?"] },
+        { "turn": 2, "role": "teacher", "speaker": "Librarian", "english": "Of course! Do you have your library card?", "korean": "물론이요! 도서관 카드 있어요?", "chunks": ["Of course!", "Do you have", "your library card?"] }
+      ],
+      "quizChoices": ["Can I borrow this book?", "I want to sleep.", "Books are boring.", "Let me eat!"],
+      "answer": 0,
+      "difficulty": 2
+    },
+    {
+      "id": 10,
+      "emoji": "🌙",
+      "name": "Bedtime",
+      "color": "#7c3aed",
+      "turns": [
+        { "turn": 1, "role": "teacher", "speaker": "Parent", "english": "Time to sleep! Brush your teeth.", "korean": "잘 시간이야! 이 닦아.", "chunks": ["Time to sleep!", "Brush your teeth."] },
+        { "turn": 2, "role": "child", "speaker": "You", "english": "Okay. Good night, mom!", "korean": "알겠어요. 잘 자요, 엄마!", "chunks": ["Okay.", "Good night, mom!"] },
+        { "turn": 3, "role": "teacher", "speaker": "Parent", "english": "Sweet dreams, my love!", "korean": "좋은 꿈 꿔, 내 사랑!", "chunks": ["Sweet dreams,", "my love!"] }
+      ],
+      "quizChoices": ["Okay. Good night, mom!", "I don't want to sleep.", "I'm still hungry!", "Let's play more!"],
+      "answer": 0,
+      "difficulty": 2
+    }
+  ]
+}

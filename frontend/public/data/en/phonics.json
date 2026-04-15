@@ -1,0 +1,216 @@
+{
+  "title": "영어회화 기본문장 1000선",
+  "description": "초·중등학생 실생활 영어 회화 | 11개 주제",
+  "version": "1.0",
+  "situations": [
+    {
+      "id": 1,
+      "emoji": "🍽️",
+      "name": "식당·음식점",
+      "nameEn": "Restaurant",
+      "color": "#ff7043",
+      "sentences": [
+        { "id": 1, "english": "Can I have a table for two?", "korean": "두 명 자리 있나요?", "phonics": "캔 아이 해브 어 테이블 포 투?", "chunks": ["Can I have a table for", "two?"], "tips": "Can I + 동사? | 정중한 요청 표현" },
+        { "id": 2, "english": "May I see the menu?", "korean": "메뉴판 볼 수 있을까요?", "phonics": "메이 아이 씨 더 메뉴?", "chunks": ["May I", "see the menu?"], "tips": "May I + 동사원형? | 허락 요청 표현" },
+        { "id": 3, "english": "What is today's special?", "korean": "오늘의 특별 메뉴가 뭐예요?", "phonics": "왓 이즈 투데이즈 스페셜?", "chunks": ["What", "is today's special?"], "tips": "What + 동사? | 정보 요청 의문문" },
+        { "id": 4, "english": "I would like to order now.", "korean": "지금 주문하고 싶어요.", "phonics": "아이 우드 라이크 투 오더 나우.", "chunks": ["I would like to", "order now."], "tips": "I would like + to부정사 | 원함 정중 표현" },
+        { "id": 5, "english": "Is this spicy?", "korean": "이거 매워요?", "phonics": "이즈 디스 스파이씨?", "chunks": ["Is this", "spicy?"], "tips": "Is + 주어 + 형용사? | 확인 질문" },
+        { "id": 6, "english": "I don't like spicy food.", "korean": "저는 매운 음식을 안 좋아해요.", "phonics": "아이 돈트 라이크 스파이씨 푸드.", "chunks": ["I don't", "like spicy food."], "tips": "부정문 | don't + 동사" },
+        { "id": 7, "english": "Can I have no onions, please?", "korean": "양파 빼주세요.", "phonics": "캔 아이 해브 노 어니언즈, 플리즈?", "chunks": ["Can I have no onions,", "please?"], "tips": "Can I + 동사? | 정중한 요청 표현" },
+        { "id": 8, "english": "I'd like a glass of water.", "korean": "물 한 잔 주세요.", "phonics": "아이드 라이크 어 글래스 어브 워터.", "chunks": ["I'd like a glass of", "water."], "tips": "I'd like + 명사 | 원하는 것 정중히 표현" },
+        { "id": 9, "english": "Can I have the check, please?", "korean": "계산서 주세요.", "phonics": "캔 아이 해브 더 첵, 플리즈?", "chunks": ["Can I have", "the check, please?"], "tips": "Can I + 동사? | 정중한 요청 표현" },
+        { "id": 10, "english": "This food is delicious!", "korean": "이 음식 정말 맛있어요!", "phonics": "디스 푸드 이즈 딜리셔스!", "chunks": ["This food", "is delicious!"], "tips": "감탄 표현 | This + is + 형용사" }
+      ]
+    },
+    {
+      "id": 2,
+      "emoji": "🛒",
+      "name": "쇼핑·마트",
+      "nameEn": "Shopping",
+      "color": "#42a5f5",
+      "sentences": [
+        { "id": 1, "english": "How much is this?", "korean": "이거 얼마예요?", "phonics": "하우 머치 이즈 디스?", "chunks": ["How much", "is this?"], "tips": "How much + 동사? | 가격 질문" },
+        { "id": 2, "english": "Do you have this in a bigger size?", "korean": "더 큰 사이즈 있나요?", "phonics": "두 유 해브 디스 인 어 비거 사이즈?", "chunks": ["Do you have this", "in a bigger size?"], "tips": "Do you have + 명사? | 상대방 확인 질문" },
+        { "id": 3, "english": "Can I try this on?", "korean": "이거 입어봐도 돼요?", "phonics": "캔 아이 트라이 디스 온?", "chunks": ["Can I", "try this on?"], "tips": "Can I + 동사? | 정중한 요청 표현" },
+        { "id": 4, "english": "Is there a sale today?", "korean": "오늘 세일 있나요?", "phonics": "이즈 데어 어 세일 투데이?", "chunks": ["Is there", "a sale today?"], "tips": "Is there + 명사? | 존재 여부 확인" },
+        { "id": 5, "english": "I'll take this one.", "korean": "이걸로 살게요.", "phonics": "아일 테이크 디스 원.", "chunks": ["I'll take", "this one."], "tips": "I'll + 동사 | 미래/결정 표현" },
+        { "id": 6, "english": "Do you accept credit cards?", "korean": "신용카드 받나요?", "phonics": "두 유 액셉트 크레딧 카드즈?", "chunks": ["Do you accept", "credit cards?"], "tips": "Do you + 동사? | 상대방 확인 질문" },
+        { "id": 7, "english": "Can I get a receipt?", "korean": "영수증 주실 수 있어요?", "phonics": "캔 아이 겟 어 리씻?", "chunks": ["Can I", "get a receipt?"], "tips": "Can I + 동사? | 정중한 요청 표현" },
+        { "id": 8, "english": "This is too expensive.", "korean": "이거 너무 비싸요.", "phonics": "디스 이즈 투 익스펜시브.", "chunks": ["This is", "too expensive."], "tips": "This is + 형용사 | 상태 설명" },
+        { "id": 9, "english": "Do you have anything cheaper?", "korean": "더 저렴한 거 있나요?", "phonics": "두 유 해브 애니씽 치퍼?", "chunks": ["Do you have", "anything cheaper?"], "tips": "Do you have + 명사? | 상대방 확인 질문" },
+        { "id": 10, "english": "I'm just looking, thank you.", "korean": "그냥 구경하는 거예요, 감사해요.", "phonics": "아임 저스트 루킹, 땡큐.", "chunks": ["I'm just looking,", "thank you."], "tips": "I'm + 동명사 | 현재 상태 설명" }
+      ]
+    },
+    {
+      "id": 3,
+      "emoji": "✈️",
+      "name": "공항·여행",
+      "nameEn": "Airport & Travel",
+      "color": "#26a69a",
+      "sentences": [
+        { "id": 1, "english": "Where is the check-in counter?", "korean": "체크인 카운터가 어디예요?", "phonics": "웨어 이즈 더 첵인 카운터?", "chunks": ["Where is", "the check-in counter?"], "tips": "Where is + 명사? | 위치 질문" },
+        { "id": 2, "english": "I have a reservation.", "korean": "예약했어요.", "phonics": "아이 해브 어 레저베이션.", "chunks": ["I have", "a reservation."], "tips": "I have + 명사 | 소유/상태 표현" },
+        { "id": 3, "english": "Can I have a window seat?", "korean": "창가 자리로 주세요.", "phonics": "캔 아이 해브 어 윈도우 씻?", "chunks": ["Can I have", "a window seat?"], "tips": "Can I have + 명사? | 정중한 요청" },
+        { "id": 4, "english": "How long is the flight?", "korean": "비행 시간이 얼마나 돼요?", "phonics": "하우 롱 이즈 더 플라잇?", "chunks": ["How long", "is the flight?"], "tips": "How long + 동사? | 시간/길이 질문" },
+        { "id": 5, "english": "I lost my luggage.", "korean": "짐을 잃어버렸어요.", "phonics": "아이 로스트 마이 러기지.", "chunks": ["I lost", "my luggage."], "tips": "I + 과거동사 | 과거 사실 표현" },
+        { "id": 6, "english": "Is this the right gate?", "korean": "이게 맞는 게이트예요?", "phonics": "이즈 디스 더 라잇 게이트?", "chunks": ["Is this", "the right gate?"], "tips": "Is this + 명사? | 확인 질문" },
+        { "id": 7, "english": "When does the plane board?", "korean": "탑승은 언제 시작해요?", "phonics": "웬 더즈 더 플레인 보드?", "chunks": ["When does", "the plane board?"], "tips": "When + 동사? | 시간 질문" },
+        { "id": 8, "english": "Do I need to go through customs?", "korean": "세관을 통과해야 하나요?", "phonics": "두 아이 니드 투 고 쓰루 커스텀즈?", "chunks": ["Do I need to", "go through customs?"], "tips": "Do I need to + 동사? | 필요 여부 질문" },
+        { "id": 9, "english": "This is my first visit.", "korean": "처음 방문이에요.", "phonics": "디스 이즈 마이 퍼스트 비짓.", "chunks": ["This is", "my first visit."], "tips": "This is + 명사구 | 상황 설명" },
+        { "id": 10, "english": "Could you help me with directions?", "korean": "길 안내 좀 해주실 수 있나요?", "phonics": "쿠드 유 헬프 미 위드 다이렉션즈?", "chunks": ["Could you help me", "with directions?"], "tips": "Could you + 동사? | 정중한 요청" }
+      ]
+    },
+    {
+      "id": 4,
+      "emoji": "🏥",
+      "name": "병원·약국",
+      "nameEn": "Hospital & Pharmacy",
+      "color": "#ef5350",
+      "sentences": [
+        { "id": 1, "english": "I have a stomachache.", "korean": "배가 아파요.", "phonics": "아이 해브 어 스터맥에이크.", "chunks": ["I have", "a stomachache."], "tips": "I have + 명사 | 증상 표현" },
+        { "id": 2, "english": "I've had a fever since yesterday.", "korean": "어제부터 열이 나요.", "phonics": "아이브 해드 어 피버 신스 예스터데이.", "chunks": ["I've had a fever", "since yesterday."], "tips": "현재완료 | have + p.p. | 경험/상태 표현" },
+        { "id": 3, "english": "Where does it hurt?", "korean": "어디가 아파요?", "phonics": "웨어 더즈 잇 허트?", "chunks": ["Where does", "it hurt?"], "tips": "Where + 동사? | 위치 질문" },
+        { "id": 4, "english": "I need to see a doctor.", "korean": "의사를 만나야 해요.", "phonics": "아이 니드 투 씨 어 닥터.", "chunks": ["I need to", "see a doctor."], "tips": "I need to + 동사 | 필요 표현" },
+        { "id": 5, "english": "I'm allergic to penicillin.", "korean": "저는 페니실린 알레르기가 있어요.", "phonics": "아임 얼러직 투 페니실린.", "chunks": ["I'm allergic to", "penicillin."], "tips": "I'm allergic to + 명사 | 알레르기 표현" },
+        { "id": 6, "english": "How many times a day?", "korean": "하루에 몇 번 먹어요?", "phonics": "하우 메니 타임즈 어 데이?", "chunks": ["How many times", "a day?"], "tips": "How many + 명사? | 횟수 질문" },
+        { "id": 7, "english": "Take this twice a day after meals.", "korean": "하루에 두 번 식후에 드세요.", "phonics": "테이크 디스 트와이스 어 데이 애프터 밀즈.", "chunks": ["Take this", "twice a day", "after meals."], "tips": "명령문 | 동사 + 부사구 | 지시 표현" },
+        { "id": 8, "english": "Do you have any side effects?", "korean": "부작용이 있나요?", "phonics": "두 유 해브 애니 사이드 이펙츠?", "chunks": ["Do you have", "any side effects?"], "tips": "Do you have + 명사? | 확인 질문" },
+        { "id": 9, "english": "I feel better now.", "korean": "이제 좀 나아졌어요.", "phonics": "아이 필 베터 나우.", "chunks": ["I feel better", "now."], "tips": "I feel + 형용사 | 상태 변화 표현" },
+        { "id": 10, "english": "Please get some rest.", "korean": "좀 쉬세요.", "phonics": "플리즈 겟 썸 레스트.", "chunks": ["Please", "get some rest."], "tips": "Please + 명령문 | 정중한 지시" }
+      ]
+    },
+    {
+      "id": 5,
+      "emoji": "🏫",
+      "name": "학교·교실",
+      "nameEn": "School & Classroom",
+      "color": "#7e57c2",
+      "sentences": [
+        { "id": 1, "english": "Can I borrow your eraser?", "korean": "지우개 빌려줄 수 있어?", "phonics": "캔 아이 바로우 유어 이레이저?", "chunks": ["Can I", "borrow your eraser?"], "tips": "Can I + 동사? | 정중한 요청" },
+        { "id": 2, "english": "I don't understand this problem.", "korean": "이 문제를 모르겠어요.", "phonics": "아이 돈트 언더스탠드 디스 프라블럼.", "chunks": ["I don't understand", "this problem."], "tips": "부정문 | don't + 동사" },
+        { "id": 3, "english": "May I go to the restroom?", "korean": "화장실 가도 될까요?", "phonics": "메이 아이 고 투 더 레스트룸?", "chunks": ["May I", "go to the restroom?"], "tips": "May I + 동사? | 허락 요청" },
+        { "id": 4, "english": "When is the homework due?", "korean": "숙제 언제까지예요?", "phonics": "웬 이즈 더 홈워크 듀?", "chunks": ["When is", "the homework due?"], "tips": "When + 동사? | 기한 질문" },
+        { "id": 5, "english": "I got a perfect score!", "korean": "만점 받았어요!", "phonics": "아이 갓 어 퍼펙트 스코어!", "chunks": ["I got", "a perfect score!"], "tips": "I got + 명사 | 결과 표현" },
+        { "id": 6, "english": "Let's work together on this.", "korean": "같이 해보자.", "phonics": "렛츠 워크 투게더 온 디스.", "chunks": ["Let's", "work together on this."], "tips": "Let's + 동사 | 제안 표현" },
+        { "id": 7, "english": "Can you explain that again?", "korean": "다시 설명해 주실 수 있어요?", "phonics": "캔 유 익스플레인 댓 어겐?", "chunks": ["Can you", "explain that again?"], "tips": "Can you + 동사? | 부탁 표현" },
+        { "id": 8, "english": "I finished my homework.", "korean": "숙제 다 했어요.", "phonics": "아이 피니쉬트 마이 홈워크.", "chunks": ["I finished", "my homework."], "tips": "I + 과거동사 | 완료 표현" },
+        { "id": 9, "english": "Please be quiet.", "korean": "조용히 해주세요.", "phonics": "플리즈 비 콰이엇.", "chunks": ["Please", "be quiet."], "tips": "Please + 명령문 | 정중한 지시" },
+        { "id": 10, "english": "Class is over. See you tomorrow!", "korean": "수업 끝! 내일 봐요!", "phonics": "클래스 이즈 오버. 씨 유 투마로우!", "chunks": ["Class is over.", "See you tomorrow!"], "tips": "짧은 핵심 표현 | 작별 인사" }
+      ]
+    },
+    {
+      "id": 6,
+      "emoji": "🏡",
+      "name": "집·일상생활",
+      "nameEn": "Home & Daily Life",
+      "color": "#66bb6a",
+      "sentences": [
+        { "id": 1, "english": "Wake up! It's time for breakfast.", "korean": "일어나! 아침 먹을 시간이야.", "phonics": "웨이크 업! 잇츠 타임 포 브렉퍼스트.", "chunks": ["Wake up!", "It's time for breakfast."], "tips": "명령문 | 동사원형으로 시작" },
+        { "id": 2, "english": "Did you brush your teeth?", "korean": "이 닦았어?", "phonics": "디드 유 브러쉬 유어 티쓰?", "chunks": ["Did you", "brush your teeth?"], "tips": "Did you + 동사? | 과거 확인 질문" },
+        { "id": 3, "english": "Please set the table.", "korean": "상 차려줘.", "phonics": "플리즈 셋 더 테이블.", "chunks": ["Please", "set the table."], "tips": "Please + 명령문 | 정중한 지시" },
+        { "id": 4, "english": "Can you turn off the light?", "korean": "불 꺼줄 수 있어?", "phonics": "캔 유 턴 오프 더 라잇?", "chunks": ["Can you", "turn off the light?"], "tips": "Can you + 동사? | 부탁 표현" },
+        { "id": 5, "english": "I need to do the laundry.", "korean": "빨래해야 해.", "phonics": "아이 니드 투 두 더 런드리.", "chunks": ["I need to", "do the laundry."], "tips": "I need to + 동사 | 필요 표현" },
+        { "id": 6, "english": "What's for dinner tonight?", "korean": "오늘 저녁 뭐야?", "phonics": "왓츠 포 디너 투나잇?", "chunks": ["What's for dinner", "tonight?"], "tips": "What's for + 명사? | 내용 질문" },
+        { "id": 7, "english": "I'm so tired today.", "korean": "오늘 너무 피곤해.", "phonics": "아임 소 타이어드 투데이.", "chunks": ["I'm so tired", "today."], "tips": "I'm + 형용사 | 감정/상태 표현" },
+        { "id": 8, "english": "Let's watch TV together.", "korean": "같이 TV 봐요.", "phonics": "렛츠 왓치 TV 투게더.", "chunks": ["Let's watch TV", "together."], "tips": "Let's + 동사 | 제안 표현" },
+        { "id": 9, "english": "It's time to go to bed.", "korean": "잘 시간이야.", "phonics": "잇츠 타임 투 고 투 베드.", "chunks": ["It's time to", "go to bed."], "tips": "It's time to + 동사 | 시간 알림" },
+        { "id": 10, "english": "Good night! Sweet dreams.", "korean": "잘 자! 좋은 꿈 꿔.", "phonics": "굿 나잇! 스윗 드림즈.", "chunks": ["Good night!", "Sweet dreams."], "tips": "짧은 핵심 표현 | 취침 인사" }
+      ]
+    },
+    {
+      "id": 7,
+      "emoji": "⚽",
+      "name": "운동·취미",
+      "nameEn": "Sports & Hobbies",
+      "color": "#ffa726",
+      "sentences": [
+        { "id": 1, "english": "What sports do you like?", "korean": "어떤 운동 좋아해?", "phonics": "왓 스포츠 두 유 라이크?", "chunks": ["What sports", "do you like?"], "tips": "What + 명사 + 동사? | 취향 질문" },
+        { "id": 2, "english": "I love playing soccer.", "korean": "축구 하는 걸 너무 좋아해.", "phonics": "아이 러브 플레잉 사커.", "chunks": ["I love", "playing soccer."], "tips": "I love + 동명사 | 좋아하는 것 표현" },
+        { "id": 3, "english": "Let's play basketball!", "korean": "농구 하자!", "phonics": "렛츠 플레이 배스킷볼!", "chunks": ["Let's play", "basketball!"], "tips": "Let's + 동사 | 제안 표현" },
+        { "id": 4, "english": "How often do you exercise?", "korean": "얼마나 자주 운동해?", "phonics": "하우 오픈 두 유 엑서사이즈?", "chunks": ["How often", "do you exercise?"], "tips": "How often + 동사? | 빈도 질문" },
+        { "id": 5, "english": "I practice the piano every day.", "korean": "매일 피아노 연습해.", "phonics": "아이 프랙티스 더 피아노 에브리 데이.", "chunks": ["I practice the piano", "every day."], "tips": "I + 동사 + 빈도부사 | 습관 표현" },
+        { "id": 6, "english": "Good game! You played well.", "korean": "잘 했어! 잘 뛰었어.", "phonics": "굿 게임! 유 플레이드 웰.", "chunks": ["Good game!", "You played well."], "tips": "감탄문 | 칭찬 표현" },
+        { "id": 7, "english": "Which team do you support?", "korean": "어느 팀 응원해?", "phonics": "위치 팀 두 유 서포트?", "chunks": ["Which team", "do you support?"], "tips": "Which + 명사 + 동사? | 선택 질문" },
+        { "id": 8, "english": "I like drawing and painting.", "korean": "그림 그리는 걸 좋아해.", "phonics": "아이 라이크 드로잉 앤 페인팅.", "chunks": ["I like", "drawing and painting."], "tips": "I like + 동명사 | 취미 표현" },
+        { "id": 9, "english": "We won the game!", "korean": "우리가 이겼어!", "phonics": "위 원 더 게임!", "chunks": ["We won", "the game!"], "tips": "We + 과거동사 | 복수 주어 + 결과" },
+        { "id": 10, "english": "Practice makes perfect.", "korean": "연습이 실력을 만들어.", "phonics": "프랙티스 메이크스 퍼펙트.", "chunks": ["Practice", "makes perfect."], "tips": "짧은 핵심 표현 | 격언/속담" }
+      ]
+    },
+    {
+      "id": 8,
+      "emoji": "🌦️",
+      "name": "날씨·계절",
+      "nameEn": "Weather & Seasons",
+      "color": "#29b6f6",
+      "sentences": [
+        { "id": 1, "english": "What's the weather like today?", "korean": "오늘 날씨 어때?", "phonics": "왓츠 더 웨더 라이크 투데이?", "chunks": ["What's the weather like", "today?"], "tips": "What's + 명사 + like? | 상태 질문" },
+        { "id": 2, "english": "It's sunny and warm.", "korean": "맑고 따뜻해요.", "phonics": "잇츠 써니 앤 웜.", "chunks": ["It's sunny", "and warm."], "tips": "It's + 형용사 | 날씨 설명" },
+        { "id": 3, "english": "Don't forget to bring an umbrella.", "korean": "우산 챙기는 거 잊지 마.", "phonics": "돈트 포겟 투 브링 언 엄브렐라.", "chunks": ["Don't forget to", "bring an umbrella."], "tips": "Don't forget to + 동사 | 충고/알림" },
+        { "id": 4, "english": "I love autumn the most.", "korean": "가을을 제일 좋아해요.", "phonics": "아이 러브 오텀 더 모스트.", "chunks": ["I love autumn", "the most."], "tips": "I love + 명사 | 좋아하는 것 표현" },
+        { "id": 5, "english": "It's raining heavily outside.", "korean": "밖에 비가 많이 와요.", "phonics": "잇츠 레이닝 헤빌리 아웃사이드.", "chunks": ["It's raining heavily", "outside."], "tips": "It's + 동명사 + 부사 | 현재 상황" },
+        { "id": 6, "english": "I hope it snows tomorrow.", "korean": "내일 눈 오면 좋겠어.", "phonics": "아이 호프 잇 스노우즈 투마로우.", "chunks": ["I hope", "it snows tomorrow."], "tips": "I hope + 절 | 바람/희망 표현" },
+        { "id": 7, "english": "Please dress warmly today.", "korean": "오늘 따뜻하게 입어요.", "phonics": "플리즈 드레스 웜리 투데이.", "chunks": ["Please dress warmly", "today."], "tips": "Please + 명령문 | 정중한 조언" },
+        { "id": 8, "english": "The weather is getting colder.", "korean": "날씨가 점점 추워지고 있어요.", "phonics": "더 웨더 이즈 게팅 콜더.", "chunks": ["The weather", "is getting colder."], "tips": "be getting + 비교급 | 변화 표현" },
+        { "id": 9, "english": "Spring is my favorite season.", "korean": "봄이 제가 가장 좋아하는 계절이에요.", "phonics": "스프링 이즈 마이 페이보릿 씨즌.", "chunks": ["Spring is", "my favorite season."], "tips": "명사 is + 소유격 + 형용사 + 명사" },
+        { "id": 10, "english": "What's the temperature outside?", "korean": "밖에 기온이 몇 도예요?", "phonics": "왓츠 더 템퍼러처 아웃사이드?", "chunks": ["What's the temperature", "outside?"], "tips": "What's + 명사? | 수치 질문" }
+      ]
+    },
+    {
+      "id": 9,
+      "emoji": "🚌",
+      "name": "교통·길찾기",
+      "nameEn": "Transportation",
+      "color": "#ec407a",
+      "sentences": [
+        { "id": 1, "english": "Excuse me, where is the subway station?", "korean": "실례합니다, 지하철역이 어디예요?", "phonics": "익스큐즈 미, 웨어 이즈 더 서브웨이 스테이션?", "chunks": ["Excuse me,", "where is the subway station?"], "tips": "Excuse me + Where is? | 공손한 위치 질문" },
+        { "id": 2, "english": "How do I get to the museum?", "korean": "박물관에 어떻게 가요?", "phonics": "하우 두 아이 겟 투 더 뮤지엄?", "chunks": ["How do I get to", "the museum?"], "tips": "How do I get to + 장소? | 길 안내 요청" },
+        { "id": 3, "english": "Take the number 5 bus.", "korean": "5번 버스를 타세요.", "phonics": "테이크 더 넘버 파이브 버스.", "chunks": ["Take", "the number 5 bus."], "tips": "명령문 | 교통수단 안내" },
+        { "id": 4, "english": "It's about a 10-minute walk.", "korean": "걸어서 10분 정도예요.", "phonics": "잇츠 어바웃 어 텐 미닛 워크.", "chunks": ["It's about", "a 10-minute walk."], "tips": "It's about + 시간 | 거리/시간 표현" },
+        { "id": 5, "english": "I missed the last train.", "korean": "막차를 놓쳤어요.", "phonics": "아이 미스트 더 라스트 트레인.", "chunks": ["I missed", "the last train."], "tips": "I + 과거동사 | 과거 사실 표현" },
+        { "id": 6, "english": "Can I get a taxi here?", "korean": "여기서 택시 잡을 수 있나요?", "phonics": "캔 아이 겟 어 택시 히어?", "chunks": ["Can I get a taxi", "here?"], "tips": "Can I + 동사? | 가능 여부 질문" },
+        { "id": 7, "english": "Please take me to this address.", "korean": "이 주소로 가주세요.", "phonics": "플리즈 테이크 미 투 디스 어드레스.", "chunks": ["Please take me to", "this address."], "tips": "Please + 명령문 | 정중한 요청" },
+        { "id": 8, "english": "Turn left at the traffic light.", "korean": "신호등에서 왼쪽으로 도세요.", "phonics": "턴 레프트 앳 더 트래픽 라잇.", "chunks": ["Turn left", "at the traffic light."], "tips": "명령문 | 방향 안내" },
+        { "id": 9, "english": "Is this bus going downtown?", "korean": "이 버스 시내 방향인가요?", "phonics": "이즈 디스 버스 고잉 다운타운?", "chunks": ["Is this bus", "going downtown?"], "tips": "Is + 명사 + 동명사? | 방향 확인" },
+        { "id": 10, "english": "I'm lost. Can you help me?", "korean": "길을 잃었어요. 도와주실 수 있나요?", "phonics": "아임 로스트. 캔 유 헬프 미?", "chunks": ["I'm lost.", "Can you help me?"], "tips": "I'm + 형용사 + Can you? | 상황 + 도움 요청" }
+      ]
+    },
+    {
+      "id": 10,
+      "emoji": "😊",
+      "name": "감정·표현",
+      "nameEn": "Feelings & Expressions",
+      "color": "#ab47bc",
+      "sentences": [
+        { "id": 1, "english": "I'm so happy today!", "korean": "오늘 너무 기뻐!", "phonics": "아임 소 해피 투데이!", "chunks": ["I'm so happy", "today!"], "tips": "I'm + 형용사 | 감정 표현" },
+        { "id": 2, "english": "I feel a little nervous.", "korean": "조금 긴장돼요.", "phonics": "아이 필 어 리틀 너버스.", "chunks": ["I feel", "a little nervous."], "tips": "I feel + 형용사 | 감정 표현" },
+        { "id": 3, "english": "Don't worry, you'll be fine!", "korean": "걱정 마, 잘 될 거야!", "phonics": "돈트 워리, 유윌 비 파인!", "chunks": ["Don't worry,", "you'll be fine!"], "tips": "Don't + 동사 | 부정 명령문 + 격려" },
+        { "id": 4, "english": "I'm really proud of you!", "korean": "정말 자랑스러워!", "phonics": "아임 리얼리 프라우드 어브 유!", "chunks": ["I'm really", "proud of you!"], "tips": "I'm + 형용사 + of | 칭찬 표현" },
+        { "id": 5, "english": "That made me laugh.", "korean": "그게 웃겼어.", "phonics": "댓 메이드 미 래프.", "chunks": ["That made me", "laugh."], "tips": "That made me + 동사원형 | 감정 유발 표현" },
+        { "id": 6, "english": "I'm sorry for being late.", "korean": "늦어서 미안해요.", "phonics": "아임 쏘리 포 비잉 레이트.", "chunks": ["I'm sorry for", "being late."], "tips": "I'm sorry for + 동명사 | 사과 표현" },
+        { "id": 7, "english": "Thank you so much!", "korean": "정말 감사해요!", "phonics": "땡큐 소 머치!", "chunks": ["Thank you", "so much!"], "tips": "짧은 핵심 표현 | 감사 표현" },
+        { "id": 8, "english": "You're the best!", "korean": "최고야!", "phonics": "유어 더 베스트!", "chunks": ["You're the best!"], "tips": "감탄문 | 칭찬 표현" },
+        { "id": 9, "english": "I miss you so much.", "korean": "너무 보고 싶어.", "phonics": "아이 미스 유 소 머치.", "chunks": ["I miss you", "so much."], "tips": "I miss + 명사 | 그리움 표현" },
+        { "id": 10, "english": "Cheer up! Tomorrow will be better.", "korean": "힘내! 내일은 더 나을 거야.", "phonics": "치어 업! 투마로우 윌 비 베터.", "chunks": ["Cheer up!", "Tomorrow will be better."], "tips": "명령문 | 격려 표현" }
+      ]
+    },
+    {
+      "id": 11,
+      "emoji": "📞",
+      "name": "전화·메시지",
+      "nameEn": "Phone & Messages",
+      "color": "#26c6da",
+      "sentences": [
+        { "id": 1, "english": "Hello, who's calling please?", "korean": "여보세요, 누구세요?", "phonics": "헬로, 후즈 콜링 플리즈?", "chunks": ["Hello,", "who's calling please?"], "tips": "Hello + who's + 동명사 | 전화 받기" },
+        { "id": 2, "english": "Can I speak to Tom, please?", "korean": "톰 좀 바꿔주세요.", "phonics": "캔 아이 스피크 투 톰, 플리즈?", "chunks": ["Can I speak to Tom,", "please?"], "tips": "Can I speak to + 이름? | 전화 연결 요청" },
+        { "id": 3, "english": "He's not available right now.", "korean": "지금 자리를 비웠어요.", "phonics": "히즈 낫 어베일러블 라잇 나우.", "chunks": ["He's not available", "right now."], "tips": "He's not + 형용사 | 부재 표현" },
+        { "id": 4, "english": "Can I leave a message?", "korean": "메시지 남겨도 될까요?", "phonics": "캔 아이 리브 어 메시지?", "chunks": ["Can I", "leave a message?"], "tips": "Can I + 동사? | 요청 표현" },
+        { "id": 5, "english": "Please call me back later.", "korean": "나중에 다시 전화해 주세요.", "phonics": "플리즈 콜 미 백 레이터.", "chunks": ["Please call me back", "later."], "tips": "Please + 명령문 | 정중한 요청" },
+        { "id": 6, "english": "Sorry, I think I have the wrong number.", "korean": "죄송해요, 잘못 거신 것 같아요.", "phonics": "쏘리, 아이 씽크 아이 해브 더 롱 넘버.", "chunks": ["Sorry,", "I think I have the wrong number."], "tips": "I think + 절 | 추측 표현" },
+        { "id": 7, "english": "I'll text you the details.", "korean": "세부 사항은 문자로 보낼게요.", "phonics": "아일 텍스트 유 더 디테일즈.", "chunks": ["I'll text you", "the details."], "tips": "I'll + 동사 | 미래 의지 표현" },
+        { "id": 8, "english": "Did you get my message?", "korean": "내 메시지 받았어?", "phonics": "디드 유 겟 마이 메시지?", "chunks": ["Did you", "get my message?"], "tips": "Did you + 동사? | 과거 확인 질문" },
+        { "id": 9, "english": "My phone battery is dead.", "korean": "핸드폰 배터리가 다 됐어.", "phonics": "마이 폰 배터리 이즈 데드.", "chunks": ["My phone battery", "is dead."], "tips": "소유격 + 명사 + is + 형용사 | 상태 설명" },
+        { "id": 10, "english": "Talk to you later!", "korean": "나중에 얘기해!", "phonics": "톡 투 유 레이터!", "chunks": ["Talk to you later!"], "tips": "짧은 핵심 표현 | 전화 마무리 인사" }
+      ]
+    }
+  ]
+}

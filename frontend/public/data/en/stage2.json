@@ -1,0 +1,47 @@
+{
+  "stage": 2,
+  "language": "en",
+  "title": "Stage 2: Phonics & Sight Words",
+  "description": "Learn short vowel phonics and common sight words",
+  "totalItems": 30,
+  "categories": [
+    {
+      "id": "phonics",
+      "name": "Phonics",
+      "icon": "🔊",
+      "level": 2,
+      "color": "#f97316",
+      "words": [
+        { "id": 1, "word": "cat", "emoji": "🐱", "hint": "Short A sound: c-a-t", "syllables": ["cat"], "tts": "cat", "sentences": ["The cat sat.", "A fat cat!"] },
+        { "id": 2, "word": "bed", "emoji": "🛏️", "hint": "Short E sound: b-e-d", "syllables": ["bed"], "tts": "bed", "sentences": ["I go to bed.", "The bed is soft."] },
+        { "id": 3, "word": "pig", "emoji": "🐷", "hint": "Short I sound: p-i-g", "syllables": ["pig"], "tts": "pig", "sentences": ["The pig is pink.", "A little pig!"] },
+        { "id": 4, "word": "hot", "emoji": "🔥", "hint": "Short O sound: h-o-t", "syllables": ["hot"], "tts": "hot", "sentences": ["It is hot today.", "The soup is hot!"] },
+        { "id": 5, "word": "bug", "emoji": "🐛", "hint": "Short U sound: b-u-g", "syllables": ["bug"], "tts": "bug", "sentences": ["I see a bug.", "A small bug!"] },
+        { "id": 6, "word": "hen", "emoji": "🐔", "hint": "Short E: h-e-n", "syllables": ["hen"], "tts": "hen", "sentences": ["A hen lays eggs.", "The hen is red."] },
+        { "id": 7, "word": "cup", "emoji": "☕", "hint": "Short U: c-u-p", "syllables": ["cup"], "tts": "cup", "sentences": ["I drink from a cup.", "Fill the cup!"] },
+        { "id": 8, "word": "map", "emoji": "🗺️", "hint": "Short A: m-a-p", "syllables": ["map"], "tts": "map", "sentences": ["I use a map.", "Look at the map!"] },
+        { "id": 9, "word": "hop", "emoji": "🐰", "hint": "Short O: h-o-p", "syllables": ["hop"], "tts": "hop", "sentences": ["Rabbits hop.", "Hop hop hop!"] },
+        { "id": 10, "word": "kit", "emoji": "🧰", "hint": "Short I: k-i-t", "syllables": ["kit"], "tts": "kit", "sentences": ["I have a first aid kit.", "Open the kit!"] }
+      ]
+    },
+    {
+      "id": "sightwords",
+      "name": "Sight Words",
+      "icon": "👁️",
+      "level": 2,
+      "color": "#8b5cf6",
+      "words": [
+        { "id": 11, "word": "the", "emoji": "📖", "hint": "The most common word!", "syllables": ["the"], "tts": "the", "sentences": ["The cat is here.", "I see the dog."] },
+        { "id": 12, "word": "and", "emoji": "➕", "hint": "Connect two things!", "syllables": ["and"], "tts": "and", "sentences": ["Cats and dogs.", "You and me!"] },
+        { "id": 13, "word": "is", "emoji": "✅", "hint": "Something exists!", "syllables": ["is"], "tts": "is", "sentences": ["This is fun!", "It is good."] },
+        { "id": 14, "word": "you", "emoji": "👤", "hint": "Talking to someone!", "syllables": ["you"], "tts": "you", "sentences": ["I like you!", "Are you happy?"] },
+        { "id": 15, "word": "I", "emoji": "🙋", "hint": "Talking about yourself!", "syllables": ["I"], "tts": "I", "sentences": ["I am happy.", "I can run!"] },
+        { "id": 16, "word": "my", "emoji": "🤗", "hint": "Something belongs to you!", "syllables": ["my"], "tts": "my", "sentences": ["This is my toy.", "My name is..."] },
+        { "id": 17, "word": "it", "emoji": "👆", "hint": "Pointing to a thing!", "syllables": ["it"], "tts": "it", "sentences": ["It is a cat.", "I want it!"] },
+        { "id": 18, "word": "in", "emoji": "📦", "hint": "Inside something!", "syllables": ["in"], "tts": "in", "sentences": ["The cat is in the box.", "Come in!"] },
+        { "id": 19, "word": "we", "emoji": "👫", "hint": "You and me together!", "syllables": ["we"], "tts": "we", "sentences": ["We are friends.", "We can play!"] },
+        { "id": 20, "word": "go", "emoji": "🏃", "hint": "Move! Start!", "syllables": ["go"], "tts": "go", "sentences": ["Let's go!", "Go fast!"] }
+      ]
+    }
+  ]
+}

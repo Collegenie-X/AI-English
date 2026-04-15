@@ -1,0 +1,65 @@
+{
+  "stage": 3,
+  "language": "en",
+  "title": "Stage 3: Conversation Patterns",
+  "description": "Learn useful English conversation sentences",
+  "totalItems": 20,
+  "categories": [
+    {
+      "id": "greetings",
+      "name": "Greetings",
+      "icon": "👋",
+      "level": 3,
+      "color": "#f97316",
+      "words": [
+        { "id": 1, "word": "Hi! How are you?", "emoji": "😊", "hint": "Say hello!", "syllables": ["Hi!", "How", "are", "you?"], "tts": "Hi! How are you?", "sentences": ["Hi! How are you?", "Good morning!"] },
+        { "id": 2, "word": "I'm fine, thank you!", "emoji": "🙂", "hint": "Answer to 'How are you?'", "syllables": ["I'm", "fine,", "thank", "you!"], "tts": "I'm fine, thank you!", "sentences": ["I'm fine, thank you!", "I'm great!"] },
+        { "id": 3, "word": "Good morning!", "emoji": "🌅", "hint": "Morning greeting!", "syllables": ["Good", "mor", "ning!"], "tts": "Good morning!", "sentences": ["Good morning, teacher!", "Good morning, mom!"] },
+        { "id": 4, "word": "Good night!", "emoji": "🌙", "hint": "Before sleeping!", "syllables": ["Good", "night!"], "tts": "Good night!", "sentences": ["Good night, dad!", "Sweet dreams. Good night!"] },
+        { "id": 5, "word": "See you later!", "emoji": "👋", "hint": "Saying goodbye!", "syllables": ["See", "you", "la", "ter!"], "tts": "See you later!", "sentences": ["See you later, friend!", "Bye! See you later!"] }
+      ]
+    },
+    {
+      "id": "requests",
+      "name": "Requests",
+      "icon": "🙏",
+      "level": 3,
+      "color": "#3b82f6",
+      "words": [
+        { "id": 6, "word": "I want water.", "emoji": "💧", "hint": "Use I want + thing", "syllables": ["I", "want", "wa", "ter."], "tts": "I want water.", "sentences": ["I want water, please.", "I want more water!"] },
+        { "id": 7, "word": "Can I have more?", "emoji": "🙋", "hint": "Ask for more!", "syllables": ["Can", "I", "have", "more?"], "tts": "Can I have more?", "sentences": ["Can I have more rice?", "Can I have more time?"] },
+        { "id": 8, "word": "I'm hungry.", "emoji": "🍽️", "hint": "Your tummy is empty!", "syllables": ["I'm", "hun", "gry."], "tts": "I'm hungry.", "sentences": ["I'm hungry. Can I eat?", "Mom, I'm hungry!"] },
+        { "id": 9, "word": "Let's play!", "emoji": "🎮", "hint": "Invite to play!", "syllables": ["Let's", "play!"], "tts": "Let's play!", "sentences": ["Let's play outside!", "Let's play a game!"] },
+        { "id": 10, "word": "Help me, please!", "emoji": "🤝", "hint": "Ask for help!", "syllables": ["Help", "me,", "please!"], "tts": "Help me, please!", "sentences": ["Help me, please!", "Can you help me?"] }
+      ]
+    },
+    {
+      "id": "questions",
+      "name": "Questions",
+      "icon": "❓",
+      "level": 3,
+      "color": "#10b981",
+      "words": [
+        { "id": 11, "word": "What is this?", "emoji": "🤔", "hint": "Ask about a thing!", "syllables": ["What", "is", "this?"], "tts": "What is this?", "sentences": ["What is this? It's a cat!", "What is this color?"] },
+        { "id": 12, "word": "It's a dog!", "emoji": "🐶", "hint": "Answer: It's a ___!", "syllables": ["It's", "a", "dog!"], "tts": "It's a dog!", "sentences": ["It's a dog! Woof!", "It's a big dog!"] },
+        { "id": 13, "word": "Where is it?", "emoji": "🔍", "hint": "Ask about location!", "syllables": ["Where", "is", "it?"], "tts": "Where is it?", "sentences": ["Where is my toy?", "Where is the ball?"] },
+        { "id": 14, "word": "I love you!", "emoji": "❤️", "hint": "Show love!", "syllables": ["I", "love", "you!"], "tts": "I love you!", "sentences": ["I love you, mom!", "I love you so much!"] },
+        { "id": 15, "word": "Me too!", "emoji": "🤝", "hint": "Same feeling!", "syllables": ["Me", "too!"], "tts": "Me too!", "sentences": ["Me too! I love cookies.", "Me too! That's funny."] }
+      ]
+    },
+    {
+      "id": "feelings",
+      "name": "Feelings",
+      "icon": "😊",
+      "level": 3,
+      "color": "#ec4899",
+      "words": [
+        { "id": 16, "word": "I'm happy!", "emoji": "😄", "hint": "Feeling great!", "syllables": ["I'm", "hap", "py!"], "tts": "I'm happy!", "sentences": ["I'm happy today!", "I'm so happy!"] },
+        { "id": 17, "word": "I'm tired.", "emoji": "😴", "hint": "Need to rest!", "syllables": ["I'm", "ti", "red."], "tts": "I'm tired.", "sentences": ["I'm tired. I need to sleep.", "I'm very tired."] },
+        { "id": 18, "word": "That's funny!", "emoji": "😂", "hint": "Something makes you laugh!", "syllables": ["That's", "fun", "ny!"], "tts": "That's funny!", "sentences": ["Ha ha! That's funny!", "That's so funny!"] },
+        { "id": 19, "word": "I'm scared.", "emoji": "😨", "hint": "Feeling afraid!", "syllables": ["I'm", "scared."], "tts": "I'm scared.", "sentences": ["I'm scared of the dark.", "Don't worry! I'm a little scared."] },
+        { "id": 20, "word": "Well done!", "emoji": "🌟", "hint": "Great job!", "syllables": ["Well", "done!"], "tts": "Well done!", "sentences": ["Well done! You did it!", "Well done, champion!"] }
+      ]
+    }
+  ]
+}
