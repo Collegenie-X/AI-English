@@ -1,45 +1,46 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useTTS } from '@/hooks/useTTS'
 import type { KoWordItem } from '@/types/content'
 
-// ── Difficulty config ─────────────────────────────────────────────────────────
-const DIFFICULTIES = [
-  { id: 'easy',   label: '초급', grid: 4, targetCount: 3, color: '#4caf50', badge: '🟢' },
-  { id: 'medium', label: '중급', grid: 5, targetCount: 5, color: '#FF9800', badge: '🟡' },
-  { id: 'hard',   label: '고급', grid: 6, targetCount: 7, color: '#e91e63', badge: '🔴' },
-]
+// ── Config ────────────────────────────────────────────────────────────────────
+const PUZZLE_CONFIG = {
+  easy:   { label: '초급', grid: 4, targetCount: 3, totalRounds: 3, color: '#4caf50', badge: '🟢', dirs: ['h'] as Dir[] },
+  medium: { label: '중급', grid: 5, targetCount: 3, totalRounds: 3, color: '#FF9800', badge: '🟡', dirs: ['h', 'v'] as Dir[] },
+  hard:   { label: '고급', grid: 6, targetCount: 3, totalRounds: 3, color: '#e91e63', badge: '🔴', dirs: ['h', 'v'] as Dir[] },
+}
 
-type DiffId = 'easy' | 'medium' | 'hard'
+type DiffId = keyof typeof PUZZLE_CONFIG
 type Dir = 'h' | 'v'
 
 interface Placement { word: string; startR: number; startC: number; dir: Dir }
 
-// ── Shuffle ───────────────────────────────────────────────────────────────────
+const FILL_CHARS = '가나다라마바사아자차카타파하강산물바람구름하늘빛꽃별눈비해달'
+
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5)
 }
 
-// ── Build letter grid with hidden words ───────────────────────────────────────
-function buildGrid(size: number, words: string[]): { grid: string[][]; placements: Placement[] } {
+// ── Grid builder ──────────────────────────────────────────────────────────────
+function buildGrid(size: number, words: string[], dirs: Dir[]): { grid: string[][]; placements: Placement[] } {
   const grid: string[][] = Array.from({ length: size }, () => Array(size).fill(''))
   const placements: Placement[] = []
-  const KOREAN_COMMON = '가나다라마바사아자차카타파하강산물바람구름하늘빛꽃별눈비해달'
-  const rand = () => KOREAN_COMMON[Math.floor(Math.random() * KOREAN_COMMON.length)]
+  const rand = () => FILL_CHARS[Math.floor(Math.random() * FILL_CHARS.length)]
 
   for (const word of words) {
     const syls = Array.from(word)
     if (syls.length > size) continue
     let placed = false
-    for (let attempt = 0; attempt < 80; attempt++) {
-      const dir: Dir = Math.random() < 0.5 ? 'h' : 'v'
+
+    for (let attempt = 0; attempt < 100; attempt++) {
+      const dir: Dir = dirs[Math.floor(Math.random() * dirs.length)]
       const maxR = dir === 'h' ? size - 1 : size - syls.length
       const maxC = dir === 'h' ? size - syls.length : size - 1
       if (maxR < 0 || maxC < 0) continue
       const r = Math.floor(Math.random() * (maxR + 1))
       const c = Math.floor(Math.random() * (maxC + 1))
-      // Check no conflict
+
       let ok = true
       for (let i = 0; i < syls.length; i++) {
         const rr = dir === 'h' ? r : r + i
@@ -47,6 +48,7 @@ function buildGrid(size: number, words: string[]): { grid: string[][]; placement
         if (grid[rr][cc] !== '' && grid[rr][cc] !== syls[i]) { ok = false; break }
       }
       if (!ok) continue
+
       for (let i = 0; i < syls.length; i++) {
         const rr = dir === 'h' ? r : r + i
         const cc = dir === 'h' ? c + i : c
@@ -56,8 +58,8 @@ function buildGrid(size: number, words: string[]): { grid: string[][]; placement
       placed = true
       break
     }
+
     if (!placed) {
-      // Force place in first available row gap (simplified fallback)
       for (let r = 0; r < size && !placed; r++) {
         for (let c = 0; c <= size - syls.length && !placed; c++) {
           if (syls.every((s, i) => grid[r][c + i] === '' || grid[r][c + i] === s)) {
@@ -70,16 +72,13 @@ function buildGrid(size: number, words: string[]): { grid: string[][]; placement
     }
   }
 
-  // Fill empty cells with random syllables
-  for (let r = 0; r < size; r++) {
-    for (let c = 0; c < size; c++) {
+  for (let r = 0; r < size; r++)
+    for (let c = 0; c < size; c++)
       if (grid[r][c] === '') grid[r][c] = rand()
-    }
-  }
+
   return { grid, placements }
 }
 
-// ── Get cells for a placement ─────────────────────────────────────────────────
 function getCells(p: Placement): [number, number][] {
   const syls = Array.from(p.word)
   return syls.map((_, i) => [
@@ -88,6 +87,56 @@ function getCells(p: Placement): [number, number][] {
   ])
 }
 
+function isValidLine(cells: [number, number][]): boolean {
+  if (cells.length < 2) return true
+  const rows = cells.map(([r]) => r)
+  const cols = cells.map(([, c]) => c)
+  const allSameRow = rows.every(r => r === rows[0])
+  const allSameCol = cols.every(c => c === cols[0])
+  if (!allSameRow && !allSameCol) return false
+  if (allSameRow) {
+    const sorted = [...cols].sort((a, b) => a - b)
+    return sorted.every((c, i) => i === 0 || c === sorted[i - 1] + 1)
+  }
+  const sorted = [...rows].sort((a, b) => a - b)
+  return sorted.every((r, i) => i === 0 || r === sorted[i - 1] + 1)
+}
+
+// ── Correct-answer flash effect ───────────────────────────────────────────────
+function showCorrectFlash(word: string) {
+  if (typeof document === 'undefined') return
+  const el = document.createElement('div')
+  el.textContent = `🎉 ${word}`
+  el.style.cssText = [
+    'position:fixed', 'left:50%', 'top:38%',
+    'transform:translate(-50%,-50%)',
+    'font-size:2rem', 'font-weight:900',
+    'color:#7E57C2', 'z-index:99999',
+    'pointer-events:none', 'white-space:nowrap',
+    'animation:correctFlash 0.85s ease forwards',
+  ].join(';')
+  document.body.appendChild(el)
+  setTimeout(() => el.remove(), 900)
+
+  for (let i = 0; i < 6; i++) {
+    const star = document.createElement('div')
+    star.textContent = ['⭐', '✨', '🌟', '💫'][i % 4]
+    const angle = (i / 6) * 360
+    const dist = 70 + Math.random() * 40
+    star.style.cssText = [
+      'position:fixed',
+      `left:calc(50% + ${Math.cos((angle * Math.PI) / 180) * dist}px)`,
+      `top:calc(38% + ${Math.sin((angle * Math.PI) / 180) * dist}px)`,
+      'font-size:1.4rem', 'z-index:99998',
+      'pointer-events:none',
+      'animation:starPop 0.7s ease forwards',
+    ].join(';')
+    document.body.appendChild(star)
+    setTimeout(() => star.remove(), 750)
+  }
+}
+
+// ── Props ─────────────────────────────────────────────────────────────────────
 interface KoPuzzleDialogProps {
   words: KoWordItem[]
   catName: string
@@ -95,187 +144,229 @@ interface KoPuzzleDialogProps {
   onClose: () => void
 }
 
-export function KoPuzzleDialog({ words, catName, catColor, onClose }: KoPuzzleDialogProps) {
+// ── Main component ────────────────────────────────────────────────────────────
+export function KoPuzzleDialog({ words, onClose }: KoPuzzleDialogProps) {
+  const { speak } = useTTS()
   const [diff, setDiff] = useState<DiffId>('easy')
-  const [gameState, setGameState] = useState<'setup' | 'playing' | 'done'>('setup')
+  const [round, setRound] = useState(1)
+  const [targets, setTargets] = useState<KoWordItem[]>([])
   const [grid, setGrid] = useState<string[][]>([])
   const [placements, setPlacements] = useState<Placement[]>([])
-  const [targets, setTargets] = useState<KoWordItem[]>([])
   const [foundWords, setFoundWords] = useState<Set<string>>(new Set())
+  const [totalFound, setTotalFound] = useState(0)
   const [selected, setSelected] = useState<[number, number][]>([])
   const [wrongCells, setWrongCells] = useState<[number, number][]>([])
   const [correctCells, setCorrectCells] = useState<[number, number][]>([])
-  const { speak } = useTTS()
+  const [isDone, setIsDone] = useState(false)
+  const usedIdsRef = useRef<Set<string>>(new Set())
+  const dragActiveRef = useRef(false)
+  const dragCellsRef = useRef<[number, number][]>([])
+  const gridRef = useRef<HTMLDivElement>(null)
 
-  const diffCfg = DIFFICULTIES.find(d => d.id === diff)!
+  const cfg = PUZZLE_CONFIG[diff]
 
-  const startGame = useCallback(() => {
-    const wordPool = words.filter(w => Array.from(w.word).length <= diffCfg.grid)
-    const chosen = shuffle(wordPool).slice(0, diffCfg.targetCount)
-    const wordStrings = chosen.map(w => w.word)
-    const { grid: g, placements: ps } = buildGrid(diffCfg.grid, wordStrings)
+  const startRound = useCallback((diffId: DiffId, roundNum: number, usedIds: Set<string>) => {
+    const config = PUZZLE_CONFIG[diffId]
+    const pool = words.filter(w => Array.from(w.word).length <= config.grid)
+    const unused = pool.filter(w => !usedIds.has(w.id))
+    const usePool = unused.length >= config.targetCount ? unused : pool
+    const chosen = shuffle(usePool).slice(0, config.targetCount)
+    chosen.forEach(w => usedIds.add(w.id))
+
+    const { grid: g, placements: ps } = buildGrid(config.grid, chosen.map(w => w.word), config.dirs)
+    setTargets(chosen)
     setGrid(g)
     setPlacements(ps)
-    setTargets(chosen)
     setFoundWords(new Set())
     setSelected([])
     setWrongCells([])
     setCorrectCells([])
-    setGameState('playing')
-  }, [words, diffCfg])
+    setRound(roundNum)
+    setIsDone(false)
+  }, [words])
 
-  const isCellSelected = (r: number, c: number) =>
-    selected.some(([sr, sc]) => sr === r && sc === c)
-  const isCellWrong = (r: number, c: number) =>
-    wrongCells.some(([wr, wc]) => wr === r && wc === c)
-  const isCellCorrect = (r: number, c: number) =>
-    correctCells.some(([cr, cc]) => cr === r && cc === c)
+  const initGame = useCallback((diffId: DiffId) => {
+    usedIdsRef.current = new Set()
+    setTotalFound(0)
+    startRound(diffId, 1, usedIdsRef.current)
+  }, [startRound])
 
-  // Check if selected cells form a valid straight line sequence
-  const isValidLine = (cells: [number, number][]): boolean => {
-    if (cells.length < 2) return true
-    const rows = cells.map(([r]) => r)
-    const cols = cells.map(([, c]) => c)
-    const allSameRow = rows.every(r => r === rows[0])
-    const allSameCol = cols.every(c => c === cols[0])
-    if (!allSameRow && !allSameCol) return false
-    // Check contiguous
-    if (allSameRow) {
-      const sorted = [...cols].sort((a, b) => a - b)
-      return sorted.every((c, i) => i === 0 || c === sorted[i - 1] + 1)
-    } else {
-      const sorted = [...rows].sort((a, b) => a - b)
-      return sorted.every((r, i) => i === 0 || r === sorted[i - 1] + 1)
-    }
+  useEffect(() => { initGame('easy') }, [initGame])
+
+  const changeDiff = (d: DiffId) => {
+    setDiff(d)
+    initGame(d)
   }
 
-  const tapCell = (r: number, c: number) => {
-    if (isCellCorrect(r, c)) return
+  const handleFoundWord = useCallback((word: string, cells: [number, number][]) => {
+    setCorrectCells(prev => [...prev, ...cells])
+    setSelected([])
+    speak(word, 'ko-KR', 0.9)
+    showCorrectFlash(word)
 
-    const alreadySel = isCellSelected(r, c)
+    setFoundWords(prev => {
+      const next = new Set(prev)
+      next.add(word)
+
+      setTotalFound(t => {
+        const newTotal = t + 1
+        if (next.size >= cfg.targetCount) {
+          setTimeout(() => {
+            if (round < cfg.totalRounds) {
+              startRound(diff, round + 1, usedIdsRef.current)
+            } else {
+              setIsDone(true)
+            }
+          }, 900)
+        }
+        return newTotal
+      })
+      return next
+    })
+  }, [cfg, diff, round, speak, startRound])
+
+  // ── Click interaction ─────────────────────────────────────────────────────
+  const tapCell = useCallback((r: number, c: number) => {
+    if (correctCells.some(([cr, cc]) => cr === r && cc === c)) return
+
+    const alreadySel = selected.some(([sr, sc]) => sr === r && sc === c)
     if (alreadySel) {
-      // deselect last
       setSelected(prev => prev.slice(0, -1))
       return
     }
 
     const newSel: [number, number][] = [...selected, [r, c]]
     if (!isValidLine(newSel)) {
-      // Flash wrong and reset
       setWrongCells(newSel)
       setTimeout(() => setWrongCells([]), 500)
       setSelected([])
       return
     }
-
     setSelected(newSel)
 
-    // Check if selected cells match any placement
-    const selWord = newSel.map(([sr, sc]) => grid[sr][sc]).join('')
-    const matchPlacement = placements.find(p => {
+    const match = placements.find(p => {
       const cells = getCells(p)
-      if (cells.length !== newSel.length) return false
-      return cells.every(([pr, pc], i) => pr === newSel[i][0] && pc === newSel[i][1])
+      return cells.length === newSel.length &&
+        cells.every(([pr, pc], i) => pr === newSel[i][0] && pc === newSel[i][1])
     })
+    if (match && !foundWords.has(match.word)) {
+      handleFoundWord(match.word, newSel)
+    }
+  }, [selected, correctCells, placements, foundWords, handleFoundWord])
 
-    if (matchPlacement && !foundWords.has(matchPlacement.word)) {
-      const newFound = new Set(foundWords)
-      newFound.add(matchPlacement.word)
-      setFoundWords(newFound)
-      setCorrectCells(prev => [...prev, ...newSel])
-      setSelected([])
-      speak(matchPlacement.word, 'ko-KR', 0.9)
-      speak('잘했어요!', 'ko-KR')
-      if (newFound.size >= targets.length) {
-        setTimeout(() => setGameState('done'), 800)
-      }
+  // ── Drag interaction ──────────────────────────────────────────────────────
+  const getCellFromPoint = (x: number, y: number): [number, number] | null => {
+    if (!gridRef.current) return null
+    const el = document.elementFromPoint(x, y) as HTMLElement | null
+    if (!el) return null
+    const r = parseInt(el.dataset.r ?? '')
+    const c = parseInt(el.dataset.c ?? '')
+    if (isNaN(r) || isNaN(c)) return null
+    return [r, c]
+  }
+
+  const onGridMouseDown = (e: React.MouseEvent) => {
+    const cell = getCellFromPoint(e.clientX, e.clientY)
+    if (!cell) return
+    dragActiveRef.current = true
+    dragCellsRef.current = [cell]
+    setSelected([cell])
+  }
+
+  const onGridMouseMove = (e: React.MouseEvent) => {
+    if (!dragActiveRef.current) return
+    const cell = getCellFromPoint(e.clientX, e.clientY)
+    if (!cell) return
+    const [r, c] = cell
+    const last = dragCellsRef.current[dragCellsRef.current.length - 1]
+    if (last && last[0] === r && last[1] === c) return
+    const newCells: [number, number][] = [...dragCellsRef.current, [r, c]]
+    if (!isValidLine(newCells)) return
+    dragCellsRef.current = newCells
+    setSelected(newCells)
+  }
+
+  const onGridMouseUp = () => {
+    if (!dragActiveRef.current) return
+    dragActiveRef.current = false
+    const cells = dragCellsRef.current
+    if (cells.length < 2) return
+    const selWord = cells.map(([r, c]) => grid[r]?.[c] ?? '').join('')
+    const match = placements.find(p => {
+      const pc = getCells(p)
+      return pc.length === cells.length &&
+        pc.every(([pr, pcc], i) => pr === cells[i][0] && pcc === cells[i][1])
+    })
+    if (match && !foundWords.has(match.word)) {
+      handleFoundWord(match.word, cells)
+    } else {
+      setWrongCells(cells)
+      setTimeout(() => { setWrongCells([]); setSelected([]) }, 450)
     }
   }
 
-  // Keyboard esc
+  const onGridTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault()
+    const t = e.touches[0]
+    const cell = getCellFromPoint(t.clientX, t.clientY)
+    if (!cell) return
+    const [r, c] = cell
+    const last = dragCellsRef.current[dragCellsRef.current.length - 1]
+    if (last && last[0] === r && last[1] === c) return
+    const newCells: [number, number][] = [...dragCellsRef.current, [r, c]]
+    if (!isValidLine(newCells)) return
+    dragCellsRef.current = newCells
+    setSelected(newCells)
+  }
+
+  const onGridTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0]
+    const cell = getCellFromPoint(t.clientX, t.clientY)
+    if (!cell) return
+    dragActiveRef.current = true
+    dragCellsRef.current = [cell]
+    setSelected([cell])
+  }
+
+  const onGridTouchEnd = () => { onGridMouseUp() }
+
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', h)
     return () => window.removeEventListener('keydown', h)
   }, [onClose])
 
-  const progress = targets.length > 0 ? (foundWords.size / targets.length) * 100 : 0
+  const isSel = (r: number, c: number) => selected.some(([sr, sc]) => sr === r && sc === c)
+  const isWrong = (r: number, c: number) => wrongCells.some(([wr, wc]) => wr === r && wc === c)
+  const isCorrect = (r: number, c: number) => correctCells.some(([cr, cc]) => cr === r && cc === c)
+
+  const cellPx = Math.min(62, Math.floor(320 / cfg.grid))
 
   // ── Done screen ────────────────────────────────────────────────────────────
-  if (gameState === 'done') {
+  if (isDone) {
     return (
       <div className="dialog-overlay" onClick={onClose}>
-        <div className="dialog-panel" onClick={e => e.stopPropagation()}>
-          <div className="dialog-header-gradient" style={{ background: 'linear-gradient(135deg,#7c3aed,#9d4edd)' }}>
-            <span style={{ color: 'white', fontWeight: 900, fontSize: '1.05rem' }}>퍼즐 완성!</span>
-            <button className="dialog-close-btn" onClick={onClose} aria-label="닫기">✕</button>
+        <div className="dialog-panel" onClick={e => e.stopPropagation()} style={{ maxWidth: 460 }}>
+          <div style={{ background: 'linear-gradient(135deg,#7c3aed,#9d4edd)', padding: '18px 20px', borderRadius: '20px 20px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ color: 'white', fontWeight: 900, fontSize: '1.05rem' }}>🧩 낱말 퍼즐 완성!</span>
+            <button className="dialog-close-btn" onClick={onClose}>✕</button>
           </div>
           <div style={{ padding: '36px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-            <span style={{ fontSize: '4.5rem', lineHeight: 1 }}>🎉</span>
-            <p style={{ fontSize: '1.8rem', fontWeight: 900, color: '#1a1a2e', margin: 0 }}>모두 찾았어요!</p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {targets.map(t => (
-                <button key={t.id} onClick={() => speak(t.word, 'ko-KR', 0.9)}
-                  style={{ padding: '6px 16px', background: '#f3e5f5', border: '2px solid #e0c8f8', borderRadius: '14px', fontFamily: 'inherit', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', color: '#6a1b9a', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  {t.emoji} {t.word}
-                </button>
-              ))}
-            </div>
-            <div style={{ background: '#FFF9C4', borderRadius: '14px', padding: '8px 24px', border: '2px solid #FFD700' }}>
-              <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#9a7000' }}>+{targets.length * 15} XP</span>
-            </div>
-            <div style={{ display: 'flex', gap: '8px', width: '100%', maxWidth: '280px' }}>
+            <span style={{ fontSize: '4rem', lineHeight: 1 }}>🎉</span>
+            <p style={{ fontSize: '1.7rem', fontWeight: 900, color: '#1a1a2e', margin: 0 }}>
+              {cfg.totalRounds}라운드 모두 완료!
+            </p>
+            <p style={{ color: '#888', fontSize: '0.9rem', margin: 0 }}>총 {totalFound}단어를 찾았어요</p>
+            <div style={{ display: 'flex', gap: '10px', width: '100%', maxWidth: 280, marginTop: 8 }}>
               <button onClick={onClose}
-                style={{ flex: 1, padding: '12px', border: '2px solid #e0e0e0', borderRadius: '14px', background: 'white', fontFamily: 'inherit', fontWeight: 700, cursor: 'pointer', color: '#555', fontSize: '0.9rem' }}>
+                style={{ flex: 1, padding: '12px', border: '2px solid #e0e0e0', borderRadius: 14, background: 'white', fontFamily: 'inherit', fontWeight: 700, cursor: 'pointer', color: '#555' }}>
                 닫기
               </button>
-              <button onClick={startGame}
-                style={{ flex: 1, padding: '12px', border: 'none', borderRadius: '14px', background: 'linear-gradient(135deg,#7c3aed,#9d4edd)', color: 'white', fontFamily: 'inherit', fontWeight: 700, cursor: 'pointer', fontSize: '0.9rem' }}>
-                다시
+              <button onClick={() => { setDiff('easy'); initGame('easy') }}
+                style={{ flex: 1, padding: '12px', border: 'none', borderRadius: 14, background: 'linear-gradient(135deg,#7c3aed,#9d4edd)', color: 'white', fontFamily: 'inherit', fontWeight: 700, cursor: 'pointer' }}>
+                다시 하기
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // ── Setup screen ───────────────────────────────────────────────────────────
-  if (gameState === 'setup') {
-    return (
-      <div className="dialog-overlay" onClick={onClose}>
-        <div className="dialog-panel" onClick={e => e.stopPropagation()}>
-          <div className="dialog-header-gradient" style={{ background: 'linear-gradient(135deg,#7c3aed,#9d4edd)' }}>
-            <div>
-              <p style={{ color: 'white', fontWeight: 900, fontSize: '1.1rem', margin: 0 }}>🧩 낱말 퍼즐</p>
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem', margin: 0, marginTop: '2px' }}>{catName} · {words.length}단어 풀</p>
-            </div>
-            <button className="dialog-close-btn" onClick={onClose} aria-label="닫기">✕</button>
-          </div>
-
-          <div style={{ padding: '24px 20px 32px' }}>
-            <p style={{ fontWeight: 700, fontSize: '0.82rem', color: '#aaa', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>난이도 선택</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
-              {DIFFICULTIES.map(d => (
-                <button key={d.id} onClick={() => setDiff(d.id as DiffId)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 16px', border: `2px solid ${diff === d.id ? d.color : '#e8e0f0'}`, borderRadius: '16px', background: diff === d.id ? `${d.color}12` : 'white', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s', boxShadow: diff === d.id ? `0 4px 14px ${d.color}30` : 'none' }}>
-                  <span style={{ fontSize: '1.4rem' }}>{d.badge}</span>
-                  <div style={{ textAlign: 'left' }}>
-                    <p style={{ margin: 0, fontWeight: 900, fontSize: '1rem', color: diff === d.id ? d.color : '#333' }}>{d.label}</p>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: '#aaa', fontWeight: 600 }}>{d.grid}×{d.grid} 격자 · {d.targetCount}단어 찾기</p>
-                  </div>
-                  {diff === d.id && (
-                    <span style={{ marginLeft: 'auto', color: d.color, fontWeight: 900, fontSize: '1.1rem' }}>✓</span>
-                  )}
-                </button>
-              ))}
-            </div>
-
-            <button onClick={startGame}
-              style={{ width: '100%', padding: '15px', border: 'none', borderRadius: '18px', background: 'linear-gradient(135deg,#7c3aed,#9d4edd)', color: 'white', fontFamily: 'inherit', fontWeight: 900, fontSize: '1.1rem', cursor: 'pointer', boxShadow: '0 6px 20px rgba(124,58,237,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden><polygon points="5,3 19,12 5,21" /></svg>
-              퍼즐 시작
-            </button>
           </div>
         </div>
       </div>
@@ -283,105 +374,170 @@ export function KoPuzzleDialog({ words, catName, catColor, onClose }: KoPuzzleDi
   }
 
   // ── Playing screen ─────────────────────────────────────────────────────────
-  const gridSize = diffCfg.grid
-  const cellSize = Math.min(48, Math.floor((Math.min(320, window.innerWidth - 80)) / gridSize))
+  const roundDots = Array.from({ length: cfg.totalRounds }, (_, i) => {
+    const active = i + 1 === round
+    const done = i + 1 < round
+    return (
+      <span key={i} style={{
+        width: 28, height: 28, borderRadius: '50%',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        fontWeight: 900, fontSize: '0.85rem',
+        background: active ? '#7c3aed' : done ? '#c8b8f8' : '#e8e0f8',
+        color: active || done ? 'white' : '#aaa',
+        border: active ? '2px solid #5c1ac8' : '2px solid transparent',
+      }}>{i + 1}</span>
+    )
+  })
+
+  const diffTabs = (['easy', 'medium', 'hard'] as DiffId[]).map(d => {
+    const c = PUZZLE_CONFIG[d]
+    const active = d === diff
+    return (
+      <button key={d} onClick={() => changeDiff(d)} style={{
+        flex: 1, padding: '8px 4px',
+        borderRadius: 20,
+        border: active ? `2px solid ${c.color}` : '2px solid transparent',
+        background: active ? `${c.color}18` : 'white',
+        color: active ? c.color : '#999',
+        fontFamily: 'inherit', fontWeight: 900, fontSize: '0.82rem',
+        cursor: 'pointer', transition: 'all 0.15s',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
+      }}>
+        {c.badge} {c.label} ({c.grid}×{c.grid})
+      </button>
+    )
+  })
 
   return (
     <div className="dialog-overlay" onClick={onClose}>
-      <div className="dialog-panel" onClick={e => e.stopPropagation()}>
-        {/* Purple gradient header */}
-        <div className="dialog-header-gradient" style={{ background: 'linear-gradient(135deg,#7c3aed,#9d4edd)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
-            <span style={{ color: 'white', fontWeight: 900, fontSize: '0.95rem' }}>🧩 낱말 퍼즐</span>
-            <span style={{ background: 'rgba(255,255,255,0.22)', color: 'white', borderRadius: '10px', padding: '2px 10px', fontSize: '0.78rem', fontWeight: 700 }}>{diffCfg.badge} {diffCfg.label}</span>
-            <span style={{ marginLeft: 'auto', color: 'rgba(255,255,255,0.85)', fontSize: '0.82rem', fontWeight: 600 }}>{foundWords.size}/{targets.length}</span>
-            <button onClick={startGame}
-              style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', borderRadius: '10px', padding: '4px 10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.78rem', fontWeight: 700 }}>
-              새로고침
-            </button>
-          </div>
-          <button className="dialog-close-btn" onClick={onClose} style={{ marginLeft: '8px' }} aria-label="닫기">✕</button>
+      <div className="dialog-panel" onClick={e => e.stopPropagation()} style={{ maxWidth: 460 }}>
+
+        {/* ── Header ── */}
+        <div style={{ background: 'linear-gradient(135deg,#7c3aed,#9d4edd)', padding: '14px 16px', borderRadius: '20px 20px 0 0', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ fontSize: '1.3rem' }}>🧩</span>
+          <span style={{ color: 'white', fontWeight: 900, fontSize: '1rem' }}>낱말 퍼즐</span>
+          <span style={{ background: 'rgba(255,255,255,0.22)', color: 'white', borderRadius: 10, padding: '2px 10px', fontSize: '0.78rem', fontWeight: 700 }}>
+            {cfg.badge} {cfg.label}
+          </span>
+          <span style={{ marginLeft: 'auto', background: 'rgba(255,255,255,0.22)', color: 'white', borderRadius: 12, padding: '3px 10px', fontSize: '0.85rem', fontWeight: 900 }}>
+            {foundWords.size}/{cfg.targetCount}
+          </span>
+          <button onClick={() => startRound(diff, round, usedIdsRef.current)}
+            style={{ background: 'rgba(255,255,255,0.22)', border: 'none', color: 'white', borderRadius: 12, padding: '5px 12px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.8rem', fontWeight: 700 }}>
+            새로고침
+          </button>
+          <button className="dialog-close-btn" onClick={onClose} style={{ marginLeft: 0 }}>✕</button>
         </div>
 
-        {/* Progress bar */}
-        <div style={{ height: '5px', background: '#ede7f6', overflow: 'hidden' }}>
-          <div style={{ height: '100%', background: diffCfg.color, width: `${progress}%`, transition: 'width 0.4s ease' }} />
+        {/* ── Difficulty tabs ── */}
+        <div style={{ padding: '10px 12px 0', display: 'flex', gap: 6, background: 'white' }}>
+          {diffTabs}
         </div>
 
-        <div style={{ padding: '16px 16px 20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          {/* Target words row */}
-          <div>
-            <p style={{ fontWeight: 700, fontSize: '0.75rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>찾아야 할 단어</p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              {targets.map(t => {
-                const found = foundWords.has(t.word)
-                return (
-                  <button key={t.id} onClick={() => speak(t.word, 'ko-KR', 0.9)}
-                    className="puzzle-target-card"
-                    style={{ minWidth: '72px', background: found ? '#e8f5e9' : '#f3e5f5', border: `2px solid ${found ? '#a5d6a7' : '#e0c8f8'}` }}
-                    aria-label={`${t.word} 듣기`}>
-                    <div style={{ fontSize: '1.6rem', lineHeight: 1, marginBottom: '3px', filter: found ? 'none' : 'grayscale(0.3)' }}>{t.emoji}</div>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 900, color: found ? '#2e7d32' : '#6a1b9a', textDecoration: found ? 'line-through' : 'none' }}>{t.word}</div>
-                    {found && <div style={{ fontSize: '0.7rem', color: '#4caf50', fontWeight: 700 }}>찾음!</div>}
-                  </button>
-                )
-              })}
-            </div>
+        {/* ── Body ── */}
+        <div style={{ padding: '14px 16px 20px', background: 'white', borderRadius: '0 0 20px 20px' }}>
+
+          {/* Section label + round dots */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>찾아야 할 단어</span>
+            <div style={{ display: 'flex', gap: 4 }}>{roundDots}</div>
           </div>
 
-          {/* Instructions */}
-          <p style={{ fontSize: '0.8rem', color: '#aaa', fontWeight: 600, textAlign: 'center', margin: 0 }}>
-            격자에서 단어의 글자들을 순서대로 탭하세요
+          {/* Word chips */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+            {targets.map(t => {
+              const found = foundWords.has(t.word)
+              const syls = Array.from(t.word)
+              return (
+                <button key={t.id} onClick={() => speak(t.word, 'ko-KR', 0.9)}
+                  style={{
+                    flex: 1, padding: '10px 6px 8px', borderRadius: 16,
+                    background: found ? 'linear-gradient(135deg,#E8F5E9,#C8E6C9)' : '#ede7f6',
+                    border: `2.5px solid ${found ? '#4CAF50' : '#d1c4e9'}`,
+                    cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center',
+                    transition: 'all 0.2s',
+                  }}>
+                  <div style={{ fontSize: '2.2rem', lineHeight: 1, marginBottom: 4 }}>{t.emoji}</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 900, color: found ? '#2E7D32' : '#2c3e50', marginBottom: 6 }}>{t.word}</div>
+                  <div style={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
+                    {syls.map((s, i) => (
+                      <span key={i} style={{
+                        width: 22, height: 22, borderRadius: 6, fontSize: '0.75rem', fontWeight: 900,
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        background: found
+                          ? ['#66BB6A', '#42A5F5', '#FFA726'][i % 3]
+                          : 'rgba(255,255,255,0.6)',
+                        color: found ? 'white' : '#999',
+                        border: `1.5px solid ${found ? 'transparent' : '#ddd'}`,
+                      }}>{found ? s : '?'}</span>
+                    ))}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Instruction */}
+          <p style={{ fontSize: '0.78rem', color: '#9c27b0', fontWeight: 700, textAlign: 'center', margin: '0 0 10px' }}>
+            {cfg.dirs.includes('v')
+              ? '격자에서 단어를 드래그하거나 글자를 순서대로 탭하세요'
+              : '격자에서 단어를 가로로 드래그하거나 글자를 순서대로 탭하세요'}
           </p>
 
-          {/* Letter grid */}
+          {/* Grid */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div
-              className="puzzle-letter-grid"
-              style={{ gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)` }}
+              ref={gridRef}
+              onMouseDown={onGridMouseDown}
+              onMouseMove={onGridMouseMove}
+              onMouseUp={onGridMouseUp}
+              onMouseLeave={onGridMouseUp}
+              onTouchStart={onGridTouchStart}
+              onTouchMove={onGridTouchMove}
+              onTouchEnd={onGridTouchEnd}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${cfg.grid}, ${cellPx}px)`,
+                gap: 6, padding: 12,
+                background: '#d4b8f0', borderRadius: 18,
+                userSelect: 'none', touchAction: 'none',
+              }}
             >
               {grid.map((row, r) =>
                 row.map((cell, c) => {
-                  const isSelected = isCellSelected(r, c)
-                  const isWrong    = isCellWrong(r, c)
-                  const isCorrect  = isCellCorrect(r, c)
-                  let bg = 'white', borderCol = '#e8e0f0', textCol = '#333'
-                  if (isCorrect) { bg = '#4caf50'; borderCol = '#388e3c'; textCol = 'white' }
-                  else if (isWrong)   { bg = '#ef5350'; borderCol = '#c62828'; textCol = 'white' }
-                  else if (isSelected){ bg = '#ede7f6'; borderCol = '#7c3aed'; textCol = '#7c3aed' }
+                  const sel = isSel(r, c)
+                  const wrong = isWrong(r, c)
+                  const correct = isCorrect(r, c)
+                  let bg = 'white', border = '#e8e0f0', color = '#333'
+                  if (correct)    { bg = '#4caf50'; border = '#388e3c'; color = 'white' }
+                  else if (wrong) { bg = '#ef5350'; border = '#c62828'; color = 'white' }
+                  else if (sel)   { bg = '#ede7f6'; border = '#7c3aed'; color = '#7c3aed' }
                   return (
-                    <button
+                    <div
                       key={`${r}-${c}`}
-                      onClick={() => !isCorrect && tapCell(r, c)}
+                      data-r={r} data-c={c}
+                      onClick={() => !correct && tapCell(r, c)}
                       style={{
-                        width: `${cellSize}px`, height: `${cellSize}px`,
-                        borderRadius: '10px', border: `2px solid ${borderCol}`,
-                        background: bg, color: textCol,
-                        fontFamily: 'inherit', fontWeight: 900, fontSize: `${Math.max(14, cellSize * 0.42)}px`,
-                        cursor: isCorrect ? 'default' : 'pointer',
-                        transition: 'all 0.12s',
-                        transform: isSelected ? 'scale(1.1)' : 'scale(1)',
+                        width: cellPx, height: cellPx,
+                        borderRadius: 10, border: `2px solid ${border}`,
+                        background: bg, color,
+                        fontWeight: 900, fontSize: Math.max(14, cellPx * 0.44),
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: correct ? 'default' : 'pointer',
+                        transition: 'background 0.1s, border-color 0.1s, color 0.1s',
+                        transform: sel ? 'scale(1.08)' : 'scale(1)',
+                        boxShadow: sel ? '0 2px 8px rgba(124,58,237,0.3)' : 'none',
+                        fontFamily: 'inherit',
                       }}
-                      aria-label={cell}
                     >
                       {cell}
-                    </button>
+                    </div>
                   )
                 })
               )}
             </div>
           </div>
 
-          {/* Clear selection button */}
-          {selected.length > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button onClick={() => setSelected([])}
-                style={{ padding: '7px 20px', border: '2px solid #e0e0e0', borderRadius: '14px', background: 'white', fontFamily: 'inherit', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer', color: '#aaa' }}>
-                선택 취소 ({selected.map(([r, c]) => grid[r]?.[c]).join('')})
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
